@@ -1,0 +1,9 @@
+@mixin hook-button() {
+  border-radius: 100px;
+  padding: 5px 40px;
+
+  &.uk-button-icon {
+    background: transparent;
+    border-radius: unset;
+  }
+}

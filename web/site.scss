@@ -1,0 +1,58 @@
+// --------------------------------------------------------------------
+// Custom Variables
+// --------------------------------------------------------------------
+
+@font-face {
+  font-family: "FuturaMediumC";
+  src: url('src/fonts/FuturaMediumC.eot') format("eot"), url("src/fonts/FuturaMediumC.woff") format("woff"), url("src/fonts/FuturaMediumC.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "FuturaBookC";
+  src: url('src/fonts/FuturaBookC.eot') format("eot"), url("src/fonts/FuturaBookC.woff") format("woff"), url("src/fonts/FuturaBookC.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+$green-main: #52926C;
+$yellow-main: #F6DF32;
+$green-text: #344B35;
+$white: #fff;
+$light-background: #F6F9F6;
+
+// Framework properties
+$inverse-global-color-mode: none;
+
+// Colors
+$global-link-color: $green-text;
+$global-color: $green-text;
+$global-primary-background: $green-main;
+
+// Typography
+$global-font-family: 'FuturaBookC', serif;
+$base-heading-font-family: 'FuturaMediumC', serif;
+$global-font-size: 18px;
+$global-2xlarge-font-size: 80px;
+
+$base-hr-border-width: 2.25px;
+
+@import "theme/button";
+// --------------------------------------------------------------------
+
+@import "src/uikit/variables-theme.scss";
+@import "src/uikit/mixins-theme.scss";
+
+// --------------------------------------------------------------------
+// Custom hooks
+// --------------------------------------------------------------------
+@import "theme/button-mixins";
+// --------------------------------------------------------------------
+
+@import "src/uikit/uikit-theme.scss";
+
+// --------------------------------------------------------------------
+
+@import "theme/utils";
+@import "theme/style";
