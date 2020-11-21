@@ -10,8 +10,48 @@
   z-index: 2;
 }
 
-.center {
+.xy-center {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.x-center {
+  display: flex;
+  justify-content: center;
+}
+
+.mt-200 {
+  margin-top: 200px;
+}
+
+.mt-300 {
+  margin-top: 300px;
+}
+
+.mt-400 {
+  margin-top: 400px;
+}
+
+.mt-500 {
+  margin-top: 500px;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+@mixin absolute-xy-center() {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin absolute-x-center() {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.absolute-xy-center {
+  @include absolute-xy-center;
 }

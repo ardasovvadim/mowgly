@@ -16,11 +16,7 @@
   font-style: normal;
 }
 
-$green-main: #52926C;
-$yellow-main: #F6DF32;
-$green-text: #344B35;
-$white: #fff;
-$light-background: #F6F9F6;
+@import "theme/colors";
 
 // Framework properties
 $inverse-global-color-mode: none;
@@ -54,5 +50,4 @@ $base-hr-border-width: 2.25px;
 
 // --------------------------------------------------------------------
 
-@import "theme/utils";
-@import "theme/style";
+

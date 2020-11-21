@@ -1,0 +1,166 @@
+@import "theme/colors";
+@import "theme/utils";
+@import "theme/index";
+
+@media (min-width: 1920px) {
+  main, footer {
+    max-width: 1500px;
+    margin: 0 auto;
+  }
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h3 {
+  color: $green-main;
+}
+
+hr {
+  border-top-color: $yellow-main;
+}
+
+p > span {
+  color: $green-main;
+}
+
+header {
+  padding: 15px 15px 0;
+  .logo-image {
+    width: 100px;
+  }
+  nav {
+    display: flex;
+    .menu {
+      height: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .avatar {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      margin-right: 30px;
+      a {
+        margin-right: 25px
+      }
+    }
+    .contacts {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      a:not(:last-of-type) {
+        margin-bottom: 12px
+      }
+    }
+  }
+}
+
+.bg {
+  position: absolute;
+  z-index: -1;
+  max-width: unset;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: $white;
+  box-shadow: 25px 30px 25px rgba(0, 0, 0, 0.15);
+  padding: 30px;
+  margin: 0 auto;
+  .card-image {
+    $radius: 200px;
+    width: $radius;
+    height: $radius;
+  }
+  .card-image-capture {
+    font-weight: bolder;
+  }
+  hr {
+    width: 80%;
+  }
+  .card-bottom {
+    margin-top: auto;
+    width: 100%;
+  }
+}
+
+.white-frame {
+  padding: 30px 30px 100px;
+  background: white;
+  box-shadow: 25px 30px 25px rgba(0, 0, 0, 0.15);
+}
+
+.footer-row {
+  height: 1600px;
+
+  .bg-top {
+    width: 100vw;
+    top: 0;
+    @include absolute-x-center;
+    z-index: -1;
+  }
+
+  .bg-bottom {
+    width: 100vw;
+    bottom: 0;
+    @include absolute-x-center;
+    z-index: -1;
+  }
+
+  .bg-map {
+    position: absolute;
+    width: 100vw;
+    top: 0;
+    @include absolute-x-center;
+
+    #map {
+      width: 100%;
+      height: 1200px;
+    }
+  }
+
+  .contacts, .contacts > h1 {
+    color: white;
+  }
+
+  .contacts {
+    hr { border-top-color: white }
+    .contacts-wrapper, .contact-line {
+      display: flex;
+    }
+    .contact-block:not(:last-of-type) {
+      margin-right: 30px;
+    }
+    .contact-line {
+      margin-bottom: 25px;
+
+      > * { margin-right: 25px; }
+      .icon { width: 36px; }
+      .name { width: 100px; }
+      .value { width: 200px;  }
+    }
+  }
+
+  .bottom-copy {
+    width: 100vw;
+    @include absolute-x-center;
+    z-index: 1;
+    bottom: 25px;
+    color: white;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    p { margin-bottom: 0; }
+
+    .icons > *:not(:last-of-type) {
+      margin-right: 40px;
+    }
+  }
+}

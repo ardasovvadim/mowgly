@@ -2,24 +2,24 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mowgly</title>
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap-grid.min.css">
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css"/>-->
 
-    <link rel="stylesheet" href="site.css">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
+
     <header>
         <nav class="row">
             <div class="col-1">
-                <img class="logo-image" src="src/logo.png" alt="logo">
+                <img class="logo-image" src="src/img/logo.png" alt="logo">
             </div>
             <div class="col-7">
                 <div class="menu">
@@ -40,7 +40,7 @@
             <div class="col-4 d-flex">
                 <div class="avatar">
                     <a href="#">Андрей Иванов</a>
-                    <img src="src/avatar.png" alt="avatar">
+                    <img src="src/img/avatar.png" alt="avatar">
                 </div>
                 <div class="contacts">
                     <a href="tel:+3800677005553">+380 (067) 700-555-3</a>
@@ -49,6 +49,7 @@
             </div>
         </nav>
     </header>
+
     <main>
 
         <!-------------------------------  MAIN BLOCK  ------------------------------>
@@ -63,22 +64,22 @@
             </div>
             <div class="col-7 ml-auto">
                 <div class="main-image-container">
-                    <img class="main-image-background" src="src/main-background.png" alt="background boys">
-                    <img class="main-image" src="src/main-boys.png" alt="boys">
+                    <img class="main-image-background" src="src/img/bg-1.png" alt="background boys">
+                    <img class="main-image" src="src/img/main-boys.png" alt="boys">
                 </div>
             </div>
             <div class="col-12 uk-text-center uk-margin-top">
                 <button class="uk-button uk-button-icon">
-                    <img src="src/arrow.svg">
+                    <img src="src/img/arrow-green.svg">
                 </button>
             </div>
         </div>
 
         <!--------------------------------------------------------------------------->
 
-        <!-------------------------------  OUR GOALS  ------------------------------>
+        <!-------------------------------  OUR GOALS  ------------------------------->
 
-        <div class="row our-goals-row">
+        <div class="row our-goals-row mt-200">
             <div class="col-10 d-flex align-items-center uk-position-relative">
                 <div class="wrapper w-100 z-2 uk-position-relative">
                     <h3>Наша цель</h3>
@@ -86,31 +87,31 @@
                     <p class="w-650px">Гармоничное развитие личности, приобщение к здоровому образу жизни, приобретение
                         навыков самообороны, изучение традиционного каратэ, совершенствование спортивное мастерства.</p>
                 </div>
-                <img class="bg bg-1" src="src/palm-leaf-bg.png">
+                <img class="bg bg-1" src="src/img/bg-5.png">
             </div>
             <div class="col-2 uk-position-relative">
                 <div class="wrapper uk-text-center z-2 uk-position-relative">
-                    <img src="src/masters/master-1.png">
+                    <img src="src/img/masters/master-1.png">
                     <p class="uk-text-bold">Хомутенко Руслан <br> Николаевич</p>
                 </div>
-                <img class="bg bg-2" src="src/palm-leaf-bg.png">
+                <img class="bg bg-2" src="src/img/bg-5.png">
             </div>
         </div>
 
         <!--------------------------------------------------------------------------->
 
-        <!-------------------------------  OUR GOALS  ------------------------------>
+        <!-------------------------------  ABOUT US  -------------------------------->
 
-        <div class="row about-row">
+        <div class="row about-row mt-300">
             <div class="col-6 uk-position-relative d-flex justify-content-center">
                 <div class="white-frame z-2 uk-position-relative">
                     <div class="slideshow" uk-slideshow="animation: fade; min-height: 350; max-height: 400">
                         <div class="uk-position-relative">
 
                             <ul class="uk-slideshow-items">
-                                <li><img src="src/photo-1.png" uk-cover></li>
-                                <li><img src="src/photo-2.png" alt="" uk-cover></li>
-                                <li><img src="src/photo-3.png" alt="" uk-cover></li>
+                                <li><img src="src/img/photo-1.png" uk-cover></li>
+                                <li><img src="src/img/photo-2.png" alt="" uk-cover></li>
+                                <li><img src="src/img/photo-3.png" alt="" uk-cover></li>
                             </ul>
 
                             <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#"
@@ -119,34 +120,245 @@
                                uk-slidenav-next uk-slideshow-item="next"></a>
 
                         </div>
-                        <div class="sw-nav">
-                            <span class="sw-nav--left"><img src="src/long-arrow.svg"></span>
-                            <span class="sw-nav--num">1</span>
+                        <div class="sw-nav xy-center">
+                            <span class="sw-nav--left"><img src="src/img/long-arrow.svg"></span>
+                            <span class="sw-nav--num active">1</span>
                             <span class="sw-nav--num">2</span>
                             <span class="sw-nav--num">3</span>
-                            <span class="sw-nav--right"><img src="src/long-arrow.svg"></span>
+                            <span class="sw-nav--right rotate-180"><img src="src/img/long-arrow.svg"></span>
                         </div>
                     </div>
                 </div>
-                <img class="bg bg-1" src="src/linear-bg.png">
+                <img class="bg absolute-xy-center" src="src/img/bg-4.png">
             </div>
             <div class="col-5 ml-auto">
                 <h1>О Клубе</h1>
                 <p>Детский Центр «Маугли» является Общественной Организацией, созданной на добровольных основах,
                     согласно с Законом Украины «Об объединениях граждан» и выполняет свою деятельность согласно с
                     действующим законодательством Украины.</p>
-                <p>Основной целью занятий в клубе является гармоничное развитие личности. Дети получают не только
-                    физическое, но и духовное развитие, направленное на воспитание морально-этических норм. Всего в
-                    клубе тренируется около 270 спортсменов, среди которых как начинающие, так и спортсмены высокого
+                <p>Основной целью занятий в клубе является <span>гармоничное развитие личности</span>. Дети получают не только
+                    <span>физическое</span>, но и <span>духовное развитие</span>, направленное на воспитание морально-этических норм. Всего в
+                    клубе тренируется около <span>270</span> спортсменов, среди которых как начинающие, так и спортсмены высокого
                     уровня - обладатели черных поясов, чемпионы Мира и Европы.</p>
             </div>
         </div>
 
         <!--------------------------------------------------------------------------->
 
-    </main>
-</div>
+        <!-------------------------------  IN OUR PROGRAM  -------------------------->
 
+        <div class="row mt-400 uk-position-relative">
+            <div class="col-12">
+                <h3>В программе обучения</h3>
+                <hr>
+            </div>
+            <div class="col-4">
+                <p>Общая физическая подготовка</p>
+                <p>Специальнаz физическая подготовка</p>
+            </div>
+            <div class="col-4">
+                <p>Традиционное каратэ (стиль ШОТОКАН)</p>
+                <p>Прикладная техника каратэ для самообороны</p>
+            </div>
+            <div class="col-4">
+                <p>Аттестация на пояса, включая чёрные для детей</p>
+                <p>Соревнования различных уровней и правил</p>
+            </div>
+            <img class="bg absolute-xy-center" src="src/img/bg-2.png">
+        </div>
+
+        <!--------------------------------------------------------------------------->
+
+        <!-------------------------------  OUR MASTERS  ----------------------------->
+
+        <div class="row our-masters-row mt-300">
+            <div class="col-12 uk-text-center mb-5">
+                <h1>Наши инструктора</h1>
+            </div>
+            <div class="col-12 cards">
+                <button class="nav-btn nav-left uk-button uk-button-icon"><img src="src/img/arrow-white.svg"></button>
+                <div class="row justify-content-around">
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-image"><img src="src/img/masters/master-4.png" alt="master"></div>
+                            <p class="card-image-capture">Волощенко (Плисецкая) <br> Евгения Константиновна</p>
+                            <hr>
+                            <p>Кандидат в Мастера спорта Украины <br> Чемпионка Украины по каратэ <br> Призер Международных турниров</p>
+                            <div class="card-bottom">
+                                <button class="uk-button uk-button-primary mt-2">Узнать больше</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-image"><img src="src/img/masters/master-2.png" alt="master"></div>
+                            <p class="card-image-capture">Цискарадзе <br> Амиран Автандилович</p>
+                            <hr>
+                            <p>Мастер Спорта СССР по борьбе <br> Черный пояс кэмпо-джитсу, кэмпо-кай <br> Черный пояс 3 Дан Пангратион</p>
+                            <div class="card-bottom">
+                                <button class="uk-button uk-button-primary mt-2">Узнать больше</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-image"><img src="src/img/masters/master-3.png" alt="master"></div>
+                            <p class="card-image-capture">Волощенко (Плисецкая) <br> Евгения Константиновна</p>
+                            <hr>
+                            <p>Кандидат в Мастера спорта Украины Чемпионка Украины по каратэ Призер Международных турниров</p>
+                            <div class="card-bottom">
+                                <button class="uk-button uk-button-primary mt-2">Узнать больше</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="nav-btn nav-right uk-button uk-button-icon"><img src="src/img/arrow-white.svg"></button>
+                <img class="bg" src="src/img/bg-3.png">
+            </div>
+        </div>
+
+        <!--------------------------------------------------------------------------->
+
+        <!-------------------------------  OUR GROUPS  ----------------------------->
+
+        <div class="row our-groups mt-500">
+            <div class="col-4">
+                <h1>Наши группы</h1>
+                <div class="wrapper">
+                    <p><span>Учебно-тренировочные группы</span></p>
+                    <p>Группы общей физической подготовки</p>
+                    <p>Группы спортивного совершенствования</p>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="card">
+                    <h3>Учебно-тренировочные группы</h3>
+                    <p>Группа предназначена для более «продвинутых» спортсменов, владеющих основами каратэ или других единоборств; или занимавшихся другими видами спорта, с начальной физической подготовкой. Дальнейшее развитие физических качеств, навыки самообороны, подготовка к выступлениям в соревнованиях, аттестациям на цветные пояса.</p>
+                    <div class="card-bottom d-flex">
+                        <div class="wrapper">
+                            <p><span><img src="src/img/calendar.svg" class="mr-2"></span> Посмотреть расписание</p>
+                            <p>Цена - <span>650 грн./ мес.</span></p>
+                        </div>
+                        <button class="uk-button uk-button-primary ml-auto">Узнать больше</button>
+                    </div>
+                </div>
+                <img class="bg absolute-xy-center" src="src/img/bg-6.png">
+            </div>
+        </div>
+
+        <!--------------------------------------------------------------------------->
+
+        <!-------------------------------  NOT ONLY  ----------------------------->
+
+        <div class="row mt-400 justify-content-between uk-position-relative">
+            <div class="col-12">
+                <h3>Клуб Маугли это не только каратэ</h3>
+                <hr>
+            </div>
+            <div class="col-auto"><p>Детская хореография</p></div>
+            <div class="col-auto"><p>Детский фитнесс</p></div>
+            <div class="col-auto"><p>Йога</p></div>
+            <div class="col-auto"><p>ММА</p></div>
+            <div class="col-auto"><p>Растяжка для детей</p></div>
+            <img class="bg absolute-xy-center" src="src/img/bg-7.png">
+        </div>
+
+        <!--------------------------------------------------------------------------->
+
+        <!-------------------------------  NOT ONLY  ----------------------------->
+
+        <div class="row mt-500">
+            <div class="col-6 uk-position-relative">
+                <div class="white-frame">
+                    <img src="src/img/photo-5.png">
+                </div>
+                <img class="bg absolute-xy-center" src="src/img/bg-8.png">
+            </div>
+            <div class="col-5 ml-auto mt-5">
+                <h1>Только вперед</h1>
+                <p class="mt-4">Клуб активно развивается во всех направлениях спортивной и общественной деятельности, привлекая в свои ряды все новых и новых приверженцев этого прекрасного вида спорта и образа жизни.</p>
+                <p>Стань участником клуба и измени свою жизнь сейчас!</p>
+                <button class="uk-button uk-button-primary mt-3">Записаться</button>
+            </div>
+        </div>
+
+        <!--------------------------------------------------------------------------->
+
+    </main>
+
+    <footer>
+
+        <div class="row footer-row mt-200 uk-position-relative">
+            <div class="col-4 mt-400">
+                <div class="card">
+                    <h3>Как нас найти</h3>
+                    <p>1. Спортклуб "Таирово"</p>
+                    <p>Здание Областного Методического Центра в котором мы расположились находится на пересечении улиц Градоначальницкой и 10 Апреля.</p>
+                    <div class="card-bottom">
+                        <ul class="uk-slideshow-items">
+                            <span class="sw-nav--left"><img src="src/img/long-arrow.svg"></span>
+                            <span class="sw-nav--num active">1</span>
+                            <span class="sw-nav--num">2</span>
+                            <span class="sw-nav--num">3</span>
+                            <span class="sw-nav--right rotate-180"><img src="src/img/long-arrow.svg"></span>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100"></div>
+            <div class="col-12 contacts mt-300">
+                <h1>Контакты</h1>
+                <hr>
+                <div class="contacts-wrapper">
+                    <div class="contact-block">
+                        <div class="contact-line">
+                            <div class="icon"><img src="src/img/icons/mail.svg"></div>
+                            <div class="name">Основная</div>
+                            <div class="value">mowglyteam@gmail.com</div>
+                        </div>
+                        <div class="contact-line">
+                            <div class="icon"><img src="src/img/icons/mail.svg"></div>
+                            <div class="name">Запасная</div>
+                            <div class="value">sensei@mowgly.com.ua</div>
+                        </div>
+                    </div>
+                    <div class="contact-block">
+                        <div class="contact-line">
+                            <div class="icon"><img src="src/img/icons/phone.svg"></div>
+                            <div class="name">Kyivstar</div>
+                            <div class="value">+380 (067) 700-555-3</div>
+                        </div>
+                        <div class="contact-line">
+                            <div class="icon"><img src="src/img/icons/phone.svg"></div>
+                            <div class="name">Life</div>
+                            <div class="value">+380 (063) 700-555-3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg bg-map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d816.7997188119471!2d30.719719402668016!3d46.48087024119659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c6319293cf6cd7%3A0xdf8fcf58e61942c2!2z0JrQu9GD0LEg0LrQsNGA0LDRgtC1INCc0LDRg9Cz0LvRlg!5e0!3m2!1suk!2sua!4v1605970157562!5m2!1suk!2sua"
+                        id="map"
+                        allowfullscreen="true"
+                        aria-hidden="false"
+                        tabindex="0">
+                </iframe>
+            </div>
+            <img class="bg bg-top" src="src/img/bg-9.png">
+            <img class="bg bg-bottom" src="src/img/bg-10.png">
+            <div class="bottom-copy bg">
+                <p>© Mowgly 2020 - All rights reserved</p>
+                <div class="icons ml-auto">
+                    <img src="src/img/icons/vk.png">
+                    <img src="src/img/icons/instagram.png">
+                    <img src="src/img/icons/facebook.png">
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>
