@@ -99,6 +99,8 @@
   }
 
   .card {
+    align-items: center;
+    margin: 0 auto;
     max-width: 400px;
     height: 100%;
     text-align: center;
@@ -111,6 +113,7 @@
     width: 600px;
     text-align: left;
     padding: 50px 50px 25px;
+    margin: 0 auto;
 
     .card-bottom {
       align-items: center;

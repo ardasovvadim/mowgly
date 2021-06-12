@@ -1,16 +1,20 @@
 @charset "UTF-8";
 @font-face {
   font-family: "FuturaMediumC";
-  src: url("src/fonts/FuturaMediumC.eot") format("eot"), url("src/fonts/FuturaMediumC.woff") format("woff"), url("src/fonts/FuturaMediumC.ttf") format("ttf");
+  src: url("../fonts/FuturaMediumC.eot") format("eot"), url("../fonts/FuturaMediumC.woff") format("woff"), url("../fonts/FuturaMediumC.ttf") format("ttf");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "FuturaBookC";
-  src: url("src/fonts/FuturaBookC.eot") format("eot"), url("src/fonts/FuturaBookC.woff") format("woff"), url("src/fonts/FuturaBookC.ttf") format("ttf");
+  src: url("../fonts/FuturaBookC.eot") format("eot"), url("../fonts/FuturaBookC.woff") format("woff"), url("../fonts/FuturaBookC.ttf") format("ttf");
   font-weight: normal;
   font-style: normal;
 }
+.uk-accordion .uk-open .uk-accordion-title:before {
+  transform: rotate(180deg);
+}
+
 /* ========================================================================
    Component: Base
  ========================================================================== */
@@ -298,7 +302,7 @@ h6, .uk-h6,
  * Sizes
  */
 h1, .uk-h1 {
-  font-size: 68px;
+  font-size: 51px;
   line-height: 1.2;
 }
 
@@ -310,6 +314,7 @@ h2, .uk-h2 {
 h3, .uk-h3 {
   font-size: 1.5rem;
   line-height: 1.4;
+  color: #52926C;
 }
 
 h4, .uk-h4 {
@@ -330,7 +335,7 @@ h6, .uk-h6 {
 /* Tablet landscape and bigger */
 @media (min-width: 960px) {
   h1, .uk-h1 {
-    font-size: 80px;
+    font-size: 60px;
   }
 
   h2, .uk-h2 {
@@ -1046,6 +1051,9 @@ a.uk-link-reset,
   /* 3 */
   margin-bottom: 20px;
 }
+.uk-table tbody > tr:first-of-type td {
+  border-top: unset;
+}
 
 /* Add margin if adjacent element */
 * + .uk-table {
@@ -1065,7 +1073,7 @@ a.uk-link-reset,
   font-size: 0.875rem;
   font-weight: normal;
   color: #999;
-  text-transform: uppercase;
+  border-bottom: 2px solid #F6DF32;
 }
 
 /* Cell
@@ -1073,6 +1081,7 @@ a.uk-link-reset,
 .uk-table td {
   padding: 16px 12px;
   vertical-align: top;
+  border-top: 2px solid #52926C;
 }
 
 /*
@@ -3599,14 +3608,14 @@ select.uk-form-width-xsmall {
 /* Title
  ========================================================================== */
 .uk-article-title {
-  font-size: 68px;
+  font-size: 51px;
   line-height: 1.2;
 }
 
 /* Tablet landscape and bigger */
 @media (min-width: 960px) {
   .uk-article-title {
-    font-size: 80px;
+    font-size: 60px;
   }
 }
 /* Meta
@@ -3918,7 +3927,7 @@ select.uk-form-width-xsmall {
 .uk-search-large .uk-search-input {
   height: 80px;
   background: transparent;
-  font-size: 80px;
+  font-size: 60px;
 }
 
 /*
@@ -3969,20 +3978,20 @@ select.uk-form-width-xsmall {
   font-size: 1.25rem;
   line-height: 1.4;
   color: #333;
-  overflow: hidden;
+  border-bottom: 2px solid #F6DF32;
+  color: #52926C;
+  font-size: 40px;
 }
-.uk-accordion-title::before {
+.uk-accordion-title:before {
   content: "";
   width: 1.4em;
   height: 1.4em;
   margin-left: 10px;
   float: right;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2213%22%20height%3D%2213%22%20viewBox%3D%220%200%2013%2013%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22%23344B35%22%20width%3D%2213%22%20height%3D%221%22%20x%3D%220%22%20y%3D%226%22%20%2F%3E%0A%20%20%20%20%3Crect%20fill%3D%22%23344B35%22%20width%3D%221%22%20height%3D%2213%22%20x%3D%226%22%20y%3D%220%22%20%2F%3E%0A%3C%2Fsvg%3E");
+  background-image: url("../img/arrow-green.svg");
+  transform: rotate(0deg);
   background-repeat: no-repeat;
   background-position: 50% 50%;
-}
-.uk-open > .uk-accordion-title::before {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2213%22%20height%3D%2213%22%20viewBox%3D%220%200%2013%2013%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22%23344B35%22%20width%3D%2213%22%20height%3D%221%22%20x%3D%220%22%20y%3D%226%22%20%2F%3E%0A%3C%2Fsvg%3E");
 }
 
 /* Hover + Focus */
@@ -3991,6 +4000,7 @@ select.uk-form-width-xsmall {
   color: #344B35;
   text-decoration: none;
   outline: none;
+  color: #52926C;
 }
 
 /* Content
@@ -3998,6 +4008,7 @@ select.uk-form-width-xsmall {
 .uk-accordion-content {
   display: flow-root;
   margin-top: 20px;
+  padding: 50px 0;
 }
 
 /*
@@ -4462,6 +4473,12 @@ select.uk-form-width-xsmall {
 .uk-slider {
   /* 1 */
   -webkit-tap-highlight-color: transparent;
+}
+.uk-slider .uk-slider-container {
+  padding: 50px;
+}
+.uk-slider .uk-slider-items li {
+  padding: 0 40px;
 }
 
 /* Container
