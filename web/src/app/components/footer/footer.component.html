@@ -1,0 +1,76 @@
+<div id="el-9" class="row uk-position-relative">
+
+  <div class="col-4 mt-400">
+    <div class="mg-card">
+
+      <h3>Как нас найти</h3>
+      <p>{{currentIndex+1}}. {{places[currentIndex].name}}</p>
+      <p>{{places[currentIndex].description}}</p>
+
+      <div class="mg-card-bottom mt-5">
+        <button [class.uk-disabled]="currentIndex == 0" (click)="previous()" class="uk-button uk-button-link"><mg-icon width="100" icon="long-arrow" color="green-main"></mg-icon></button>
+<!--        <span ></mg-icon></span>-->
+        <span *ngFor="let place of places; let i = index" [class.uk-active]="currentIndex == i" (click)="currentIndex = i">{{i+1}}</span>
+        <span [class.uk-disabled]="currentIndex == places.length - 1" (click)="next()"><mg-icon width="100" rotate="right" icon="long-arrow" color="green-main"></mg-icon></span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="w-100"></div>
+
+  <div class="col-12 contacts mt-300">
+    <h1>Контакты</h1>
+    <hr>
+    <div class="contacts-wrapper" id="contacts">
+      <div class="contact-block">
+        <div class="contact-line">
+          <div class="icon"><img src="assets/img/icons/mail.svg"></div>
+          <div class="name">Основная</div>
+          <div class="value">mowglyteam@gmail.com</div>
+        </div>
+        <div class="contact-line">
+          <div class="icon"><img src="assets/img/icons/mail.svg"></div>
+          <div class="name">Запасная</div>
+          <div class="value">sensei@mowgly.com.ua</div>
+        </div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-line">
+          <div class="icon"><img src="assets/img/icons/phone.svg"></div>
+          <div class="name">Kyivstar</div>
+          <div class="value">+380 (067) 700-555-3</div>
+        </div>
+        <div class="contact-line">
+          <div class="icon"><img src="assets/img/icons/phone.svg"></div>
+          <div class="name">Life</div>
+          <div class="value">+380 (063) 700-555-3</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg bg-map">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d816.7997188119471!2d30.719719402668016!3d46.48087024119659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c6319293cf6cd7%3A0xdf8fcf58e61942c2!2z0JrQu9GD0LEg0LrQsNGA0LDRgtC1INCc0LDRg9Cz0LvRlg!5e0!3m2!1suk!2sua!4v1605970157562!5m2!1suk!2sua"
+      id="map"
+      allowfullscreen="true"
+      aria-hidden="false"
+      tabindex="0">
+    </iframe>
+  </div>
+
+  <div class="bottom-copy bg">
+    <p>© Mowgly 2020 - All rights reserved</p>
+
+    <div class="icons ml-auto">
+      <a href=""><mg-icon icon="vk" color="white"></mg-icon></a>
+      <a href=""><mg-icon icon="instagram" color="white"></mg-icon></a>
+      <a href=""><mg-icon icon="facebook" color="white"></mg-icon></a>
+    </div>
+  </div>
+
+  <img class="bg bg-top" src="assets/img/bg-9.png">
+  <img class="bg bg-bottom" src="assets/img/bg-10.png">
+
+</div>

@@ -1,0 +1,124 @@
+.w-100 {
+  width: 100%;
+}
+
+.max-w-80 {
+  max-width: 80%;
+}
+
+.w-650px {
+  max-width: 650px;
+}
+
+.z-m1 {
+  z-index: -1;
+}
+
+.p-left-m200 {
+  left: -200px;
+}
+
+.z-2 {
+  z-index: 2;
+}
+
+.xy-center {
+  @include xy-center();
+}
+
+.x-center {
+  display: flex;
+  justify-content: center;
+}
+
+.y-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mt-100 {
+  margin-top: 100px;
+}
+
+.mt-200 {
+  margin-top: 200px;
+}
+
+.mt-300 {
+  margin-top: 300px;
+}
+
+.mt-400 {
+  margin-top: 400px;
+}
+
+.mt-500 {
+  margin-top: 500px;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.absolute-xy-center {
+  @include absolute-xy-center;
+}
+
+.mr-auto {
+  margin-right: auto;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.ml-5 {
+  margin-left: 5px;
+}
+
+.mr-5 {
+  margin-right: 5px;
+}
+
+.y-center-left {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.p-15 {
+  padding: 0 15px;
+}
+
+.absolute-y-center-left {
+  @include absolute-y-center-left();
+}
+
+.w-xl-container {
+  width: $container-max-xxl-width;
+}
+
+@media (min-width: $breakpoint-xlarge) {
+  .xy-xl-center {
+    @include xy-center();
+  }
+  .absolute-xy-xl-center {
+    @include absolute-xy-center;
+  }
+}
+
+@media (max-width: $breakpoint-large) {
+  .display-lg-none {
+    display: none;
+  }
+  .max-w-lg-100 {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: $breakpoint-small) {
+  .display-sm-none {
+    display: none;
+  }
+}

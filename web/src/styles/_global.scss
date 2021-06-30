@@ -1,0 +1,153 @@
+html, body {
+  overflow-x: hidden;
+}
+
+.global-wrapper {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+h3 {
+  color: $green-main;
+}
+
+hr {
+  border-top-color: $yellow-main;
+}
+
+p > span {
+  color: $green-main;
+}
+
+.bg {
+  position: absolute;
+  z-index: -1;
+  max-width: unset;
+}
+
+.bg-wrapper {
+  position: absolute;
+  z-index: -1;
+  min-width: $container-max-xxl-width;
+}
+
+.mg-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: $white;
+  box-shadow: 25px 30px 25px rgba(0, 0, 0, 0.15);
+  padding: 50px;
+
+  .mg-card-bottom {
+    margin: auto 0 10px;
+    width: 100%;
+  }
+}
+
+.white-frame {
+  display: block;
+  background: $white;
+  padding: 50px 50px 70px;
+  box-shadow: 25px 30px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+
+.stepper {
+  display: flex;
+
+  .step {
+    $radius: 15px;
+    width: $radius;
+    height: $radius;
+    background: $light-background;
+    border-radius: 12px;
+
+    &:not(:first-of-type) {
+      margin-left: 80px;
+      position: relative;
+
+      &:before {
+        position: absolute;
+        left: -75px;
+        top: 7px;
+        content: '';
+        width: 70px;
+        height: 2px;
+        background: $light-background;
+      }
+    }
+
+    &.active {
+      background: $yellow-main;
+      &:before { background: $yellow-main; }
+    }
+  }
+}
+
+.uk-accordion .col-6 {
+  .mg-card {
+    max-width: 600px;
+    height: 100%;
+  }
+  &:nth-last-of-type(n+3) { margin-bottom: 50px; }
+}
+
+.record-row {
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    @include absolute-x-center();
+    z-index: -1;
+    width: 100vw;
+    top: -200px;
+    bottom: -500px;
+    background: url("../assets/img/bg-11.png");
+  }
+  .back-btn {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform: rotate(180deg) translateY(-50%);
+  }
+  .skip-btn {
+    @include xy-center();
+    span { margin: 0 15px 0 0; }
+  }
+}
+
+.record-2 {
+  .mg-card > h1, .mg-card > h3 {
+    margin: 0;
+  }
+  .mg-card {
+    margin: 0 auto 25px;
+    max-width: 600px;
+  }
+}
+
+ul > ul { margin: 0; }
+li { margin: 10px 0; }
+
+.record-3 {
+  li > .row {
+    margin: 0;
+  }
+  .mg-card {
+    max-width: 450px;
+    text-align: center;
+    align-items: center;
+    margin: 0 15px;
+  }
+}
+
+

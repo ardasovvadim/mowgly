@@ -131,7 +131,7 @@
   right: -80px;
   top: 50%;
 }
-.our-masters-row .card {
+.our-masters-row .mg-card {
   align-items: center;
   margin: 0 auto;
   max-width: 400px;
@@ -139,18 +139,18 @@
   text-align: center;
 }
 
-.our-groups .card {
+.our-groups .mg-card {
   align-items: end;
   width: 600px;
   text-align: left;
   padding: 50px 50px 25px;
   margin: 0 auto;
 }
-.our-groups .card .card-bottom {
+.our-groups .mg-card .mg-card-bottom {
   align-items: center;
   margin-top: 30px;
 }
-.our-groups .card .card-bottom .uk-button {
+.our-groups .mg-card .mg-card-bottom .uk-button {
   height: fit-content;
 }
 .our-groups .col-4 .wrapper {
@@ -207,7 +207,7 @@ header .logo-image {
 header nav {
   display: flex;
 }
-header nav .menu {
+header nav .mg-navbar {
   height: 100%;
   display: flex;
   justify-content: space-around;
@@ -237,24 +237,24 @@ header nav .contacts a:not(:last-of-type) {
   max-width: unset;
 }
 
-.card {
+.mg-card {
   display: flex;
   flex-direction: column;
   background: #fff;
   box-shadow: 25px 30px 25px rgba(0, 0, 0, 0.15);
   padding: 30px;
 }
-.card .card-image {
+.mg-card .mg-card-image {
   width: 200px;
   height: 200px;
 }
-.card .card-image-capture {
+.mg-card .mg-card-capture {
   font-weight: bolder;
 }
-.card hr {
+.mg-card hr {
   width: 80%;
 }
-.card .card-bottom {
+.mg-card .mg-card-bottom {
   margin-top: auto;
   width: 100%;
 }
@@ -268,23 +268,23 @@ header nav .contacts a:not(:last-of-type) {
 .footer-row.main {
   height: 1600px;
 }
-.footer-row .card {
+.footer-row .mg-card {
   text-align: left;
   align-items: end;
 }
-.footer-row .card p {
+.footer-row .mg-card p {
   margin: 0 0 15px;
 }
-.footer-row .card .card-bottom {
+.footer-row .mg-card .mg-card-bottom {
   text-align: center;
 }
-.footer-row .card .card-bottom span:not(:last-of-type) {
+.footer-row .mg-card .mg-card-bottom span:not(:last-of-type) {
   margin-right: 10px;
 }
-.footer-row .card .card-bottom span.uk-disabled {
+.footer-row .mg-card .mg-card-bottom span.uk-disabled {
   filter: opacity(25%);
 }
-.footer-row .card .card-bottom span.uk-active {
+.footer-row .mg-card .mg-card-bottom span.uk-active {
   color: #F6DF32;
 }
 .footer-row .bg-top {
@@ -389,7 +389,7 @@ header nav .contacts a:not(:last-of-type) {
   background: #F6DF32;
 }
 
-.uk-accordion .col-6 .card {
+.uk-accordion .col-6 .mg-card {
   max-width: 600px;
   height: 100%;
 }
@@ -409,7 +409,7 @@ header nav .contacts a:not(:last-of-type) {
   width: 100vw;
   top: -200px;
   bottom: -500px;
-  background: url("../img/bg-11.png");
+  background: url("../assets/img/bg-11.png");
 }
 .record-row .back-btn {
   position: absolute;
@@ -426,10 +426,10 @@ header nav .contacts a:not(:last-of-type) {
   margin: 0 15px 0 0;
 }
 
-.record-2 .card > h1, .record-2 .card > h3 {
+.record-2 .mg-card > h1, .record-2 .mg-card > h3 {
   margin: 0;
 }
-.record-2 .card {
+.record-2 .mg-card {
   margin: 0 auto 25px;
   max-width: 600px;
 }
@@ -445,7 +445,7 @@ li {
 .record-3 li > .row {
   margin: 0;
 }
-.record-3 .card {
+.record-3 .mg-card {
   max-width: 450px;
   text-align: center;
   align-items: center;

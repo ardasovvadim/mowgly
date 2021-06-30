@@ -1,0 +1,12 @@
+@import "variables";
+
+header, footer {
+  padding: 15px;
+  margin: 0 auto;
+}
+
+@media (min-width: $breakpoint-xlarge) {
+  header, footer {
+    max-width: $container-max-xxl-width;
+  }
+}

@@ -1,0 +1,15 @@
+<div class="mg-gallery-container uk-position-relative">
+
+  <div [id]="elementId" class="mg-gallery-white-frame" uk-slideshow="animation: fade; min-height: 350; max-height: 400">
+    <ul class="uk-slideshow-items">
+      <li *ngFor="let path of imgPaths"><img [src]="path" uk-cover /></li>
+    </ul>
+  </div>
+
+  <div class="mg-gallery-nav xy-center">
+    <a><mg-icon icon="long-arrow" color="yellow-main" width="100" (click)="prev()"></mg-icon></a>
+    <a *ngFor="let path of imgPaths; let i = index" class="sw-nav--num" [class.active]="currentIndex === i" (click)="show(i)">{{ i + 1 }}</a>
+    <a><mg-icon icon="long-arrow" color="yellow-main" width="100" rotate="right" (click)="next()"></mg-icon></a>
+  </div>
+
+</div>
