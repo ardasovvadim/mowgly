@@ -1,0 +1,79 @@
+<div id="el-9">
+
+  <img class="bg-top" src="../../../../assets/img/bg-9.png">
+  <div class="cover-top" (click)="goToGoogleMapLink()"></div>
+
+  <div class="mg-card">
+
+    <div class="wrapper">
+        <h3>Как нас найти</h3>
+        <p>{{currentIndex+1}}. {{places[currentIndex].name}}</p>
+        <p>{{places[currentIndex].description}}</p>
+    </div>
+
+    <div class="mg-card-bottom">
+      <span [class.uk-disabled]="currentIndex == 0" (click)="previous()"><mg-icon width="100" icon="long-arrow" color="green-main"></mg-icon></span>
+<!--        <span ></mg-icon></span>-->
+      <span *ngFor="let place of places; let i = index" [class.uk-active]="currentIndex == i" (click)="currentIndex = i">{{i+1}}</span>
+      <span [class.uk-disabled]="currentIndex == places.length - 1" (click)="next()"><mg-icon width="100" rotate="right" icon="long-arrow" color="green-main"></mg-icon></span>
+    </div>
+
+  </div>
+
+  <div id="footer-map" (click)="goToGoogleMapLink()">
+    <iframe
+      [src]="getGoogleApiLink(places[currentIndex])"
+      id="map"
+      allowfullscreen="false"
+      aria-hidden="false"
+      tabindex="0">
+    </iframe>
+  </div>
+
+  <div class="contacts">
+
+    <h1>Контакты</h1>
+    <hr>
+    <div class="contacts-wrapper">
+      <div class="contact-block">
+        <div class="contact-line">
+          <div class="icon"><img src="../../../../assets/img/icons/mail.svg"></div>
+          <div class="name">Основная</div>
+          <div class="value">mowglyteam@gmail.com</div>
+        </div>
+        <div class="contact-line">
+          <div class="icon"><img src="../../../../assets/img/icons/mail.svg"></div>
+          <div class="name">Запасная</div>
+          <div class="value">sensei@mowgly.com.ua</div>
+        </div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-line">
+          <div class="icon"><img src="../../../../assets/img/icons/phone.svg"></div>
+          <div class="name">Kyivstar</div>
+          <div class="value">+380 (067) 700-555-3</div>
+        </div>
+        <div class="contact-line">
+          <div class="icon"><img src="../../../../assets/img/icons/phone.svg"></div>
+          <div class="name">Life</div>
+          <div class="value">+380 (063) 700-555-3</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-copy mt-100">
+      <p>© Mowgly 2020 - All rights reserved</p>
+
+      <div class="icons ml-auto">
+        <a href=""><mg-icon icon="vk" color="white"></mg-icon></a>
+        <a href=""><mg-icon icon="instagram" color="white"></mg-icon></a>
+        <a href=""><mg-icon icon="facebook" color="white"></mg-icon></a>
+      </div>
+    </div>
+
+  </div>
+
+  <img class="bg-bottom" src="../../../../assets/img/bg-10.png">
+  <div class="cover-bottom" (click)="goToGoogleMapLink()"></div>
+
+</div>

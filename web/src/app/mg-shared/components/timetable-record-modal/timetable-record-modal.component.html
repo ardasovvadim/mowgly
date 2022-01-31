@@ -1,0 +1,37 @@
+<div id="{{id}}" class="uk-modal-container" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+
+    <h3 class="uk-modal-title">Расписание</h3>
+
+    <table *ngFor="let group of $timetableGroups | async;" class="uk-table uk-table-divide uk-table-justify">
+
+      <caption>{{group.sectionName}} - {{group.city}} - {{group.locationName}}</caption>
+
+      <thead>
+      <tr>
+        <th>№</th>
+        <th>Тренер</th>
+        <th>Пн</th>
+        <th>Вт</th>
+        <th>Ср</th>
+        <th>Чт</th>
+        <th>Пт</th>
+        <th>Сб</th>
+        <th>Вс</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let master of group.masters; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{master.masterName}}</td>
+        <td *ngFor="let day of [1, 2, 3, 4, 5, 6, 0]">{{displayTime(master.timetables, day)}}</td>
+      </tr>
+      </tbody>
+
+    </table>
+
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+
+  </div>
+</div>

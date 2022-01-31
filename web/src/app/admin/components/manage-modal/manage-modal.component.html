@@ -1,0 +1,21 @@
+<div id="{{id}}" [class.uk-modal-container]="style == 'container'" uk-modal>
+  <div class="uk-modal-dialog" [class.uk-margin-auto-vertical]="style == 'center'">
+
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+
+    <div class="uk-modal-header">
+      <h3 class="uk-modal-title">{{title}}</h3>
+    </div>
+
+    <div class="uk-modal-body">
+      <ng-content></ng-content>
+    </div>
+
+    <div class="col-12 uk-margin-medium-top uk-text-right uk-modal-footer">
+      <button type="submit" class="uk-button uk-button-primary uk-margin-right" (click)="submit()">Сохранить</button>
+      <button type="button" class="uk-button uk-button-danger uk-margin-right" (click)="delete()">Удалить</button>
+      <button type="button" class="uk-button uk-button-default" (click)="cancel()">Отменить</button>
+    </div>
+
+  </div>
+</div>

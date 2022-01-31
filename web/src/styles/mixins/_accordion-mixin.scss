@@ -5,8 +5,8 @@
 @mixin hook-accordion-title() {
 
   &:not(.mg-accordion-title) {
-    border-bottom: 2px solid $yellow-main;
-    color: $green-main;
+    border-bottom: 2px solid $mg-yellow-main;
+    color: $mg-green-main;
     font-size: 40px;
 
     &:before {
@@ -25,7 +25,7 @@
 }
 
 @mixin hook-accordion-title-hover() {
-  color: $green-main;
+  color: $mg-green-main;
 }
 
 .uk-accordion .uk-open .uk-accordion-title:before { transform: rotate(180deg); }

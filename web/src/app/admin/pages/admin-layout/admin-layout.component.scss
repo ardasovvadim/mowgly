@@ -1,0 +1,15 @@
+@import "variables";
+
+header .wrapper {
+  margin: 0 -15px;
+}
+
+.mg-container {
+  margin: 30px auto 0;
+  max-width: $container-max-xxl-width;
+}
+
+main {
+  padding: 50px 30px;
+  //margin: 0 15px;
+}

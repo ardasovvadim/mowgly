@@ -1,0 +1,40 @@
+@import "src/styles/variables";
+
+
+
+.mg-card {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 30px 50px;
+  align-items: center;
+  cursor: pointer;
+
+  & > * {
+    width: 100%;
+  }
+
+  .mg-card-image {
+    $radius: 200px;
+    width: $radius;
+    height: $radius;
+    margin: 0 auto;
+  }
+
+  .wrapper p {
+    margin: 0 0 5px;
+  }
+
+  .mg-card-capture {
+    font-weight: bolder;
+    width: 200px;
+    display: inline-block;
+    margin-bottom: 0;
+  }
+
+  .mg-card-bottom {
+    margin: 50px 0 0;
+  }
+
+}

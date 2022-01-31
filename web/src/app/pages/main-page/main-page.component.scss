@@ -66,7 +66,7 @@
   margin-top: 50px;
 
   h1 {
-    margin-bottom: 100px;
+    margin-bottom: 150px;
   }
 }
 
@@ -81,16 +81,16 @@
     padding: 0 15px;
   }
 
-  .bg-wrapper {
+  .mg-bg-wrapper {
     @include absolute-xy-center();
 
-    .bg:first-of-type {
+    .mg-bg:first-of-type {
       left: 0%;
       top: 50%;
       transform: translate(-50%, -50%);
     }
 
-    .bg:nth-of-type(3) {
+    .mg-bg:nth-of-type(3) {
       left: 104%;
       top: 50%;
       transform: translate(-50%, -50%);
@@ -101,13 +101,13 @@
 #el-8 {
   margin-top: 300px;
 
-  .white-frame {
+  .mg-white-frame {
     margin: 0 10px;
     padding: 20px 20px 30px;
     width: fit-content;
   }
 
-  .bg {
+  .mg-bg {
     width: 600px;
   }
 
@@ -118,7 +118,7 @@
 }
 
 
-@media (min-width: $breakpoint-small) {
+@media (min-width: $mg-breakpoint-small) {
   #main-gallery-container-1 .wrapper {
     margin: 100px;
   }
@@ -129,23 +129,28 @@
   #el-8 {
     margin-top: 400px;
 
-    .white-frame {
+    .mg-white-frame {
       padding: 30px 30px 50px;
     }
 
-    .bg {
+    .mg-bg {
       width: 850px;
     }
   }
 }
 
-@media (min-width: $breakpoint-large) {
+@media (min-width: $mg-breakpoint-large) {
   #el-1 {
     padding: unset;
   }
 
   #el-2, #el-4 {
     margin-top: 200px;
+  }
+
+  #el-4 {
+    margin-top: 150px;
+    h1 { margin-bottom: 150px; }
   }
 
   #el-7 {
@@ -162,32 +167,34 @@
       margin: auto 0;
     }
 
-    .bg {
+    .mg-bg {
       width: 650px;
     }
   }
 }
 
-@media (min-width: $breakpoint-xlarge) {
+@media (min-width: $mg-breakpoint-xlarge) {
   #el-2 {
     margin-top: 400px;
   }
 
   #el-4 {
-    margin-top: 300px;
+    margin-top: 200px;
+
+    h1 { margin-bottom: 200px }
   }
 
   #el-8 {
-    .white-frame {
+    .mg-white-frame {
       padding: 50px 50px 70px;
     }
-    .bg {
+    .mg-bg {
       width: 950px;
     }
   }
 }
 
-@media (min-width: $breakpoint-large) and (max-width: $breakpoint-xlarge) {
+@media (min-width: $mg-breakpoint-large) and (max-width: $mg-breakpoint-xlarge) {
   #main-gallery-container-1 {
     @include y-center-left();
   }
@@ -205,7 +212,7 @@
 
 }
 
-@media (max-width: $breakpoint-medium) {
+@media (max-width: $mg-breakpoint-medium) {
   #main-gallery-container-1 .wrapper {
     width: 100%;
   }

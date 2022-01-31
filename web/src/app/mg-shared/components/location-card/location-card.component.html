@@ -1,0 +1,9 @@
+<div class="mg-card">
+  <h3>"{{location.name}}"</h3>
+  <p class="mt-0">{{location.address}}</p>
+
+  <div class="card-bottom d-flex mt-4 align-items-center">
+    <a (click)="goToLink(location.googleMapsLink)"><mg-icon icon="location" color="green-main"></mg-icon>Показать на карте</a>
+    <ng-content></ng-content>
+  </div>
+</div>

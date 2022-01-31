@@ -1,0 +1,16 @@
+<div class="mg-slider" uk-slider="autoplay: true; center: true" [ngClass]="containerClasses">
+
+  <ul class="uk-slider-items uk-child-width-1-2@s uk-child-width-1-3@xl uk-grid">
+    <li *ngFor="let url of imageUrls; let i = index">
+      <div class="mg-card">
+        <img loading="lazy" [src]="url | image" alt="image with master {{i+1}}">
+      </div>
+    </li>
+  </ul>
+
+  <div class="mg-slider-nav">
+    <a href="#" uk-slider-item="previous"><mg-icon width="100" color="yellow-main" icon="long-arrow"></mg-icon></a>
+    <a href="#" uk-slider-item="next"><mg-icon width="100" color="yellow-main" rotate="right" icon="long-arrow"></mg-icon></a>
+  </div>
+
+</div>

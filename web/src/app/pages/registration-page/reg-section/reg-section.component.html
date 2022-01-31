@@ -1,0 +1,10 @@
+<div class="mg-card">
+  <div class="wrapper" [innerHTML]="section.settings | settingValue: 'CardHeader' | interpolation: section"></div>
+
+  <div class="wrapper" [innerHTML]="section.settings | settingValue: 'CardDescription'"></div>
+
+  <div class="card-bottom d-flex mt-4 align-items-center">
+    <a (click)="openTimeTable.emit(section)"><span class="uk-margin-right"><mg-icon color="green-main" icon="calendar"></mg-icon></span>Расписание</a>
+    <button (click)="sectionSelected.emit(section)" class="uk-button uk-button-primary ml-auto">Выбрать</button>
+  </div>
+</div>

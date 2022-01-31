@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout';
-import {MgVariables} from '../utils/mgVariables';
+import {MgVariables} from '../utils/mg-variables';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 

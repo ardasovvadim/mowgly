@@ -13,11 +13,11 @@
 }
 
 // Colors
-$green-main: #52926C;
-$yellow-main: #F6DF32;
-$green-text: #344B35;
-$white: #fff;
-$light-background: #F6F9F6;
+$mg-green-main: #52926C;
+$mg-yellow-main: #F6DF32;
+$mg-green-text: #344B35;
+$mg-white: #fff;
+$mg-light-background: #F6F9F6;
 
 // ----------> UIKit <---------------------------------------------------------------
 
@@ -25,9 +25,9 @@ $light-background: #F6F9F6;
 $inverse-global-color-mode: none;
 
 // Colors
-$global-link-color: $green-text;
-$global-color: $green-text;
-$global-primary-background: $green-main;
+$global-link-color: $mg-green-text;
+$global-color: $mg-green-text;
+$global-primary-background: $mg-green-main;
 
 // Typography
 $global-font-family: 'FuturaBookC', serif;
@@ -40,29 +40,40 @@ $base-hr-border-width: 2.25px;
 $offcanvas-bar-width-m: auto;
 $offcanvas-bar-width: 100%;
 
-$dotnav-item-background:                         rgba($white, 0.2) !default;
-$dotnav-item-hover-background:                   rgba($white, 0.6) !default;
-$dotnav-item-onclick-background:                 rgba($white, 0.2) !default;
-$dotnav-item-active-background:                  rgba($white, 0.6) !default;
-$slidenav-color:                                 rgba($white, 0.5) !default;
-$slidenav-hover-color:                           rgba($white, 0.9) !default;
-$slidenav-active-color:                          rgba($white, 0.5) !default;
+$dotnav-item-background:                         rgba($mg-green-main, 1) !default;
+$dotnav-item-hover-background:                   rgba($mg-yellow-main, 0.6) !default;
+$dotnav-item-onclick-background:                 rgba($mg-yellow-main, 0.2) !default;
+$dotnav-item-active-background:                  rgba($mg-yellow-main, 0.6) !default;
+$slidenav-color:                                 rgba($mg-white, 0.5) !default;
+$slidenav-hover-color:                           rgba($mg-white, 0.9) !default;
+$slidenav-active-color:                          rgba($mg-white, 0.5) !default;
+
+// Form
+
+$form-border: $mg-green-main;
+$form-focus-border: $mg-yellow-main;
+$form-border-width: 2px;
+$form-radio-border: $form-focus-border;
+$form-radio-border-width: $form-border-width;
+$form-radio-focus-border: $form-focus-border;
+$form-background: unset;
+$form-focus-background: unset;
 
 
 // ----------> Bootstrap <---------------------------------------------------------------
 
-$breakpoint-small: 640px;
-$breakpoint-medium: 960px;
-$breakpoint-large: 1200px;
-$breakpoint-xlarge: 1600px;
+$mg-breakpoint-small: 640px;
+$mg-breakpoint-medium: 960px;
+$mg-breakpoint-large: 1200px;
+$mg-breakpoint-xlarge: 1600px;
 
 $grid-breakpoints: (
   xs: 0,
-  sm: $breakpoint-small,
-  md: $breakpoint-medium,
-  lg: $breakpoint-large,
-  xl: $breakpoint-xlarge,
-  xxl: $breakpoint-xlarge
+  sm: $mg-breakpoint-small,
+  md: $mg-breakpoint-medium,
+  lg: $mg-breakpoint-large,
+  xl: $mg-breakpoint-xlarge,
+  xxl: $mg-breakpoint-xlarge
 );
 
 $container-max-sm-width: 100%;

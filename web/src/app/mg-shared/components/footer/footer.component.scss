@@ -1,0 +1,174 @@
+@import "src/styles/variables";
+@import "node_modules/bootstrap/scss/mixins";
+
+#el-9 {
+  height: 1600px;
+  width: 100%;
+  margin-top: 200px;
+  position: relative;
+  z-index: 1;
+}
+
+#footer-map {
+  width: 100%;
+  height: 1200px;
+
+  iframe {
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.mg-card {
+
+  text-align: left;
+  align-items: end;
+  position: absolute;
+  top: 350px;
+  left: 150px;
+  width: 500px;
+  min-height: 350px;
+  z-index: 3;
+
+  p { margin: 0 0 20px; }
+
+  .mg-card-bottom {
+    text-align: center;
+    margin-top: auto;
+
+    span {
+      &:not(:last-of-type) {
+        margin-right: 10px;
+      }
+      &.uk-disabled {
+        filter: opacity(25%);
+      }
+      &.uk-active {
+        color: $mg-yellow-main;
+      }
+    }
+  }
+}
+
+.bg-top {
+  position: absolute;
+  top: -50px;
+  right: -100px;
+  z-index: 1;
+  max-width: unset;
+  width: 1700px;
+}
+
+.cover-top, .cover-bottom {
+  display: block;
+  position: absolute;
+  height: 200px;
+  opacity: 0;
+  //background: rgba(255, 0, 0, 0.3);
+  z-index: 2;
+  left: 0;
+  right: 0;
+}
+
+.cover-top {
+  top: 75px;
+}
+
+.cover-bottom {
+  bottom: 600px;
+}
+
+.bg-bottom {
+  position: absolute;
+  max-width: unset;
+  width: 2000px;
+  bottom: 0;
+  z-index: 1;
+  left: 46%;
+  transform: translateX(-50%);
+}
+
+.contacts, .contacts > h1 {
+  color: white;
+}
+
+.contacts {
+
+  position: absolute;
+  width: 100%;
+  z-index: 3;
+  bottom: 30px;
+  left: 0;
+  padding: 0 15px;
+
+  hr { border-top-color: white }
+
+  .contacts-wrapper, .contact-line {
+    display: flex;
+  }
+
+  .contact-block:not(:last-of-type) {
+    margin-right: 30px;
+  }
+
+  .contact-line {
+    margin-bottom: 25px;
+
+    > * { margin-right: 25px; }
+    .icon { width: 36px; }
+    .name { width: 100px; }
+    .value { width: 200px;  }
+  }
+}
+
+.bottom-copy {
+
+  color: white;
+  display: flex;
+  align-items: center;
+
+  p { margin-bottom: 0; }
+
+  .icons > *:not(:last-of-type) {
+    margin-right: 40px;
+  }
+}
+
+@media (max-width: $mg-breakpoint-medium) {
+  .mg-card {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 15px;
+  }
+}
+
+@media (max-width: $mg-breakpoint-small) {
+  .mg-card {
+    margin: 0;
+    transform: translateX(0);
+    max-width: unset;
+    width: auto;
+    left: 15px;
+    right: 15px;
+  }
+
+  .bottom-copy .icons > *:not(:last-of-type) {
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: $mg-breakpoint-medium) {
+  .contacts {
+    .contacts-wrapper {
+      flex-direction: column;
+
+      .contact-block {
+        margin: 0;
+      }
+    }
+  }
+}
+

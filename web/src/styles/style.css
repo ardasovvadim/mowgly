@@ -85,31 +85,31 @@
   left: -50px;
 }
 
-.about-row .white-frame {
+.about-row .mg-white-frame {
   width: 600px;
   background: #fff;
   padding: 40px 40px 70px;
   box-shadow: 25px 30px 25px rgba(0, 0, 0, 0.15);
 }
-.about-row .white-frame .sw-nav {
+.about-row .mg-white-frame .sw-nav {
   margin: 0 auto;
   position: absolute;
   bottom: -50px;
   left: 0;
   right: 0;
 }
-.about-row .white-frame .sw-nav > * {
+.about-row .mg-white-frame .sw-nav > * {
   color: #fff;
   margin: 0 20px;
 }
-.about-row .white-frame .sw-nav .sw-nav--num.active {
+.about-row .mg-white-frame .sw-nav .sw-nav--num.active {
   color: #F6DF32;
 }
-.about-row .bg {
+.about-row .mg-bg {
   width: 900px;
 }
 
-.our-masters-row .bg {
+.our-masters-row .mg-bg {
   left: 50%;
   transform: translateX(-50%);
   bottom: -300px;
@@ -169,7 +169,7 @@
   width: 2px;
   background: #F6DF32;
 }
-.our-groups .bg {
+.our-groups .mg-bg {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -231,7 +231,7 @@ header nav .contacts a:not(:last-of-type) {
   margin-bottom: 12px;
 }
 
-.bg {
+.mg-bg {
   position: absolute;
   z-index: -1;
   max-width: unset;
@@ -259,7 +259,7 @@ header nav .contacts a:not(:last-of-type) {
   width: 100%;
 }
 
-.white-frame {
+.mg-white-frame {
   padding: 30px 30px 100px;
   background: white;
   box-shadow: 25px 30px 25px rgba(0, 0, 0, 0.15);

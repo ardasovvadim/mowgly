@@ -1,0 +1,66 @@
+<div class="row align-items-stretch">
+
+  <div class="col-lg-6">
+
+    <div class="mg-card">
+      <h3>Важная информация</h3>
+      <p>Членство в Центе только индивидуальное. Прием в члены Центра осуществляется  с 4х-летнего возраста. Лица, которые не достигли 14-летнего возраста, принимаются в Центр после подачи письменного заявления от родителей или опекунов.</p>
+    </div>
+
+    <div class="mg-card">
+      <h3>Что нужно для вступления в клуб</h3>
+      <ul>
+        <li>Предоставить справку от терапевта о допуске к занятиям спортом.</li>
+        <li>Предоставить ксерокопию свидетельства о рождении</li>
+        <li>Две фотографии 3х4.</li>
+        <li>Спортивную тренировочную форму (первого месяца к занятиям допускаються только в кимоно)</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="col-lg-6">
+
+    <div class="mg-card uk-text-center">
+
+      <h1>Анкета ученика</h1>
+      <p>Каратэ — Учебно-тренировочная группа</p>
+      <div class="mg-card-image">
+        <img src="assets/img/personal-photo.png" alt="personal photo">
+      </div>
+      <p class="uk-link">Выбрать фото</p>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit.emit(form.getRawValue())">
+        <div class="uk-margin">
+          <input type="text" class="uk-input" placeholder="Имя" formControlName="firstName">
+        </div>
+        <div class="uk-margin">
+          <input type="text" class="uk-input" placeholder="Фамилия" formControlName="lastName">
+        </div>
+        <div class="uk-margin">
+          <input type="text" class="uk-input" placeholder="Дата рождения" formControlName="birthday">
+        </div>
+        <div class="uk-margin">
+          <input type="text" class="uk-input" placeholder="Номер телефона" formControlName="phoneNumber">
+        </div>
+        <div class="uk-margin">
+          <input type="text" class="uk-input" placeholder="Email" formControlName="email">
+        </div>
+        <div class="uk-margin">
+          <input type="password" class="uk-input" placeholder="Пароль" formControlName="password">
+        </div>
+        <div class="uk-margin-medium d-flex justify-content-between">
+          <label><input type="checkbox" class="uk-checkbox" formControlName="isParent">Родитель ученика</label>
+          <label><input type="checkbox" class="uk-checkbox" formControlName="rememberMe">Запомнить меня</label>
+        </div>
+
+        <div class="mg-card-bottom">
+          <button class="uk-button uk-button-primary">Отправить заявку</button>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

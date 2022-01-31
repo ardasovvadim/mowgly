@@ -1,0 +1,35 @@
+<mg-manage-modal [id]="id" [form]="form" (onSubmit)="submit()" (onCancel)="cancel()" (onDelete)="delete()">
+  <form [formGroup]="form">
+
+    <!--    Name    -->
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="name">Название:</label>
+      <div class="uk-form-controls"><input type="text" class="uk-input" placeholder="Название" formControlName="name" id="name"></div>
+    </div>
+
+    <!--    Address    -->
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="address">Адрес:</label>
+      <div class="uk-form-controls"><input type="text" class="uk-input" placeholder="Адрес" formControlName="address" id="address"></div>
+    </div>
+
+    <!--    City    -->
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="city">Город:</label>
+      <div class="uk-form-controls"><input type="text" class="uk-input" placeholder="Город" formControlName="city" id="city"></div>
+    </div>
+
+    <!--    Google link    -->
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="googleLink">Google link:</label>
+      <div class="uk-form-controls"><input type="text" class="uk-input" placeholder="Google link" formControlName="googleMapsLink" id="googleLink"></div>
+    </div>
+
+  </form>
+</mg-manage-modal>
+
+

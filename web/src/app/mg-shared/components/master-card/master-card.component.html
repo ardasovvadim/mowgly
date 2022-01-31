@@ -1,0 +1,17 @@
+<div class="mg-card">
+
+  <div class="mg-card-image"><img [src]="master.profiles | settingValue: 'CardMasterAvatarImage'" alt="master"></div>
+
+  <p class="mg-card-capture">{{master.name}}</p>
+
+  <hr>
+
+  <div class="wrapper">
+    <p *ngFor="let achievement of (master.profiles | settingValue: 'CardMasterAchievements')">{{achievement}}</p>
+  </div>
+
+  <div class="mg-card-bottom">
+    <ng-content></ng-content>
+  </div>
+
+</div>

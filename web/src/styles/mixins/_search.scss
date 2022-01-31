@@ -1,0 +1,4 @@
+@mixin hook-search-default-input() {
+  border: unset;
+  border-bottom: $form-border-width solid $form-border;
+}

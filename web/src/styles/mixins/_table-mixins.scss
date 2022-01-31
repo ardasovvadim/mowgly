@@ -8,11 +8,11 @@
 }
 
 @mixin hook-table-header-cell() {
-  border-bottom: 2px solid $yellow-main;
+  border-bottom: 2px solid $mg-yellow-main;
 }
 
 
 @mixin hook-table-cell() {
-  border-top: 2px solid $green-main;
+  border-top: 2px solid $mg-green-main;
 }
 

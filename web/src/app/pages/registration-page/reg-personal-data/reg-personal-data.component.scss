@@ -1,0 +1,31 @@
+@import "variables";
+
+.row { flex-direction: column-reverse; }
+
+.col-lg-6 {
+  padding: 0 25px;
+
+  .mg-card {
+    max-width: 600px;
+    margin: 0 auto 50px;
+  }
+}
+
+.col-lg-6:nth-of-type(2) {
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  p:first-of-type {
+    margin: 0 0 30px;
+  }
+
+  .mg-card-bottom {
+    margin: 30px 0 0;
+  }
+}
+
+@media (min-width: $mg-breakpoint-large) {
+  .row { flex-direction: row; }
+}
