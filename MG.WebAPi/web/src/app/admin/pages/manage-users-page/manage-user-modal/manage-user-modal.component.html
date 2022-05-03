@@ -1,0 +1,85 @@
+<mg-manage-modal [id]="id" [form]="form" [style]="'container'" (onSubmit)="submit()" (onCancel)="cancel()" (onDelete)="delete()" [isDeleteButton]="isEditMode">
+  <form [formGroup]="form">
+
+    <div class="row">
+
+      <div class="col-auto">
+
+        <div class="wrapper">
+<!--          <img [src]="master.profiles | settingValue : 'CardMasterAvatarImage'" width="200" height="200" alt="Master card image avatar">-->
+          <div class="uk-margin">
+            <div uk-form-custom>
+              <a>Выбрать фото</a>
+              <input type="file" id="cardImage">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-auto">
+
+        <!--     First name     -->
+
+        <div class="uk-margin">
+          <label class="uk-form-label" for="firstName">Имя:</label>
+          <div class="uk-form-controls">
+            <input type="text" class="uk-input" placeholder="Имя" formControlName="firstName" id="firstName">
+          </div>
+        </div>
+
+        <!--     Last name     -->
+
+        <div class="uk-margin">
+          <label class="uk-form-label" for="lastName">Фамилия:</label>
+          <div class="uk-form-controls">
+            <input type="text" class="uk-input" placeholder="Фамилия" formControlName="lastName" id="lastName">
+          </div>
+        </div>
+
+        <!--     Middle name     -->
+
+        <div class="uk-margin">
+          <label class="uk-form-label" for="middleName">Отчетсво:</label>
+          <div class="uk-form-controls">
+            <input type="text" class="uk-input" placeholder="Отчество" formControlName="middleName" id="middleName">
+          </div>
+        </div>
+
+        <!--     Birthday name     -->
+
+        <div class="uk-margin">
+          <label class="uk-form-label" for="birthday">Дата рождения:</label>
+          <div class="uk-form-controls">
+            <input type="date" class="uk-input" placeholder="Дата рождения" formControlName="birthday" id="birthday">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-auto">
+
+        <!--     Email     -->
+
+        <div class="uk-margin">
+          <label class="uk-form-label" for="email">Емейл:</label>
+          <div class="uk-form-controls">
+            <input type="email" class="uk-input" placeholder="Емейл" formControlName="email" id="email">
+          </div>
+        </div>
+
+        <!--     Phone     -->
+
+        <div class="uk-margin">
+          <label class="uk-form-label" for="phone">Мобильный телефон:</label>
+          <div class="uk-form-controls">
+            <input type="tel" class="uk-input" placeholder="Мобильный телефон" formControlName="phone" id="phone">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </form>
+</mg-manage-modal>

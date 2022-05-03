@@ -9,5 +9,6 @@ public class TimetableRecordEditModel
     public Guid LocationId { get; set; }
     public Guid MasterId { get; set; }
     public DayOfWeek DayOfWeek { get; set; }
-    public string Time { get; set; }
+    public string StartTime { get; set; }
+    public string EndTime { get; set; }
 }

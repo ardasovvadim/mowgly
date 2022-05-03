@@ -1,0 +1,17 @@
+<div class="timeslot"
+     [ngStyle]="{
+        'height.px': calculatedHeight,
+        'top.px': yDelta
+     }">
+
+  <div class="time">
+    <p>Время:</p>
+    <p>{{originData?.startTime}} - {{originData?.endTime}}</p>
+  </div>
+  <hr>
+  <p>Инструктор:</p>
+  <p>{{master}}</p>
+  <p>Секция:</p>
+  <p>{{section}}</p>
+
+</div>

@@ -8,6 +8,7 @@ using AutoMapper;
 using MG.WebAPi.Data;
 using MG.WebApi.Entities;
 using MG.WebAPi.Entities.Enums;
+using MG.WebApi.Entities.Users;
 using MG.WebAPi.Models;
 using MG.WebAPi.Models.Masters;
 using MG.WebAPi.Repositories;

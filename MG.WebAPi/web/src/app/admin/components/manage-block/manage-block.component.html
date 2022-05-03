@@ -1,0 +1,36 @@
+<div class="uk-position-relative"
+     (mouseenter)="isToolbarHidden = false; isHovered = true"
+     (mouseleave)="isToolbarHidden = true; isHovered = false">
+
+  <div class="manage-block" [class.show-outline]="isHovered">
+    <ng-content></ng-content>
+  </div>
+
+  <div *ngIf="!disablesTools" class="manage-block-toolbar"
+       [class.uk-invisible]="isToolbarHidden">
+    <ng-template [ngIf]="movingTools">
+      <a (click)="blockUp()" uk-icon="arrow-up"></a>
+      <a (click)="blockDown()" uk-icon="arrow-down"></a>
+    </ng-template>
+    <a (click)="blockEdit()" *ngIf="editTool" uk-icon="pencil"></a>
+    <a (click)="delete()" *ngIf="deleteTool" uk-icon="trash"></a>
+    <div *ngIf="addTool" class="uk-inline">
+      <a uk-icon="plus"></a>
+      <div uk-dropdown>
+        <ul class="uk-nav uk-dropdown-nav">
+          <li (click)="add(blockTypes.Text)"><a>Текст</a></li>
+          <li (click)="add(blockTypes.Image)"><a>Картинка</a></li>
+          <li (click)="add(blockTypes.Video)"><a>Видео</a></li>
+          <li (click)="add(blockTypes.TournamentResultsTable)"><a>Таблица</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <ng-content select="right-toolbar">
+
+    </ng-content>
+
+  </div>
+
+</div>
+

@@ -27,5 +27,7 @@ namespace MG.WebApi.Controllers
         {
             return await _timetableRecordService.GetTimeTableRecordEditModelAsync(request);
         }
+        
+        // public async Task<Timetable>
     }
 }

@@ -1,0 +1,22 @@
+<div class="uk-margin">
+  <label class="uk-form-label" for="videoUrl">{{label}}:</label>
+  <div class="uk-form-controls">
+    <input type="text"
+           class="uk-input"
+           [placeholder]="placeholder"
+           (ngModelChange)="onChange($event)"
+           [ngModel]="filteringName"
+           (keydown.arrowDown)="highlightBelow()"
+           (keydown.arrowUp)="highlightAbove()"
+           (keydown.enter)="selectOption()"
+           id="videoUrl">
+    <div uk-drop="mode: click; delay-hide: 0" [id]="id">
+      <div class="uk-card uk-card-body uk-card-default">
+        <div *ngFor="let option of options; let i = index"
+             [class.mg-active]="i == highlightIndex">
+          <a (click)="onSelected(option)">{{option.name}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

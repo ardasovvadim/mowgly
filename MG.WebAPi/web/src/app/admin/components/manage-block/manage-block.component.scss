@@ -1,0 +1,31 @@
+@import "variables";
+
+.manage-block {
+  outline: unset;
+  transition: outline .1s ease-in-out;
+}
+
+.show-outline {
+  outline: 1px dashed rgba(0, 0, 0, .2);
+}
+
+.manage-block-toolbar {
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  transform: translateY(-100%);
+
+  border: 1px dashed rgba(0, 0, 0, .2);
+  border-bottom: unset;
+  background: $mg-white;
+  padding: 3px;
+  z-index: 1;
+
+  a {
+    width: 15px;
+  }
+
+  > *:not(:last-child) {
+    margin-right: 5px;
+  }
+}

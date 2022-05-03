@@ -1,0 +1,24 @@
+<div class="news-image">
+
+  <div class="uk-inline">
+    <a [href]="'#' + id" uk-toggle>
+      <img [src]="image.url | safeUrl"
+           width="600"
+           height="400"
+           [alt]="image.caption">
+    </a>
+    <ng-template [ngIf]="image.caption">
+      <div class="uk-overlay uk-overlay-primary uk-position-bottom">
+        <p>{{image.caption}}</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <div [id]="id" class="uk-flex-top" uk-modal>
+    <div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical">
+      <button class="uk-modal-close-outside" type="button" uk-close></button>
+      <img [src]="image.url | safeUrl" [alt]="image.caption">
+    </div>
+  </div>
+
+</div>

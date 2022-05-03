@@ -1,0 +1,26 @@
+@import "variables";
+
+.mg-card {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  width: 370px;
+  display: flex;
+  padding: 35px 30px 30px;
+  border: 1px solid rgba(0, 0, 0, .05);
+  z-index: 999;
+
+  h4 {
+    color: $mg-green-main;
+  }
+
+  button {
+    font-size: 1rem;
+  }
+}
+
+#close-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

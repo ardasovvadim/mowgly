@@ -1,0 +1,53 @@
+.editable:hover {
+  font-weight: bold;
+  cursor: pointer;
+  background: rgba(0,0,0,.1);
+  position: relative;
+}
+
+.timetable-table {
+
+  tbody {
+
+    tr {
+      height: 100px;
+    }
+
+    td {
+      min-width: 150px;
+      vertical-align: middle;
+      position: relative;
+    }
+
+    tr td:not(:first-of-type):hover {
+      background: rgba(0, 0, 0, .05);
+    }
+  }
+}
+
+.timeslot-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.hidden-wrapper {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.table-wrapper table {
+  &:first-of-type {
+    margin-bottom: 0;
+  }
+
+  &:last-of-type {
+    margin-top: 0;
+  }
+}

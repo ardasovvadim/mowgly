@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MG.WebApi.Entities;
 using MG.WebApi.Entities.Sections;
+using MG.WebApi.Entities.Users;
 using MG.WebAPi.Models;
 using MG.WebApi.Models.TimetableRecords;
 using MG.WebAPi.Repositories;
@@ -43,7 +44,9 @@ namespace MG.WebAPi.Services
 
         public async Task<IEnumerable<TimetableRecordLocationGroupVm>> GetTimeTableRecordsByCriteria(TimeTableRecordCriteriaRequest criteria)
         {
-            var query = _repository.GetQueryable();
+            var query = _repository
+                .GetQueryable()
+                .WhereIf(criteria.Cities != null && criteria.Cities.Any(), r => criteria.Cities.Contains(r.Location.City));
 
             if (criteria.MasterGuids != null && criteria.MasterGuids.Any())
                 query = query.Where(r => criteria.MasterGuids.Contains(r.MasterId));
@@ -53,6 +56,7 @@ namespace MG.WebAPi.Services
 
             if (criteria.LocationGuids != null && criteria.LocationGuids.Any())
                 query = query.Where(r => criteria.LocationGuids.Contains(r.LocationId));
+            
 
             query = query.Include(r => r.Master)
                 .ThenInclude(r => r.Sections)
@@ -103,27 +107,17 @@ namespace MG.WebAPi.Services
 
         public async Task<TimetableRecordEditModelResponse> GetTimeTableRecordEditModelAsync(TimeTableRecordCriteriaRequest request)
         {
-            var query = _repository.GetQueryable();
-            
-            query.WhereIf(request.LocationGuids?.Any() ?? false, r => request.LocationGuids.Contains(r.LocationId));
-            query.WhereIf(request.MasterGuids?.Any() ?? false, r => request.MasterGuids.Contains(r.MasterId));
-            query.WhereIf(request.SectionGuids?.Any() ?? false, r => request.SectionGuids.Contains(r.SectionId));
-            
-            query.WhereIf(request.LocationFilterName.IsNullOrEmpty(), r => r.Location.Name.ToLower().Contains(request.LocationFilterName.ToLower().Trim()));
-            query.WhereIf(request.SectionFilterName.IsNullOrEmpty(), r => r.Section.Name.ToLower().Contains(request.SectionFilterName.ToLower().Trim()));
-            
-            var masterSplitedFilterName = request.MasterFilterName.ToLower().Trim().Split(" ").ToList();
-            query.WhereIf(request.MasterFilterName.IsNullOrEmpty(), r =>
-                masterSplitedFilterName.Contains(r.Master.FirstName.ToLower())
-                || masterSplitedFilterName.Contains(r.Master.LastName)
-                || masterSplitedFilterName.Contains(r.Master.MiddleName));
+            var filterText = request.FilterText?.Trim().ToUpper();
+            var query = _repository.GetQueryable()
+                .WhereIf(request.LocationGuids?.Any() ?? false, r => request.LocationGuids.Contains(r.LocationId))
+                .WhereIf(request.MasterGuids?.Any() ?? false, r => request.MasterGuids.Contains(r.MasterId))
+                .WhereIf(request.SectionGuids?.Any() ?? false, r => request.SectionGuids.Contains(r.SectionId))
+                .WhereIf(!filterText.IsNullOrEmpty(), r => r.Master.NormalizedName.Contains(filterText));
 
             return new TimetableRecordEditModelResponse
             {
                 Data = _mapper.Map<IEnumerable<TimetableRecordEditModel>>(await query.ToListAsync()),
-                Locations = _locationRepository.GetQueryable().Select(l => new IdName{Id = l.Id, Name = l.Name}),
                 Masters = _masterRepository.GetQueryable().Select(l => new IdName{Id = l.Id, Name = $"{l.FirstName} {l.LastName} {l.MiddleName}"}),
-                Sections = _sectionRepository.GetQueryable().Select(l => new IdName{Id = l.Id, Name = l.Name})
             };
         }
     }

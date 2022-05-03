@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MG.WebApi.Entities;
+using MG.WebApi.Entities.Users;
 using MG.WebAPi.Models;
 using MG.WebAPi.Repositories;
 

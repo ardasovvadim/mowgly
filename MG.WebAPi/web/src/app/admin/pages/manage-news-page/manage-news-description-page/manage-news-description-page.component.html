@@ -1,0 +1,174 @@
+<div class="row justify-content-center uk-position-relative">
+  <div class="col-md-10">
+
+    <div class="mg-tools">
+      <button class="uk-button uk-button-primary" (click)="saveResult()">Сохранить</button>
+      <button class="uk-button uk-button-primary" (click)="publish()">Опубликовать</button>
+      <button class="uk-button uk-button-default" (click)="reset()">Очистить</button>
+    </div>
+
+    <div class="uk-card mg-card-news uk-card-default uk-grid-collapse mt-50">
+
+      <div class="uk-card-media-left uk-cover-container uk-background-secondary uk-position-relative">
+
+        <!--    todo: alt    -->
+        <ng-template [ngIf]="data?.imageUrl">
+          <img class="uk-animation-fade uk-animation-fast" [src]="data.imageUrl" alt="article image" uk-cover>
+        </ng-template>
+        <canvas width="600" height="400"></canvas>
+
+        <div class="uk-overlay-primary uk-position-cover mg-hover-opacity">
+          <div class="uk-position-center">
+            <button class="uk-button uk-button-primary" (click)="editImageCover()">
+              <span uk-icon="icon: camera" class="uk-margin-right"></span> Добавить обложку
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="uk-flex uk-flex-row uk-flex-column uk-flex-between">
+
+        <div class="uk-card-body">
+
+          <!--     Title     -->
+
+          <mg-manage-block [disablesTools]="true"
+                           (onBlockEdit)="focus('manage-title-field')">
+
+            <input id="manage-title-field" class="mg-manage-input uk-h3" type="text" [(ngModel)]="data.title">
+
+          </mg-manage-block>
+
+          <!--     Description     -->
+
+          <mg-manage-block
+            [deleteTool]="false"
+            [movingTools]="false"
+            [editTool]="false"
+            (onBlockEdit)="focus('manage-description-field')">
+
+            <p>
+              <textarea class="mg-textarea uk-textarea" cdkTextareaAutosize [(ngModel)]="data.description"></textarea>
+            </p>
+
+          </mg-manage-block>
+
+          <ng-template [ngIf]="data.blocks && data.blocks.length">
+            <div class="news-description">
+              <div *ngFor="let block of data.blocks">
+
+                <!--       Text type       -->
+
+                <ng-template [ngIf]="block.type == blockTypes.Text">
+                  <div class="uk-animation-fade uk-animation-fast">
+                    <mg-manage-block
+                      (onBlockEdit)="editTextBlock(block)"
+                      [block]="block">
+
+                      <quill-editor format="html"
+                                    placeholder="Введите текст..."
+                                    [modules]="quillEditorModules"
+                                    #quillEditor
+                                    [(ngModel)]="block.data">
+                        <div class="mg-editor" quill-editor-toolbar>
+                          <span class="ql-formats">
+                            <select class="ql-header">
+                              <option selected><p>Параграф</p></option>
+                              <option value="1"><h3>Заголовок 3</h3></option>
+                              <option value="2"><h2>Заголовок 2</h2></option>
+                              <option value="3"><h1>Заголовок 1</h1></option>
+                            </select>
+                          </span>
+                          <span class="ql-formats">
+                            <button class="ql-bold"></button>
+                            <button class="ql-italic"></button>
+                            <button class="ql-underline"></button>
+                            <button class="ql-strike"></button>
+                          </span>
+                          <span class="ql-formats">
+                            <button class="ql-list" value="ordered"></button>
+                            <button class="ql-list" value="bullet"></button>
+                            <select class="ql-align">
+                              <option selected></option>
+                              <option value="center"></option>
+                              <option value="right"></option>
+                              <option value="justify"></option>
+                            </select>
+                          </span>
+                          <span class="ql-formats">
+                            <button class="ql-link"></button>
+                          </span>
+                          <span class="ql-formats">
+                            <button class="ql-clean"></button>
+                          </span>
+                        </div>
+                      </quill-editor>
+
+                    </mg-manage-block>
+                  </div>
+                </ng-template>
+
+                <!--       Video type       -->
+
+                <ng-template [ngIf]="block.type == blockTypes.Video">
+                  <div class="news-video uk-animation-fade uk-animation-fast">
+                    <mg-manage-block [block]="block"
+                                     (onBlockEdit)="editVideo(block)">
+                      <iframe [src]="block.data | safeUrl"
+                              width="1920"
+                              height="1080"
+                              allowfullscreen
+                              uk-responsive
+                              uk-video="automute: true; autoplay: false"></iframe>
+                    </mg-manage-block>
+                  </div>
+                </ng-template>
+
+                <!--       Image type       -->
+
+                <ng-template [ngIf]="block.type == blockTypes.Image">
+                  <div class="uk-animation-fade uk-animation-fast">
+                    <mg-manage-block [block]="block"
+                                     (onBlockEdit)="editImageBlock(block)">
+                      <mg-news-image-block [data]="block.data"></mg-news-image-block>
+                    </mg-manage-block>
+                  </div>
+                </ng-template>
+
+                <!--       Tournament Results Table type       -->
+
+                <ng-template [ngIf]="block.type == blockTypes.TournamentResultsTable">
+                  <div class="uk-animation-fade uk-animation-fast">
+                    <mg-manage-block [block]="block" (onBlockEdit)="editTournament(data.tournament)">
+                      <mg-manage-tournament-table #data [data]="block.data"></mg-manage-tournament-table>
+                    </mg-manage-block>
+                  </div>
+                </ng-template>
+
+
+              </div>
+            </div>
+          </ng-template>
+
+        </div>
+
+        <div class="uk-card-footer uk-flex uk-flex-between align-items-center">
+
+
+          <div>
+            <h1 class="uk-text-meta uk-margin-remove">{{data.author}}</h1>
+            <p class="uk-text-meta uk-margin-remove">{{data.createdDate | date : 'longDate'}}</p>
+          </div>
+
+          <div>
+            <a href="#" class="uk-button uk-button-text" [routerLink]="['/news']">Назад к новостям <span
+              uk-icon="arrow-left"></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mg-bg></mg-bg>
+</div>

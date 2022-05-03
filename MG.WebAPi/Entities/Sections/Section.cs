@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MG.WebAPi.Entities.Interfaces;
+using MG.WebApi.Entities.Users;
 
 namespace MG.WebApi.Entities.Sections
 {

@@ -8,8 +8,7 @@ namespace MG.WebApi.Models.TimetableRecords
         public IEnumerable<Guid> SectionGuids { get; set; }
         public IEnumerable<Guid> MasterGuids { get; set; }
         public IEnumerable<Guid> LocationGuids { get; set; }
-        public string SectionFilterName { get; set; }
-        public string MasterFilterName { get; set; }
-        public string LocationFilterName { get; set; }
+        public IEnumerable<string> Cities { get; set; }
+        public string FilterText { get; set; }
     }
 }

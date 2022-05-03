@@ -13,11 +13,11 @@ namespace MG.WebAPi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureMgAppConfiguration(args)
+                // .ConfigureMgAppConfiguration(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseWebRoot("../static");
+                    webBuilder.UseWebRoot("static");
                 });
     }
 }

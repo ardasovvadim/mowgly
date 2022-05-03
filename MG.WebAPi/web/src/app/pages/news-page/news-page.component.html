@@ -1,0 +1,55 @@
+<div class="col-12 mt-100">
+  <h1 class="uk-text-center">Новости</h1>
+</div>
+
+<div class="row justify-content-center uk-position-relative">
+
+  <div class="col-md-10">
+    <ng-template [ngIf]="data && data.length" [ngIfElse]="noData">
+      <div class="mg-news mt-100" *ngFor="let news of data">
+
+        <div class="uk-card mg-card-news uk-card-default uk-grid-collapse uk-margin"
+             [class.uk-child-width-1-2@m]="news.imageUrl"
+             uk-grid>
+          <ng-template [ngIf]="news.imageUrl">
+            <div class="uk-card-media-left uk-cover-container">
+              <!--    todo: alt    -->
+              <img [src]="news.imageUrl" alt="article image" uk-cover>
+              <canvas width="600" height="400"></canvas>
+            </div>
+          </ng-template>
+          <div class="uk-flex uk-flex-row uk-flex-column uk-flex-between">
+            <div class="uk-card-body">
+
+              <h3 class="uk-card-title">{{news.title}}</h3>
+              <p>{{news.description}}</p>
+
+            </div>
+
+            <div class="uk-card-footer uk-flex uk-flex-between align-items-center">
+
+              <div>
+                <h3 class="uk-text-meta uk-margin-remove">{{news.author}}</h3>
+                <p class="uk-text-meta uk-margin-remove">{{news.createdDate | date : 'longDate'}}</p>
+              </div>
+
+              <div>
+                <a href="#" class="uk-button uk-button-text" [routerLink]="['/news', news.id]">Продолжить читать <span uk-icon="arrow-right"></span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </ng-template>
+    <ng-template #noData>
+      <h3 class="uk-text-center">Новостей пока нет = (</h3>
+    </ng-template>
+  </div>
+
+
+    <!--    todo -->
+<!--    <img class="mg-bg absolute-x-center" style="top: -100px; width: auto" src="/assets/img/bg-15.png" alt="background">-->
+
+</div>

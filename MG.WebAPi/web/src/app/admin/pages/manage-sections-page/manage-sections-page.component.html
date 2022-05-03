@@ -1,0 +1,38 @@
+<div class="mg-tools uk-margin-medium-bottom">
+  <div class="uk-search uk-search-default">
+    <a class="uk-search-icon-flip" uk-search-icon></a>
+    <input class="uk-search-input uk-input" type="search" placeholder="Поиск" [(ngModel)]="nameFiltering">
+  </div>
+  <button class="uk-button uk-button-primary" type="button" (click)="addNew()">Добавить</button>
+</div>
+
+<table class="uk-table uk-table-divide uk-table-justify uk-background-muted" uk-sticky="offset: 100">
+
+  <thead>
+  <tr>
+    <th class="uk-table-shrink">№</th>
+    <th class="uk-table-expand">Название</th>
+    <th class="uk-table-shrink"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+
+  <tr *ngFor="let section of data; let i = index">
+
+    <td>{{i + 1}}</td>
+    <td>{{section.name}}</td>
+    <td>
+      <button class="uk-button uk-button-default">Действия</button>
+      <div uk-dropdown="animation: uk-animation-slide-top-small; duration: 100">
+        <ul class="uk-nav uk-dropdown-nav">
+          <li><a (click)="edit(section)"><span uk-icon="icon: pencil"></span> Редактировать</a></li>
+        </ul>
+      </div>
+    </td>
+
+  </tr>
+
+  </tbody>
+
+</table>

@@ -28,7 +28,10 @@ namespace MG.WebAPi.Config
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IRegistrationService, RegistrationService>();
             services.AddScoped<IImageService, ImageService>();
-            
+            services.AddScoped<ITournamentService, TournamentService>();
+            services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<IEventService, EventService>();
+
             // Utils
             services.AddSingleton<IEmailUtils, EmailUtils>();
             services.AddSingleton<IDirectoryUtils, DirectoryUtils>();

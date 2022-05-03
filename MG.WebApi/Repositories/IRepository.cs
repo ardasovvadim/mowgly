@@ -15,7 +15,7 @@ namespace MG.WebAPi.Repositories
         Task<List<T>> GetAllAsync();
         Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> expression, string include = null, int? skip = null, int? take = null);
         IQueryable<T> GetPage(IQueryable<T> query, PageRequest page);
-        Task<T> GetByIdAsync(Guid id);
+        Task<T> GetByIdAsync(Guid id, string include = null);
         Task InsertAsync(T entity);
         void Update(T entity);
         Task<bool> DeleteAsync(Guid id);

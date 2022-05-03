@@ -1,0 +1,66 @@
+<mg-manage-modal [id]="id" [form]="form" (onSubmit)="submit()" (onCancel)="cancel()" (onDelete)="delete()" [isDeleteButton]="isEditMode">
+  <form [formGroup]="form">
+
+    <!--    Day of week    -->
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="dayOfWeek">День недели:</label>
+      <div class="uk-form-controls">
+        <select class="uk-select" formControlName="dayOfWeek" id="dayOfWeek">
+          <option [ngValue]="null">Выберите день недели</option>
+          <option *ngFor="let item of dayOfWeek" [ngValue]="item.key">{{item.value}}</option>
+        </select>
+      </div>
+    </div>
+
+    <!--  StartTime and EndTime  -->
+
+    <div class="uk-margin row">
+      <div class="col-md-6">
+        <label class="uk-form-label" for="startTime">Время начала:</label>
+        <div class="uk-form-controls"><input type="time" class="uk-input" formControlName="startTime" id="startTime"></div>
+      </div>
+      <div class="col-md-6">
+        <label class="uk-form-label" for="endTime">Время конца:</label>
+        <div class="uk-form-controls"><input type="time" class="uk-input" formControlName="endTime" id="endTime"></div>
+      </div>
+    </div>
+
+    <!--  Location  -->
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="locationId">Филиал:</label>
+      <div class="uk-form-controls">
+        <select class="uk-select" formControlName="locationId" id="locationId">
+          <option [ngValue]="null">Выберите филиал</option>
+          <option *ngFor="let item of locations" [ngValue]="item.id">{{item.name}}</option>
+        </select>
+      </div>
+    </div>
+
+    <!--  Master  -->
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="masterId">Инструктор:</label>
+      <div class="uk-form-controls">
+        <select class="uk-select" formControlName="masterId" id="masterId">
+          <option [ngValue]="null">Выберите инструктора</option>
+          <option *ngFor="let item of masters" [ngValue]="item.id">{{item.name}}</option>
+        </select>
+      </div>
+    </div>
+
+    <!--  Section  -->
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="sectionId">Направление:</label>
+      <div class="uk-form-controls">
+        <select class="uk-select" formControlName="sectionId" id="sectionId">
+          <option [ngValue]="null">Выберите направление</option>
+          <option *ngFor="let item of sections" [ngValue]="item.id">{{item.name}}</option>
+        </select>
+      </div>
+    </div>
+
+  </form>
+</mg-manage-modal>

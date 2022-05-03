@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection.PortableExecutable;
+using System.Linq;
 using MG.WebAPi.Data;
 using MG.WebAPi.Database;
 using MG.WebApi.Entities;
 using MG.WebApi.Entities.Emails;
 using MG.WebAPi.Entities.Enums;
+using MG.WebApi.Entities.Events;
 using MG.WebApi.Entities.Images;
 using MG.WebApi.Entities.Sections;
+using MG.WebApi.Entities.Tournaments;
 using MG.WebApi.Entities.Users;
 
 namespace MG.WebAPi.MockData
@@ -21,6 +23,92 @@ namespace MG.WebAPi.MockData
             var masters = InitializeMasters(context, sections);
             var timetableRecords = InitializeTimetableRecords(context, masters, sections, locations);
             var emailTemplates = InitializeEmailTemplates(context);
+            var students = InitializeStudents(context);
+            var tournaments = InitializeTournaments(context, students);
+            var users = InitializeUsers(context);
+            var events = InitializeEvents(context);
+        }
+
+        private static IEnumerable<Event> InitializeEvents(MgContext context)
+        {
+            var days = 0;
+            var events = new List<Event>
+            {
+                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
+                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
+                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
+                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
+                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
+                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
+                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
+                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
+                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
+                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
+            };
+            
+            context.Events.AddRange(events);
+            context.SaveChanges();
+
+            return events;
+        }
+
+        private static IEnumerable<User> InitializeUsers(MgContext context)
+        {
+            var users = new List<User>
+            {
+                new()
+                {
+                    Id = Guid.Parse("8F256A33-E2BA-4FE1-860B-67947CDADAD8"),
+                    FirstName = "Руслан",
+                    LastName = "Хомутенко",
+                    MiddleName = "Николаевич",
+                    UserTypes = UserType.Admin
+                }
+            };
+            
+            context.Users.AddRange(users);
+            context.SaveChanges();
+
+            return users;
+        }
+
+        private static IEnumerable<Tournament> InitializeTournaments(MgContext context, IEnumerable<User> students)
+        {
+            var tournaments = new List<Tournament>
+            {
+                new()
+                {
+                    Id = Guid.Parse("BAFDB8EC-17DA-471B-85CF-DC4C88BB3EC6"),
+                    Name = "Международный чемпионат",
+                    ActionDate = DateTime.UtcNow,
+                    Results = new List<TournamentResult>
+                    {
+                        new() {User = students.First(), Place = "1", Awards = "Золотая медаль", Score = "5:3", AdditionalInfo = "Дополнительная информация"},
+                        new() {User = students.Skip(1).First(), Place = "2", Awards = "Серебряная медаль", Score = "3:5", AdditionalInfo = "Дополнительная информация"},
+                        new() {User = students.Last(), Place = "3", Awards = "Бронзовая медаль", Score = "2:6", AdditionalInfo = "Дополнительная информация"},
+                    } 
+                }
+            };
+            
+            context.Tournaments.AddRange(tournaments);
+            context.SaveChanges();
+
+            return tournaments;
+        }
+
+        private static IEnumerable<User> InitializeStudents(MgContext context)
+        {
+            var students = new List<User>
+            {
+                new() { FirstName = "Иван", LastName = "Иванов", MiddleName = "Иванович", NormalizedName = "ИВАН ИВАНОВ ИВАНОВИЧ", UserTypes = UserType.Student },
+                new() { FirstName = "Александр", LastName = "Жуков", MiddleName = "Владимирович", NormalizedName = "АЛЕКСАНДР ЖУКОВ ВЛАДИМИРОВИЧ", UserTypes = UserType.Student },
+                new() { FirstName = "Никита", LastName = "Добрыня", MiddleName = "Александрович", NormalizedName = "НИКИТА ДОБРЫНЯ АЛЕКСАНДРОВИЧ", UserTypes = UserType.Student },
+            };
+            
+            context.Users.AddRange(students);
+            context.SaveChanges();
+
+            return students;
         }
 
         private static List<EmailTemplate> InitializeEmailTemplates(MgContext context)
@@ -157,8 +245,8 @@ namespace MG.WebAPi.MockData
                         new()
                         {
                             Name = UserProfileKeys.CardMasterAchievements,
-                            Value = "[\"Кандидат в Мастера спорта Украины\", \"Чемпионка Украины по каратэ\", \"Призер Международных турниров\"]",
-                            DataType = DataType.Array
+                            Value = "<p>Кандидат в Мастера спорта Украины</p><p>Чемпионка Украины по каратэ</p><p>Призер Международных турниров</p>",
+                            DataType = DataType.Html
                         },
                         new()
                         {
@@ -198,8 +286,8 @@ namespace MG.WebAPi.MockData
                         new()
                         {
                             Name = UserProfileKeys.CardMasterAchievements,
-                            Value = "[\"Мастер Спорта СССР по борьбе\", \"Черный пояс кэмпо-джитсу, кэмпо-кай\", \"Черный пояс 3 Дан Пангратион\"]",
-                            DataType = DataType.Array
+                            Value = "<p>Кандидат в Мастера спорта Украины</p><p>Чемпионка Украины по каратэ</p><p>Призер Международных турниров</p>",
+                            DataType = DataType.Html
                         },
                         new()
                         {
@@ -222,7 +310,7 @@ namespace MG.WebAPi.MockData
                         {
                             Name = UserProfileKeys.CardMasterAchievements,
                             Value = "[\"Мастер Спорта СССР по борьбе\", \"Черный пояс кэмпо-джитсу, кэмпо-кай\", \"Черный пояс 3 Дан Пангратион\"]",
-                            DataType = DataType.Array
+                            DataType = DataType.Html
                         },
                         new()
                         {

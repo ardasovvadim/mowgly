@@ -31,7 +31,7 @@ namespace MG.WebAPi
 
             services.AddCors(options => options.AddPolicy("AllowAllOrigins", builder =>
             {
-                builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+                builder.WithOrigins(Configuration["AppSettings:ApiUrl"]).AllowAnyMethod().AllowAnyHeader();
             }));
             
             services.AddSwaggerGen(c =>
@@ -42,16 +42,18 @@ namespace MG.WebAPi
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "../Web/dist";
+                configuration.RootPath = Configuration["AppSettings:Angular:RootPath"];
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseDeveloperExceptionPage();
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                // app.UseDeveloperExceptionPage();
                 
                 app.UseSwagger();
                 
@@ -97,8 +99,8 @@ namespace MG.WebAPi
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
-                spa.Options.SourcePath = "../Web";
-                spa.Options.DefaultPage = "/";
+                spa.Options.SourcePath = Configuration["AppSettings:Angular:SourcePath"];
+                // spa.Options.DefaultPage = "/";
                 if (env.IsDevelopment())
                 {
                     // spa.UseAngularCliServer(npmScript: "start");

@@ -4,6 +4,7 @@ using AutoMapper;
 using MG.WebApi.Entities;
 using MG.WebApi.Entities.Emails;
 using MG.WebAPi.Entities.Enums;
+using MG.WebApi.Entities.Users;
 using MG.WebAPi.Models.Registrations;
 using MG.WebAPi.Repositories;
 using Microsoft.EntityFrameworkCore;

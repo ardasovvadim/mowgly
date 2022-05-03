@@ -1,0 +1,65 @@
+<ng-template [ngIf]="!timetableGroups || !timetableGroups.length">
+  <div class="uk-overflow-auto">
+    <table class="uk-table uk-table-divide uk-table-justify">
+      <caption>Направление - Город - Филиал</caption>
+
+      <thead>
+      <tr>
+        <th>№</th>
+        <th>Тренер</th>
+        <th>Пн</th>
+        <th>Вт</th>
+        <th>Ср</th>
+        <th>Чт</th>
+        <th>Пт</th>
+        <th>Сб</th>
+        <th>Вс</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>
+
+<div class="uk-overflow-auto">
+  <table *ngFor="let group of timetableGroups" class="uk-table uk-table-divide uk-table-justify">
+
+    <caption>{{group.sectionName}} - {{group.city}} - {{group.locationName}}</caption>
+
+    <thead>
+    <tr>
+      <th>№</th>
+      <th>Тренер</th>
+      <th>Пн</th>
+      <th>Вт</th>
+      <th>Ср</th>
+      <th>Чт</th>
+      <th>Пт</th>
+      <th>Сб</th>
+      <th>Вс</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let master of group.masters; let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{master.masterName}}</td>
+      <td *ngFor="let day of [1, 2, 3, 4, 5, 6, 0]">{{displayTime(master.timetables, day)}}</td>
+    </tr>
+    </tbody>
+
+  </table>
+</div>

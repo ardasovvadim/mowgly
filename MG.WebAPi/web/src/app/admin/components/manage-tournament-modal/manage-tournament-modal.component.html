@@ -1,0 +1,30 @@
+<mg-manage-modal [title]="'Редактировать турнир'"
+                 [id]="id"
+                 (onCancel)="close()"
+                 (onSubmit)="submit()"
+                 (onDelete)="delete()"
+                 [isDeleteButton]="true">
+
+  <form [formGroup]="form">
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="name">Название:</label>
+      <div class="uk-form-controls">
+        <input type="text" class="uk-input" placeholder="Введите название соревнований" formControlName="name" id="name">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="actionDate">Дата проведения:</label>
+      <div class="uk-form-controls">
+        <input type="date"
+               class="uk-input"
+               placeholder="Введите дату проведения"
+               formControlName="actionDate"
+               id="actionDate">
+      </div>
+    </div>
+
+  </form>
+
+</mg-manage-modal>

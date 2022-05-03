@@ -1,0 +1,44 @@
+<mg-manage-modal [title]="'Добавить результат'"
+                 [id]="id"
+                 (onCancel)="close()"
+                 (onSubmit)="submit()"
+                 (onDelete)="delete()"
+                 [isDeleteButton]="result?.id != null">
+
+  <form [formGroup]="form">
+    <mg-autocomplete-input placeholder="Имя участника"
+                           label="ФИО учасника"
+                           (onRefreshOption)="refreshStudentOptions($event)"
+                           [options]="studentOptions"
+                           formControlName="student"></mg-autocomplete-input>
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="place">Место:</label>
+      <div class="uk-form-controls">
+        <input type="text" class="uk-input" placeholder="Введите место на соревнованиях" formControlName="place" id="place">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="score">Счет:</label>
+      <div class="uk-form-controls">
+        <input type="text" class="uk-input" placeholder="Введите счет" formControlName="score" id="score">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="awards">Награды:</label>
+      <div class="uk-form-controls">
+        <input type="text" class="uk-input" placeholder="Ведите награды" formControlName="awards" id="awards">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="additionalInfo">Дополнительная информация:</label>
+      <div class="uk-form-controls">
+        <input type="text" class="uk-input" placeholder="Дополнительная информация" formControlName="additionalInfo" id="additionalInfo">
+      </div>
+    </div>
+  </form>
+
+</mg-manage-modal>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MG.WebAPi.Database;
 using MG.WebAPi.Entities.Interfaces;
 using MG.WebAPi.Models;
+using MG.WebAPi.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -63,11 +64,9 @@ namespace MG.WebAPi.Repositories
             int? take = null)
         {
             var query = DbSet
-                .Where(expression)
-                .Where(entity => !entity.Deleted);
+                .WhereIf(expression != null, expression);
 
-            if (!string.IsNullOrEmpty(include))
-                query = query.Include(include);
+            query = Include(query, include);
             
             if (skip.HasValue)
                 query = query.Skip(skip.Value);
@@ -75,6 +74,11 @@ namespace MG.WebAPi.Repositories
                 query = query.Take(take.Value);
 
             return await query.ToListAsync();
+        }
+
+        private IQueryable<T> Include(IQueryable<T> query, string include)
+        {
+            return include.IsNullOrEmpty() ? query : query.Include(include);
         }
 
         public IQueryable<T> GetPage(IQueryable<T> query, PageRequest page)
@@ -85,9 +89,11 @@ namespace MG.WebAPi.Repositories
             return query.Take(page.PageSize);
         }
 
-        public async Task<T> GetByIdAsync(Guid id)
+        public async Task<T> GetByIdAsync(Guid id, string include = null)
         {
-            return await DbSet.FirstOrDefaultAsync(entity => entity.Id == id && !entity.Deleted);
+            var query = GetQueryable();
+            query = Include(query, include);
+            return await query.FirstOrDefaultAsync(entity => entity.Id == id);
         }
 
         public async Task InsertAsync(T entity)
@@ -101,7 +107,7 @@ namespace MG.WebAPi.Repositories
         {
             entity.UpdatedDate = DateTime.UtcNow;
             if (Context.Entry(entity).State != EntityState.Modified)
-            Context.Entry(entity).State = EntityState.Modified;
+                Context.Entry(entity).State = EntityState.Modified;
         }
 
         public Task<bool> IsExistsAsync(Guid id)

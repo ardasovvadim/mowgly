@@ -1,11 +1,19 @@
 using System;
+using System.Linq;
+using System.Linq.Expressions;
 using MG.WebApi.Entities;
 using MG.WebApi.Entities.Emails;
 using MG.WebAPi.Entities.Enums;
+using MG.WebApi.Entities.Events;
 using MG.WebApi.Entities.Images;
+using MG.WebAPi.Entities.Interfaces;
+using MG.WebApi.Entities.News;
 using MG.WebApi.Entities.Sections;
+using MG.WebApi.Entities.Tournaments;
 using MG.WebApi.Entities.Users;
+using MG.WebAPi.Utils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace MG.WebAPi.Database
 {
@@ -20,25 +28,34 @@ namespace MG.WebAPi.Database
         public DbSet<EmailQueue> EmailQueue { get; set; }
         public DbSet<EmailTemplate> EmailTemplates { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Tournament> Tournaments { get; set; }
+        public DbSet<TournamentResult> TournamentResults { get; set; }
+        public DbSet<News> News { get; set; }
+        public DbSet<Event> Events { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Location>().ToTable(nameof(Locations));
             modelBuilder.Entity<UserRequest>().ToTable(nameof(UserRequests));
-            modelBuilder.Entity<GeneralSetting>().ToTable(nameof(Settings))
-                .HasDiscriminator<string>("SettingsType");
+            modelBuilder.Entity<GeneralSetting>().ToTable(nameof(Settings)) .HasDiscriminator<string>("SettingsType");
             modelBuilder.Entity<User>().ToTable(nameof(Users));
             modelBuilder.Entity<Section>().ToTable(nameof(Sections));
             modelBuilder.Entity<TimetableRecord>().ToTable(nameof(TimetableRecords));
             modelBuilder.Entity<EmailQueue>().ToTable(nameof(EmailQueue));
             modelBuilder.Entity<EmailTemplate>().ToTable(nameof(EmailTemplates));
             modelBuilder.Entity<Image>().ToTable(nameof(Images));
-
+            modelBuilder.Entity<Tournament>().ToTable(nameof(Tournaments));
+            modelBuilder.Entity<TournamentResult>().ToTable(nameof(TournamentResults));
+            modelBuilder.Entity<News>().ToTable(nameof(News));
+            modelBuilder.Entity<Event>().ToTable(nameof(Events));
+           
+            modelBuilder.ApplyGlobalFilters(e => !e.Deleted);
+           
             SeedData(modelBuilder);
             
             base.OnModelCreating(modelBuilder);
         }
-        
+
         private void SeedData(ModelBuilder modelBuilder)
         {
             var defaultUsers = new[]

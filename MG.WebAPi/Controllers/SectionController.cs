@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MG.WebAPi.Controllers;
-using MG.WebApi.Entities;
 using MG.WebApi.Entities.Sections;
 using MG.WebAPi.Models.Sections;
 using MG.WebAPi.Services;
@@ -26,6 +24,5 @@ namespace MG.WebApi.Controllers
             var sections = await _sectionService.GetAsync(section => section.Locations.Any(l => l.Id == request.LocationId), $"{nameof(Section.Settings)}");
             return sections?.OrderBy(s => s.Settings.FirstOrDefault(setting => setting.Name == SectionSettingKeys.CardOrder)?.Value ?? string.Empty);
         }
-
     }
 }

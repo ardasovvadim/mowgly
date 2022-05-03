@@ -1,0 +1,23 @@
+<mg-manage-modal [title]="'Добавить изображение'"
+                 [id]="id"
+                 (onCancel)="close()"
+                 (onSubmit)="submit()"
+                 [isDeleteButton]="false">
+
+  <form [formGroup]="form">
+    <div class="uk-margin">
+      <label class="uk-form-label" for="url">Ссылка:</label>
+      <div class="uk-form-controls">
+        <input type="text" class="uk-input" placeholder="Вставте ссылку с изображением" formControlName="url" id="url">
+      </div>
+    </div>
+
+    <div *ngIf="showCaptionInput" class="uk-margin">
+      <label class="uk-form-label" for="caption">Подпись:</label>
+      <div class="uk-form-controls">
+        <input type="text" class="uk-input" placeholder="Вставте ссылку с изображением" formControlName="caption" id="caption">
+      </div>
+    </div>
+  </form>
+
+</mg-manage-modal>

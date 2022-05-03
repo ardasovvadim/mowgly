@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MG.WebApi.Entities;
 using MG.WebApi.Entities.Emails;
+using MG.WebApi.Entities.Users;
 using MG.WebAPi.Repositories;
 using MG.WebAPi.Utils;
 using Microsoft.EntityFrameworkCore;

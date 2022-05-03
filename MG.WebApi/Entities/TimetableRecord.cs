@@ -1,6 +1,7 @@
 ﻿using System;
 using MG.WebAPi.Entities.Interfaces;
 using MG.WebApi.Entities.Sections;
+using MG.WebApi.Entities.Users;
 
 namespace MG.WebApi.Entities
 {
