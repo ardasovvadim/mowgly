@@ -11,6 +11,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MG.WebApi\MG.WebApi.csproj" />
+      <ProjectReference Include="..\MG.WebApi\MG.WebHost.csproj" />
     </ItemGroup>
 </Project>

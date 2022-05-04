@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using MG.WebAPi.Utils;
+using MG.WebHost.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MG.WebApi.UnitTests.Utils
