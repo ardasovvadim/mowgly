@@ -1,17 +1,21 @@
-import { Injectable } from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private baseApiUrl: string = environment.baseApiLinks;
+  get baseApiUrl() {
+    return this.baseUrl + 'api'
+  }
 
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private readonly httpClient: HttpClient,
+    @Inject('BASE_URL') private baseUrl: string
+  ) {
 
   }
 

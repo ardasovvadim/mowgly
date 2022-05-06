@@ -9,6 +9,7 @@ export function getBaseUrl() {
 }
 
 const providers = [
+  // @ts-ignore
   { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
 ];
 

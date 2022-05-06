@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
 using MG.WebHost.Entities.Images;
 using MG.WebHost.Models;
 using MG.WebHost.Repositories;
@@ -17,7 +14,7 @@ namespace MG.WebHost.Services
     {
         private readonly IRepository<Image> _imageRepository;
         private readonly IDirectoryUtils _directoryUtils;
-        private const string ImageFolder = "Source/Images";
+        private const string ImageFolder = "wwwroot/Images";
 
         public ImageService(IRepository<Image> imageRepository,
             IDirectoryUtils directoryUtils)

@@ -29,6 +29,9 @@ const routes: Routes = [
       {path: '**', component: NotFoundPageComponent}
     ]
   },
+  // { path: '', component: HomeComponent, pathMatch: 'full' },
+  // { path: 'counter', component: CounterComponent },
+  // { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
 ];
 
 @NgModule({

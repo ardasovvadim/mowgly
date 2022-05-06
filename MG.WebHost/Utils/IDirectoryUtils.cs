@@ -15,8 +15,7 @@ namespace MG.WebHost.Utils
 
         public DirectoryUtils()
         {
-            var contentRootPath = Environment.CurrentDirectory;
-            _rootProjectPath = Directory.GetParent(contentRootPath)?.FullName;
+            _rootProjectPath = Environment.CurrentDirectory;
         }
 
         public string CombinePathFromRoot(string path) => Path.Combine(_rootProjectPath, path);

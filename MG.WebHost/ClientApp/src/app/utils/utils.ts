@@ -35,7 +35,8 @@ export function isGuid(str: string): boolean {
 }
 
 export function getImageUrl(guid: string): string {
-  return `${environment.baseApiLinks}/image/${guid}`;
+  // todo
+  return `/api/image/${guid}`;
 }
 
 export function parseImage(strValue: string) {
