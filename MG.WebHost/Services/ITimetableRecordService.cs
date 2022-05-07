@@ -2,6 +2,7 @@ using AutoMapper;
 using MG.WebHost.Entities;
 using MG.WebHost.Entities.Sections;
 using MG.WebHost.Entities.Users;
+using MG.WebHost.Exceptions;
 using MG.WebHost.Models;
 using MG.WebHost.Models.TimetableRecords;
 using MG.WebHost.Repositories;
@@ -14,6 +15,7 @@ namespace MG.WebHost.Services
     {
         Task<IEnumerable<TimetableRecordLocationGroupVm>> GetTimeTableRecordsByCriteria(TimeTableRecordCriteriaRequest criteria);
         Task<TimetableRecordEditModelResponse> GetTimeTableRecordEditModelAsync(TimeTableRecordCriteriaRequest request);
+        Task<TimetableRecordEditModel> AddTimetableRecordAsync(TimetableRecordEditModel request);
     }
 
     public class TimetableRecordService : ITimetableRecordService
@@ -115,6 +117,26 @@ namespace MG.WebHost.Services
                 Data = _mapper.Map<IEnumerable<TimetableRecordEditModel>>(await query.ToListAsync()),
                 Masters = _masterRepository.GetQueryable().Select(l => new IdName{Id = l.Id, Name = $"{l.FirstName} {l.LastName} {l.MiddleName}"}),
             };
+        }
+
+        public async Task<TimetableRecordEditModel> AddTimetableRecordAsync(TimetableRecordEditModel request)
+        {
+            var isNew = !request.Id.HasValue;
+            var entity = request.Id.HasValue
+                ? await _repository.GetByIdAsync(request.Id.Value)
+                : new TimetableRecord();
+
+            if (entity == null)
+                throw new BusinessException("Not found");
+            
+            _mapper.Map(request, entity);
+
+            if (isNew)
+                await _repository.InsertAsync(entity);
+            else
+                _repository.Update(entity);
+
+            return _mapper.Map<TimetableRecordEditModel>(entity);
         }
     }
 }

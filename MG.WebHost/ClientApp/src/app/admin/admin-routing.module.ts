@@ -13,11 +13,13 @@ import {
   ManageNewsDescriptionPageComponent
 } from './pages/manage-news-page/manage-news-description-page/manage-news-description-page.component';
 import {ManageEventsPageComponent} from './pages/manage-events-page/manage-events-page.component';
+import {AuthorizeGuard} from "../../api-authorization/authorize.guard";
 
 const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
+    canActivate: [AuthorizeGuard],
     children: [
       {path: '', redirectTo: 'schedule', pathMatch: 'full'},
       {path: 'masters/:id', component: ManageMastersPageComponent},

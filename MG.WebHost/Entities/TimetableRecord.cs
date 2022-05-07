@@ -1,5 +1,4 @@
-﻿using System;
-using MG.WebHost.Entities.Interfaces;
+﻿using MG.WebHost.Entities.Interfaces;
 using MG.WebHost.Entities.Sections;
 using MG.WebHost.Entities.Users;
 

@@ -1,14 +1,11 @@
 using MG.WebHost.Config;
 using MG.WebHost.Database;
 using MG.WebHost.Entities.Users;
-using MG.WebHost.MockData;
-using MG.WebHost.Settings;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +44,9 @@ if (builder.Environment.IsProduction())
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.ConfigureBusinessServices(builder.Configuration);
 
 var app = builder.Build();
@@ -59,6 +59,8 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions{
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {
@@ -74,10 +76,10 @@ app.UseIdentityServer();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+    name: "api",
+    pattern: "api/{controller}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-app.MapFallbackToFile("index.html");;
+app.MapFallbackToFile("index.html");
 
 app.Run();

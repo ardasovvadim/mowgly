@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using MG.WebHost.Controllers;
 using MG.WebHost.Models.TimetableRecords;
 using MG.WebHost.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MG.WebHost.Controllers
@@ -22,12 +20,18 @@ namespace MG.WebHost.Controllers
             return await _timetableRecordService.GetTimeTableRecordsByCriteria(criteria);
         }
 
-        [HttpPost(nameof(GetTimeTableRecordEditModels))]
+        [HttpPost(nameof(GetTimeTableRecordEditModels)), Authorize]
         public async Task<TimetableRecordEditModelResponse> GetTimeTableRecordEditModels(TimeTableRecordCriteriaRequest request)
         {
             return await _timetableRecordService.GetTimeTableRecordEditModelAsync(request);
         }
-        
-        // public async Task<Timetable>
+
+        [HttpPost(nameof(AddTimetableRecordAsync)), Authorize]
+        public async Task<TimetableRecordEditModel> AddTimetableRecordAsync(TimetableRecordEditModel request)
+        {
+            return null;
+            
+            return await _timetableRecordService.AddTimetableRecordAsync(request);
+        }
     }
 }

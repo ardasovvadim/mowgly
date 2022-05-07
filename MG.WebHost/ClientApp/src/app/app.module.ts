@@ -26,6 +26,7 @@ import {MasterPageComponent} from "./pages/master-page/master-page.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AppRoutingModule} from "./app-routing.module";
 import {MgSharedModule} from "./mg-shared/mg-shared.module";
+import { ScullyLibModule } from '@scullyio/ng-lib';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import {MgSharedModule} from "./mg-shared/mg-shared.module";
     MasterPageComponent,
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     HttpClientModule,
     ApiAuthorizationModule,
     BrowserModule,
@@ -58,6 +59,7 @@ import {MgSharedModule} from "./mg-shared/mg-shared.module";
     AppRoutingModule,
     MgSharedModule,
     FormsModule,
+    ScullyLibModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }

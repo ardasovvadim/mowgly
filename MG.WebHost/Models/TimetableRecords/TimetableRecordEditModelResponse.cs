@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using MG.WebHost.Models;
-
 namespace MG.WebHost.Models.TimetableRecords;
 
 public class TimetableRecordEditModelResponse
