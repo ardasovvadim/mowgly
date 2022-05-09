@@ -3,6 +3,8 @@ using AutoMapper;
 using MG.WebHost.Entities.Interfaces;
 using MG.WebHost.Models;
 using MG.WebHost.Repositories;
+using MG.WebHost.Utils;
+using Microsoft.EntityFrameworkCore;
 
 namespace MG.WebHost.Services
 {
@@ -29,6 +31,21 @@ namespace MG.WebHost.Services
         {
             var entities = await Repository.GetAsync(whereExpression, include);
             return Mapper.Map<IEnumerable<TDto>>(entities);
+        }
+
+        public async Task<Page<TDto>> GetListAsync(PageRequest pageRequest)
+        {
+            var query = Repository
+                .GetQueryable()
+                .Page(pageRequest);
+
+            return new Page<TDto>
+            {
+                Count = await query.CountAsync(),
+                PageSize = pageRequest.PageSize,
+                PageNumber = pageRequest.PageNumber,
+                Elements = Mapper.Map<IEnumerable<TDto>>(await query.ToListAsync())
+            };
         }
 
         public async Task<TDto> SaveAsync(TDto dto)

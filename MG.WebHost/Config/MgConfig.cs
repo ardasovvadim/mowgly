@@ -23,7 +23,6 @@ namespace MG.WebHost.Config
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ITournamentService, TournamentService>();
             services.AddScoped<INewsService, NewsService>();
-            services.AddScoped<IEventService, EventService>();
 
             // Utils
             services.AddSingleton<IEmailUtils, EmailUtils>();

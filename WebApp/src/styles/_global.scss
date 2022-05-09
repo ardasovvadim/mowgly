@@ -1,0 +1,203 @@
+@import "variables";
+
+html, body {
+  overflow-x: hidden;
+}
+
+.mg-global-wrapper {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+header {
+  padding: 15px;
+}
+
+header, footer {
+  margin: 0 auto;
+}
+
+footer {
+  width: 100%;
+}
+
+
+@media (min-width: $mg-breakpoint-xlarge) {
+  header, footer {
+    max-width: $container-max-xxl-width;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+h3 {
+  color: $mg-green-main;
+}
+
+hr {
+  border-top-color: $mg-yellow-main;
+}
+
+p > span {
+  color: $mg-green-main;
+}
+
+.mg-yellow {
+  color: $mg-yellow-main;
+}
+
+.mg-white {
+  color: $mg-white;
+}
+
+.mg-bg {
+  position: absolute;
+  z-index: -1;
+  max-width: unset;
+}
+
+.mg-bg-wrapper {
+  position: absolute;
+  z-index: -1;
+  min-width: $container-max-xxl-width;
+}
+
+.mg-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: $mg-white;
+  box-shadow: 25px 30px 25px rgba(0, 0, 0, 0.15);
+  padding: 50px;
+
+  .mg-card-bottom {
+    margin: auto 0 10px;
+    width: 100%;
+  }
+}
+
+.mg-white-frame {
+  display: block;
+  background: $mg-white;
+  padding: 50px 50px 70px;
+  box-shadow: 25px 30px 25px rgba(0, 0, 0, 0.15);
+}
+
+ul > ul {
+  margin: 0;
+}
+
+li {
+  margin: 10px 0;
+}
+
+.mg-noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+
+input[type=checkbox] {
+  $size: 20px;
+  width: $size;
+  height: $size;
+}
+
+label > input[type=checkbox] {
+  margin-right: 10px;
+}
+
+.mg-tools select {
+  max-width: 200px;
+}
+
+@media (max-width: $mg-breakpoint-xlarge) {
+  .mg-max-xl-overflow-visible {
+    overflow: visible;
+  }
+}
+
+.mg-tools {
+
+  > *:not(:last-child) {
+    margin-right: 30px;
+  }
+
+  .uk-search-icon-flip {
+    color: $mg-green-main;
+  }
+
+  .uk-search-default {
+    width: 250px;
+  }
+}
+
+// ---------> News styles <-------------
+
+.mg-card-news {
+  width: fit-content;
+  box-shadow: 25px 30px 25px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, .05);
+}
+
+.news-description {
+
+  & > div > div:not(:last-of-type) {
+    margin-bottom: 20px;
+  }
+
+  .news-video, .news-image, .news-tournament-table {
+    margin: 30px 0 50px;
+  }
+
+  .news-image {
+    text-align: center;
+
+    p {
+      text-align: left;
+      color: $mg-white;
+    }
+  }
+}
+
+.mg-manage-input {
+  border: unset;
+  padding: 0;
+  outline: unset;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.mg-manage-input--p {
+  font-family: "FuturaBookC", serif;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+// ---------> Admin styles <-------------
+
+.area-highlighted:hover {
+  outline: rgba(0, 0, 0, .2) dashed 1px;
+}
+
+.mg-hover-opacity {
+  opacity: 0;
+  transition: opacity .2s ease-in-out;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+

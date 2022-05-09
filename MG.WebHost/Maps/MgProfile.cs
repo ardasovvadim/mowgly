@@ -1,7 +1,6 @@
 using AutoMapper;
 using MG.WebHost.Entities;
 using MG.WebHost.Entities.Enums;
-using MG.WebHost.Entities.Events;
 using MG.WebHost.Entities.News;
 using MG.WebHost.Entities.Sections;
 using MG.WebHost.Entities.Tournaments;
@@ -27,7 +26,9 @@ namespace MG.WebHost.Maps
                 .ReverseMap();
             CreateMap<Section, SectionVm>();
             CreateMap<TimetableRecord, TimetableRecordVm>();
-            CreateMap<TimetableRecord, TimetableRecordEditModel>();
+            CreateMap<TimetableRecord, TimetableRecordEditModel>()
+                .ReverseMap()
+                .ForMember(d => d.Id, s => s.Ignore());
             CreateMap<GeneralSetting, GeneralSettingVm>();
             CreateMap<User, MasterVm>()
                 .ForMember(d => d.Name, o => o.MapFrom(s => $"{s.FirstName} {s.LastName} {s.MiddleName}"));
@@ -71,8 +72,11 @@ namespace MG.WebHost.Maps
                 .ForMember(d => d.Author, o => o.Ignore())
                 ;
 
-            CreateMap<Event, EventVm>()
+            CreateMap<Tournament, EventVm>()
+                .ForMember(d => d.TournamentName, o => o.MapFrom(s => s.Name))
                 .ReverseMap()
+                .ForMember(d => d.Name, o => o.Ignore())
+                .AfterMap((e, t) => t.SetName(e.TournamentName))
                 ;
         }
     }

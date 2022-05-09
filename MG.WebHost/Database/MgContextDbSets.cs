@@ -1,7 +1,6 @@
 using MG.WebHost.Entities;
 using MG.WebHost.Entities.Emails;
 using MG.WebHost.Entities.Enums;
-using MG.WebHost.Entities.Events;
 using MG.WebHost.Entities.Images;
 using MG.WebHost.Entities.News;
 using MG.WebHost.Entities.Sections;
@@ -26,7 +25,6 @@ namespace MG.WebHost.Database
         public DbSet<Tournament> Tournaments { get; set; }
         public DbSet<TournamentResult> TournamentResults { get; set; }
         public DbSet<News> News { get; set; }
-        public DbSet<Event> Events { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,7 +40,6 @@ namespace MG.WebHost.Database
             modelBuilder.Entity<Tournament>().ToTable(nameof(Tournaments));
             modelBuilder.Entity<TournamentResult>().ToTable(nameof(TournamentResults));
             modelBuilder.Entity<News>().ToTable(nameof(News));
-            modelBuilder.Entity<Event>().ToTable(nameof(Events));
            
             modelBuilder.ApplyGlobalFilters(e => !e.Deleted);
            

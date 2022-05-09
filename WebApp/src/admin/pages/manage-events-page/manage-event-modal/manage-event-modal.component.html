@@ -1,0 +1,48 @@
+<mg-manage-modal [title]="'Добавить событие'"
+                 [id]="id"
+                 (onCancel)="close()"
+                 (onSubmit)="submit()"
+                 (onDelete)="delete()"
+                 [isDeleteButton]="form.value.id != null">
+
+  <form [formGroup]="form">
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="tournamentName">Название турнира:</label>
+      <div class="uk-form-controls">
+        <input type="text" class="uk-input" placeholder="Название турнира" formControlName="tournamentName" id="tournamentName">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="actionDate">Дата проведения:</label>
+      <div class="uk-form-controls">
+        <input type="date" class="uk-input" placeholder="Дата проведения" formControlName="actionDate" id="actionDate">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="address">Адресс:</label>
+      <div class="uk-form-controls">
+        <input type="text" class="uk-input" placeholder="Адресс" formControlName="address" id="address">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="googleMapLink">Ссылка на google карты:</label>
+      <div class="uk-form-controls">
+        <input type="text" class="uk-input" placeholder="Ссылка" formControlName="googleMapLink" id="googleMapLink">
+      </div>
+    </div>
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="participants">Учасники:</label>
+      <div class="uk-form-controls">
+        <input type="text" class="uk-input" placeholder="Учасники" formControlName="participants" id="participants">
+      </div>
+    </div>
+
+
+  </form>
+
+</mg-manage-modal>

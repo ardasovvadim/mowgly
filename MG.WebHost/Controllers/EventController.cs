@@ -1,6 +1,4 @@
-using System;
-using System.Threading.Tasks;
-using MG.WebHost.Controllers;
+using MG.WebHost.Entities.Tournaments;
 using MG.WebHost.Models;
 using MG.WebHost.Models.Events;
 using MG.WebHost.Services;
@@ -10,9 +8,9 @@ namespace MG.WebHost.Controllers;
 
 public class EventController : BaseController
 {
-    private readonly IEventService _eventService;
+    private readonly IService<EventVm, Tournament> _eventService;
 
-    public EventController(IEventService eventService)
+    public EventController(IService<EventVm, Tournament> eventService)
     {
         _eventService = eventService;
     }
@@ -26,7 +24,7 @@ public class EventController : BaseController
     [HttpPost]
     public async Task<EventVm> AddAsync(EventVm request)
     {
-        return await _eventService.AddAsync(request);
+        return await _eventService.SaveAsync(request);
     }
 
     [HttpDelete("{id}")]

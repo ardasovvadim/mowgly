@@ -20,18 +20,22 @@ namespace MG.WebHost.Controllers
             return await _timetableRecordService.GetTimeTableRecordsByCriteria(criteria);
         }
 
-        [HttpPost(nameof(GetTimeTableRecordEditModels)), Authorize]
-        public async Task<TimetableRecordEditModelResponse> GetTimeTableRecordEditModels(TimeTableRecordCriteriaRequest request)
+        [HttpPost(nameof(GetTimeTableRecordsAsync))]
+        public async Task<GetTimetableRecordsResponse> GetTimeTableRecordsAsync(TimeTableRecordCriteriaRequest request)
         {
-            return await _timetableRecordService.GetTimeTableRecordEditModelAsync(request);
+            return await _timetableRecordService.GetTimeTableRecordsAsync(request);
         }
 
         [HttpPost(nameof(AddTimetableRecordAsync)), Authorize]
         public async Task<TimetableRecordEditModel> AddTimetableRecordAsync(TimetableRecordEditModel request)
         {
-            return null;
-            
             return await _timetableRecordService.AddTimetableRecordAsync(request);
+        }
+
+        [HttpDelete("{id}"), Authorize]
+        public async Task DeleteTimetableRecordAsync(Guid id)
+        {
+            await _timetableRecordService.DeleteAsync(id);
         }
     }
 }

@@ -14,8 +14,9 @@ namespace MG.WebHost.Services
     public interface ITimetableRecordService
     {
         Task<IEnumerable<TimetableRecordLocationGroupVm>> GetTimeTableRecordsByCriteria(TimeTableRecordCriteriaRequest criteria);
-        Task<TimetableRecordEditModelResponse> GetTimeTableRecordEditModelAsync(TimeTableRecordCriteriaRequest request);
+        Task<GetTimetableRecordsResponse> GetTimeTableRecordsAsync(TimeTableRecordCriteriaRequest request);
         Task<TimetableRecordEditModel> AddTimetableRecordAsync(TimetableRecordEditModel request);
+        Task DeleteAsync(Guid id);
     }
 
     public class TimetableRecordService : ITimetableRecordService
@@ -24,7 +25,7 @@ namespace MG.WebHost.Services
         private readonly IRepository<Location> _locationRepository;
         private readonly IRepository<Section> _sectionRepository;
         private readonly IRepository<User> _masterRepository;
-        private readonly IMapper _mapper;
+        private readonly IMapper Mapper;
 
         public TimetableRecordService(
             IRepository<TimetableRecord> repository, 
@@ -34,7 +35,7 @@ namespace MG.WebHost.Services
             IRepository<User> masterRepository)
         {
             _repository = repository;
-            _mapper = mapper;
+            Mapper = mapper;
             _locationRepository = locationRepository;
             _sectionRepository = sectionRepository;
             _masterRepository = masterRepository;
@@ -71,7 +72,7 @@ namespace MG.WebHost.Services
                 foreach (var masterId in locationFilteredEntities.Select(e => e.MasterId).Distinct())
                 {
                     var masterFilteredEntities = locationFilteredEntities.Where(e => e.MasterId == masterId).ToList();
-                    var timetables = _mapper.Map<List<TimetableRecordVm>>(masterFilteredEntities);
+                    var timetables = Mapper.Map<List<TimetableRecordVm>>(masterFilteredEntities);
 
                     if (!timetables.Any())
                         continue;
@@ -103,7 +104,7 @@ namespace MG.WebHost.Services
             return timetableLocationGroups;
         }
 
-        public async Task<TimetableRecordEditModelResponse> GetTimeTableRecordEditModelAsync(TimeTableRecordCriteriaRequest request)
+        public async Task<GetTimetableRecordsResponse> GetTimeTableRecordsAsync(TimeTableRecordCriteriaRequest request)
         {
             var filterText = request.FilterText?.Trim().ToUpper();
             var query = _repository.GetQueryable()
@@ -112,10 +113,10 @@ namespace MG.WebHost.Services
                 .WhereIf(request.SectionGuids?.Any() ?? false, r => request.SectionGuids.Contains(r.SectionId))
                 .WhereIf(!filterText.IsNullOrEmpty(), r => r.Master.NormalizedName.Contains(filterText));
 
-            return new TimetableRecordEditModelResponse
+            return new GetTimetableRecordsResponse
             {
-                Data = _mapper.Map<IEnumerable<TimetableRecordEditModel>>(await query.ToListAsync()),
-                Masters = _masterRepository.GetQueryable().Select(l => new IdName{Id = l.Id, Name = $"{l.FirstName} {l.LastName} {l.MiddleName}"}),
+                Data = Mapper.Map<IEnumerable<TimetableRecordEditModel>>(await query.ToListAsync()),
+                Masters = _masterRepository.GetQueryable().Select(l => new IdName{Id = l.Id, Name = l.ConcatName()}),
             };
         }
 
@@ -129,14 +130,22 @@ namespace MG.WebHost.Services
             if (entity == null)
                 throw new BusinessException("Not found");
             
-            _mapper.Map(request, entity);
+            Mapper.Map(request, entity);
 
             if (isNew)
                 await _repository.InsertAsync(entity);
             else
                 _repository.Update(entity);
 
-            return _mapper.Map<TimetableRecordEditModel>(entity);
+            await _repository.SaveChangesAsync();
+
+            return Mapper.Map<TimetableRecordEditModel>(entity);
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            await _repository.DeleteAsync(id);
+            await _repository.SaveChangesAsync();
         }
     }
 }

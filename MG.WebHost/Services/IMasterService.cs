@@ -6,6 +6,7 @@ using MG.WebHost.Entities.Users;
 using MG.WebHost.Models;
 using MG.WebHost.Models.Masters;
 using MG.WebHost.Repositories;
+using MG.WebHost.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace MG.WebHost.Services
@@ -44,7 +45,7 @@ namespace MG.WebHost.Services
 
             query = query.Include(user => user.Profiles.Where(p => cardMasterProfileKeys.Contains(p.Name)));
             var originalQuery = query;
-            var pagedQuery = Repository.GetPage(query, request.PageRequest);
+            var pagedQuery = query.Page(request.PageRequest);
             var entities = await pagedQuery.ToListAsync();
             var entitiesCount = originalQuery.Count();
             var result = Mapper.Map<IEnumerable<MasterVm>>(entities);

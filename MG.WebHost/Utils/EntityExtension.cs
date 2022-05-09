@@ -54,11 +54,40 @@ public static class EntityExtension
         }
     }
 
-    public static IQueryable<T> Page<T>(this IQueryable<T> query, PageRequest request)
+    public static IQueryable<T> Page<T>(this IQueryable<T> query, PageRequest request) where T : IBaseEntity
     {
         if (request is null)
             return query;
 
-        return request.PageSize > 0 ? query.Skip(request.PageNumber * request.PageSize).Take(request.PageSize) : query;
+        var q = request.PageSize > 0 
+            ? query.Skip(request.PageNumber * request.PageSize).Take(request.PageSize) 
+            : query;
+
+        if (!request.Sort.IsNullOrEmpty())
+        {
+            switch (request.SortOrder)
+            {
+                case SortOrder.Asc: ;
+                    q = q.OrderByDynamic(x => $"x.{request.Sort}");
+                    break;
+                case SortOrder.Desc:
+                    q = q.OrderByDescendingDynamic(x => $"x.{request.Sort}");
+                    break;
+            }
+        }
+        else
+        {
+            switch (request.SortOrder)
+            {
+                case SortOrder.Asc: ;
+                    q = q.OrderBy(e => e);
+                    break;
+                case SortOrder.Desc:
+                    q = q.OrderByDescendingDynamic(request.Sort);
+                    break;
+            }
+        }
+
+        return q;
     }
 }

@@ -1,3 +1,4 @@
+using Duende.IdentityServer.Services;
 using MG.WebHost.Config;
 using MG.WebHost.Database;
 using MG.WebHost.Entities.Users;
@@ -30,6 +31,17 @@ builder.Services.AddDefaultIdentity<User>(options =>
     })
     .AddEntityFrameworkStores<MgContext>();
 
+builder.Services.AddSingleton<ICorsPolicyService>((container) => {
+    var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
+    return new DefaultCorsPolicyService(logger) {
+        // todo: not for production
+        AllowedOrigins =
+        {
+            "http://localhost:4200",
+        }
+    };
+});
+
 builder.Services.AddIdentityServer()
     .AddApiAuthorization<User, MgContext>();
 
@@ -46,6 +58,22 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+const string MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.DefaultPolicyName = MyAllowSpecificOrigins;
+    options
+        .AddPolicy(name: MyAllowSpecificOrigins,
+        policy  =>
+        {
+            policy
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                ;
+        });
+});
 
 builder.Services.ConfigureBusinessServices(builder.Configuration);
 
@@ -68,8 +96,16 @@ else
     app.UseHsts();
 }
 
+var defaultFileOptions = new DefaultFilesOptions
+{
+    RedirectToAppendTrailingSlash = false
+};
+app.UseDefaultFiles(defaultFileOptions);
 app.UseStaticFiles();
+
 app.UseRouting();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
 app.UseIdentityServer();

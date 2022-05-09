@@ -2,7 +2,6 @@ using MG.WebHost.Database;
 using MG.WebHost.Entities;
 using MG.WebHost.Entities.Emails;
 using MG.WebHost.Entities.Enums;
-using MG.WebHost.Entities.Events;
 using MG.WebHost.Entities.Images;
 using MG.WebHost.Entities.Sections;
 using MG.WebHost.Entities.Tournaments;
@@ -22,30 +21,6 @@ namespace MG.WebHost.MockData
             var students = InitializeStudents(context);
             var tournaments = InitializeTournaments(context, students);
             var users = InitializeUsers(context);
-            var events = InitializeEvents(context);
-        }
-
-        private static IEnumerable<Event> InitializeEvents(MgContext context)
-        {
-            var days = 0;
-            var events = new List<Event>
-            {
-                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
-                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
-                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
-                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
-                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
-                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
-                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
-                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
-                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
-                new() {TournamentName = "29th Karate Grand Prix Croatia", Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-",NormalizedTournamentName = "29TH KARATE GRAND PRIX CROATIA"},
-            };
-            
-            context.Events.AddRange(events);
-            context.SaveChanges();
-
-            return events;
         }
 
         private static IEnumerable<User> InitializeUsers(MgContext context)
@@ -58,6 +33,7 @@ namespace MG.WebHost.MockData
                     FirstName = "Руслан",
                     LastName = "Хомутенко",
                     MiddleName = "Николаевич",
+                    NormalizedName = "ХОМУТЕНКО РУСЛАН НИКОЛАЕВИЧ",
                     UserTypes = UserType.Admin
                 }
             };
@@ -70,21 +46,23 @@ namespace MG.WebHost.MockData
 
         private static IEnumerable<Tournament> InitializeTournaments(MgContext context, IEnumerable<User> students)
         {
-            var tournaments = new List<Tournament>
+            var days = 0;
+
+            var tournaments = new List<Tournament>();
+            Enumerable.Repeat(() =>
             {
-                new()
-                {
-                    Id = Guid.Parse("BAFDB8EC-17DA-471B-85CF-DC4C88BB3EC6"),
-                    Name = "Международный чемпионат",
-                    ActionDate = DateTime.UtcNow,
-                    Results = new List<TournamentResult>
+                tournaments.Add(
+                    new Tournament(name: "29th Karate Grand Prix Croatia")
                     {
-                        new() {User = students.First(), Place = "1", Awards = "Золотая медаль", Score = "5:3", AdditionalInfo = "Дополнительная информация"},
-                        new() {User = students.Skip(1).First(), Place = "2", Awards = "Серебряная медаль", Score = "3:5", AdditionalInfo = "Дополнительная информация"},
-                        new() {User = students.Last(), Place = "3", Awards = "Бронзовая медаль", Score = "2:6", AdditionalInfo = "Дополнительная информация"},
-                    } 
-                }
-            };
+                        Address = "Sambor/Croatia", GoogleMapLink = "https://goo.gl/maps/XsDLKcLXamGB9tdt8", ActionDate = DateTime.UtcNow.AddDays(-++days), Participants = "-", Results = new List<TournamentResult>
+                        {
+                            new() { User = students.First(), Place = "1", Awards = "Золотая медаль", Score = "5:3", AdditionalInfo = "Дополнительная информация" },
+                            new() { User = students.Skip(1).First(), Place = "2", Awards = "Серебряная медаль", Score = "3:5", AdditionalInfo = "Дополнительная информация" },
+                            new() { User = students.Last(), Place = "3", Awards = "Бронзовая медаль", Score = "2:6", AdditionalInfo = "Дополнительная информация" },
+                        }
+                    }
+                );
+            }, 10).ToList().ForEach(e => e());
             
             context.Tournaments.AddRange(tournaments);
             context.SaveChanges();
@@ -233,9 +211,10 @@ namespace MG.WebHost.MockData
                 {
                     UserTypes = UserType.Master,
                     Sections = sections,
-                    FirstName = "Волощенко", 
-                    LastName = "Евгения",
+                    FirstName = "Евгения", 
+                    LastName = "Волощенко",
                     MiddleName = "Константиновна",
+                    NormalizedName = "ВОЛОЩЕНКО ЕВГЕНИЯ КОНСТАНТИНОВНА",
                     Profiles = new List<UserProfile>
                     {
                         new()
@@ -274,9 +253,10 @@ namespace MG.WebHost.MockData
                 {
                     UserTypes = UserType.Master,
                     Sections = sections,
-                    FirstName = "Цискарадзе", 
-                    LastName = "Амиран",
+                    FirstName = "Амиран", 
+                    LastName = "Цискарадзе",
                     MiddleName = "Автандилович",
+                    NormalizedName = "ЦИСКАРАДЗЕ АМИРАН АВТАНДИЛОВИЧ",
                     Profiles = new List<UserProfile>
                     {
                         new()
@@ -300,6 +280,7 @@ namespace MG.WebHost.MockData
                     FirstName = "Иван", 
                     LastName = "Иванов",
                     MiddleName = "Иванович",
+                    NormalizedName = "ИВАНОВ ИВАН ИВАНОВИЧ",
                     Profiles = new List<UserProfile>
                     {
                         new()

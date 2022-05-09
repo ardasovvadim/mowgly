@@ -78,14 +78,6 @@ namespace MG.WebHost.Repositories
             return include.IsNullOrEmpty() ? query : query.Include(include);
         }
 
-        public IQueryable<TEntity> GetPage(IQueryable<TEntity> query, PageRequest page)
-        {
-            query = query.OrderBy(e => e.CreatedDate);
-            if (page.PageNumber > 1)
-                query = query.Skip((page.PageNumber - 1) * page.PageSize);
-            return query.Take(page.PageSize);
-        }
-
         public async Task<TEntity> GetByIdAsync(Guid id, string include = null)
         {
             var query = GetQueryable();

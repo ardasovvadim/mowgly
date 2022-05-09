@@ -1,0 +1,82 @@
+<div class="mg-tools uk-margin-medium-bottom">
+
+  <div class="uk-search uk-search-default">
+    <a class="uk-search-icon-flip" uk-search-icon></a>
+    <input class="uk-search-input uk-input" type="search" placeholder="Поиск" [(ngModel)]="filterText">
+  </div>
+
+  <select class="uk-select" [(ngModel)]="cityFilter" (ngModelChange)="refreshData()">
+    <option [ngValue]="null">Все города</option>
+    <option *ngFor="let city of options?.cities" [ngValue]="city">{{city}}</option>
+  </select>
+
+  <select class="uk-select" [(ngModel)]="locationFilter" (ngModelChange)="refreshData()">
+    <option [ngValue]="null">Все филиалы</option>
+    <option *ngFor="let location of options?.locations" [ngValue]="location.id">{{location.name}}</option>
+  </select>
+
+  <select class="uk-select" [(ngModel)]="sectionFilter" (ngModelChange)="refreshData()">
+    <option [ngValue]="null">Все направления</option>
+    <option *ngFor="let section of options?.sections" [ngValue]="section.id">{{section.name}}</option>
+  </select>
+
+  <button class="uk-button uk-button-primary" type="button" (click)="addTimeslot()">Добавить</button>
+
+  <button class="uk-button uk-button-primary" type="button" (click)="refreshData()">Обновить</button>
+
+</div>
+
+
+<div class="table-wrapper" >
+
+  <!-- It's shit but to do header sticky there is no other way -->
+
+  <table class="uk-table uk-table-divide uk-table-justify uk-background-muted" uk-sticky="offset: 100">
+    <thead>
+    <tr>
+      <th>Время</th>
+      <th>Пн</th>
+      <th>Вт</th>
+      <th>Ср</th>
+      <th>Чт</th>
+      <th>Пт</th>
+      <th>Сб</th>
+      <th>Вс</th>
+    </tr>
+    </thead>
+  </table>
+
+  <table class="uk-table uk-table-divide uk-table-justify timetable-table mg-noselect">
+
+    <tbody>
+
+    <tr *ngFor="let dayTime of dayTimes">
+
+      <td>{{dayTime}}</td>
+
+      <td *ngFor="let day of dayOfWeek">
+
+        <ng-container *ngIf="isBusy(day, dayTime); else freeSlot">
+          <div class="timeslot-wrapper">
+            <mg-timetable-slot *ngIf="isBuildBusySlot(day, dayTime)"
+                               (click)="editTimeslot(getBusySlot(day, dayTime));"
+                               [options]="options"
+                               [masters]="masters"
+                               [data]="getBusySlot(day, dayTime)"></mg-timetable-slot>
+          </div>
+        </ng-container>
+
+        <ng-template #freeSlot>
+          <div class="hidden-wrapper" (click)="addTimeslot(day, dayTime)">-</div>
+        </ng-template>
+
+      </td>
+
+    </tr>
+
+    </tbody>
+
+  </table>
+</div>
+
+<mg-manage-timeslot-modal #manageModal></mg-manage-timeslot-modal>
