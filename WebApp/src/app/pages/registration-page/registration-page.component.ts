@@ -2,10 +2,12 @@ import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {LocationService} from '../../services/location.service';
 import {LocationViewModel} from '../../models/locations/location.view.model';
 import {UiKit} from '../../utils/ui-kit';
-import {goToExternalLink, Indexer} from '../../utils/utils';
+import {Indexer} from '../../utils/utils';
 import {fadeInAnimation} from '../../mg-shared/animations/fadeInAnimation';
 import {ModalService} from '../../services/modal.service';
-import {TimetableRecordModalComponent} from '../../mg-shared/components/timetable-record-modal/timetable-record-modal.component';
+import {
+  TimetableRecordModalComponent
+} from '../../mg-shared/components/timetable-record-modal/timetable-record-modal.component';
 import {SectionService} from '../../services/section.service';
 import {RegistrationStateService} from '../../services/registration-state.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
@@ -190,15 +192,15 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
       this.resetState();
     }
     else {
-      const request = new MasterSearchCriteria();
-      request.locationIds = [this.state.selectedLocation];
-      request.sectionIds = [this.state.selectedSection];
-
       this.masterService
-        .getCardMasters(request)
-        .subscribe(masters => {
-          this.masters = masters;
-        });
+        .getCardMasters({
+          pageSize: 10,
+          locationIds: [this.state.selectedLocation],
+          sectionIds: [this.state.selectedSection]
+        } as MasterSearchCriteria)
+          .subscribe(masters => {
+            this.masters = masters;
+          });
     }
   }
 

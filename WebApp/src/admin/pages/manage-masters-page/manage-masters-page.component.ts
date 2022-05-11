@@ -35,8 +35,7 @@ export class ManageMastersPageComponent implements OnInit, OnDestroy {
             const id = params['id'];
             if (!id) {
                 this.test = false;
-                const request = new MasterSearchCriteria();
-                this.$masters = this.manageMasterService.getCardMasters(request);
+                this.$masters = this.manageMasterService.getCardMasters({pageSize: 10} as MasterSearchCriteria);
             } else {
                 this.test = true;
             }

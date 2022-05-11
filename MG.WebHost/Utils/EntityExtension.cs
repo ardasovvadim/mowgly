@@ -59,9 +59,7 @@ public static class EntityExtension
         if (request is null)
             return query;
 
-        var q = request.PageSize > 0 
-            ? query.Skip(request.PageNumber * request.PageSize).Take(request.PageSize) 
-            : query;
+        var q = query;
 
         if (!request.Sort.IsNullOrEmpty())
         {
@@ -80,14 +78,24 @@ public static class EntityExtension
             switch (request.SortOrder)
             {
                 case SortOrder.Asc: ;
-                    q = q.OrderBy(e => e);
+                    q = q.OrderBy(e => e.CreatedDate);
                     break;
                 case SortOrder.Desc:
-                    q = q.OrderByDescendingDynamic(request.Sort);
+                    q = q.OrderByDescending(e => e.CreatedDate);
                     break;
             }
         }
 
-        return q;
+        return request.PageSize > 0 
+            ? q.Skip(request.PageNumber * request.PageSize).Take(request.PageSize) 
+            : q;;
+    }
+
+    public static IQueryable<TEntity> WhereIf<TEntity>(
+        this IQueryable<TEntity> source, 
+        bool execute, 
+        Func<IQueryable<TEntity>,IQueryable<TEntity>> predicate) where TEntity : class, IBaseEntity
+    {
+        return execute ? predicate(source) : source;
     }
 }

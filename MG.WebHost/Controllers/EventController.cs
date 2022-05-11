@@ -1,7 +1,9 @@
+using System.Linq.Expressions;
 using MG.WebHost.Entities.Tournaments;
 using MG.WebHost.Models;
 using MG.WebHost.Models.Events;
 using MG.WebHost.Services;
+using MG.WebHost.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MG.WebHost.Controllers;
@@ -18,7 +20,14 @@ public class EventController : BaseController
     [HttpPost("list")]
     public async Task<Page<EventVm>> GetListAsync(EventListRequest request)
     {
-        return await _eventService.GetListAsync(request);
+        
+        return await _eventService.GetListAsync(request, where: query =>
+        {
+            var filterText = request.FilterText?.Trim();
+            return query
+                .WhereIf(request.ActionDate != null, t => t.ActionDate >= request.ActionDate)
+                .WhereIf(!filterText.IsNullOrEmpty(), t => t.NormalizedName.Contains(filterText));
+        });
     }
     
     [HttpPost]

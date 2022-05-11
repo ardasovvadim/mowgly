@@ -1,75 +1,88 @@
-<div class="row mt-100">
-  <div class="col-12">
-    <h1 class="uk-text-center">Календарь событий</h1>
+<div class="row mt-100" id="scroll-point">
+    <div class="col-12">
+        <h1 class="uk-text-center">Календарь событий</h1>
 
-    <div class="mg-tools mt-50">
+        <div class="mg-tools mt-50 uk-grid-small" uk-grid>
 
-      <div class="uk-search uk-search-default">
-        <a class="uk-search-icon-flip" uk-search-icon></a>
-        <input class="uk-search-input uk-input" type="search" placeholder="Поиск" (ngModelChange)="filterText = $event; refreshData()" [ngModel]="filterText">
-      </div>
+            <div class="uk-width-1-2@s uk-width-auto@m">
+                <div class="uk-search uk-search-default w-100">
+                    <a class="uk-search-icon-flip"
+                       (click)="refreshData()"
+                       uk-search-icon></a>
+                    <input class="uk-search-input uk-input" type="search" placeholder="Поиск"
+                           (keyup.enter)="refreshData()"
+                           (ngModelChange)="filterText = $event;" [ngModel]="filterText">
+                </div>
+            </div>
 
-      <div class="uk-inline">
-        <span class="uk-form-icon uk-form-icon-flip mg-text-green-main" uk-icon="icon: calendar"></span>
-        <input class="uk-input" type="date" placeholder="Дата события" (ngModelChange)="filterDate = $event; refreshData()" [ngModel]="filterDate">
-      </div>
+            <div class="uk-width-1-2@s uk-width-auto@m">
+                <div class="uk-inline w-100">
+                    <span class="uk-form-icon uk-form-icon-flip mg-text-green-main" uk-icon="icon: calendar"></span>
+                    <input class="uk-input" type="date" placeholder="Дата события"
+                           (ngModelChange)="filterDate = $event; refreshData()" [ngModel]="filterDate">
+                </div>
+            </div>
 
-      <button class="uk-button uk-button-primary" type="button" (click)="refreshData()">Обновить</button>
+            <div class="uk-width-1-2@s uk-width-auto@m">
+                <button class="uk-button uk-button-primary w-100" type="button" (click)="refreshData()">
+                    <span class="uk-margin-small-right" uk-icon="refresh"></span>Обновить
+                </button>
+            </div>
 
-    </div>
+            <div class="uk-width-1-2@s uk-width-auto@m">
+                <button class="uk-button uk-button-primary w-100" type="button" (click)="reset()">
+                    <span class="uk-margin-small-right" uk-icon="close"></span>Сбросить
+                </button>
+            </div>
 
-  </div>
-
-  <div class="col-12 mt-100 uk-position-relative mg-bg-light">
-    <div class="mg-card">
-      <table class="uk-table uk-table-divide uk-table-justify">
-
-        <thead>
-        <tr>
-          <th>№</th>
-          <th (click)="isDesc = !isDesc; refreshData()" class="mg-pointer">
-            Дата события
-            <ng-template [ngIf]="isDesc" [ngIfElse]="down"><span uk-icon="chevron-up"></span></ng-template>
-            <ng-template #down><span uk-icon="chevron-down"></span></ng-template>
-          </th>
-          <th>Название турнира</th>
-          <th>Адрес</th>
-          <th>Учасники</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr *ngFor="let event of data; let i = index">
-          <td>{{i + 1}}</td>
-          <td>{{event.actionDate | date : 'dd-MM-yyyy'}}</td>
-          <td>{{event.tournamentName}}</td>
-          <td>{{event.address}}</td>
-          <td>{{event.participants}}</td>
-        </tr>
-        </tbody>
-
-      </table>
-
-      <ul class="uk-pagination uk-flex-center" uk-margin>
-        <li><a href="#"><span uk-pagination-previous></span></a></li>
-        <li><a href="#">1</a></li>
-        <li class="uk-disabled"><span>...</span></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">6</a></li>
-        <li class="uk-active"><span>7</span></li>
-        <li><a href="#">8</a></li>
-        <li><a href="#">9</a></li>
-        <li><a href="#">10</a></li>
-        <li class="uk-disabled"><span>...</span></li>
-        <li><a href="#">20</a></li>
-        <li><a href="#"><span uk-pagination-next></span></a></li>
-      </ul>
+        </div>
 
     </div>
 
-    <mg-bg [offset]="-180"></mg-bg>
+    <div class="col-12 mt-50 uk-position-relative">
+        <div class="mg-card">
 
-  </div>
+            <div class="uk-overflow-auto">
+                <table class="uk-table uk-table-divide uk-table-justify">
+
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th (click)="asc = !asc; refreshData()" class="mg-pointer">
+                            Дата события
+                            <ng-template [ngIf]="asc" [ngIfElse]="down"><span uk-icon="chevron-up"></span></ng-template>
+                            <ng-template #down><span uk-icon="chevron-down"></span></ng-template>
+                        </th>
+                        <th>Название турнира</th>
+                        <th>Адрес</th>
+                        <th>Учасники</th>
+                    </tr>
+                    </thead>
+
+                    <tbody style="display: table-row-group" [smoothHeight]="data">
+                    <tr *ngFor="let event of data; let i = index" class="uk-animation-fade uk-animation-fast">
+                        <td class="uk-table-shrink"
+                            style="min-width: 50px">{{i + 1 + (pageOptions.pageNumber * pageOptions.pageSize)}}</td>
+                        <td class="uk-table-shrink"
+                            style="min-width: 150px">{{event.actionDate | date : 'dd-MM-yyyy'}}</td>
+                        <td class="uk-table-expand"
+                            style="min-width: 400px">{{event.tournamentName}}</td>
+                        <td style="min-width: 100px">{{event.address}}</td>
+                        <td style="min-width: 100px">{{event.participants}}</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+            <mg-pagination [pageOptions]="pageOptions"
+                           (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
+
+        </div>
+
+
+        <mg-bg [offset]="-180"></mg-bg>
+
+    </div>
 
 </div>

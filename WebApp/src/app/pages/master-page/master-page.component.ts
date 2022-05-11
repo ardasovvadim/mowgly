@@ -40,7 +40,7 @@ export class MasterPageComponent implements OnInit, OnDestroy {
         });
 
       masterService
-        .getCardMasters(new MasterSearchCriteria())
+        .getCardMasters({pageSize: 5} as MasterSearchCriteria)
         .subscribe(masters => this.otherMasters = masters?.filter(m => m.id != this.masterId));
     });
 

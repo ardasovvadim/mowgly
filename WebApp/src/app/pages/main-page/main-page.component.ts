@@ -22,9 +22,10 @@ export class MainPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const request = new MasterSearchCriteria();
     this.masterService
-      .getCardMasters(request)
+      .getCardMasters({
+        pageSize: 5
+      } as MasterSearchCriteria)
       .subscribe(masters => this.masters = masters);
   }
 

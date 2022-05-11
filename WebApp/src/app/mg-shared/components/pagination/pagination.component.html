@@ -1,0 +1,16 @@
+<ul class="uk-pagination uk-flex-center" uk-margin>
+    <li [class.uk-disabled]="!isPreviousPageAvailable" >
+        <a (click)="previousPage()"><span uk-pagination-previous></span></a>
+    </li>
+
+    <li [class.uk-active]="options2?.pageNumber == page - 1"
+        (click)="options2?.pageNumber != (page - 1) && toPage(page)"
+        *ngFor="let page of pages">
+        <a>{{page}}</a>
+    </li>
+    <li class="uk-disabled" [hidden]="pagesAmount != 0"><span>...</span></li>
+
+    <li [class.uk-disabled]="!isNextPageAvailable">
+        <a (click)="nextPage()"><span uk-pagination-next></span></a>
+    </li>
+</ul>

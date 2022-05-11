@@ -35,6 +35,8 @@ import {NewsPageComponent} from '../pages/news-page/news-page.component';
 import {AutocompleteInputComponent} from './components/autocomplete-input/autocomplete-input.component';
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {LoadingDirective} from './directives/loading.directive';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { SmoothHeightAnimDirective } from './animations/smooth-height-anim.directive';
 
 const components: any[] = [
     FooterComponent,
@@ -75,6 +77,8 @@ const components: any[] = [
         AutocompleteInputComponent,
         ConfirmDialogComponent,
         LoadingDirective,
+        PaginationComponent,
+        SmoothHeightAnimDirective,
     ],
     exports: [
         ...components,
@@ -89,6 +93,8 @@ const components: any[] = [
         NewsImageBlockComponent,
         AutocompleteInputComponent,
         LoadingDirective,
+        PaginationComponent,
+        SmoothHeightAnimDirective,
     ],
     imports: [
         CommonModule,

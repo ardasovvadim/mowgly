@@ -50,4 +50,8 @@
   &:last-of-type {
     margin-top: 0;
   }
+
+  th, td {
+    min-width: 200px;
+  }
 }

@@ -1,41 +1,82 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {EventVm} from '../../models/events/event-vm';
-import {EventsApiService} from '../../services/events-api.service';
+import {EventsApiService, toSortOrder} from '../../services/events-api.service';
+import {PaginationComponent} from '../../mg-shared/components/pagination/pagination.component';
+import {PageOptions} from '../../models/page';
+import {tap} from 'rxjs';
+import {fadeInAnimation} from '../../mg-shared/animations/fadeInAnimation';
+import {smoothHeight} from '../../mg-shared/animations/smooth-height-anim.directive';
 
 @Component({
-  selector: 'mg-events-page',
-  templateUrl: './events-page.component.html',
-  styleUrls: ['./events-page.component.scss'],
-  providers: [
-    EventsApiService
-  ]
+    selector: 'mg-events-page',
+    templateUrl: './events-page.component.html',
+    styleUrls: ['./events-page.component.scss'],
+    animations: [
+        fadeInAnimation,
+        smoothHeight
+    ],
+    providers: [
+        EventsApiService
+    ]
 })
 export class EventsPageComponent implements OnInit {
-  filterText: string;
-  filterDate: string;
-  isDesc: boolean = true;
-  data: EventVm[];
 
-  constructor(
-    private readonly eventsApiService: EventsApiService
-  ) { }
+    filterText: string;
+    filterDate: string;
+    asc: boolean = false;
+    data: EventVm[];
 
-  ngOnInit(): void {
-    this.refreshData();
-  }
+    @ViewChild('pagination') pagination: PaginationComponent;
 
-  add() {
+    private readonly initialPageOptions = {
+        count: 0,
+        pageSize: 10,
+        pageNumber: 0
+    }
 
-  }
+    pageOptions: PageOptions = {...this.initialPageOptions};
 
-  refreshData() {
-    this.eventsApiService.getList({
-      actionDate: this.filterDate,
-      filterText: this.filterText,
-      pageNumber: 0,
-      pageSize: 10,
-      sort: this.isDesc ? 'desc' : 'asc'
-    }).subscribe(data => this.data = data.elements);
+    constructor(
+        private readonly eventsApiService: EventsApiService
+    ) {
+    }
 
-  }
+    ngOnInit(): void {
+        this.refreshData();
+    }
+
+    refreshData() {
+        this.eventsApiService.getList({
+            actionDate: this.filterDate,
+            filterText: this.filterText,
+            pageNumber: this.pageOptions.pageNumber,
+            pageSize: this.pageOptions.pageSize,
+            sort: 'ActionDate',
+            sortOrder: toSortOrder(this.asc)
+        })
+            .pipe(
+                tap(data => {
+                    if (!data) {
+                        this.pageOptions = null;
+                        return
+                    }
+
+                    this.pageOptions = {
+                        pageNumber: data.pageNumber,
+                        pageSize: data.pageSize,
+                        count: data.count
+                    }
+                }),
+            )
+            .subscribe(data => {
+                this.data = data.elements;
+            });
+    }
+
+    reset() {
+        this.filterText = null;
+        this.filterDate = null;
+        this.pageOptions = {...this.initialPageOptions};
+        this.refreshData();
+    }
 }

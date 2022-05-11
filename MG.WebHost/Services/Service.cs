@@ -33,24 +33,24 @@ namespace MG.WebHost.Services
             return Mapper.Map<IEnumerable<TDto>>(entities);
         }
 
-        public async Task<Page<TDto>> GetListAsync(PageRequest pageRequest)
+        public async Task<Page<TDto>> GetListAsync(PageRequest pageRequest, Func<IQueryable<TEntity>, IQueryable<TEntity>> where = null)
         {
             var query = Repository
                 .GetQueryable()
-                .Page(pageRequest);
+                .WhereIf(where != null, where);
 
             return new Page<TDto>
             {
                 Count = await query.CountAsync(),
                 PageSize = pageRequest.PageSize,
                 PageNumber = pageRequest.PageNumber,
-                Elements = Mapper.Map<IEnumerable<TDto>>(await query.ToListAsync())
+                Elements = Mapper.Map<IEnumerable<TDto>>(await query.Page(pageRequest).ToListAsync())
             };
         }
 
         public async Task<TDto> SaveAsync(TDto dto)
         {
-            var entity = await Repository.GetByIdAsync(dto.Id);
+            var entity = dto.Id.HasValue ? await Repository.GetByIdAsync(dto.Id.Value) : null;
 
             if (entity == null)
             {
