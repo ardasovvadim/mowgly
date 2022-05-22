@@ -133,8 +133,14 @@
   }
 }
 
-.mg-bg-light {
+// ---------> Colors <-------------
+
+.mg-background-light {
   background: $mg-light-background;
+}
+
+.mg-background-green-main {
+  background: $mg-green-main;
 }
 
 .mg-text-green-main {

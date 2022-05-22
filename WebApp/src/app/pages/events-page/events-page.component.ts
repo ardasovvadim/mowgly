@@ -6,6 +6,7 @@ import {PageOptions} from '../../models/page';
 import {tap} from 'rxjs';
 import {fadeInAnimation} from '../../mg-shared/animations/fadeInAnimation';
 import {smoothHeight} from '../../mg-shared/animations/smooth-height-anim.directive';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'mg-events-page',
@@ -37,7 +38,8 @@ export class EventsPageComponent implements OnInit {
     pageOptions: PageOptions = {...this.initialPageOptions};
 
     constructor(
-        private readonly eventsApiService: EventsApiService
+        private readonly eventsApiService: EventsApiService,
+        private readonly router: Router
     ) {
     }
 
@@ -78,5 +80,9 @@ export class EventsPageComponent implements OnInit {
         this.filterDate = null;
         this.pageOptions = {...this.initialPageOptions};
         this.refreshData();
+    }
+
+    goToNews(newsId: string) {
+        this.router.navigate(['/news/' + newsId]);
     }
 }

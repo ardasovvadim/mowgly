@@ -1,7 +1,5 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {IdName} from '../../../models/timetable-records/timetable-record.view.model';
-import {Indexer} from '../../../utils/utils';
-import {UiKit} from '../../../utils/ui-kit';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Observable, Subscription} from 'rxjs';
 
@@ -19,53 +17,47 @@ import {Observable, Subscription} from 'rxjs';
 })
 export class AutocompleteInputComponent implements OnInit, ControlValueAccessor {
 
-    readonly id = `autocomplete-${Indexer.getId()}`;
-
-    get dropdown(): any {
-        return this._dropdown ?? (this._dropdown = UiKit.drop('#' + this.id));
-    }
-
-    @Input() placeholder: string;
+    @Input() placeholder: string = '';
     @Input() optionsSource: (filterText: string) => Observable<IdName[]>;
+    @Output() onOptionSelected: EventEmitter<IdName> = new EventEmitter<IdName>();
 
     set options(options: IdName[]) {
         this._options = options;
         this.highlightIndex = -1;
         if (options && options.length)
-            this.showDropdown();
+            this.displayOptions = true;
     }
 
     get options(): IdName[] {
         return this._options;
     }
 
-    private _dropdown: any;
     filteringName: string;
     selectedIdName: IdName;
     _options: IdName[];
     highlightIndex = -1;
     disabled: boolean = false;
+    displayOptions: boolean = false;
+    isOptionsFocused: boolean = false;
 
     ngOnInit(): void {}
 
     onSelected(option: IdName) {
         this.selectedIdName = option;
         this.filteringName = option.name;
-        this.highlightIndex = -1;
         this.options = [];
-        this.hideDropdown();
+        this.displayOptions = false;
         this.propagateChange(option);
+        this.onOptionSelected.emit(option);
     }
-
-    private showDropdown = () => this.dropdown?.show();
-
-    private hideDropdown = () => this.dropdown?.hide();
 
     private lastSub: Subscription;
 
     onChange(filteringName: string) {
+        filteringName = filteringName?.trim()
+
         if (filteringName && filteringName.length && !this.lastSub) {
-            this.lastSub = this.optionsSource(filteringName.trim())
+            this.lastSub = this.optionsSource(filteringName)
                 .subscribe(options => {
                     this.options = options;
                     this.lastSub = null;
@@ -106,13 +98,16 @@ export class AutocompleteInputComponent implements OnInit, ControlValueAccessor 
     }
 
     writeValue(obj: IdName): void {
-        if (obj !== undefined) {
-            this.selectedIdName = obj;
-            this.filteringName = obj?.name;
-        }
+        this.selectedIdName = obj ?? null;
+        this.filteringName = obj?.name ?? '';
     }
 
     registerOnTouched(fn: any): void {}
 
     propagateChange = (_: any) => {};
+
+    inputFocusOut() {
+        if (!this.isOptionsFocused)
+            this.displayOptions = false;
+    }
 }

@@ -14,7 +14,7 @@
           <ng-template [ngIf]="news.imageUrl">
             <div class="uk-card-media-left uk-cover-container">
               <!--    todo: alt    -->
-              <img [src]="news.imageUrl" alt="article image" uk-cover>
+              <img [src]="news.imageUrl | image" alt="article image" uk-cover>
               <canvas width="600" height="400"></canvas>
             </div>
           </ng-template>

@@ -15,11 +15,11 @@ export const fadeInAnimation =
     ])
   ])
 
-export const growAnimation =
-    trigger('grow', [
-        transition('void <=> *', []),
-        transition('* <=> *', [
-            style({height: '{{startHeight}}px', opacity: 0}),
-            animate('.5s ease'),
-        ], {params: {startHeight: 0}})
-    ])
+// export const growAnimation =
+//     trigger('grow', [
+//         transition('void <=> *', []),
+//         transition('* <=> *', [
+//             style({height: '{{startHeight}}px', opacity: 0}),
+//             animate('.5s ease'),
+//         ], {params: {startHeight: 0}})
+//     ])

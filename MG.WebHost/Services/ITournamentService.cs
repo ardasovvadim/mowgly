@@ -33,8 +33,8 @@ public class TournamentService : ITournamentService
     private readonly IMapper _mapper;
 
     public TournamentService(
-        IRepository<User> userRepository, 
-        IRepository<Tournament> tournamentRepository, 
+        IRepository<User> userRepository,
+        IRepository<Tournament> tournamentRepository,
         IRepository<TournamentResult> tournamentResultRepository, IMapper mapper)
     {
         _userRepository = userRepository;
@@ -63,7 +63,7 @@ public class TournamentService : ITournamentService
 
     public async Task<TournamentResultVm> AddTournamentResult(Guid id, TournamentResultEditModel request)
     {
-        if (! await _tournamentRepository.IsExistsAsync(id))
+        if (!await _tournamentRepository.IsExistsAsync(id))
             // todo: throw exception and handling
             return null;
 
@@ -76,7 +76,7 @@ public class TournamentService : ITournamentService
         _mapper.Map(request, result);
         result.TournamentId = id;
         result.UserId = student.Id.Value;
-        
+
         if (result.Id != Guid.Empty)
             _tournamentResultRepository.Update(result);
         else
@@ -103,13 +103,13 @@ public class TournamentService : ITournamentService
             ? await _tournamentRepository.GetByIdAsync(request.Id.Value) ?? new Tournament()
             : new Tournament();
         _mapper.Map(request, result);
-        
+
         if (request.Id.HasValue)
             _tournamentRepository.Update(result);
-        else 
+        else
             await _tournamentRepository.InsertAsync(result);
         await _tournamentRepository.SaveChangesAsync();
-        
+
         return _mapper.Map<TournamentEditModel>(result);
     }
 
@@ -129,12 +129,12 @@ public class TournamentService : ITournamentService
         }
 
         var nameParts = student.Name.Trim().Split(" ");
-        var newStudent = new User
+        var newStudent = new User(
+            nameParts.Length >= 2 ? nameParts[1] : null,
+            nameParts.Length >= 1 ? nameParts.First() : null,
+            nameParts.Length >= 3 ? nameParts.Last() : null)
         {
-            UserTypes = UserType.Student,
-            FirstName = nameParts.Length >= 2 ? nameParts[1] : null,
-            LastName = nameParts.Length >= 1 ? nameParts.First() : null,
-            MiddleName = nameParts.Length >= 3 ? nameParts.Last() : null
+            UserTypes = UserType.Student
         };
         await _userRepository.InsertAsync(newStudent);
         await _userRepository.SaveChangesAsync();

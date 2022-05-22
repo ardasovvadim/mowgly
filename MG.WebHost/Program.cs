@@ -24,6 +24,7 @@ builder.Services.AddDbContext<MgContext>(options =>
             .EnableDetailedErrors();
 });
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddDefaultIdentity<User>(options =>
     {
@@ -37,7 +38,7 @@ builder.Services.AddSingleton<ICorsPolicyService>((container) => {
         // todo: not for production
         AllowedOrigins =
         {
-            "http://localhost:4200",
+            "https://localhost:4200",
         }
     };
 });
@@ -47,6 +48,8 @@ builder.Services.AddIdentityServer()
 
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
+
+builder.Services.AddDistributedMemoryCache();
 
 if (builder.Environment.IsProduction())
     builder.Services.Configure<JwtBearerOptions>(
@@ -59,16 +62,16 @@ builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-const string MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
+const string myAllowSpecificOrigins = "MyAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
-    options.DefaultPolicyName = MyAllowSpecificOrigins;
+    options.DefaultPolicyName = myAllowSpecificOrigins;
     options
-        .AddPolicy(name: MyAllowSpecificOrigins,
+        .AddPolicy(name: myAllowSpecificOrigins,
         policy  =>
         {
             policy
-                .WithOrigins("http://localhost:4200")
+                .WithOrigins("https://localhost:4200")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 ;
@@ -105,7 +108,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors(myAllowSpecificOrigins);
 
 app.UseAuthentication();
 app.UseIdentityServer();

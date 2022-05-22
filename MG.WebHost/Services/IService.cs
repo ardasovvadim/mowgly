@@ -10,7 +10,7 @@ namespace MG.WebHost.Services
     {
         Task<IEnumerable<TDto>> GetAllAsync();
         Task<IEnumerable<TDto>> GetAsync(Expression<Func<TEntity, bool>> whereExpression, string include = null);
-        Task<Page<TDto>> GetListAsync(PageRequest pageRequest, Func<IQueryable<TEntity>, IQueryable<TEntity>> where = null);
+        Task<Page<TDto>> GetListAsync(PageRequest pageRequest, Func<IQueryable<TEntity>, IQueryable<TEntity>> where = null, string include = null);
         Task<TDto> SaveAsync(TDto dto);
         Task<bool> DeleteAsync(Guid key);
     }

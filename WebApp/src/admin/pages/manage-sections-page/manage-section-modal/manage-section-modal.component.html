@@ -1,56 +1,21 @@
-<mg-manage-modal [id]="id"
-                 [form]="form"
-                 (onSubmit)="submit()"
-                 (onCancel)="cancel()"
-                 (onDelete)="delete()" [isDeleteButton]="isEditMode">
-  <form [formGroup]="form">
+<mg-manage-modal [id]="id" [isDeleteButton]="isEditMode" (onSubmit)="submit()" (onDelete)="delete()" (onCancel)="modal.hide();">
+    <form [formGroup]="form">
 
-    <!--    Name    -->
+        <!--    Name    -->
+        <div class="uk-margin">
+            <label class="uk-form-label" for="name">Название:</label>
+            <div class="uk-form-controls">
+                <input type="text" class="uk-input" placeholder="Название" formControlName="name" id="name">
+            </div>
+        </div>
 
-    <div class="uk-margin">
-      <label class="uk-form-label" for="name">Название:</label>
-      <div class="uk-form-controls">
-        <input type="text" class="uk-input" placeholder="Название" formControlName="name" id="name">
-      </div>
-    </div>
-
-    <!--    Header    -->
-
-    <div class="uk-margin">
-      <label class="uk-form-label" for="cardHeader">Заголовок на карточке:</label>
-      <div class="uk-form-controls">
-        <input type="text" class="uk-input" placeholder="Название" formControlName="cardHeader" id="cardHeader">
-      </div>
-    </div>
-
-    <!--    Description    -->
-
-    <div class="uk-margin">
-      <label class="uk-form-label" for="cardDescription">Описание карточки:</label>
-      <div class="uk-form-controls">
-        <input type="text" class="uk-input" placeholder="Название" formControlName="cardDescription" id="cardDescription">
-      </div>
-    </div>
-
-    <!--    Order    -->
-
-    <div class="uk-margin">
-      <label class="uk-form-label" for="cardOrder">Порядок:</label>
-      <div class="uk-form-controls">
-        <input type="text" class="uk-input" placeholder="Название" formControlName="cardOrder" id="cardOrder">
-      </div>
-    </div>
-
-    <!--    Column    -->
-
-    <div class="uk-margin">
-      <label class="uk-form-label" for="cardColumn">Колонка:</label>
-      <div class="uk-form-controls">
-        <input type="text" class="uk-input" placeholder="Название" formControlName="cardColumn" id="cardColumn">
-      </div>
-    </div>
-
-  </form>
+        <!--    Description    -->
+        <div class="uk-margin">
+            <h3>Описание:</h3>
+            <div class="mg-quill-field">
+                <mg-quill-editor placeholder="Введите текст..."
+                                 formControlName="description"></mg-quill-editor>
+            </div>
+        </div>
+    </form>
 </mg-manage-modal>
-
-

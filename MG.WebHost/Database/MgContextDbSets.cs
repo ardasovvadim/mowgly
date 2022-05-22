@@ -39,7 +39,12 @@ namespace MG.WebHost.Database
             modelBuilder.Entity<Image>().ToTable(nameof(Images));
             modelBuilder.Entity<Tournament>().ToTable(nameof(Tournaments));
             modelBuilder.Entity<TournamentResult>().ToTable(nameof(TournamentResults));
-            modelBuilder.Entity<News>().ToTable(nameof(News));
+            modelBuilder.Entity<News>()
+                .ToTable(nameof(News))
+                .HasOne(e => e.Tournament)
+                .WithOne(e => e.News)
+                .HasForeignKey<News>(e => e.TournamentId)
+                .IsRequired(false);
            
             modelBuilder.ApplyGlobalFilters(e => !e.Deleted);
            
@@ -47,7 +52,7 @@ namespace MG.WebHost.Database
             
             base.OnModelCreating(modelBuilder);
         }
-
+        
         private void SeedData(ModelBuilder modelBuilder)
         {
             var defaultUsers = new[]

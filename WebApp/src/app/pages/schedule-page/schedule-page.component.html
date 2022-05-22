@@ -1,40 +1,45 @@
 <div class="row mt-100">
 
-  <div class="col-12">
-    <h1 class="uk-text-center">Расписание</h1>
+    <div class="col-12">
+        <h1 class="uk-text-center">Расписание</h1>
 
-    <div class="mg-tools uk-margin-medium-bottom mt-50">
-      <select class="uk-select" [(ngModel)]="filteringCity">
-        <option [ngValue]="null">Все города</option>
-        <option *ngFor="let city of options?.cities" [ngValue]="city">{{city}}</option>
-      </select>
-
-      <select class="uk-select" [(ngModel)]="filteringLocation">
-        <option [ngValue]="null">Все филиалы</option>
-        <option *ngFor="let location of options?.locations" [ngValue]="location.id">{{location.name}}</option>
-      </select>
-
-      <select class="uk-select" [(ngModel)]="filteringSection">
-        <option [ngValue]="null">Все направления</option>
-        <option *ngFor="let section of options?.sections" [ngValue]="section.id">{{section.name}}</option>
-      </select>
-
-      <button class="uk-button uk-button-primary" (click)="refreshData()">Обновить</button>
-
-    </div>
-
-  </div>
-
-  <div class="col-12 mt-50 uk-position-relative mg-bg-light">
-    <div class="mg-card">
-
-      <mg-timetable-record-table #timetable></mg-timetable-record-table>
+        <div class="mg-tools uk-margin-medium-bottom mt-50 uk-grid-small" uk-grid>
+            <div class="uk-width-1-2@s uk-width-auto@m">
+                <select class="uk-select" [(ngModel)]="filteringCity">
+                    <option [ngValue]="null">Все города</option>
+                    <option *ngFor="let city of options?.cities" [ngValue]="city">{{city}}</option>
+                </select>
+            </div>
+            <div class="uk-width-1-2@s uk-width-auto@m">
+                <select class="uk-select" [(ngModel)]="filteringLocation">
+                    <option [ngValue]="null">Все филиалы</option>
+                    <option *ngFor="let location of options?.locations"
+                            [ngValue]="location.id">{{location.name}}</option>
+                </select>
+            </div>
+            <div class="uk-width-1-2@s uk-width-auto@m">
+                <select class="uk-select" [(ngModel)]="filteringSection">
+                    <option [ngValue]="null">Все направления</option>
+                    <option *ngFor="let section of options?.sections" [ngValue]="section.id">{{section.name}}</option>
+                </select>
+            </div>
+            <div class="uk-width-1-2@s uk-width-auto@m">
+                <button class="uk-button uk-button-primary" (click)="refreshData()">Обновить</button>
+            </div>
+        </div>
 
     </div>
 
-    <!--    todo -->
-    <img class="mg-bg absolute-x-center" style="top: -180px" src="/assets/img/bg-15.png" alt="background">
+    <div class="col-12 mt-50 uk-position-relative mg-background-light">
+        <div class="mg-card">
 
-  </div>
+            <mg-timetable-record-table #timetable></mg-timetable-record-table>
+
+        </div>
+
+        <!--    todo -->
+        <img class="mg-bg absolute-x-center" style="top: -180px" src="/assets/img/bg-15.png" alt="background">
+
+    </div>
 
 </div>

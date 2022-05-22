@@ -37,6 +37,7 @@ import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog
 import {LoadingDirective} from './directives/loading.directive';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { SmoothHeightAnimDirective } from './animations/smooth-height-anim.directive';
+import { ListPipe } from './pipes/list.pipe';
 
 const components: any[] = [
     FooterComponent,
@@ -79,6 +80,7 @@ const components: any[] = [
         LoadingDirective,
         PaginationComponent,
         SmoothHeightAnimDirective,
+        ListPipe,
     ],
     exports: [
         ...components,
@@ -95,6 +97,7 @@ const components: any[] = [
         LoadingDirective,
         PaginationComponent,
         SmoothHeightAnimDirective,
+        ListPipe,
     ],
     imports: [
         CommonModule,

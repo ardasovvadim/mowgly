@@ -37,15 +37,15 @@ namespace MG.WebHost.Services
                 .Where(user => user.UserTypes == UserType.Master);
 
             if (request.LocationIds.Any() && request.SectionIds.Any())
-                query = query.Where(user => user.Sections.Any(section => request.SectionIds.Contains(section.Id) && section.Locations.Any(location => request.LocationIds.Contains(location.Id))));
+                query = query.Where(u => u.TimetableRecords.Any(t => request.LocationIds.Contains(t.LocationId) && request.SectionIds.Contains(t.SectionId)));
             else if (request.LocationIds.Any())
-                query = query.Where(user => user.Sections.Any(section => section.Locations.Any(location => request.LocationIds.Contains(location.Id))));
+                query = query.Where(u => u.TimetableRecords.Any(t => request.LocationIds.Contains(t.LocationId)));
             else if (request.SectionIds.Any())
-                query = query.Where(user => user.Sections.Any(section => request.SectionIds.Contains(section.Id)));
+                query = query.Where(u => u.TimetableRecords.Any(t => request.SectionIds.Contains(t.SectionId)));
 
             query = query.Include(user => user.Profiles.Where(p => cardMasterProfileKeys.Contains(p.Name)));
             var originalQuery = query;
-            var pagedQuery = query.Page(request.PageRequest);
+            var pagedQuery = query.Page(request);
             var entities = await pagedQuery.ToListAsync();
             var entitiesCount = originalQuery.Count();
             var result = Mapper.Map<IEnumerable<MasterVm>>(entities);
@@ -53,8 +53,8 @@ namespace MG.WebHost.Services
             {
                 Count = entitiesCount,
                 Elements = result,
-                PageNumber = request.PageRequest.PageNumber,
-                PageSize = request.PageRequest.PageSize,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize,
             };
         }
 
@@ -94,22 +94,28 @@ namespace MG.WebHost.Services
             if (model == null)
                 return null;
 
-            var isNew = model.Id == Guid.Empty;
-            await Repository.BeginTransactionAsync();
+            var isNew = model.Id == null;
+            using var transaction = await Repository.BeginTransactionAsync();
 
             try
             {
                 await ValidateModelAsync(model, isNew);
             
                 var entity = isNew 
-                    ? new User()
-                    : await GetMasterEditModelEntityAsync(model.Id);
+                    ? new User { UserTypes = UserType.Master }
+                    : await GetMasterEditModelEntityAsync(model.Id.Value);
                 if (entity == null)
                     throw new ArgumentException("Пользователь не был найден");
+
+                if (isNew)
+                    await Repository.InsertAsync(entity);
+                else 
+                    Repository.Update(entity);
+                
                 Mapper.Map(model, entity);
                 
-                await Repository.SaveChangesAsync();
                 await Repository.CommitTransactionAsync();
+                await Repository.SaveChangesAsync();
                 
                 return Mapper.Map<MasterEditModel>(entity);
             }
@@ -126,24 +132,24 @@ namespace MG.WebHost.Services
             var invalidEmail = false;
             var invalidPhone = false;
             
-            if (isNew)
-            {
-                invalidEmail = await Repository.GetQueryable().AnyAsync(u => u.Email == model.Email);
-                invalidPhone = await Repository.GetQueryable().AnyAsync(u => u.PhoneNumber == model.Phone);
-            }
-            else
-            {
-                invalidEmail = await Repository.GetQueryable().AnyAsync(u => u.Email == model.Email && u.Id != model.Id);
-                invalidPhone = await Repository.GetQueryable().AnyAsync(u => u.PhoneNumber == model.Phone && u.Id != model.Id);
-            }
+            if (!model.Email.IsNullOrEmpty())
+                invalidEmail = isNew 
+                    ? await Repository.GetQueryable().AnyAsync(u => u.Email == model.Email)
+                    : await Repository.GetQueryable().AnyAsync(u => u.Email == model.Email && u.Id != model.Id);
             
+            if (!model.Phone.IsNullOrEmpty())
+                invalidPhone = isNew 
+                    ? await Repository.GetQueryable().AnyAsync(u => u.PhoneNumber == model.Phone)
+                    : await Repository.GetQueryable().AnyAsync(u => u.PhoneNumber == model.Phone && u.Id != model.Id);
+                
             if (invalidEmail)
                 validationExceptions.Add(new ValidationException("Пользователь с таким емейлом уже существует"));
+            
             if (invalidPhone)
                 validationExceptions.Add(new ValidationException("Пользователь с таким мобильным телефоном уже существует"));
 
             if (validationExceptions.Any())
-                throw new AggregateException("Ошибки валидации");
+                throw new AggregateException("Ошибки валидации", validationExceptions);
         }
     }
 }

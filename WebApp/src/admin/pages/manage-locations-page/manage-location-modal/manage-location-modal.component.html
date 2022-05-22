@@ -1,4 +1,9 @@
-<mg-manage-modal [id]="id" [form]="form" (onSubmit)="submit()" (onCancel)="cancel()" (onDelete)="delete()">
+<mg-manage-modal [id]="id"
+                 [form]="form"
+                 (onSubmit)="submit()"
+                 (onCancel)="cancel()"
+                 (onDelete)="delete()"
+                 [isDeleteButton]="form.value.id">
   <form [formGroup]="form">
 
     <!--    Name    -->
@@ -27,6 +32,23 @@
     <div class="uk-margin">
       <label class="uk-form-label" for="googleLink">Google link:</label>
       <div class="uk-form-controls"><input type="text" class="uk-input" placeholder="Google link" formControlName="googleMapsLink" id="googleLink"></div>
+    </div>
+
+    <div class="uk-margin" uk-margin>
+      <label class="uk-form-label uk-display-block">Секции:</label>
+      <button type="button"
+              *ngFor="let section of form.value.sections"
+              class="uk-button uk-button-primary uk-button-small uk-margin-small-right">
+        {{section.name}}<span class="uk-margin-small-left" uk-icon="icon: close" (click)="deleteSection(section)"></span>
+      </button>
+
+      <div class="uk-margin">
+        <mg-autocomplete-input [optionsSource]="updateSections"
+                               #sectionAutocomplete
+                               (onOptionSelected)="addSection($event)"
+                               placeholder="Введите название секции"></mg-autocomplete-input>
+      </div>
+
     </div>
 
   </form>

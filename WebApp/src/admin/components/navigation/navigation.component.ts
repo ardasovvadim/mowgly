@@ -13,7 +13,7 @@ export class NavigationComponent implements OnInit {
     {name: 'Иструктора', link: 'masters'},
     {name: 'Филиалы', link: 'locations'},
     {name: 'Направления', link: 'sections'},
-    {name: 'Настройки', link: 'settings'},
+    // {name: 'Настройки', link: 'settings'},
     {name: 'Пользователи', link: 'users'},
     {name: 'Расписание', link: 'schedule'},
     {name: 'События', link: 'events'},

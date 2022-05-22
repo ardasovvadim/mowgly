@@ -68,9 +68,8 @@
             },
             "scripts": [
               "./node_modules/uikit/dist/js/uikit.min.js",
-              "./node_modules/uikit/dist/js/uikit-icons.min.js",
-              "./node_modules/@fortawesome/fontawesome-free/js/all.min.js",
-              "./ckeditor/build/translations/ru.js"
+              "./uikit/uikit-icons-custom.js",
+              "./node_modules/@fortawesome/fontawesome-free/js/all.min.js"
             ]
           },
           "configurations": {

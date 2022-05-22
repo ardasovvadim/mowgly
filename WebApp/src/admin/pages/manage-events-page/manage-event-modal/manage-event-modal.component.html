@@ -16,7 +16,8 @@
 
     <div class="uk-margin">
       <label class="uk-form-label" for="actionDate">Дата проведения:</label>
-      <div class="uk-form-controls">
+      <div class="uk-inline w-100">
+        <span class="uk-form-icon uk-form-icon-flip mg-text-green-main" uk-icon="icon: calendar"></span>
         <input type="date" class="uk-input" placeholder="Дата проведения" formControlName="actionDate" id="actionDate">
       </div>
     </div>
@@ -40,6 +41,10 @@
       <div class="uk-form-controls">
         <input type="text" class="uk-input" placeholder="Учасники" formControlName="participants" id="participants">
       </div>
+    </div>
+
+    <div class="uk-margin-medium-top" *ngIf="editMode">
+      <p class="uk-margin-remove">Изменить <a (click)="changeResults()">таблицу результатов</a></p>
     </div>
 
 

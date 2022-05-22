@@ -43,23 +43,12 @@ namespace MG.WebHost.Services
 
         public async Task<IEnumerable<TimetableRecordLocationGroupVm>> GetTimeTableRecordsByCriteria(TimeTableRecordCriteriaRequest criteria)
         {
-            var query = _repository
-                .GetQueryable()
-                .WhereIf(criteria.Cities != null && criteria.Cities.Any(), r => criteria.Cities.Contains(r.Location.City));
+            var query = FilterQuery(_repository.GetQueryable(), criteria);
 
-            if (criteria.MasterGuids != null && criteria.MasterGuids.Any())
-                query = query.Where(r => criteria.MasterGuids.Contains(r.MasterId));
-
-            if (criteria.SectionGuids != null && criteria.SectionGuids.Any())
-                query = query.Where(r => criteria.SectionGuids.Contains(r.SectionId));
-
-            if (criteria.LocationGuids != null && criteria.LocationGuids.Any())
-                query = query.Where(r => criteria.LocationGuids.Contains(r.LocationId));
-            
-
+            // todo: probably needs refactor
             query = query.Include(r => r.Master)
-                .ThenInclude(r => r.Sections)
-                .ThenInclude(r => r.Locations);
+                .Include(r => r.Section)
+                .Include(r => r.Location);
 
             var entities = await query.ToListAsync();
             var timetableLocationGroups = new List<TimetableRecordLocationGroupVm>();
@@ -106,12 +95,7 @@ namespace MG.WebHost.Services
 
         public async Task<GetTimetableRecordsResponse> GetTimeTableRecordsAsync(TimeTableRecordCriteriaRequest request)
         {
-            var filterText = request.FilterText?.Trim().ToUpper();
-            var query = _repository.GetQueryable()
-                .WhereIf(request.LocationGuids?.Any() ?? false, r => request.LocationGuids.Contains(r.LocationId))
-                .WhereIf(request.MasterGuids?.Any() ?? false, r => request.MasterGuids.Contains(r.MasterId))
-                .WhereIf(request.SectionGuids?.Any() ?? false, r => request.SectionGuids.Contains(r.SectionId))
-                .WhereIf(!filterText.IsNullOrEmpty(), r => r.Master.NormalizedName.Contains(filterText));
+            var query = FilterQuery(_repository.GetQueryable(), request);
 
             return new GetTimetableRecordsResponse
             {
@@ -146,6 +130,17 @@ namespace MG.WebHost.Services
         {
             await _repository.DeleteAsync(id);
             await _repository.SaveChangesAsync();
+        }
+
+        private IQueryable<TimetableRecord> FilterQuery(IQueryable<TimetableRecord> query, TimeTableRecordCriteriaRequest request)
+        {
+            var filterText = request.FilterText?.Trim().ToUpper();
+            return query
+                .WhereIf(request.LocationId != null, r => request.LocationId == r.LocationId)
+                .WhereIf(request.MasterId != null, r => request.MasterId == r.MasterId)
+                .WhereIf(request.SectionId != null, r => request.SectionId == r.SectionId)
+                .WhereIf(!request.City.IsNullOrEmpty(), r => r.Location.City.Contains(request.City))
+                .WhereIf(!filterText.IsNullOrEmpty(), r => r.Master.NormalizedName.Contains(filterText));
         }
     }
 }

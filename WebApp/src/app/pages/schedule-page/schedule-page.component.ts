@@ -35,14 +35,11 @@ export class SchedulePageComponent implements OnInit {
 
   refreshData() {
     this.timetable.displayTimetableRecords({
-      locationGuids: this.passOrDefault(this.filteringLocation),
-      sectionGuids: this.passOrDefault(this.filteringSection),
-      cities: this.passOrDefault(this.filteringCity)
+      locationId: this.filteringLocation,
+      sectionId: this.filteringSection,
+      city: this.filteringCity
     })
       .subscribe();
   }
 
-  private passOrDefault(filter: string): string[] {
-    return filter ? [filter] : [];
-  }
 }

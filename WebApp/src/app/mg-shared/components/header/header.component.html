@@ -27,7 +27,7 @@
   <div *ngIf="isLargeMenu" class="col-auto d-flex ml-auto">
 
     <div class="avatar">
-      <a href="#" id="user-name">Пользователь</a>
+      <a [routerLink]="['/' + profile]" id="user-name">Пользователь</a>
       <img src="/assets/img/avatar.png" alt="avatar">
     </div>
 

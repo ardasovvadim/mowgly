@@ -9,6 +9,7 @@ import {PageOptions} from '../../../app/models/page';
 import {tap} from 'rxjs';
 import {fadeInAnimation} from '../../../app/mg-shared/animations/fadeInAnimation';
 import {smoothHeight} from '../../../app/mg-shared/animations/smooth-height-anim.directive';
+import {Router} from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -26,25 +27,25 @@ import {smoothHeight} from '../../../app/mg-shared/animations/smooth-height-anim
 export class ManageEventsPageComponent implements OnInit, AfterViewInit {
 
     @ViewChild('manageModal') manageModal: ManageEventModalComponent;
+    @ViewChild('pagination') pagination: PaginationComponent;
 
     filterText: string;
     filterDate: string;
-    asc: boolean = false;
     data: EventVm[];
+    currentRowIndex: number = -1;
 
-    @ViewChild('pagination') pagination: PaginationComponent;
-
+    asc: boolean = false;
     private readonly initialPageOptions = {
         count: 0,
         pageSize: 10,
         pageNumber: 0
     }
-
     pageOptions: PageOptions = {...this.initialPageOptions};
-    currentRowIndex: number = -1;
+
 
     constructor(
         private readonly eventsApiService: ManageEventsApiService,
+        private readonly router: Router
     ) {
     }
 
@@ -108,5 +109,9 @@ export class ManageEventsPageComponent implements OnInit, AfterViewInit {
             .subscribe(_ => {
                 this.refreshData();
             })
+    }
+
+    goToNews(newsId: string) {
+        this.router.navigate(['admin', 'news', newsId])
     }
 }

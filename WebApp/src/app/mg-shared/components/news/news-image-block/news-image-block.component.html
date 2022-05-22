@@ -2,7 +2,8 @@
 
   <div class="uk-inline">
     <a [href]="'#' + id" uk-toggle>
-      <img [src]="image.url | safeUrl"
+      <img [src]="image.url | image | safeUrl"
+           loading="lazy"
            width="600"
            height="400"
            [alt]="image.caption">
@@ -17,7 +18,9 @@
   <div [id]="id" class="uk-flex-top" uk-modal>
     <div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical">
       <button class="uk-modal-close-outside" type="button" uk-close></button>
-      <img [src]="image.url | safeUrl" [alt]="image.caption">
+      <img [src]="image.url | image | safeUrl"
+           loading="lazy"
+           [alt]="image.caption">
     </div>
   </div>
 

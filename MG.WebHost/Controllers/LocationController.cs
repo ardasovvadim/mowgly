@@ -1,22 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MG.WebHost.Entities;
-using MG.WebHost.Models;
 using MG.WebHost.Models.Locations;
-using MG.WebHost.Repositories;
 using MG.WebHost.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace MG.WebHost.Controllers
 {
     public class LocationController : BaseController
     {
-        private readonly IService<LocationVm, Location> _locationService;
-
-        public LocationController(IService<LocationVm, Location> locationService)
+        private readonly ILocationService _locationService;
+        
+        public LocationController(ILocationService locationService)
         {
             _locationService = locationService;
         }
@@ -24,27 +18,27 @@ namespace MG.WebHost.Controllers
         [HttpGet]
         public async Task<IEnumerable<LocationVm>> GetAsync()
         {
-            return await _locationService.GetAllAsync();
+            return await BaseService.GetAllAsync<LocationVm, Location>();
         }
 
         #region Admin
 
-        [HttpPost]
-        public async Task<IActionResult> Save(LocationVm model)
+        [HttpGet("{id}"), Authorize]
+        public async Task<LocationEditModel> GetByIdAsync(Guid id)
         {
-            var dto = await _locationService.SaveAsync(model);
-            if (dto == null)
-                BadRequest();
-            return Ok(dto);
+            return await BaseService.GetByIdAsync<LocationEditModel, Location>(id, nameof(Location.Sections));
+        }
+        
+        [HttpPost, Authorize]
+        public async Task<LocationEditModel> Save(LocationEditModel model)
+        {
+            return await _locationService.Save(model);
         }
 
-        [HttpDelete("{locationId:guid}")]
-        public async Task<IActionResult> Delete(Guid locationId)
-        {
-            var result = await _locationService.DeleteAsync(locationId);
-            if (!result)
-                BadRequest();
-            return Ok();
+        [HttpDelete("{locationId:guid}"), Authorize]
+        public async Task Delete(Guid locationId)
+        { 
+            await BaseService.DeleteAsync<Location>(locationId);
         }
 
         #endregion

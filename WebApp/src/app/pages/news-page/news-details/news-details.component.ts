@@ -51,6 +51,7 @@ export class NewsDetailsComponent implements OnInit {
 export interface NewsDetailsVm extends NewsVm {
   authorAvatar: string;
   authorId?: string;
+  tournamentId?: string;
   blocks: NewsBlock[];
 }
 

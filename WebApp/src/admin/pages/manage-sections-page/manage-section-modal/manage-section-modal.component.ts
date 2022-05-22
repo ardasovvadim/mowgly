@@ -1,61 +1,85 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {SectionEditModel} from '../../../../app/models/sections/section.view.model';
-import {ManageModal} from '../../../components/manage-modal/manage-modal';
+import {ManageSectionApiService} from '../../../services/manage-section-api.service';
+import {ProfileMaps} from '../../../models/profile.model';
+import {DataType} from '../../../../app/models/data-type';
+import {applyProfileMappingToData, applyProfileMappingToForm} from '../../../utils/settings';
+import {SectionVm} from '../../../../app/models/sections/section.view.model';
+import {UiKit} from '../../../../app/utils/ui-kit';
+import {Indexer} from '../../../../app/utils/utils';
 
 @Component({
     selector: 'mg-manage-section-modal',
     templateUrl: './manage-section-modal.component.html',
-    styleUrls: ['./manage-section-modal.component.scss']
+    styleUrls: ['./manage-section-modal.component.scss'],
+    providers: [
+        ManageSectionApiService
+    ]
 })
-export class ManageSectionModalComponent extends ManageModal {
+export class ManageSectionModalComponent implements AfterViewInit {
 
-    isEditMode = false;
-    location: SectionEditModel = {} as SectionEditModel;
+    readonly id: string = `manage-section-modal-${Indexer.getId()}`;
+    get sid(): string {
+        return '#' + this.id;
+    }
+    @Output() onClosed: EventEmitter<void> = new EventEmitter<void>();
+
+    get isEditMode() {
+        return this.form.value.id
+    }
     form: FormGroup = this.fb.group({
-        id: [''],
+        id: [null],
         name: [''],
-        cardHeader: [''],
-        cardDescription: [''],
-        cardOrder: [''],
-        cardColumn: ['']
+        description: [''],
+        profiles: [[]]
     });
+    modal: any;
+
+    private profileMappings: ProfileMaps = {
+        'description': {key: 'CardDescription', type: DataType.Html}
+    }
 
     constructor(
         private fb: FormBuilder,
+        private readonly sectionApi: ManageSectionApiService
     ) {
-        super();
     }
 
     ngOnInit(): void {
     }
 
     submit() {
-        // this.locationService
-        //   .save(this.form.value)
-        //   .subscribe(_ => {
-        //     this.submittedAndClosed.emit();
-        //     this.close();
-        //   });
+        if (this.form.invalid)
+            return;
+
+        const request = {...this.form.value};
+        applyProfileMappingToData(this.profileMappings, request)
+        this.sectionApi.update(this.form.value)
+            .subscribe(_ => {
+                this.onClosed.emit();
+                this.modal.hide();
+            });
     }
 
-    show(obj: SectionEditModel) {
-        this.location = obj;
-        this.form.reset(obj, {emitEvent: false});
-        this.open();
+    show(data: SectionVm) {
+        applyProfileMappingToForm(this.profileMappings, data);
+        this.form.reset(data);
+        this.modal.show();
     }
 
     delete() {
-        // this.locationService
-        //   .delete(this.location.id)
-        //   .subscribe(_ => {
-        //     this.submittedAndClosed.emit();
-        //     this.close();
-        //   });
+        const id = this.form.value.id
+        if (!id)
+            return;
+
+        this.sectionApi.delete(id)
+            .subscribe(_ => {
+                this.onClosed.emit();
+                this.modal.hide();
+            })
     }
 
-    cancel() {
-        this.close();
+    ngAfterViewInit(): void {
+        this.modal = UiKit.modal(this.sid)
     }
-
 }

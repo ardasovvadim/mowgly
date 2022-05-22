@@ -1,16 +1,21 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {LocationService} from '../../../app/services/location.service';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {LocationApiService} from '../../../app/services/location-api.service';
 import {LocationViewModel} from '../../../app/models/locations/location.view.model';
 import {ModalService} from '../../../app/services/modal.service';
 import {ManageLocationModalComponent} from './manage-location-modal/manage-location-modal.component';
 import {Subscription} from 'rxjs';
+import {ManageLocationApiService} from '../../services/manage-location-api.service';
+import {LocationEditModel} from '../../models/location.model';
 
 @Component({
   selector: 'mg-manage-locations-page',
   templateUrl: './manage-locations-page.component.html',
-  styleUrls: ['./manage-locations-page.component.scss']
+  styleUrls: ['./manage-locations-page.component.scss'],
+  providers: [
+    ManageLocationApiService
+  ]
 })
-export class ManageLocationsPageComponent implements OnInit, OnDestroy {
+export class ManageLocationsPageComponent implements OnInit, AfterViewInit {
 
   originLocations: LocationViewModel[] = [];
   get locations(): LocationViewModel[]  {
@@ -19,61 +24,50 @@ export class ManageLocationsPageComponent implements OnInit, OnDestroy {
     if (this.filteringCity != null)
       result = this.originLocations.filter(l => l.city == this.filteringCity);
 
-    if (this.nameFiltering != null) {
-      const search = this.nameFiltering as string;
+    if (this.filterText != null) {
+      const search = this.filterText as string;
       result = result.filter(l => l.name.toLowerCase().includes(search.toLowerCase().trim()))
     }
 
     return result.sort((l1, l2) => l1.name > l2.name ? 1 : -1);
   }
   cities: string[] = [];
-  modal: ManageLocationModalComponent | null = null;
   filteringCity: string | null = null;
-  nameFiltering: string | null = null;
-  subscriptions: Subscription[] = [];
+  filterText: string | null = null;
 
-  constructor(private locationService: LocationService,
-              private modalService: ModalService) {
-  }
+  @ViewChild('manageLocationModalComponent') modal: ManageLocationModalComponent;
 
-  ngOnDestroy(): void {
-     this.subscriptions.forEach(s => s.unsubscribe());
-     if (this.modal != null)
-       this.modalService.deleteModal(this.modal);
+  constructor(private locationService: ManageLocationApiService) {
   }
 
   ngOnInit(): void {
-    this.refreshLocations();
-
-    this.modalService
-      .createModal<ManageLocationModalComponent>({type: ManageLocationModalComponent})
-      .subscribe(modal => {
-        this.modal = modal;
-        if (this.modal != null) {
-          const sub = this.modal.submittedAndClosed.subscribe(_ => this.refreshLocations());
-          this.subscriptions.push(sub);
-          this.modal.close()
-        }
-      });
+    this.refreshData();
   }
 
   addNew() {
-    this.modal?.showLocation(new LocationViewModel());
+    this.modal.showLocation({} as LocationEditModel);
   }
 
   edit(location: LocationViewModel) {
-    this.modal?.showLocation(location);
+    this.locationService.getById(location.id)
+        .subscribe(data => {
+          this.modal.showLocation(data);
+        })
   }
 
-  private refreshLocations() {
+  refreshData() {
     this.locationService
-      .getAll()
-      .subscribe(locations => {
-        this.originLocations = locations;
-        this.cities = locations
-          .map(l => l.city)
-          .filter((v, i, s) => s.indexOf(v) == i)
-          .sort();
-      });
+        .getAll()
+        .subscribe(locations => {
+          this.originLocations = locations;
+          this.cities = locations
+              .map(l => l.city)
+              .filter((v, i, s) => s.indexOf(v) == i)
+              .sort();
+        });
+  }
+
+  ngAfterViewInit(): void {
+    this.modal.submittedAndClosed.subscribe(_ => this.refreshData());
   }
 }

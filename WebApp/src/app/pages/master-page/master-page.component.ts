@@ -54,7 +54,7 @@ export class MasterPageComponent implements OnInit, OnDestroy {
   }
 
   displayTimetables() {
-    this.timetableModal?.displayTimetableRecords({sectionGuids: [], masterGuids: [this.masterId], locationGuids: []});
+    this.timetableModal?.displayTimetableRecords({masterId: this.masterId});
   }
 
   ngOnDestroy(): void {

@@ -40,9 +40,9 @@ import { ScullyLibModule } from '@scullyio/ng-lib';
     ],
     imports: [
         BrowserModule,
+        ApiAuthorizationModule,
         AppRoutingModule,
         HttpClientModule,
-        ApiAuthorizationModule,
 
         BrowserAnimationsModule,
         ReactiveFormsModule,

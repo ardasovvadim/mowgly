@@ -12,6 +12,7 @@ namespace MG.WebHost.Config
         {
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IService<,>), typeof(Service<,>));
+            services.AddScoped(typeof(IBaseService), typeof(BaseService));
             services.AddAutoMapper(typeof(MgProfile));
             
             // Services
@@ -23,6 +24,7 @@ namespace MG.WebHost.Config
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ITournamentService, TournamentService>();
             services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<ILocationService, LocationService>();
 
             // Utils
             services.AddSingleton<IEmailUtils, EmailUtils>();

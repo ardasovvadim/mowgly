@@ -1,7 +1,7 @@
 export interface TRSearchCriteriaRequest {
-  sectionGuids?: string[];
-  masterGuids?: string[];
-  locationGuids?: string[];
-  cities?: string[];
+  sectionId?: string;
+  masterId?: string;
+  locationId?: string;
+  city?: string;
   filterText?: string;
 }

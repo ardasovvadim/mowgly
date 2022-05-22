@@ -21,6 +21,7 @@ public static class EntityExtension
     }
 
     public static bool IsNullOrEmpty(this string str) => string.IsNullOrEmpty(str);
+    public static bool IsNotNullOrEmpty(this string str) => !string.IsNullOrEmpty(str);
 
     public static string ConcatName(this User user)
     {
@@ -97,5 +98,13 @@ public static class EntityExtension
         Func<IQueryable<TEntity>,IQueryable<TEntity>> predicate) where TEntity : class, IBaseEntity
     {
         return execute ? predicate(source) : source;
+    }
+
+    public static IQueryable<TEntity> IncludeIf<TEntity>(
+        this IQueryable<TEntity> source,
+        bool predicate,
+        string include) where TEntity : class
+    {
+        return predicate ? source.Include(include) : source;
     }
 }

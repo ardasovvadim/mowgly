@@ -1,0 +1,49 @@
+//
+// Component: Notification
+//
+// ========================================================================
+
+
+// Variables
+// ========================================================================
+
+
+// Component
+// ========================================================================
+
+@mixin hook-notification() {
+  border: 1px solid rgba(0, 0, 0, .05);
+  box-shadow: 25px 30px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+// Message
+// ========================================================================
+
+// @mixin hook-notification-message(){}
+
+
+// Close
+// ========================================================================
+
+// @mixin hook-notification-close(){}
+
+
+// Style modifiers
+// ========================================================================
+
+//@mixin hook-notification-message-primary() {}
+
+// @mixin hook-notification-message-success(){}
+
+// @mixin hook-notification-message-warning(){}
+
+// @mixin hook-notification-message-danger(){}
+
+
+// Miscellaneous
+// ========================================================================
+
+// @mixin hook-notification-misc(){}
+
+

@@ -1,15 +1,18 @@
 import {GeneralSettingVm} from '../../app/models/general-setting.view.model';
+import {PageRequest} from '../../app/models/page-request';
 
-// export class MasterEditModel {
-//   public id: string = '';
-//   public firstName: string = '';
-//   public lastName: string = '';
-//   public middleName: string = '';
-//   public birthday: string = '';
-//   public email: string = '';
-//   public phone: string = '';
-//   public profiles: GeneralSettingVm[] = [];
-// }
+export interface AdminMasterVm {
+  id: string,
+  name: string,
+  sections: string,
+  createdDate: string,
+  updatedDate: string;
+}
+
+export interface GetMasterListRequest extends PageRequest {
+  filterText: string;
+  sectionId: string;
+}
 
 export interface MasterEditModel {
   id: string;

@@ -21,6 +21,7 @@ export class ManageBlockComponent implements OnInit, AfterViewInit {
   isToolbarHidden = true;
   isHovered = false;
 
+  @Output() onHovered: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() onBlockEdit: EventEmitter<NewsBlock> = new EventEmitter<NewsBlock>();
 
   blockTypes = NewsBlockType;

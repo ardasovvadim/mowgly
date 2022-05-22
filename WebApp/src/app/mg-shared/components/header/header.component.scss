@@ -1,4 +1,8 @@
-@import "src/styles/variables";
+@import "variables";
+
+a {
+  color: $mg-green-text;
+}
 
 .logo-image {
   height: 80%;

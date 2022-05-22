@@ -4,6 +4,7 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {Router} from '@angular/router';
 import {UiKit} from '../../../utils/ui-kit';
 import {scrollTo} from '../../../utils/utils';
+import {ApplicationPaths} from '../../../../api-authorization/api-authorization.constants';
 
 @UntilDestroy()
 @Component({
@@ -19,7 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     {name: 'Новости', link: '/news'},
     {name: 'Ближайшие события', link: '/events'},
     {
-      name: 'Клубная информация', link: '/',
+      name: 'Клубная информация',
       children: [
         {name: 'Расписание', link: '/schedule'},
         {name: 'Календарь событий', link: '/events'},
@@ -28,6 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     },
     {name: 'Как нас найти', link: '#'},
   ]
+  profile: string = ApplicationPaths.Profile;
 
   constructor(private breakpointService: BreakpointService,
               private router: Router) {

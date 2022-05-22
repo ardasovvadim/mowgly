@@ -14,7 +14,7 @@ namespace MG.WebHost.Repositories
         Task<bool> DeleteAsync(Guid id);
         Task<bool> IsExistsAsync(Guid id);
         Task SaveChangesAsync();
-        Task BeginTransactionAsync();
+        Task<IDisposable> BeginTransactionAsync();
         Task CommitTransactionAsync();
         Task RollbackTransactionAsync();
     }

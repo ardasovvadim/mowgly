@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {IdName, LocationSectionOptions} from '../models/timetable-records/timetable-record.view.model';
 import {Observable} from 'rxjs';
@@ -21,19 +21,33 @@ export class OptionsApiService {
     return this.api.get(this.baseUrl + "/location");
   }
 
-  getMasterOptions(filterName: string = null, sectionId: string = null): Observable<IdName[]> {
+  getMasterOptions(filterName: string = null): Observable<IdName[]> {
     const params = new HttpParams()
         .set('filterName', filterName)
-        .set('sectionId', sectionId)
     ;
     return this.api.get(this.baseUrl + "/master", params);
   }
 
-  getSectionOptions(locationId: string): Observable<IdName[]> {
-    const params = new HttpParams().set('locationId', locationId)
+  getSectionOptions(locationId: string, filterText: string = null, exceptLocationIds: string[] = null): Observable<IdName[]> {
+    let params = new HttpParams()
+    if (locationId)
+      params = params.set('locationId', locationId)
+    if (filterText)
+      params = params.set('filterText', filterText)
+    if (exceptLocationIds && exceptLocationIds.length > 0)
+      params = params.set('exceptLocationIds', exceptLocationIds.join(', '))
     return this.api.get(this.baseUrl + "/section", params);
   }
 
+  getEvents(filterText: string, date: string): Observable<IdName[]> {
+    let params = new HttpParams();
+    if (filterText)
+      params = params.set('filterName', filterText);
+    if (date)
+      params = params.set('date', date);
+
+    return this.api.get(this.baseUrl + '/event', params);
+  }
 }
 
 export interface OptionsRequest {

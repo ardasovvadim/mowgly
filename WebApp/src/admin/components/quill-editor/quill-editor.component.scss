@@ -1,0 +1,9 @@
+.mg-toolbar > * {
+  display: inline-block;
+  margin: 5px 2px;
+}
+
+.mg-toolbar > .mg-separator {
+  margin: 5px 5px;
+  transform: rotate(90deg);
+}

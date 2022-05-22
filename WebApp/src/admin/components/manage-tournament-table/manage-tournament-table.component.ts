@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {TournamentResult, TournamentResultsData} from '../../../app/pages/news-page/news-details/news-details.component';
 import {ModalService} from '../../../app/services/modal.service';
 import {
@@ -11,9 +11,11 @@ import {Subscription} from 'rxjs';
   selector: 'mg-manage-tournament-table',
   templateUrl: './manage-tournament-table.component.html',
   styleUrls: ['./manage-tournament-table.component.scss'],
-  providers: []
+  providers: [
+    ManageTournamentApiService
+  ]
 })
-export class ManageTournamentTableComponent implements OnInit, OnDestroy {
+export class ManageTournamentTableComponent implements AfterViewInit {
 
   @Input() set data(value: string) {
     this.tournamentId = value;
@@ -26,35 +28,15 @@ export class ManageTournamentTableComponent implements OnInit, OnDestroy {
 
   private tournamentId: string;
   private _data: TournamentResultsData;
-  private subscriptions: Subscription[] = [];
 
-  manageModal: ManageTournamentResultModalComponent;
+  @ViewChild('manageModal') manageModal: ManageTournamentResultModalComponent;
+  currentRowIndex: number = -1;
 
   constructor(
-    private readonly modalService: ModalService,
     private readonly tournamentService: ManageTournamentApiService
   ) { }
 
   ngOnInit(): void {
-    this.modalService.createModal<ManageTournamentResultModalComponent>({type: ManageTournamentResultModalComponent})
-      .subscribe(modal => {
-        if (modal) {
-          this.manageModal = modal;
-
-          this.subscriptions.push(this.manageModal.onSubmittedAndClosed.subscribe(_ => {
-            this.refreshData();
-          }));
-        }
-
-
-      });
-  }
-
-  ngOnDestroy(): void {
-    if (this.manageModal)
-      this.modalService.deleteModal(this.manageModal);
-
-    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   private refreshData() {
@@ -64,5 +46,15 @@ export class ManageTournamentTableComponent implements OnInit, OnDestroy {
 
   addNewResult() {
     this.manageModal.manageResult(this.tournament, {} as TournamentResult);
+  }
+
+  ngAfterViewInit(): void {
+    this.manageModal.onSubmittedAndClosed.subscribe(_ => {
+      this.refreshData();
+    })
+  }
+
+  manageTournament(result: TournamentResult) {
+    this.manageModal.manageResult(this.tournament, result);
   }
 }

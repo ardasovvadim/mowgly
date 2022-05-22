@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using MG.WebHost.Entities.Interfaces;
+﻿using MG.WebHost.Entities.Interfaces;
 using MG.WebHost.Entities.Sections;
 
 namespace MG.WebHost.Entities
@@ -11,8 +10,8 @@ namespace MG.WebHost.Entities
         public string City { get; set; }
         public string GoogleMapsLink { get; set; }
 
-        public virtual ICollection<UserRequest> UserRequests { get; set; }
-        public virtual ICollection<Section> Sections { get; set; }
-        public virtual ICollection<TimetableRecord> TimetableRecords { get; set; }
+        public virtual ICollection<UserRequest> UserRequests { get; set; } = new HashSet<UserRequest>();
+        public virtual ICollection<Section> Sections { get; set; } = new HashSet<Section>();
+        public virtual ICollection<TimetableRecord> TimetableRecords { get; set; } = new HashSet<TimetableRecord>();
     }
 }

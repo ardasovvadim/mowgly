@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using MG.WebHost.Entities.News;
 using MG.WebHost.Models.News;
@@ -40,9 +36,13 @@ public class NewsService : INewsService
 
     public async Task<NewsDetailsEditModel> AddNews(NewsDetailsEditModel request)
     {
-        var result = request.Id.HasValue
-            ? await _newsRepository.GetByIdAsync(request.Id.Value) ?? new News()
-            : new News();
+        var isNew = !request.Id.HasValue; 
+        var result = isNew
+            ? new News()
+            : await _newsRepository.GetByIdAsync(request.Id.Value) ?? new News();
+
+        if (isNew)
+            result.PublishedDate = DateTime.UtcNow;
 
         _mapper.Map(request, result);
 
@@ -59,5 +59,6 @@ public class NewsService : INewsService
     public async Task DeleteNews(Guid newsId)
     {
         await _newsRepository.DeleteAsync(newsId);
+        await _newsRepository.SaveChangesAsync();
     }
 }

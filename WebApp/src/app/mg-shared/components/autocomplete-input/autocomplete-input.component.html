@@ -1,21 +1,26 @@
-<div class="uk-form-controls uk-position-relative">
+<div class="uk-form-controls uk-position-relative uk-position-relative">
     <span class="uk-form-icon uk-form-icon-flip mg-text-green-main" [hidden]="selectedIdName?.id == null" uk-icon="icon: check"></span>
     <input type="text"
            class="uk-input"
+           (focusout)="inputFocusOut()"
            [placeholder]="placeholder"
            (ngModelChange)="onChange($event)"
            [ngModel]="filteringName"
            (keydown.arrowDown)="highlightBelow()"
            (keydown.arrowUp)="highlightAbove()"
            (keydown.enter)="selectOption()"
-           [disabled]="disabled"
-    >
-</div>
-<div uk-drop="mode: click; delay-hide: 0" [id]="id">
-    <div class="uk-card uk-card-body uk-card-default">
+           [disabled]="disabled">
+
+    <div class="uk-card uk-card-body uk-card-default uk-position-absolute mg-options"
+         [hidden]="!displayOptions"
+         (mouseenter)="isOptionsFocused = true"
+         (mouseleave)="isOptionsFocused = false"
+         (focus)="isOptionsFocused = true"
+         (focusout)="isOptionsFocused = false">
         <div *ngFor="let option of options; let i = index"
+             (click)="onSelected(option)"
              [class.mg-active]="i == highlightIndex">
-            <a (click)="onSelected(option)">{{option.name}}</a>
+            <a>{{option.name}}</a>
         </div>
     </div>
 </div>

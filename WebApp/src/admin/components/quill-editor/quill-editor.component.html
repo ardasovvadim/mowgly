@@ -1,0 +1,49 @@
+<div [id]="toolbarId" class="mg-toolbar" [hidden]="!displayToolBar">
+
+    <div #customTools>
+        <ng-content></ng-content>
+    </div>
+
+    <ng-template [ngIf]="!customTools.children.length">
+        <button uk-icon="bold" (click)="quill.format('bold', true)"></button>
+        <button uk-icon="italic" (click)="quill.format('italic', true)"></button>
+        <button uk-icon="strikethrough" (click)="quill.format('strike', true)"></button>
+        <button uk-icon="underline" (click)="quill.format('underline', true)"></button>
+
+        <button uk-icon="minus" class="mg-separator"></button>
+
+        <span>
+        <button uk-icon="header"></button>
+        <div uk-dropdown="pos: bottom-justify">
+                <ul class="uk-nav uk-dropdown-nav">
+                    <li><a (click)="quill.format('header', 1)">Заголовок 1</a></li>
+                    <li><a (click)="quill.format('header', 2)">Заголовок 2</a></li>
+                    <li><a (click)="quill.format('header', 3)">Заголовок 3</a></li>
+                    <li><a (click)="quill.format('header', 4)">Параграф</a></li>
+                </ul>
+        </div>
+    </span>
+
+        <button uk-icon="minus" class="mg-separator"></button>
+
+        <button uk-icon="minus" (click)="insertDivider()"></button>
+        <button uk-icon="quote-right" (click)="quill.format('blockquote', true)"></button>
+        <button uk-icon="link" (click)="addLink()"></button>
+        <button uk-icon="list" class="ql-list" value="bullet"></button>
+        <button uk-icon="ordered-list" class="ql-list" value="ordered"></button>
+
+        <button uk-icon="minus" class="mg-separator"></button>
+
+        <button uk-icon="align-left" class="ql-align" value=""></button>
+        <button uk-icon="align-right" class="ql-align" value="right"></button>
+        <button uk-icon="align-center" class="ql-align" value="center"></button>
+        <button uk-icon="align-justify" class="ql-align" value="justify"></button>
+
+        <button uk-icon="minus" class="mg-separator"></button>
+
+        <button uk-icon="close" class="ql-clean"></button>
+    </ng-template>
+
+</div>
+
+<div [id]="containerId" class="mg-editor-container"></div>

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace MG.WebHost.Models
 {
     public record Page<T> where T : class

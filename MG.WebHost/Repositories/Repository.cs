@@ -1,7 +1,6 @@
 using System.Linq.Expressions;
 using MG.WebHost.Database;
 using MG.WebHost.Entities.Interfaces;
-using MG.WebHost.Models;
 using MG.WebHost.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -42,8 +41,6 @@ namespace MG.WebHost.Repositories
             if (Transaction != null)
             {
                 await Transaction.CommitAsync();
-                await Transaction.DisposeAsync();
-                Transaction = null;
             }
         }
 
@@ -109,9 +106,9 @@ namespace MG.WebHost.Repositories
             return Context.SaveChangesAsync();
         }
 
-        public async Task BeginTransactionAsync()
+        public async Task<IDisposable> BeginTransactionAsync()
         {
-            Transaction = await Context.Database.BeginTransactionAsync();
+            return Transaction = await Context.Database.BeginTransactionAsync();
         }
 
         public IQueryable<TEntity> GetQueryable()

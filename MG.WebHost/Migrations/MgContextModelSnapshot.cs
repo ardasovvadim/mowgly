@@ -362,12 +362,18 @@ namespace MG.WebHost.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("longtext");
 
+                    b.Property<Guid?>("TournamentId")
+                        .HasColumnType("char(36)");
+
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("TournamentId")
+                        .IsUnique();
 
                     b.ToTable("News", (string)null);
                 });
@@ -638,18 +644,17 @@ namespace MG.WebHost.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("13b24881-bc0f-4dfe-90cf-d9ea39d7674d"),
+                            Id = new Guid("8a6b2abf-2bad-4066-8bfb-6a5d356a6466"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a1bc47a0-035f-45ab-b1a9-c44ce63906df",
-                            CreatedDate = new DateTime(2022, 5, 9, 19, 50, 31, 810, DateTimeKind.Utc).AddTicks(1150),
+                            ConcurrencyStamp = "11c29d0f-4413-41c5-b8f2-671297e2a034",
+                            CreatedDate = new DateTime(2022, 5, 21, 14, 53, 42, 634, DateTimeKind.Utc).AddTicks(480),
                             Deleted = false,
                             Email = "ardasovvadim@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4bcb449e-aeb5-4eac-81ce-af471b21ca10",
                             TwoFactorEnabled = false,
-                            UpdatedDate = new DateTime(2022, 5, 9, 19, 50, 31, 810, DateTimeKind.Utc).AddTicks(1150),
+                            UpdatedDate = new DateTime(2022, 5, 21, 14, 53, 42, 634, DateTimeKind.Utc).AddTicks(480),
                             UserTypes = 8
                         });
                 });
@@ -784,21 +789,6 @@ namespace MG.WebHost.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SectionUser", b =>
-                {
-                    b.Property<Guid>("MastersId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("SectionsId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("MastersId", "SectionsId");
-
-                    b.HasIndex("SectionsId");
-
-                    b.ToTable("SectionUser");
-                });
-
             modelBuilder.Entity("MG.WebHost.Entities.Sections.SectionSetting", b =>
                 {
                     b.HasBaseType("MG.WebHost.Entities.GeneralSetting");
@@ -846,7 +836,13 @@ namespace MG.WebHost.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MG.WebHost.Entities.Tournaments.Tournament", "Tournament")
+                        .WithOne("News")
+                        .HasForeignKey("MG.WebHost.Entities.News.News", "TournamentId");
+
                     b.Navigation("Author");
+
+                    b.Navigation("Tournament");
                 });
 
             modelBuilder.Entity("MG.WebHost.Entities.TimetableRecord", b =>
@@ -864,7 +860,7 @@ namespace MG.WebHost.Migrations
                         .IsRequired();
 
                     b.HasOne("MG.WebHost.Entities.Sections.Section", "Section")
-                        .WithMany()
+                        .WithMany("TimetableRecords")
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -957,21 +953,6 @@ namespace MG.WebHost.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SectionUser", b =>
-                {
-                    b.HasOne("MG.WebHost.Entities.Users.User", null)
-                        .WithMany()
-                        .HasForeignKey("MastersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MG.WebHost.Entities.Sections.Section", null)
-                        .WithMany()
-                        .HasForeignKey("SectionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MG.WebHost.Entities.Sections.SectionSetting", b =>
                 {
                     b.HasOne("MG.WebHost.Entities.Sections.Section", "Section")
@@ -1004,10 +985,14 @@ namespace MG.WebHost.Migrations
             modelBuilder.Entity("MG.WebHost.Entities.Sections.Section", b =>
                 {
                     b.Navigation("Settings");
+
+                    b.Navigation("TimetableRecords");
                 });
 
             modelBuilder.Entity("MG.WebHost.Entities.Tournaments.Tournament", b =>
                 {
+                    b.Navigation("News");
+
                     b.Navigation("Results");
                 });
 

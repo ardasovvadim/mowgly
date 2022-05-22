@@ -1,6 +1,8 @@
 import {environment} from '../../environments/environment';
 import {GeneralSettingVm} from '../models/general-setting.view.model';
 import {UiKit} from './ui-kit';
+import * as moment from 'moment';
+import {defer, Observable} from 'rxjs';
 
 export abstract class Indexer {
   private static id: number = 0;
@@ -47,4 +49,21 @@ export function scrollTo(id: string, offset: number | null = null) {
   const options = offset == null ? {} : {offset};
   const scrollId = `#${id}`;
   UiKit.scroll(scrollId, options)?.scrollTo(scrollId);
+}
+
+export function toNormalDate(date: string): string {
+  return moment(date).format('YYYY-MM-DD')
+}
+
+export function readImageAsDataUrl(event: Event, action: (dataUrl: string) => void) {
+  const file = (event.target as HTMLInputElement).files[0];
+  const fr = new FileReader()
+  fr.onload = () => {
+    action(fr.result as string)
+  }
+  fr.readAsDataURL(file);
+}
+
+export function toNetDate(date: string) {
+  return moment(date).format('YYYY-MM-DD')
 }

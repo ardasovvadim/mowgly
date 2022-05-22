@@ -1,5 +1,3 @@
-using System;
-
 namespace MG.WebHost.Entities.Sections
 {
     public class SectionSetting : GeneralSetting

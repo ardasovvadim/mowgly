@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {delay, finalize, of} from 'rxjs';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {
     AdminTimetableRecordsResponse,
     IdName,
@@ -11,8 +10,9 @@ import * as moment from 'moment';
 import {ManageTimeslotModalComponent} from './manage-timeslot-modal/manage-timeslot-modal.component';
 import {MgOptions, OptionsApiService} from '../../../app/services/options-api.service';
 import {ManageTimetableApiService} from '../../services/manage-timetable-api.service';
-import {filter, map, switchMap, tap} from 'rxjs/operators';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {finalize, of} from 'rxjs';
+import {filter, map, switchMap, tap} from 'rxjs/operators';
 
 @UntilDestroy()
 @Component({
@@ -22,7 +22,8 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
     providers: [
         ManageTimetableApiService,
         OptionsApiService
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageSchedulePageComponent implements OnInit, AfterViewInit {
 
@@ -50,7 +51,8 @@ export class ManageSchedulePageComponent implements OnInit, AfterViewInit {
 
     constructor(
         private readonly timetableService: ManageTimetableApiService,
-        private readonly optionsService: OptionsApiService
+        private readonly optionsService: OptionsApiService,
+        private readonly cdr: ChangeDetectorRef
     ) {
         new Array(24).fill(0).forEach((_, i) => {
             if (i >= 7 && i <= 21) {
@@ -69,9 +71,9 @@ export class ManageSchedulePageComponent implements OnInit, AfterViewInit {
     refreshData(): void {
         this.loading = true;
         this.timetableService.getTimeTableRecords({
-            cities: this.passOrDefault(this.cityFilter),
-            sectionGuids: this.passOrDefault(this.sectionFilter),
-            locationGuids: this.passOrDefault(this.locationFilter),
+            city: this.cityFilter,
+            sectionId: this.sectionFilter,
+            locationId: this.locationFilter,
             filterText: this.filterText
         })
             .pipe(
@@ -79,6 +81,7 @@ export class ManageSchedulePageComponent implements OnInit, AfterViewInit {
             )
             .subscribe(data => {
                 this.response = data;
+                this.cdr.detectChanges();
             });
     }
 
@@ -131,24 +134,18 @@ export class ManageSchedulePageComponent implements OnInit, AfterViewInit {
             endTime = moment(dayTime, 'HH:mm').add(30, 'minutes').format('HH:mm');
         }
 
-        if (this.modal) {
-            this.modal.showTimeslot({
-                dayOfWeek: day,
-                startTime,
-                endTime
-            } as TimetableRecordEditModel);
-        }
+        this.modal.showTimeslot({
+            dayOfWeek: day,
+            startTime,
+            endTime
+        } as TimetableRecordEditModel);
+        this.cdr.detectChanges();
     }
 
     editTimeslot(timeslot: TimetableRecordEditModel) {
-        if (this.modal) {
-            const masterName = this.response.masters.find(m => m.id == timeslot.masterId)?.name;
-            this.modal.showTimeslot({...timeslot, masterId: {id: timeslot.masterId, name: masterName}});
-        }
-    }
-
-    private passOrDefault(filter: string): string[] {
-        return filter ? [filter] : [];
+        const masterName = this.response.masters.find(m => m.id == timeslot.masterId)?.name;
+        this.modal.showTimeslot({...timeslot, masterId: {id: timeslot.masterId, name: masterName}});
+        this.cdr.detectChanges();
     }
 
     ngAfterViewInit(): void {
@@ -158,7 +155,10 @@ export class ManageSchedulePageComponent implements OnInit, AfterViewInit {
                     this.modal.locationSections = data.locations2;
                 })
             )
-            .subscribe(options => this.options = options);
+            .subscribe(options => {
+                this.options = options;
+                this.cdr.detectChanges();
+            });
 
         this.modal.onSubmitted
             .pipe(

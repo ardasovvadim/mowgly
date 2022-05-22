@@ -25,7 +25,8 @@ $mg-light-background: #F6F9F6;
 $inverse-global-color-mode: none;
 
 // Colors
-$global-link-color: $mg-green-text;
+$global-link-color: $mg-green-main;
+$global-link-hover-color: $mg-yellow-main;
 $global-color: $mg-green-text;
 $global-primary-background: $mg-green-main;
 
@@ -59,6 +60,9 @@ $form-radio-focus-border: $form-focus-border;
 $form-background: unset;
 $form-focus-background: unset;
 
+// Notifications
+$notification-position: 20px !default;
+
 
 // ----------> Bootstrap <---------------------------------------------------------------
 
@@ -68,12 +72,12 @@ $mg-breakpoint-large: 1200px;
 $mg-breakpoint-xlarge: 1600px;
 
 $grid-breakpoints: (
-  xs: 0,
-  sm: $mg-breakpoint-small,
-  md: $mg-breakpoint-medium,
-  lg: $mg-breakpoint-large,
-  xl: $mg-breakpoint-xlarge,
-  xxl: $mg-breakpoint-xlarge
+        xs: 0,
+        sm: $mg-breakpoint-small,
+        md: $mg-breakpoint-medium,
+        lg: $mg-breakpoint-large,
+        xl: $mg-breakpoint-xlarge,
+        xxl: $mg-breakpoint-xlarge
 );
 
 $container-max-sm-width: 100%;
@@ -81,9 +85,9 @@ $container-max-md-width: $container-max-sm-width;
 $container-max-lg-width: 1200px;
 $container-max-xxl-width: 1600px;
 $container-max-widths: (
-  sm: 100%,
-  md: 100%,
-  lg: $container-max-lg-width,
-  xl: $container-max-xxl-width,
-  xxl: $container-max-xxl-width
+        sm: 100%,
+        md: 100%,
+        lg: $container-max-lg-width,
+        xl: $container-max-xxl-width,
+        xxl: $container-max-xxl-width
 )

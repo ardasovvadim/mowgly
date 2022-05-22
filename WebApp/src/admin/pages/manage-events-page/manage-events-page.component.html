@@ -6,8 +6,7 @@
          (click)="refreshData()"
          uk-search-icon></a>
       <input class="uk-search-input uk-input" type="search" placeholder="Поиск по названию"
-             (keyup.enter)="refreshData()"
-             (ngModelChange)="filterText = $event;" [ngModel]="filterText">
+             (keyup.enter)="refreshData()" [(ngModel)]="filterText">
     </div>
   </div>
 
@@ -65,7 +64,7 @@
       <td class="uk-table-shrink"
           style="min-width: 150px">{{event.actionDate | date : 'dd-MM-yyyy'}}</td>
       <td class="uk-table-expand"
-          style="min-width: 400px">{{event.tournamentName}}</td>
+          style="min-width: 400px" [class.uk-link]="!!event.newsId" (click)="goToNews(event.newsId)">{{event.tournamentName}}</td>
       <td style="min-width: 100px">{{event.address}}</td>
       <td style="min-width: 100px">{{event.participants}}</td>
       <td>

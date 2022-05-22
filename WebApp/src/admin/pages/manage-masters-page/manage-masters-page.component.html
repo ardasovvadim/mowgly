@@ -1,37 +1,80 @@
-<div class="mg-tools uk-margin-medium-bottom">
+<div class="mg-tools uk-margin-medium-bottom uk-grid-small" uk-grid="">
 
-  <form class="uk-search uk-search-default">
-    <a class="uk-search-icon-flip" uk-search-icon></a>
-    <input class="uk-search-input uk-input" type="search" placeholder="Поиск">
-  </form>
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <div class="uk-search uk-search-default w-100">
+      <a class="uk-search-icon-flip"
+         (click)="refreshData()"
+         uk-search-icon></a>
+      <input class="uk-search-input uk-input" type="search" placeholder="Поиск по названию"
+             (keyup.enter)="refreshData()"
+             (ngModelChange)="filterText = $event;" [ngModel]="filterText">
+    </div>
+  </div>
 
-  <button class="uk-button uk-button-primary" type="button" (click)="addNew()">Добавить инструктора</button>
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <select class="uk-select" [(ngModel)]="sectionFilter" (ngModelChange)="refreshData()">
+      <option [ngValue]="null">Все направления</option>
+      <option *ngFor="let section of sections" [ngValue]="section.id">{{section.name}}</option>
+    </select>
+  </div>
 
-  <button class="uk-button uk-button-primary" type="button" (click)="goTest()">Тест</button>
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <button class="uk-button uk-button-primary" type="button" routerLink="new">
+      <span class="uk-margin-small-right" uk-icon="plus"></span>Добавить
+    </button>
+  </div>
 
-  <a class="uk-icon-button" uk-icon="refresh"></a>
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <button class="uk-button uk-button-primary w-100" type="button" (click)="refreshData()">
+      <span class="uk-margin-small-right" uk-icon="refresh"></span>Обновить
+    </button>
+  </div>
 
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <button class="uk-button uk-button-primary w-100" type="button" (click)="reset()">
+      <span class="uk-margin-small-right" uk-icon="close"></span>Сбросить
+    </button>
+  </div>
 
 </div>
 
-<ng-container *ngIf="test; else other_section">
+<div class="table-wrapper uk-overflow-auto">
 
-<!--  <mg-master-page #masterPageComponent>-->
+  <table class="uk-table uk-table-divide uk-table-justify uk-background-muted" (mouseleave)="currentRowIndex = -1">
 
-<!--    <mg-manage-html manageMasterDescription highlightArea="manageMasterDescription"></mg-manage-html>-->
+    <thead>
+    <tr>
+      <th>№</th>
+      <th>Имя</th>
+      <th>Направления</th>
+      <th>Время создания</th>
+      <th>Время обновления</th>
+      <th></th>
+    </tr>
+    </thead>
 
-<!--  </mg-master-page>-->
+    <tbody style="display: table-row-group"  [smoothHeight]="data">
+    <tr *ngFor="let master of data; let i = index" (mouseenter)="currentRowIndex = i" class="uk-animation-fade uk-animation-fast">
+      <td class="uk-table-shrink" style="min-width: 50px">
+        {{i + 1 + (pageOptions.pageNumber * pageOptions.pageSize)}}
+      </td>
+      <td style="min-width: 150px">
+        {{master.name}}
+      </td>
+      <td>{{master.sections}}</td>
+      <td>{{master.createdDate | date: 'short'}}</td>
+      <td>{{master.updatedDate | date: 'short'}}</td>
+      <td>
+        <div [style.visibility]="currentRowIndex != i ? 'hidden' : ''">
+          <a class="uk-icon-button" uk-icon="pencil" [routerLink]="master.id"></a>
+        </div>
+      </td>
+    </tr>
+    </tbody>
 
+  </table>
 
-</ng-container>
+  <mg-pagination [pageOptions]="pageOptions"
+                 (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
 
-<ng-template #other_section>
-  <div class="row justify-content-center">
-    <div class="col-md-6 col-lg-4 col-xxl-3" *ngFor="let master of $masters | async">
-      <mg-master-card [master]="master">
-        <button class="uk-button uk-button-primary" type="button" (click)="openEditDialog(master)">Редактировать</button>
-      </mg-master-card>
-    </div>
-  </div>
-</ng-template>
-
+</div>

@@ -1,178 +1,178 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of, tap} from 'rxjs';
 import * as moment from 'moment';
-import {tap} from 'rxjs/operators';
-import {ManageTournamentModalComponent} from '../components/manage-tournament-modal/manage-tournament-modal.component';
 import {
-  NewsBlock,
-  NewsBlockType,
-  NewsDetailsVm,
-  NewsImageBlock, TournamentEditModel, TournamentResultsData
+    NewsBlock,
+    NewsBlockType,
+    NewsDetailsVm,
+    NewsImageBlock
 } from '../../app/pages/news-page/news-details/news-details.component';
 import {StorageService} from '../../app/services/storage.service';
 import {UserDataService} from '../../app/services/user-data.service';
-import {Indexer} from '../../app/utils/utils';
+import {
+    ChooseOrCreateEventModalComponent
+} from '../pages/manage-news-page/manage-news-description-page/componenets/choose-or-create-event-modal/choose-or-create-event-modal.component';
+import {ManageNewsApiService} from './manage-news-api.service';
+import {mgSuccessNotification} from '../../app/utils/ui-kit';
 
 @Injectable()
 export class NewsManageService {
 
-  set newsManageService(value: ManageTournamentModalComponent) {
-    this._modalManageTournament = value;
-  }
+    private readonly newsDataSub: BehaviorSubject<NewsDetailsVm> = new BehaviorSubject<NewsDetailsVm>({} as NewsDetailsVm);
 
-  get $data(): Observable<NewsDetailsVm> {
-    return this.dataSub.asObservable();
-  }
-
-  private get blocks(): NewsBlock[] {
-    return this.data?.blocks;
-  }
-
-  private isPublished = false;
-  private data: NewsDetailsVm;
-  private _modalManageTournament: ManageTournamentModalComponent;
-  private readonly saveKey = 'unsaved-article';
-
-  private readonly dataSub: BehaviorSubject<NewsDetailsVm> = new BehaviorSubject<NewsDetailsVm>(null);
-
-  constructor(
-    private readonly storageService: StorageService,
-    private readonly userData: UserDataService
-  ) {
-    console.log('created')
-  }
-
-  blockUp(block: NewsBlock) {
-    const currentIndex = this.blocks.indexOf(block);
-    if (currentIndex == 0)
-      return;
-    const movingItem = this.blocks[currentIndex-1];
-    this.blocks[currentIndex] = movingItem;
-    this.blocks[currentIndex - 1] = block;
-
-    this.saveState();
-  }
-
-  blockDown(block: NewsBlock) {
-    const currentIndex = this.blocks.indexOf(block);
-    if (currentIndex == this.blocks.length - 1)
-      return;
-    const movingItem = this.blocks[currentIndex+1];
-    this.blocks[currentIndex] = movingItem;
-    this.blocks[currentIndex + 1] = block;
-
-    this.saveState();
-  }
-
-  deleteBlock(block: NewsBlock) {
-    const index = this.blocks.indexOf(block);
-    this.blocks.splice(index, 1);
-
-    this.saveState();
-  }
-
-  // todo: animation in a future?
-  addBlock(block: NewsBlock, type: NewsBlockType) {
-    const newBlock = this.createBlock(block, type);
-
-    switch (type) {
-      case NewsBlockType.Image: {
-        const defaultImageBlockData = {
-          url: 'https://autosdutriomphe.fr/wp-content/uploads/2018/04/default-image.png',
-          caption: 'Подпись'
-        } as NewsImageBlock;
-        newBlock.data = JSON.stringify(defaultImageBlockData);
-        break;
-      }
-      case NewsBlockType.Text: {
-        newBlock.data = `<p>Текст ${Indexer.getId()}</p>`
-        break;
-      }
-      case NewsBlockType.Video: {
-        newBlock.data = 'https://www.youtube.com/embed/bfoGTrtFc5g'
-        break;
-      }
-      case NewsBlockType.TournamentResultsTable: {
-        this._modalManageTournament.manageTournament({} as TournamentResultsData);
-        const sub = this._modalManageTournament.onSubmittedAndClosed
-          .subscribe((data: TournamentEditModel) => {
-            if (data)
-              newBlock.data = data.id;
-            sub.unsubscribe();
-          })
-        break;
-      }
+    get $data(): Observable<NewsDetailsVm> {
+        return this.newsDataSub.asObservable();
     }
 
-    this.saveState();
-  }
-
-  getNews(id: string): Observable<NewsDetailsVm> {
-    return this._getNews(id).pipe(
-      tap(data => this.dataSub.next(data))
-    );
-  }
-
-  private _getNews(id: string): Observable<NewsDetailsVm> {
-    if (id === "new") {
-      this.data = this.storageService.get<NewsDetailsVm>(this.saveKey);
-      if (!this.data)
-        this.reset(false);
-
-      return of(this.data);
+    private get data(): NewsDetailsVm {
+        return this.newsDataSub.value;
     }
 
-    return of(null);
-  }
-
-  saveState() {
-    if (this.data && !this.isPublished)
-      this.storageService.set(this.saveKey, this.data);
-  }
-
-  reset(emmit: boolean = true) {
-    this.data = {
-      title: 'Заголовок',
-      description: 'Описание',
-      author: 'Хомутенко Руслан Николаевич',
-      authorAvatar: '',
-      authorId: this.userData.getUserId(),
-      createdDate: moment().toISOString(),
-    } as NewsDetailsVm;
-
-    if (emmit)
-      this.dataSub.next(this.data);
-
-    this.saveState();
-  }
-
-  private createBlock(block: NewsBlock, type: NewsBlockType): NewsBlock {
-    if (!this.blocks) {
-      this.data.blocks = [];
+    private get blocks(): NewsBlock[] {
+        return this.data?.blocks;
     }
 
-    const index = block ? this.blocks.indexOf(block) : -1;
-    const newBlock = {type, order: 0} as NewsBlock;
-    this.blocks.splice(index+1, 0, newBlock);
+    private get isPublished(): boolean {
+        return !!this.newsDataSub.value.id;
+    }
 
-    return newBlock;
-  }
+    private get isEditMode(): boolean {
+        return !this.data?.id;
+    }
 
-  editTournament(tournament: TournamentEditModel) {
-    this._modalManageTournament.manageTournament(tournament);
-    const sub = this._modalManageTournament.onSubmittedAndClosed
-      .subscribe((data: TournamentEditModel) => {
-        if (data) {
-          tournament.name = data.name;
-          tournament.actionDate = data.actionDate;
+    private readonly saveKey = 'unsaved-article';
+
+    createEventModal: ChooseOrCreateEventModalComponent;
+    private savedBlockPosition = -1;
+
+    constructor(
+        private readonly storageService: StorageService,
+        private readonly userData: UserDataService,
+        private readonly newsApiService: ManageNewsApiService
+    ) {
+    }
+
+    blockUp(block: NewsBlock) {
+        const currentIndex = this.blocks.indexOf(block);
+        if (currentIndex == 0)
+            return;
+        this.blocks[currentIndex] = this.blocks[currentIndex - 1];
+        this.blocks[currentIndex - 1] = block;
+
+        this.saveState();
+    }
+
+    blockDown(block: NewsBlock) {
+        const currentIndex = this.blocks.indexOf(block);
+        if (currentIndex == this.blocks.length - 1)
+            return;
+        this.blocks[currentIndex] = this.blocks[currentIndex + 1];
+        this.blocks[currentIndex + 1] = block;
+
+        this.saveState();
+    }
+
+    deleteBlock(block: NewsBlock) {
+        const index = this.blocks.indexOf(block);
+        this.blocks.splice(index, 1);
+
+        this.saveState();
+    }
+
+    // todo: animation in a future?
+    addBlock(block: NewsBlock, type: NewsBlockType) {
+        if (!this.blocks) {
+            this.data.blocks = [];
         }
-        sub.unsubscribe();
-      });
-  }
 
-  deleteBlockByTournamentId(tournamentId: string) {
-    const block = this.blocks.find(b => b.type == NewsBlockType.TournamentResultsTable && b.data === tournamentId);
-    if (block)
-      this.deleteBlock(block);
-  }
+        const newBlock = {type, order: 0} as NewsBlock;
+        const index = block ? this.blocks.indexOf(block) : -1;
+
+        switch (type) {
+            case NewsBlockType.Image: {
+                const defaultImageBlockData = {
+                    url: 'https://autosdutriomphe.fr/wp-content/uploads/2018/04/default-image.png',
+                    caption: 'Подпись'
+                } as NewsImageBlock;
+                newBlock.data = JSON.stringify(defaultImageBlockData);
+                break;
+            }
+            case NewsBlockType.Text: {
+                newBlock.data = `<p>Текст...</p>`
+                break;
+            }
+            case NewsBlockType.Video: {
+                newBlock.data = 'https://www.youtube.com/embed/bfoGTrtFc5g'
+                break;
+            }
+            case NewsBlockType.TournamentResultsTable: {
+                this.createEventModal.chooseEvent();
+                this.savedBlockPosition = index;
+                return;
+            }
+        }
+
+        this.blocks.splice(index + 1, 0, newBlock);
+        this.saveState();
+    }
+
+    getNews(id: string): Observable<NewsDetailsVm> {
+        const data = id == 'new'
+            ? of(this.storageService.get<NewsDetailsVm>(this.saveKey) ?? this.newData())
+            : this.newsApiService.getNewsDetails(id)
+
+        return data.pipe(
+            tap(data => this.newsDataSub.next(data))
+        )
+    }
+
+    saveState() {
+        if (this.isEditMode) {
+            this.storageService.set(this.saveKey, this.data);
+            mgSuccessNotification(`<span uk-icon="check" class="uk-margin-small-right"></span> Данные сохранены`);
+        }
+    }
+
+    reset() {
+        const data = this.newData();
+        this.newsDataSub.next(data);
+        this.saveState();
+    }
+
+    private newData = (): NewsDetailsVm => {
+        return {
+            title: 'Заголовок',
+            description: 'Описание',
+            // todo: not sure
+            createdDate: moment().toISOString(),
+        } as NewsDetailsVm;
+    }
+
+    addTournamentTableBlock(id: string) {
+        if (!id)
+            return;
+
+        const index = this.savedBlockPosition == -1 ? -1 : this.savedBlockPosition;
+        const newBlock = {type: NewsBlockType.TournamentResultsTable, order: 0, data: id} as NewsBlock;
+        if (index == -1)
+            this.blocks.push(newBlock);
+        else
+            this.blocks.splice(index + 1, 0, newBlock);
+
+        this.saveState();
+    }
+
+    publish() {
+        return this.newsApiService.addNews(this.data)
+            .pipe(
+                tap(() => {
+                    if (this.isEditMode)
+                        this.reset();
+                })
+            );
+    }
+
+    deleteNews() {
+        return this.newsApiService.deleteNews(this.data.id);
+    }
 }

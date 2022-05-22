@@ -3,6 +3,7 @@ export interface EventVm {
   actionDate: string;
   tournamentName: string;
   address: string;
+  newsId?: string;
   participants: string;
   googleMapLink: string;
 }

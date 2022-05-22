@@ -1,12 +1,12 @@
 <div class="row mt-50 justify-content-center uk-position-relative">
   <div class="col-md-10">
     <ng-template [ngIf]="!newsNotFound" [ngIfElse]="notFound">
-      <div class="uk-card mg-card-news uk-card-default uk-grid-collapse uk-margin">
+      <div class="uk-card mg-card-news uk-card-default uk-grid-collapse uk-margin w-100">
 
         <ng-template [ngIf]="data?.imageUrl">
           <div class="uk-card-media-left uk-cover-container">
             <!--    todo: alt    -->
-            <img [src]="data.imageUrl" alt="article image" uk-cover>
+            <img [src]="data.imageUrl | image" alt="article image" uk-cover>
             <canvas width="600" height="400"></canvas>
           </div>
         </ng-template>

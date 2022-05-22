@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using MG.WebHost.Entities.Interfaces;
-using MG.WebHost.Entities.Users;
+﻿using MG.WebHost.Entities.Interfaces;
 
 namespace MG.WebHost.Entities.Sections
 {
@@ -10,6 +8,6 @@ namespace MG.WebHost.Entities.Sections
         
         public virtual ICollection<SectionSetting> Settings { get; set; }
         public virtual ICollection<Location> Locations { get; set; }
-        public virtual ICollection<User> Masters { get; set; }
+        public virtual ICollection<TimetableRecord> TimetableRecords { get; set; }
     }
 }

@@ -1,4 +1,11 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Output
+} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {
     IdName,
@@ -8,16 +15,20 @@ import {
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {OptionsApiService} from '../../../../app/services/options-api.service';
 import {Observable} from 'rxjs';
-import {ModalBase} from '../../../../app/interfaces/modal-base';
+import {Indexer} from '../../../../app/utils/utils';
+import UIkit from 'uikit';
+import {UiKit} from '../../../../app/utils/ui-kit';
+import UIkitModalElement = UIkit.UIkitModalElement;
 
 @UntilDestroy()
 @Component({
     selector: 'mg-manage-timeslot-modal',
     templateUrl: './manage-timeslot-modal.component.html',
     styleUrls: ['./manage-timeslot-modal.component.scss'],
-    providers: []
+    providers: [],
+    changeDetection: ChangeDetectionStrategy.Default
 })
-export class ManageTimeslotModalComponent extends ModalBase {
+export class ManageTimeslotModalComponent implements AfterViewInit {
 
     @Output() onSubmitted: EventEmitter<TimetableRecordEditModel> = new EventEmitter<TimetableRecordEditModel>();
     @Output() onDeleted: EventEmitter<TimetableRecordEditModel> = new EventEmitter<TimetableRecordEditModel>();
@@ -51,11 +62,14 @@ export class ManageTimeslotModalComponent extends ModalBase {
     locationSections: LocationSectionOptions[] = [];
     selectedLocation: LocationSectionOptions | null = null;
 
+    readonly id: string = `manage-timetable-slot-modal-${Indexer.getId()}`;
+    get sid(): string { return '#' + this.id }
+
     constructor(
         private fb: FormBuilder,
-        private readonly optionsApiService: OptionsApiService
+        private readonly optionsApiService: OptionsApiService,
+        private readonly cdf: ChangeDetectorRef
     ) {
-        super();
     }
 
     ngOnInit(): void {
@@ -67,12 +81,12 @@ export class ManageTimeslotModalComponent extends ModalBase {
                 this.selectedLocation = this.locationSections.find(l => l.id == value);
 
                 if (value == null) {
-                    this.form.controls['sectionId']?.disable()
-                    this.form.controls['masterId']?.disable()
-                    this.form.value.sectionId = null;
-                    this.form.value.masterId = null;
+                    this.form.controls['sectionId']?.disable({emitEvent: false})
+                    this.form.controls['masterId']?.disable({emitEvent: false})
+                    this.form.get('sectionId')?.setValue(null)
+                    this.form.get('masterId')?.setValue(null)
                 } else
-                    this.form.controls['sectionId']?.enable()
+                    this.form.controls['sectionId']?.enable({emitEvent: false})
             })
 
         this.form.controls['sectionId']?.valueChanges
@@ -81,10 +95,10 @@ export class ManageTimeslotModalComponent extends ModalBase {
             )
             .subscribe(value => {
                 if (value != null) {
-                    this.form.controls['masterId']?.enable();
+                    this.form.controls['masterId']?.enable({emitEvent: false});
                 } else {
-                    this.form.controls['masterId']?.disable()
-                    this.form.value.masterId = null;
+                    this.form.controls['masterId']?.disable({emitEvent: false})
+                    this.form.get('masterId')?.setValue(null);
                 }
             })
     }
@@ -97,19 +111,25 @@ export class ManageTimeslotModalComponent extends ModalBase {
         this.isEditMode = !!timeslot.id;
         this.timeslot = timeslot;
         this.form.reset(timeslot);
-        this.open();
+        this.modal.show();
     }
 
     delete() {
         this.onDeleted.emit(this.form.value);
     }
 
-    cancel() {
-        this.close();
+    close() {
+        this.modal.hide();
     }
 
     refreshMasterOptions(): (string) => Observable<IdName[]> {
         const other = this
-        return (text: string) => other.optionsApiService.getMasterOptions(text, this.form.value.sectionId);
+        return (text: string) => other.optionsApiService.getMasterOptions(text);
+    }
+
+    private modal: UIkitModalElement;
+
+    ngAfterViewInit(): void {
+        this.modal = UiKit.modal(this.sid)
     }
 }

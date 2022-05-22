@@ -33,11 +33,12 @@ namespace MG.WebHost.Services
             return Mapper.Map<IEnumerable<TDto>>(entities);
         }
 
-        public async Task<Page<TDto>> GetListAsync(PageRequest pageRequest, Func<IQueryable<TEntity>, IQueryable<TEntity>> where = null)
+        public async Task<Page<TDto>> GetListAsync(PageRequest pageRequest, Func<IQueryable<TEntity>, IQueryable<TEntity>> where = null, string include = null)
         {
             var query = Repository
                 .GetQueryable()
-                .WhereIf(where != null, where);
+                .WhereIf(where != null, where)
+                .IncludeIf(!include.IsNullOrEmpty(), include);
 
             return new Page<TDto>
             {

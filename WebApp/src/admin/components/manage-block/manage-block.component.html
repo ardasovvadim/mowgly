@@ -1,6 +1,6 @@
 <div class="uk-position-relative"
-     (mouseenter)="isToolbarHidden = false; isHovered = true"
-     (mouseleave)="isToolbarHidden = true; isHovered = false">
+     (mouseenter)="isToolbarHidden = false; isHovered = true; onHovered.emit(true)"
+     (mouseleave)="isToolbarHidden = true; isHovered = false; onHovered.emit(false)">
 
   <div class="manage-block" [class.show-outline]="isHovered">
     <ng-content></ng-content>
@@ -21,7 +21,7 @@
           <li (click)="add(blockTypes.Text)"><a>Текст</a></li>
           <li (click)="add(blockTypes.Image)"><a>Картинка</a></li>
           <li (click)="add(blockTypes.Video)"><a>Видео</a></li>
-          <li (click)="add(blockTypes.TournamentResultsTable)"><a>Таблица</a></li>
+          <li (click)="add(blockTypes.TournamentResultsTable)"><a>Таблица результатов</a></li>
         </ul>
       </div>
     </div>

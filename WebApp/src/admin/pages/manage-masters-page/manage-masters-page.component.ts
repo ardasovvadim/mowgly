@@ -1,81 +1,90 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {MasterVm} from '../../../app/models/masterVm';
-import {ManageMasterService} from '../../services/manage-master.service';
-import {ModalService} from '../../../app/services/modal.service';
-import {ManageMasterModalComponent} from './manage-master-modal/manage-master-modal.component';
-import {MasterEditModel} from '../../models/master-edit-model';
-import {MasterSearchCriteria} from '../../../app/models/masters/master-search-criteria.request';
-import {ActivatedRoute, Router} from '@angular/router';
-import * as ClassicEditor from 'ckeditor/build/ckeditor';
+import {Component, ViewChild} from '@angular/core';
+import {tap} from 'rxjs';
+import {ManageMasterApiService} from '../../services/manage-master-api.service';
+import {AdminMasterVm} from '../../models/master-edit-model';
+import {toSortOrder} from '../../../app/services/events-api.service';
+import {PaginationComponent} from '../../../app/mg-shared/components/pagination/pagination.component';
+import {PageOptions} from '../../../app/models/page';
+import {UntilDestroy} from '@ngneat/until-destroy';
+import {fadeInAnimation} from '../../../app/mg-shared/animations/fadeInAnimation';
+import {smoothHeight} from '../../../app/mg-shared/animations/smooth-height-anim.directive';
+import {OptionsApiService} from '../../../app/services/options-api.service';
+import {IdName} from '../../../app/models/timetable-records/timetable-record.view.model';
 
+@UntilDestroy()
 @Component({
     selector: 'mg-manage-masters-page',
     templateUrl: './manage-masters-page.component.html',
     styleUrls: ['./manage-masters-page.component.scss'],
-    providers: [ManageMasterService]
+    animations: [
+        fadeInAnimation,
+        smoothHeight
+    ],
+    providers: [
+        ManageMasterApiService,
+        OptionsApiService
+    ]
 })
-export class ManageMastersPageComponent implements OnInit, OnDestroy {
+export class ManageMastersPageComponent {
 
-    public Editor = ClassicEditor;
-    $masters: Observable<MasterVm[]>
-    private modal: ManageMasterModalComponent | null = null;
-    test: boolean = false;
+    @ViewChild('pagination') pagination: PaginationComponent;
 
-    constructor(private manageMasterService: ManageMasterService,
-                private modalService: ModalService,
-                private readonly router: Router,
-                private readonly activatedRoute: ActivatedRoute
+    filterText: any;
+    data: AdminMasterVm[];
+    currentRowIndex: number;
+
+    asc: boolean = false;
+    private readonly initialPageOptions = {
+        count: 0,
+        pageSize: 10,
+        pageNumber: 0
+    }
+    pageOptions: PageOptions = {...this.initialPageOptions};
+    sectionFilter: string = null;
+    sections: IdName[] = [];
+
+    constructor(
+        private manageMasterService: ManageMasterApiService,
+        private readonly optionsApiService: OptionsApiService,
     ) {
+        this.refreshData();
+        this.optionsApiService
+            .getSectionOptions(null)
+            .subscribe(data => this.sections = data);
     }
 
-    ngOnInit(): void {
+    refreshData() {
+        this.manageMasterService.getList({
+            filterText: this.filterText,
+            sectionId: this.sectionFilter,
+            pageNumber: this.pageOptions.pageNumber,
+            pageSize: this.pageOptions.pageSize,
+            sort: 'CreatedDate',
+            sortOrder: toSortOrder(this.asc)
+        })
+            .pipe(
+                tap(data => {
+                    if (!data) {
+                        this.pageOptions = null;
+                        return
+                    }
 
-        this.activatedRoute.params.subscribe(params => {
-            const id = params['id'];
-            if (!id) {
-                this.test = false;
-                this.$masters = this.manageMasterService.getCardMasters({pageSize: 10} as MasterSearchCriteria);
-            } else {
-                this.test = true;
-            }
-        });
-
-        this.modalService
-            .createModal<ManageMasterModalComponent>({type: ManageMasterModalComponent})
-            .subscribe(modal => {
-                this.modal = modal;
-                // const master = new MasterVm();
-                // master.id = 'C904A5E6-5057-4E8E-9FB0-12FD80211CB9';
-                // this.openEditDialog(master);
+                    this.pageOptions = {
+                        pageNumber: data.pageNumber,
+                        pageSize: data.pageSize,
+                        count: data.count
+                    }
+                }),
+            )
+            .subscribe(data => {
+                this.data = data.elements;
             });
     }
 
-    openEditDialog(master: MasterVm) {
-        this.manageMasterService
-            .getEditModel(master.id)
-            .subscribe(master => {
-                if (this.modal != null) {
-                    this.modal.displayEditMaster(master);
-                }
-            });
-    }
-
-    ngOnDestroy(): void {
-        if (this.modal != null)
-            this.modalService.deleteModal(this.modal);
-    }
-
-    addNew() {
-        this.modal?.displayEditMaster({} as MasterEditModel, false);
-    }
-
-    goTest() {
-        this.test = !this.test;
-        if (this.test) {
-            this.router.navigate(['admin', 'masters', '834df39b-0e2f-435b-9447-799c472612b1']);
-        } else {
-            this.router.navigate(['../']);
-        }
+    reset() {
+        this.filterText = null;
+        this.sectionFilter = null;
+        this.pageOptions = {...this.initialPageOptions};
+        this.refreshData();
     }
 }

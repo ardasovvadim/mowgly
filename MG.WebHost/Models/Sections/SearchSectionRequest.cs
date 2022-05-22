@@ -1,5 +1,3 @@
-using System;
-
 namespace MG.WebHost.Models.Sections
 {
     public class SearchSectionRequest

@@ -20,27 +20,31 @@ public class DbMigrationWorker : IHostedService
         await using var scope = ServiceProvider.CreateAsyncScope();
         var serviceProvider = scope.ServiceProvider;
         var logger = serviceProvider.GetRequiredService<ILogger<DbMigrationWorker>>();
-        var settings = serviceProvider.GetService<IOptions<ServiceSettings>>()?.Value;
+        var settings = serviceProvider.GetRequiredService<IOptions<ServiceSettings>>().Value;
         
-        if (settings?.RecreateDb != true)
-            return;
-        
-        logger.LogInformation("Db will be recreated");
-
         try
         {
             await using var context = serviceProvider.GetRequiredService<MgContext>();
-            
-            logger.LogInformation("Deleting DB...");
-            await context.Database.EnsureDeletedAsync(cancellationToken);
 
-            logger.LogInformation("Creating DB...");
-            await context.Database.EnsureCreatedAsync(cancellationToken);
+            if (settings.RecreateDb)
+            {
+                logger.LogInformation("Db will be recreated");
 
-            // logger.LogInformation("Migrating DB...");
-            // await context.Database.MigrateAsync(cancellationToken);
+                
+                logger.LogInformation("Deleting DB...");
+                await context.Database.EnsureDeletedAsync(cancellationToken);
 
-            if (settings.UseMockData)
+                logger.LogInformation("Creating DB...");
+                await context.Database.EnsureCreatedAsync(cancellationToken);
+            }
+
+            if (settings.MigrateDb)
+            {
+                logger.LogInformation("Migrating DB...");
+                await context.Database.MigrateAsync(cancellationToken);
+            }
+
+            if (settings.SeedData)
             {
                 logger.LogInformation("Seeding mock data to DB...");
                 TestDbData.Initialize(context);

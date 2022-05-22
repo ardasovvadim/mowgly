@@ -9,7 +9,7 @@ import {goToExternalLink} from '../../../utils/utils';
 })
 export class LocationCardComponent implements OnInit {
 
-  @Input() location: LocationViewModel = new LocationViewModel();
+  @Input() location: LocationViewModel = {} as LocationViewModel;
 
   constructor() { }
 

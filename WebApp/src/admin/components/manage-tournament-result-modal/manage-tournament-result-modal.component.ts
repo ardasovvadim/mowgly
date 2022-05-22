@@ -7,7 +7,8 @@ import {
   TournamentResultsData
 } from '../../../app/pages/news-page/news-details/news-details.component';
 import {IdName} from '../../../app/models/timetable-records/timetable-record.view.model';
-import {Observable} from 'rxjs';
+import {catchError, Observable} from 'rxjs';
+import {mgConfirm} from '../../../app/utils/ui-kit';
 
 @Component({
   selector: 'mg-manage-tournament-result-modal',
@@ -21,15 +22,15 @@ export class ManageTournamentResultModalComponent extends ManageModal {
   tournament: TournamentResultsData;
 
   form: FormGroup = this.fb.group({
+    'id': [null],
     'student': [''],
     'place': [''],
     'score': [''],
     'additionalInfo': [''],
     'awards': ['']
   });
-  studentOptions: IdName[];
 
-  refreshStudentOptions(filterText: string): Observable<IdName[]> {
+  refreshStudentOptions = (filterText: string): Observable<IdName[]> => {
     return this.tournamentService.getStudents({
       filterText,
       except: this.tournament?.results.map(r => r.student.id)
@@ -52,11 +53,21 @@ export class ManageTournamentResultModalComponent extends ManageModal {
   }
 
   submit() {
-    this.tournamentService.addResult(this.tournament?.id, {...this.form.value, id: this.result.id})
-      .subscribe(_ => {
-        this.onSubmittedAndClosed.emit();
-        this.close();
-      });
+    if (this.form.invalid)
+      return
+
+    const student = this.form.value.student as IdName;
+
+    if (!student.id) {
+      mgConfirm('Участник не был найден. Вы уверены что хотите создать нового?')
+          .subscribe({
+            next: () => this.addResult(),
+            error: () => this.open()
+          });
+      return;
+    }
+
+    this.addResult();
   }
 
   manageResult(tournament: TournamentResultsData, result: TournamentResult) {
@@ -73,5 +84,13 @@ export class ManageTournamentResultModalComponent extends ManageModal {
           this.onSubmittedAndClosed.emit();
           this.close();
         })
+  }
+
+  private addResult() {
+    this.tournamentService.addResult(this.tournament?.id, this.form.value)
+        .subscribe(_ => {
+          this.onSubmittedAndClosed.emit();
+          this.close();
+        });
   }
 }

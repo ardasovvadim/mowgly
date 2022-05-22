@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {LocationService} from '../../services/location.service';
+import {LocationApiService} from '../../services/location-api.service';
 import {LocationViewModel} from '../../models/locations/location.view.model';
 import {UiKit} from '../../utils/ui-kit';
 import {Indexer} from '../../utils/utils';
@@ -33,8 +33,7 @@ import {TRSearchCriteriaRequest} from '../../models/timetable-records/timetable-
 export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public locationsCityGroups: Map<string, LocationViewModel[]> = new Map<string, LocationViewModel[]>();
-  public sectionsColumn1: SectionVm[] = [];
-  public sectionsColumn2: SectionVm[] = [];
+  public sections: SectionVm[] = [];
   public masters: MasterVm[] = [];
   public switcherId: string = `switcher-${Indexer.getId()}`;
   private $currentStep: BehaviorSubject<RegistrationState>;
@@ -51,7 +50,7 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
   private regCompletedModal: RegCompletedModalComponent | null = null;
   private switcherRef: HTMLElement | null = null;
 
-  constructor(private locationService: LocationService,
+  constructor(private locationService: LocationApiService,
               private modalService: ModalService,
               private sectionService: SectionService,
               private registrationStateService: RegistrationStateService,
@@ -115,7 +114,7 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
 
   showSectionTimeTableRecords(section: SectionVm): void {
     if (section != null && this.state.selectedLocation != null) {
-      this.timetableModal?.displayTimetableRecords({sectionGuids: [section.id], masterGuids: [], locationGuids: [this.state.selectedLocation]});
+      this.timetableModal?.displayTimetableRecords({sectionId: section.id, locationId: this.state.selectedLocation});
     }
   }
 
@@ -124,9 +123,8 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
       && this.state.selectedLocation != null
       && master != null) {
       this.timetableModal?.displayTimetableRecords({
-        sectionGuids: [],
-        masterGuids: [master.id],
-        locationGuids: [this.state.selectedLocation]
+        masterId: master.id,
+        locationId: this.state.selectedLocation
       } as TRSearchCriteriaRequest);
     }
   }
@@ -177,13 +175,7 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
 
       this.sectionService
         .getSectionByLocationId(this.state.selectedLocation)
-        .subscribe(sections => {
-          this.sectionsColumn1 = sections.filter(s => {
-            const value = s.settings.find(setting => setting.name == SectionSettingKeys.CardColumn)?.value;
-            return value != null && +value == 1;
-          });
-          this.sectionsColumn2 = sections.filter(s => !this.sectionsColumn1.includes(s));
-        });
+        .subscribe(sections => this.sections = sections);
     }
   }
 

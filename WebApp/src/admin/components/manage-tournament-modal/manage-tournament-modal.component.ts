@@ -23,7 +23,6 @@ export class ManageTournamentModalComponent extends ManageModal {
   constructor(
     private readonly fb: FormBuilder,
     private readonly tournamentService: ManageTournamentApiService,
-    // private readonly newsService: NewsManageService
   ) {
     super();
   }

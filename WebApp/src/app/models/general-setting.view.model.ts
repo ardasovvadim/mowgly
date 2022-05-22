@@ -1,11 +1,11 @@
 import {DataType} from './data-type';
 import {parseImage} from '../utils/utils';
 
-export class GeneralSettingVm {
-  id: string = '';
-  name: string = '';
-  value: string = '';
-  dataType: DataType = DataType.None;
+export interface GeneralSettingVm {
+  id: string;
+  name: string;
+  value: string;
+  dataType: DataType;
 }
 
 export function containsSetting(settings: GeneralSettingVm[], key: string) {
@@ -18,8 +18,10 @@ export function setOrCreateSetting(settings: GeneralSettingVm[], key: string, va
 
   let setting = settings.find(s => s.name == key);
   if (setting == null) {
-    setting = new GeneralSettingVm();
-    setting.dataType = dataType;
+    setting = {
+      name: key,
+      dataType: dataType
+    } as GeneralSettingVm;
     settings.push(setting);
   }
 
@@ -59,8 +61,9 @@ export function stringifySettingValue(value: any, dataType: DataType): string {
   }
 }
 
-export function getValueOrDefault(settings: GeneralSettingVm[], key: string): string {
-  return settings?.find(s => s.name === key).value ?? '';
+export function getValueOrDefault(settings: GeneralSettingVm[], key: string, defaultValue: string = null): string {
+  const value = settings?.find(s => s.name === key)
+  return value ? parseValue(value) : null ?? defaultValue ?? '';
 }
 
 export function parseValue(setting: GeneralSettingVm): any {
@@ -78,7 +81,3 @@ export function parseValue(setting: GeneralSettingVm): any {
       return setting.value;
   }
 }
-
-
-
-

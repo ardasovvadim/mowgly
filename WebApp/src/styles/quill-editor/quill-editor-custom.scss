@@ -1,0 +1,21 @@
+.mg-news-text-editor {
+
+  .ql-container {
+    border: unset;
+  }
+
+  .ql-editor {
+    padding: 0;
+  }
+
+  .mg-toolbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateY(-100%);
+  }
+
+  .ql-editor.ql-blank::before {
+    left: 0;
+  }
+}

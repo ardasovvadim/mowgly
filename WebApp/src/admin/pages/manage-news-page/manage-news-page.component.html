@@ -1,8 +1,67 @@
-<div class="row">
-  <div class="col-12">
-    <button class="uk-button uk-button-primary" (click)="add()">Добавить</button>
+<div class="uk-grid-small uk-child-width-1-2@m uk-child-width-auto@l" uk-grid>
+  <div>
+    <div class="uk-search uk-search-default w-100" style="min-width: 300px;">
+      <a class="uk-search-icon-flip"
+         (click)="refreshData()"
+         uk-search-icon></a>
+      <input class="uk-search-input uk-input" type="search" placeholder="Поиск по заголовоку"
+             (keyup.enter)="refreshData()" [(ngModel)]="filterText">
+    </div>
+  </div>
+  <div>
+    <div class="uk-inline w-100">
+      <span class="uk-form-icon uk-form-icon-flip mg-text-green-main" uk-icon="icon: calendar"></span>
+      <input class="uk-input" type="date" placeholder="Дата события"
+             (ngModelChange)="filterDate = $event; refreshData()" [ngModel]="filterDate">
+    </div>
+  </div>
+  <div>
+    <button class="uk-button uk-button-primary w-100" (click)="add()">Добавить</button>
+  </div>
+  <div>
+    <button class="uk-button uk-button-primary w-100" (click)="refreshData()">Обновить</button>
+  </div>
+  <div>
+    <button class="uk-button uk-button-primary w-100" (click)="reset()">Сбросить</button>
   </div>
 </div>
 
-<mg-news-page>
-</mg-news-page>
+
+<div class="table-wrapper uk-overflow-auto">
+
+  <table class="uk-table uk-table-divide uk-table-justify uk-background-muted" (mouseleave)="currentRowIndex = -1">
+
+    <thead>
+    <tr>
+      <th>№</th>
+      <th (click)="asc = !asc; refreshData()" class="mg-pointer">
+        Дата публикации
+        <ng-template [ngIf]="asc" [ngIfElse]="down"><span uk-icon="chevron-up"></span></ng-template>
+        <ng-template #down><span uk-icon="chevron-down"></span></ng-template>
+      </th>
+      <th>Заголовок</th>
+      <th>Автор</th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody style="display: table-row-group"  [smoothHeight]="data">
+    <tr *ngFor="let news of data; let i = index" (mouseenter)="currentRowIndex = i" class="uk-animation-fade uk-animation-fast">
+      <td class="uk-table-shrink" style="min-width: 50px">{{i + 1 + (pageOptions.pageNumber * pageOptions.pageSize)}}</td>
+      <td class="uk-table-shrink" style="min-width: 200px">{{news.publishedDate | date : 'dd-MM-yyyy'}}</td>
+      <td class="uk-table-expand" style="min-width: 300px">{{news.title}}</td>
+      <td style="min-width: 300px">{{news.authorName}}</td>
+      <td>
+        <div [style.visibility]="currentRowIndex != i ? 'hidden' : ''">
+          <a class="uk-icon-button" uk-icon="pencil" (click)="edit(news.id)"></a>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+
+  </table>
+
+  <mg-pagination [pageOptions]="pageOptions"
+                 (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
+
+</div>

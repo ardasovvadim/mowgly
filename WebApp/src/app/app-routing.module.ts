@@ -9,7 +9,6 @@ import {SchedulePageComponent} from './pages/schedule-page/schedule-page.compone
 import {NewsPageComponent} from './pages/news-page/news-page.component';
 import {NewsDetailsComponent} from './pages/news-page/news-details/news-details.component';
 import {NotFoundPageComponent} from './pages/not-found-page/not-found-page.component';
-import {AuthorizeGuard} from '../api-authorization/authorize.guard';
 
 const routes: Routes = [
     {path: 'admin', loadChildren: () => import('../admin/admin.module').then(m => m.AdminModule)},
@@ -24,7 +23,8 @@ const routes: Routes = [
             {path: 'schedule', component: SchedulePageComponent},
             {path: 'news', component: NewsPageComponent},
             {path: 'news/:id', component: NewsDetailsComponent},
-            // {path: '**', component: NotFoundPageComponent}
+            {path: '404', component: NotFoundPageComponent},
+            {path: '**', component: NotFoundPageComponent}
         ]
     },
 ];

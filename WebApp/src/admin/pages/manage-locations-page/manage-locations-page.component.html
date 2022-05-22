@@ -1,13 +1,34 @@
-<div class="mg-tools uk-margin-medium-bottom">
-  <div class="uk-search uk-search-default">
-    <a class="uk-search-icon-flip" uk-search-icon></a>
-    <input class="uk-search-input uk-input" type="search" placeholder="Поиск" [(ngModel)]="nameFiltering">
+<div class="mg-tools uk-margin-medium-bottom uk-grid-small" uk-grid>
+
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <div class="uk-search uk-search-default w-100">
+      <a class="uk-search-icon-flip"
+         (click)="refreshData()"
+         uk-search-icon></a>
+      <input class="uk-search-input uk-input" type="search" placeholder="Поиск по названию"
+             (keyup.enter)="refreshData()" [(ngModel)]="filterText">
+    </div>
   </div>
-  <select class="uk-select" [(ngModel)]="filteringCity">
-    <option [ngValue]="null">Все города</option>
-    <option *ngFor="let city of cities" [ngValue]="city">{{city}}</option>
-  </select>
-  <button class="uk-button uk-button-primary" type="button" (click)="addNew()">Добавить филиал</button>
+
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <select class="uk-select" [(ngModel)]="filteringCity" (ngModelChange)="refreshData()">
+      <option [ngValue]="null">Все города</option>
+      <option *ngFor="let city of cities" [ngValue]="city">{{city}}</option>
+    </select>
+  </div>
+
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <button class="uk-button uk-button-primary" type="button" (click)="addNew()">
+      <span class="uk-margin-small-right" uk-icon="plus"></span>Добавить
+    </button>
+  </div>
+
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <button class="uk-button uk-button-primary w-100" type="button" (click)="refreshData()">
+      <span class="uk-margin-small-right" uk-icon="refresh"></span>Обновить
+    </button>
+  </div>
+
 </div>
 
 <div class="row justify-content-center">
@@ -19,3 +40,5 @@
     </div>
   </div>
 </div>
+
+<mg-manage-location-modal #manageLocationModalComponent></mg-manage-location-modal>

@@ -27,17 +27,16 @@ namespace MG.WebHost.MockData
         {
             var users = new List<User>
             {
-                new()
+                new(
+                    firstName: "Руслан",
+                    lastName: "Хомутенко",
+                    middleName: "Николаевич")
                 {
                     Id = Guid.Parse("8F256A33-E2BA-4FE1-860B-67947CDADAD8"),
-                    FirstName = "Руслан",
-                    LastName = "Хомутенко",
-                    MiddleName = "Николаевич",
-                    NormalizedName = "ХОМУТЕНКО РУСЛАН НИКОЛАЕВИЧ",
                     UserTypes = UserType.Admin
                 }
             };
-            
+
             context.Users.AddRange(users);
             context.SaveChanges();
 
@@ -74,9 +73,9 @@ namespace MG.WebHost.MockData
         {
             var students = new List<User>
             {
-                new() { FirstName = "Иван", LastName = "Иванов", MiddleName = "Иванович", NormalizedName = "ИВАН ИВАНОВ ИВАНОВИЧ", UserTypes = UserType.Student },
-                new() { FirstName = "Александр", LastName = "Жуков", MiddleName = "Владимирович", NormalizedName = "АЛЕКСАНДР ЖУКОВ ВЛАДИМИРОВИЧ", UserTypes = UserType.Student },
-                new() { FirstName = "Никита", LastName = "Добрыня", MiddleName = "Александрович", NormalizedName = "НИКИТА ДОБРЫНЯ АЛЕКСАНДРОВИЧ", UserTypes = UserType.Student },
+                new(firstName: "Иван", lastName: "Иванов", middleName: "Иванович") { UserTypes = UserType.Student },
+                new("Александр", "Жуков", "Владимирович") {UserTypes = UserType.Student },
+                new("Никита", "Добрыня", "Александрович") { UserTypes = UserType.Student },
             };
             
             context.Users.AddRange(students);
@@ -175,31 +174,31 @@ namespace MG.WebHost.MockData
                 {
                     Id = Guid.Parse("bbf76a2e-1949-41a8-8f4b-7574207b4442"),
                     PhysicalImageSubPath = "Masters",
-                    Extension = "png"
+                    Extension = ".png"
                 },
                 new()
                 {
                     Id = Guid.Parse("12b57b36-e781-4463-89f7-eaa3b063065b"),
                     PhysicalImageSubPath = "Masters",
-                    Extension = "png"
+                    Extension = ".png"
                 },
                 new()
                 {
                     Id = Guid.Parse("d6fb834b-454d-42e4-98c6-92916a85d654"),
                     PhysicalImageSubPath = "Masters",
-                    Extension = "png"
+                    Extension = ".png"
                 },
                 new()
                 {
                     Id = Guid.Parse("c21c070c-57e6-417b-8be7-ce66bfdca7c1"),
                     PhysicalImageSubPath = "Masters",
-                    Extension = "png"
+                    Extension = ".png"
                 },
                 new()
                 {
                     Id = Guid.Parse("3eedd769-1a3c-423f-9091-d73a29e7056e"),
                     PhysicalImageSubPath = "Masters",
-                    Extension = "png"
+                    Extension = ".png"
                 }
             };
             
@@ -207,14 +206,11 @@ namespace MG.WebHost.MockData
             
             var masters = new List<User>
             {
-                new()
+                new(firstName: "Евгения", 
+                    lastName: "Волощенко",
+                    middleName: "Константиновна")
                 {
                     UserTypes = UserType.Master,
-                    Sections = sections,
-                    FirstName = "Евгения", 
-                    LastName = "Волощенко",
-                    MiddleName = "Константиновна",
-                    NormalizedName = "ВОЛОЩЕНКО ЕВГЕНИЯ КОНСТАНТИНОВНА",
                     Profiles = new List<UserProfile>
                     {
                         new()
@@ -249,14 +245,12 @@ namespace MG.WebHost.MockData
                         }
                     }
                 },
-                new()
+                new(
+                    firstName: "Амиран", 
+                    lastName: "Цискарадзе",
+                    middleName: "Автандилович")
                 {
                     UserTypes = UserType.Master,
-                    Sections = sections,
-                    FirstName = "Амиран", 
-                    LastName = "Цискарадзе",
-                    MiddleName = "Автандилович",
-                    NormalizedName = "ЦИСКАРАДЗЕ АМИРАН АВТАНДИЛОВИЧ",
                     Profiles = new List<UserProfile>
                     {
                         new()
@@ -273,20 +267,18 @@ namespace MG.WebHost.MockData
                         }
                     }
                 },
-                new()
+                new(
+                    firstName: "Иван", 
+                    lastName: "Иванов",
+                    middleName: "Иванович")
                 {
                     UserTypes = UserType.Master,
-                    Sections = sections,
-                    FirstName = "Иван", 
-                    LastName = "Иванов",
-                    MiddleName = "Иванович",
-                    NormalizedName = "ИВАНОВ ИВАН ИВАНОВИЧ",
                     Profiles = new List<UserProfile>
                     {
                         new()
                         {
                             Name = UserProfileKeys.CardMasterAchievements,
-                            Value = "[\"Мастер Спорта СССР по борьбе\", \"Черный пояс кэмпо-джитсу, кэмпо-кай\", \"Черный пояс 3 Дан Пангратион\"]",
+                            Value = "<p>Кандидат в Мастера спорта Украины</p><p>Чемпионка Украины по каратэ</p><p>Призер Международных турниров</p>",
                             DataType = DataType.Html
                         },
                         new()

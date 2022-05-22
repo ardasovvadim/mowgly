@@ -14,6 +14,10 @@ import {
 } from './pages/manage-news-page/manage-news-description-page/manage-news-description-page.component';
 import {ManageEventsPageComponent} from './pages/manage-events-page/manage-events-page.component';
 import {AuthorizeGuard} from '../api-authorization/authorize.guard';
+import {ManageMasterPageComponent} from './pages/manage-masters-page/manage-master-page/manage-master-page.component';
+import {
+  ManageTournamentResultsPageComponent
+} from './pages/manage-tournament-results-page/manage-tournament-results-page.component';
 
 const routes: Routes = [
   {
@@ -21,18 +25,19 @@ const routes: Routes = [
     component: AdminLayoutComponent,
     canActivate: [AuthorizeGuard],
     children: [
-      {path: '', redirectTo: 'schedule', pathMatch: 'full'},
-      {path: 'masters/:id', component: ManageMastersPageComponent},
-      {path: 'masters', component: ManageMastersPageComponent},
-      {path: 'news', component: ManageNewsPageComponent},
-      {path: 'news/:id', component: ManageNewsDescriptionPageComponent},
-      {path: 'orders', component: ManageOrdersPageComponent},
-      {path: 'sections', component: ManageSectionsPageComponent},
-      {path: 'settings', component: ManageSettingsPageComponent},
-      {path: 'users', component: ManageUsersPageComponent},
-      {path: 'locations', component: ManageLocationsPageComponent},
-      {path: 'schedule', component: ManageSchedulePageComponent},
-      {path: 'events', component: ManageEventsPageComponent},
+      {path: '', redirectTo: 'schedule', pathMatch: 'full', canActivate: [AuthorizeGuard]},
+      {path: 'masters/:id', component: ManageMasterPageComponent, canActivate: [AuthorizeGuard]},
+      {path: 'masters', component: ManageMastersPageComponent, canActivate: [AuthorizeGuard]},
+      {path: 'news', component: ManageNewsPageComponent, canActivate: [AuthorizeGuard]},
+      {path: 'news/:id', component: ManageNewsDescriptionPageComponent, canActivate: [AuthorizeGuard]},
+      {path: 'orders', component: ManageOrdersPageComponent, canActivate: [AuthorizeGuard]},
+      {path: 'sections', component: ManageSectionsPageComponent, canActivate: [AuthorizeGuard]},
+      {path: 'settings', component: ManageSettingsPageComponent, canActivate: [AuthorizeGuard]},
+      {path: 'users', component: ManageUsersPageComponent, canActivate: [AuthorizeGuard]},
+      {path: 'locations', component: ManageLocationsPageComponent, canActivate: [AuthorizeGuard]},
+      {path: 'schedule', component: ManageSchedulePageComponent, canActivate: [AuthorizeGuard]},
+      {path: 'events', component: ManageEventsPageComponent, canActivate: [AuthorizeGuard]},
+      {path: 'events/:id/results', component: ManageTournamentResultsPageComponent, canActivate: [AuthorizeGuard]},
     ]
   },
 

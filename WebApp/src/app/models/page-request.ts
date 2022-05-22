@@ -6,3 +6,7 @@ export interface PageRequest {
   sort?: string;
   sortOrder?: SortOrder;
 }
+
+export interface FilterPageRequest extends PageRequest {
+  filterText?: string;
+}

@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using MG.WebHost.Entities.Interfaces;
-using MG.WebHost.Utils;
 
 namespace MG.WebHost.Entities.Tournaments;
 
@@ -37,4 +34,6 @@ public class Tournament : BaseEntity
     }
 
     public ICollection<TournamentResult> Results { get; set; }
+
+    public virtual News.News News { get; set; }
 }

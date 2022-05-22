@@ -1,7 +1,7 @@
 <div class="mg-card">
-  <div class="wrapper" [innerHTML]="section.settings | settingValue: 'CardHeader' | interpolation: section"></div>
+  <h3>{{section.name}}</h3>
 
-  <div class="wrapper" [innerHTML]="section.settings | settingValue: 'CardDescription'"></div>
+  <div class="wrapper" [innerHTML]="section.profiles | settingValue: 'CardDescription'"></div>
 
   <div class="card-bottom d-flex mt-4 align-items-center">
     <a (click)="openTimeTable.emit(section)"><span class="uk-margin-right"><mg-icon color="green-main" icon="calendar"></mg-icon></span>Расписание</a>

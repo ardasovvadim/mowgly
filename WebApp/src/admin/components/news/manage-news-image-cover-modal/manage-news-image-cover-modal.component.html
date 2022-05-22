@@ -6,10 +6,14 @@
 
   <form [formGroup]="form">
     <div class="uk-margin">
-      <label class="uk-form-label" for="url">Ссылка:</label>
+      <label class="uk-form-label" for="url">Изображение:</label>
       <div class="uk-form-controls">
-        <input type="text" class="uk-input" placeholder="Вставте ссылку с изображением" formControlName="url" id="url">
+        <input readonly="true" type="text" class="uk-input" placeholder="Ссылка или маркер изображения" formControlName="url" id="url">
       </div>
+    </div>
+
+    <div class="uk-margin">
+      <p class="uk-text-middle">Добавить новое <a (click)="addNewImage()">изображение</a></p>
     </div>
 
     <div *ngIf="showCaptionInput" class="uk-margin">
@@ -21,3 +25,5 @@
   </form>
 
 </mg-manage-modal>
+
+<mg-add-image-modal #addImageModal [aspectRatio]="3/2" [saveOptions]="{maxHeight: 400, maxWidth: 600}"></mg-add-image-modal>

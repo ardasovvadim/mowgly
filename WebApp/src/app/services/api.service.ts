@@ -28,8 +28,10 @@ export class ApiService {
     ).pipe(map(obj => obj as T));
   }
 
-  public post<T>(link: string, body: any): Observable<T> {
-    return this.httpClient.post(`${this.baseApiUrl}/${link}`, body).pipe(map(obj => obj as T));
+  public post<T>(link: string, body: any, queryParams: HttpParams = null): Observable<T> {
+    return this.httpClient.post(`${this.baseApiUrl}/${link}`, body, {
+      params: queryParams
+    }).pipe(map(obj => obj as T));
   }
 
   delete<T>(link: string): Observable<T> {

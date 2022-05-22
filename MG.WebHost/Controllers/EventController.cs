@@ -5,6 +5,7 @@ using MG.WebHost.Models.Events;
 using MG.WebHost.Services;
 using MG.WebHost.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MG.WebHost.Controllers;
 
@@ -26,7 +27,8 @@ public class EventController : BaseController
             var filterText = request.FilterText?.Trim();
             return query
                 .WhereIf(request.ActionDate != null, t => t.ActionDate >= request.ActionDate)
-                .WhereIf(!filterText.IsNullOrEmpty(), t => t.NormalizedName.Contains(filterText));
+                .WhereIf(!filterText.IsNullOrEmpty(), t => t.NormalizedName.Contains(filterText))
+                .Include(e => e.News);
         });
     }
     

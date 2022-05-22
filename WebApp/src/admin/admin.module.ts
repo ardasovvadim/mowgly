@@ -9,11 +9,7 @@ import {ManageOrdersPageComponent} from './pages/manage-orders-page/manage-order
 import {ManageUsersPageComponent} from './pages/manage-users-page/manage-users-page.component';
 import {ManageMastersPageComponent} from './pages/manage-masters-page/manage-masters-page.component';
 import {ManageSectionsPageComponent} from './pages/manage-sections-page/manage-sections-page.component';
-import {
-    ManageMasterModalComponent
-} from './pages/manage-masters-page/manage-master-modal/manage-master-modal.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {QuillModule} from 'ngx-quill';
 import {ManageLocationsPageComponent} from './pages/manage-locations-page/manage-locations-page.component';
 import {
     ManageLocationModalComponent
@@ -25,7 +21,6 @@ import {
     ManageTimeslotModalComponent
 } from './pages/manage-schedule-page/manage-timeslot-modal/manage-timeslot-modal.component';
 import {ManageUserModalComponent} from './pages/manage-users-page/manage-user-modal/manage-user-modal.component';
-import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {
     ManageSectionModalComponent
 } from './pages/manage-sections-page/manage-section-modal/manage-section-modal.component';
@@ -50,6 +45,13 @@ import {
 import {ManageTournamentModalComponent} from './components/manage-tournament-modal/manage-tournament-modal.component';
 import {ManageEventsPageComponent} from './pages/manage-events-page/manage-events-page.component';
 import {ManageEventModalComponent} from './pages/manage-events-page/manage-event-modal/manage-event-modal.component';
+import { ManageMasterPageComponent } from './pages/manage-masters-page/manage-master-page/manage-master-page.component';
+import {AngularCropperjsModule} from 'angular-cropperjs';
+import { ImageCroppModalComponent } from './components/image-cropp-modal/image-cropp-modal.component';
+import { AddImageModalComponent } from './components/add-image-modal/add-image-modal.component';
+import { QuillEditorComponent } from './components/quill-editor/quill-editor.component';
+import { ChooseOrCreateEventModalComponent } from './pages/manage-news-page/manage-news-description-page/componenets/choose-or-create-event-modal/choose-or-create-event-modal.component';
+import { ManageTournamentResultsPageComponent } from './pages/manage-tournament-results-page/manage-tournament-results-page.component';
 
 @NgModule({
     declarations: [
@@ -60,7 +62,6 @@ import {ManageEventModalComponent} from './pages/manage-events-page/manage-event
         ManageUsersPageComponent,
         ManageMastersPageComponent,
         ManageSectionsPageComponent,
-        ManageMasterModalComponent,
         ManageLocationsPageComponent,
         ManageLocationModalComponent,
         ManageModalComponent,
@@ -81,6 +82,12 @@ import {ManageEventModalComponent} from './pages/manage-events-page/manage-event
         ManageTournamentModalComponent,
         ManageEventsPageComponent,
         ManageEventModalComponent,
+        ManageMasterPageComponent,
+        ImageCroppModalComponent,
+        AddImageModalComponent,
+        QuillEditorComponent,
+        ChooseOrCreateEventModalComponent,
+        ManageTournamentResultsPageComponent,
     ],
     exports: [
         ManageModalComponent
@@ -89,12 +96,11 @@ import {ManageEventModalComponent} from './pages/manage-events-page/manage-event
         CommonModule,
         AdminRoutingModule,
         ReactiveFormsModule,
-        QuillModule.forRoot({}),
-        // todo: delete?
-        CKEditorModule,
         FormsModule,
         MgSharedModule,
         TextFieldModule,
+        // custom
+        AngularCropperjsModule,
     ],
     providers: []
 })
