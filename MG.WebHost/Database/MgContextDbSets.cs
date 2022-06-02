@@ -7,6 +7,7 @@ using MG.WebHost.Entities.Sections;
 using MG.WebHost.Entities.Tournaments;
 using MG.WebHost.Entities.Users;
 using MG.WebHost.Utils;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace MG.WebHost.Database
@@ -42,9 +43,10 @@ namespace MG.WebHost.Database
             modelBuilder.Entity<News>()
                 .ToTable(nameof(News))
                 .HasOne(e => e.Tournament)
-                .WithOne(e => e.News)
-                .HasForeignKey<News>(e => e.TournamentId)
-                .IsRequired(false);
+                .WithMany(e => e.News)
+                .HasForeignKey(e => e.TournamentId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.SetNull);
            
             modelBuilder.ApplyGlobalFilters(e => !e.Deleted);
            

@@ -13,15 +13,15 @@ public interface IBaseService
 {
     Task<IEnumerable<TDto>> GetAllAsync<TDto, TEntity>()
         where TDto : class
-        where TEntity : BaseEntity;
+        where TEntity : class, IBaseEntity;
 
-    Task<TDto> GetByIdAsync<TDto, TEntity>(Guid id, string include = null)
+    Task<TDto> GetByIdAsync<TDto, TEntity>(Guid id, string include = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> expr = null)
         where TDto : class
-        where TEntity : BaseEntity;
+        where TEntity : class, IBaseEntity;
     
     Task<IEnumerable<TDto>> GetAsync<TDto, TEntity>(Expression<Func<TEntity, bool>> whereExpression, string include = null)
         where TDto : class
-        where TEntity : BaseEntity;
+        where TEntity : class, IBaseEntity;
 
     Task<Page<TDto>> GetListAsync<TDto, TEntity>(
         PageRequest pageRequest,
@@ -29,21 +29,22 @@ public interface IBaseService
         string include = null
     )
         where TDto : class
-        where TEntity : BaseEntity;
+        where TEntity : class, IBaseEntity;
     
     Task<TDto> SaveAsync<TDto, TEntity>(TDto dto)
         where TDto : BaseDto
-        where TEntity : BaseEntity;
+        where TEntity : class, IBaseEntity;
 
     Task<bool> DeleteAsync<TEntity>(Guid key)
-        where TEntity : BaseEntity;
+        where TEntity : class, IBaseEntity;
 }
 
 public class BaseService : IBaseService
 {
     private IServiceProvider ServiceProvider { get; }
     protected IMapper Mapper => ServiceProvider.GetService<IMapper>();
-    protected IRepository<TEntity> Repository<TEntity>() where TEntity : BaseEntity => ServiceProvider.GetRequiredService<IRepository<TEntity>>();
+    protected IRepository<TEntity> Repository<TEntity>() where TEntity : class, IBaseEntity => ServiceProvider.GetRequiredService<IRepository<TEntity>>();
+    protected ILogger<IBaseService> Logger => ServiceProvider.GetRequiredService<ILogger<IBaseService>>();
 
     public BaseService(IServiceProvider serviceProvider)
     {
@@ -52,20 +53,24 @@ public class BaseService : IBaseService
 
     public async Task<IEnumerable<TDto>> GetAllAsync<TDto, TEntity>()
         where TDto : class
-        where TEntity : BaseEntity
+        where TEntity : class, IBaseEntity
     {
         var entities = await Repository<TEntity>().GetAllAsync();
         return Mapper.Map<IEnumerable<TDto>>(entities);
     }
 
-    public async Task<TDto> GetByIdAsync<TDto, TEntity>(Guid id, string include = null) where TDto : class where TEntity : BaseEntity
+    public async Task<TDto> GetByIdAsync<TDto, TEntity>(Guid id, string include = null, Func<IQueryable<TEntity>, IQueryable<TEntity>> expr = null) where TDto : class where TEntity : class, IBaseEntity
     {
-        return Mapper.Map<TDto>(await Repository<TEntity>().GetByIdAsync(id, include));
+        return Mapper.Map<TDto>(await Repository<TEntity>()
+            .GetQueryable()
+            .WhereIf(expr != null, expr)
+            .IncludeIf(include.IsNotNullOrEmpty(), include)
+            .FirstOrDefaultAsync(e => e.Id == id));
     }
 
     public async Task<IEnumerable<TDto>> GetAsync<TDto, TEntity>(Expression<Func<TEntity, bool>> whereExpression, string include = null)
         where TDto : class
-        where TEntity : BaseEntity
+        where TEntity : class, IBaseEntity
     {
         var entities = await Repository<TEntity>().GetAsync(whereExpression, include);
         return Mapper.Map<IEnumerable<TDto>>(entities);
@@ -73,7 +78,7 @@ public class BaseService : IBaseService
 
     public async Task<Page<TDto>> GetListAsync<TDto, TEntity>(PageRequest pageRequest, Func<IQueryable<TEntity>, IQueryable<TEntity>> where = null, string include = null)
         where TDto : class
-        where TEntity : BaseEntity
+        where TEntity : class, IBaseEntity
     {
         var query = Repository<TEntity>()
             .GetQueryable()
@@ -89,7 +94,7 @@ public class BaseService : IBaseService
         };
     }
 
-    public virtual async Task<TDto> SaveAsync<TDto, TEntity>(TDto dto) where TDto : BaseDto where TEntity : BaseEntity
+    public virtual async Task<TDto> SaveAsync<TDto, TEntity>(TDto dto) where TDto : BaseDto where TEntity : class, IBaseEntity
     {
         var repository = Repository<TEntity>();
         var entity = dto.Id.HasValue ? await repository.GetByIdAsync(dto.Id.Value) : null;
@@ -110,7 +115,7 @@ public class BaseService : IBaseService
         return Mapper.Map<TDto>(entity);
     }
 
-    public async Task<bool> DeleteAsync<TEntity>(Guid key) where TEntity : BaseEntity
+    public async Task<bool> DeleteAsync<TEntity>(Guid key) where TEntity : class, IBaseEntity
     {
         var repository = Repository<TEntity>();
         var result = await repository.DeleteAsync(key);

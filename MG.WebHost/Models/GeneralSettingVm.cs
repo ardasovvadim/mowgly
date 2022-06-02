@@ -1,4 +1,3 @@
-using System;
 using MG.WebHost.Entities.Enums;
 
 namespace MG.WebHost.Models

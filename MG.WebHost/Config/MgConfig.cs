@@ -1,8 +1,9 @@
-using MG.WebHost.Maps;
+using AutoMapper;
 using MG.WebHost.Repositories;
 using MG.WebHost.Services;
 using MG.WebHost.Settings;
 using MG.WebHost.Utils;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace MG.WebHost.Config
 {
@@ -13,13 +14,14 @@ namespace MG.WebHost.Config
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IService<,>), typeof(Service<,>));
             services.AddScoped(typeof(IBaseService), typeof(BaseService));
-            services.AddAutoMapper(typeof(MgProfile));
+            services.AddAutoMapper(typeof(MgMapProfile));
             
             // Services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITimetableRecordService, TimetableRecordService>();
             services.AddScoped<IMasterService, MasterService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IEmailSender, EmailService>();
             services.AddScoped<IRegistrationService, RegistrationService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ITournamentService, TournamentService>();
@@ -31,10 +33,20 @@ namespace MG.WebHost.Config
             services.AddSingleton<IDirectoryUtils, DirectoryUtils>();
 
             services.Configure<AppSettings>(configuration.GetSection(AppSettings.SettingsSection));
+            services.Configure<SmtpSettings>(configuration.GetSection(SmtpSettings.SettingsSection));
+            services.Configure<DbInitializerSettings>(configuration.GetSection(DbInitializerSettings.Name));
+
+            services.AddStartupTask<DbInitialization>();
 
             return services;
         }
         
+        private static IServiceCollection AddStartupTask<T>(this IServiceCollection serviceCollection)
+            where T : class, IStartupTask
+        {
+            return serviceCollection.AddTransient<IStartupTask, T>();
+        }
+
         public static IHostBuilder ConfigureMgAppConfiguration(this IHostBuilder app, string[] args) => app.ConfigureAppConfiguration((context, config) =>
         {
             var env = context.HostingEnvironment;

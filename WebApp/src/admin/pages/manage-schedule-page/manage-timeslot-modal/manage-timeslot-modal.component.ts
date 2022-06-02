@@ -1,11 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Output
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {
     IdName,
@@ -66,9 +59,8 @@ export class ManageTimeslotModalComponent implements AfterViewInit {
     get sid(): string { return '#' + this.id }
 
     constructor(
-        private fb: FormBuilder,
+        private readonly fb: FormBuilder,
         private readonly optionsApiService: OptionsApiService,
-        private readonly cdf: ChangeDetectorRef
     ) {
     }
 

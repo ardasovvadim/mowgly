@@ -21,6 +21,7 @@ import {RegCompletedModalComponent} from './pages/registration-page/reg-complete
 import {AuthorizeInterceptor} from '../api-authorization/authorize.interceptor';
 import {ApiAuthorizationModule} from '../api-authorization/api-authorization.module';
 import { ScullyLibModule } from '@scullyio/ng-lib';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 @NgModule({
     declarations: [
@@ -37,6 +38,7 @@ import { ScullyLibModule } from '@scullyio/ng-lib';
         NotFoundPageComponent,
         NewsDetailsComponent,
         MasterPageComponent,
+        LoginPageComponent,
     ],
     imports: [
         BrowserModule,

@@ -6,24 +6,39 @@ using MG.WebHost.Entities.Images;
 using MG.WebHost.Entities.Sections;
 using MG.WebHost.Entities.Tournaments;
 using MG.WebHost.Entities.Users;
+using Microsoft.AspNetCore.Identity;
 
 namespace MG.WebHost.MockData
 {
     public static class TestDbData
     {
-        public static void Initialize(MgContext context)
+        public static async Task Initialize(MgContext context, UserManager<User> userManager, RoleManager<IdentityRole<Guid>> roleManager)
         {
+            var roles = await InitializeRoles(context, userManager, roleManager);
             var locations = InitializeLocations(context);
             var sections = InitializeSections(context, locations);
-            var masters = InitializeMasters(context, sections);
+            var masters = await InitializeMasters(context, sections, roles, userManager);
             var timetableRecords = InitializeTimetableRecords(context, masters, sections, locations);
             var emailTemplates = InitializeEmailTemplates(context);
-            var students = InitializeStudents(context);
+            var students = await InitializeStudents(context, roles, userManager);
             var tournaments = InitializeTournaments(context, students);
-            var users = InitializeUsers(context);
+            var users = await InitializeUsers(context, userManager, roles);
         }
 
-        private static IEnumerable<User> InitializeUsers(MgContext context)
+        private static async Task<Dictionary<UserType, IdentityRole<Guid>>> InitializeRoles(MgContext context, UserManager<User> userManager, RoleManager<IdentityRole<Guid>> roleManager)
+        {
+            var roles = Enum.GetValues<UserType>()
+                .Where(v => v != UserType.None)
+                .Select(v => new KeyValuePair<UserType, IdentityRole<Guid>>(v, new IdentityRole<Guid>(v.ToString("G"))))
+                .ToList();
+
+            foreach (var (key, value) in roles)
+                await roleManager.CreateAsync(value);
+
+            return new Dictionary<UserType, IdentityRole<Guid>>(roles);
+        }
+
+        private static async Task<IEnumerable<User>> InitializeUsers(MgContext context, UserManager<User> userManager, Dictionary<UserType, IdentityRole<Guid>> identityRoles)
         {
             var users = new List<User>
             {
@@ -38,7 +53,13 @@ namespace MG.WebHost.MockData
             };
 
             context.Users.AddRange(users);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+            
+            var adminRole = identityRoles[UserType.Admin].Name;
+            foreach (var user in users)
+            {
+                await userManager.AddToRoleAsync(user, adminRole);
+            }
 
             return users;
         }
@@ -69,7 +90,7 @@ namespace MG.WebHost.MockData
             return tournaments;
         }
 
-        private static IEnumerable<User> InitializeStudents(MgContext context)
+        private static async Task<IEnumerable<User>> InitializeStudents(MgContext context, Dictionary<UserType, IdentityRole<Guid>> roles, UserManager<User> userManager)
         {
             var students = new List<User>
             {
@@ -79,7 +100,14 @@ namespace MG.WebHost.MockData
             };
             
             context.Users.AddRange(students);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+
+            var studentRole = roles[UserType.Student].Name;
+
+            foreach (var student in students)
+            {
+                await userManager.AddToRoleAsync(student, studentRole);
+            }
 
             return students;
         }
@@ -166,7 +194,7 @@ namespace MG.WebHost.MockData
             return timetableRecords;
         }
 
-        private static List<User> InitializeMasters(MgContext context, List<Section> sections)
+        private static async Task<List<User>> InitializeMasters(MgContext context, List<Section> sections, Dictionary<UserType, IdentityRole<Guid>> roles, UserManager<User> userManager)
         {
             var images = new List<Image>
             {
@@ -174,7 +202,7 @@ namespace MG.WebHost.MockData
                 {
                     Id = Guid.Parse("bbf76a2e-1949-41a8-8f4b-7574207b4442"),
                     PhysicalImageSubPath = "Masters",
-                    Extension = ".png"
+                    Extension = ".png",
                 },
                 new()
                 {
@@ -292,7 +320,13 @@ namespace MG.WebHost.MockData
             };
             
             context.Users.AddRange(masters);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+
+            var masterRole = roles[UserType.Master];
+            foreach (var master in masters)
+            {
+                await userManager.AddToRoleAsync(master, masterRole.Name);
+            }
             
             return masters;
         }

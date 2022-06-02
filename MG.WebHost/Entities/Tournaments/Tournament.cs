@@ -35,5 +35,5 @@ public class Tournament : BaseEntity
 
     public ICollection<TournamentResult> Results { get; set; }
 
-    public virtual News.News News { get; set; }
+    public virtual ICollection<News.News> News { get; set; }
 }

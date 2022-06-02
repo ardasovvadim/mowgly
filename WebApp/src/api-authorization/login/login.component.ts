@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
     private router: Router) { }
 
   async ngOnInit() {
-    debugger;
     const action = this.activatedRoute.snapshot.url[1];
     switch (action.path) {
       case LoginActions.Login:

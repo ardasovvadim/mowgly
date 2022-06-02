@@ -1,6 +1,8 @@
 using MG.WebHost.Entities;
+using MG.WebHost.Models;
 using MG.WebHost.Models.Locations;
 using MG.WebHost.Services;
+using MG.WebHost.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +24,18 @@ namespace MG.WebHost.Controllers
         }
 
         #region Admin
+
+        [HttpPost("list"), Authorize]
+        public async Task<Page<AdminLocationVm>> GetListAsync(GetAdminLocationVmRequest request)
+        {
+            return await BaseService.GetListAsync<AdminLocationVm, Location>(request, query =>
+            {
+                return query
+                    .WhereIf(request.FilterCity.IsNotNullOrEmpty(), l => l.City.ToUpper() == request.FilterCity.ToUpper())
+                    .WhereIf(request.FilterText.IsNotNullOrEmpty(), l => l.Name.Contains(request.FilterText))
+                    ;
+            });
+        }
 
         [HttpGet("{id}"), Authorize]
         public async Task<LocationEditModel> GetByIdAsync(Guid id)

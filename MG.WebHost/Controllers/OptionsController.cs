@@ -123,4 +123,10 @@ public class OptionsController : BaseController
             .Take(5)
             .ToListAsync();
     }
+
+    [HttpGet("cities")]
+    public async Task<IEnumerable<string>> GetCitiesAsync()
+    {
+        return await _locationRepository.GetQueryable().Select(l => l.City).Distinct().ToListAsync();
+    }
 }

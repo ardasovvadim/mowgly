@@ -6,10 +6,10 @@ namespace MG.WebHost.Entities.Enums
     public enum UserType
     {
         None = 0,
-        Moderator = 1,
-        Student = 2,
-        Master = 4,
-        Admin = 8,
-        Parent = 16
+        Moderator = 1 << 0,
+        Student = 1 << 1,
+        Master = 1 << 2,
+        Admin = 1 << 3,
+        Parent = 1 << 4
     }
 }

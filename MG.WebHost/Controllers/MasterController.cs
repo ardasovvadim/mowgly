@@ -40,7 +40,7 @@ namespace MG.WebHost.Controllers
 
         #region Admin_rights
 
-        [HttpPost, Authorize]
+        [HttpPost, Authorize(Roles = nameof(UserType.Admin))]
         public async Task<Page<AdminMasterVm>> GetListAsync(GetMasterListRequest request)
         {
             return await _adminMasterService.GetListAsync(

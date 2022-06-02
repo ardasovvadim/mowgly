@@ -1,71 +1,95 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UserEditModel} from '../../models/user-edit-model';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {AdminUserVm, UserType, userTypes} from '../../models/user.model';
 import {ModalService} from '../../../app/services/modal.service';
+import {fadeInAnimation} from '../../../app/mg-shared/animations/fadeInAnimation';
+import {smoothHeight} from '../../../app/mg-shared/animations/smooth-height-anim.directive';
+import {PaginationComponent} from '../../../app/mg-shared/components/pagination/pagination.component';
+import {PageOptions} from '../../../app/models/page';
+import {toSortOrder} from '../../../app/services/events-api.service';
+import {tap} from 'rxjs';
+import {ManageUserApiService} from '../../services/manage-user-api.service';
 import {ManageUserModalComponent} from './manage-user-modal/manage-user-modal.component';
 
 @Component({
     selector: 'mg-manage-users-page',
     templateUrl: './manage-users-page.component.html',
-    styleUrls: ['./manage-users-page.component.scss']
+    styleUrls: ['./manage-users-page.component.scss'],
+    animations: [
+        fadeInAnimation,
+        smoothHeight
+    ],
+    providers: [
+        ManageUserApiService
+    ]
 })
-export class ManageUsersPageComponent implements OnInit, OnDestroy {
+export class ManageUsersPageComponent implements OnInit {
 
-    nameFiltering: string;
+    userTypes = userTypes;
 
-    data: UserEditModel[] = [
-        {
-            firstName: 'A',
-            lastName: 'B',
-            middleName: 'C',
-            birthday: '10.07.2000',
-            email: 'ardasovvadim@gmail.com',
-            id: '1',
-            phone: '+380951026860'
-        },
-        {
-            id: '2',
-            firstName: 'A2',
-            lastName: 'B2',
-            middleName: 'C2',
-            birthday: '24.01.1998',
-            email: 'testmail@gmail.com',
-            phone: '+380576728765'
-        }
-    ];
+    @ViewChild('modal') modal: ManageUserModalComponent;
+    @ViewChild('pagination') pagination: PaginationComponent;
 
-    private modal: ManageUserModalComponent;
+    filterText: string;
+    filterDate: string;
+    data: AdminUserVm[];
+    currentRowIndex: number = -1;
+
+    asc: boolean = false;
+    private readonly initialPageOptions = {
+        count: 0,
+        pageSize: 10,
+        pageNumber: 0
+    }
+    pageOptions: PageOptions = {...this.initialPageOptions};
+    userType: UserType = null;
 
     constructor(
-        private readonly modalService: ModalService
+        private readonly modalService: ModalService,
+        private readonly userApiService: ManageUserApiService
     ) {
     }
 
     ngOnInit(): void {
-        this.initializeModal();
+        this.refreshData();
     }
 
-    addUser() {
-        this.modal?.open();
-    }
+    refreshData() {
+        this.userApiService.getList({
+            userType: +this.userType,
+            filterText: this.filterText,
+            pageNumber: this.pageOptions.pageNumber,
+            pageSize: this.pageOptions.pageSize,
+            sort: 'NormalizedName',
+            sortOrder: toSortOrder(this.asc)
+        })
+            .pipe(
+                tap(data => {
+                    if (!data) {
+                        this.pageOptions = null;
+                        return
+                    }
 
-    refresh() {
-
-    }
-
-    private initializeModal() {
-        this.modalService
-            .createModal<ManageUserModalComponent>({type: ManageUserModalComponent})
-            .subscribe(modal => {
-                this.modal = modal;
-                if (this.modal != null) {
-                    // const sub = this.modal.submittedAndClosed.subscribe(_ => this.refreshLocations());
-                    // this.subscriptions.push(sub);
-                    // this.modal.close()
-                }
+                    this.pageOptions = {
+                        pageNumber: data.pageNumber,
+                        pageSize: data.pageSize,
+                        count: data.count
+                    }
+                }),
+            )
+            .subscribe(data => {
+                this.data = data.elements;
             });
     }
 
-    ngOnDestroy(): void {
-        this.modalService.deleteModal(this.modal);
+    reset() {
+        this.filterText = null;
+        this.filterDate = null;
+        this.pageOptions = {...this.initialPageOptions};
+        this.refreshData();
     }
+
+    ngAfterViewInit(): void {
+        this.modal.onSubmittedAndClosed.subscribe(() => this.refreshData());
+    }
+
 }

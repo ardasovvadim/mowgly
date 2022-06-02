@@ -1,6 +1,6 @@
-using MG.Migrator.Settings;
 using MG.Migrator.Workers;
 using MG.WebHost.Database;
+using MG.WebHost.Settings;
 using Microsoft.EntityFrameworkCore;
 
 var host = Host.CreateDefaultBuilder()
@@ -20,7 +20,7 @@ var host = Host.CreateDefaultBuilder()
                     .EnableDetailedErrors();
         });
 
-        services.Configure<ServiceSettings>(builder.Configuration.GetSection(ServiceSettings.Name));
+        services.Configure<DbInitializerSettings>(builder.Configuration.GetSection(DbInitializerSettings.Name));
 
         services.AddHostedService<DbMigrationWorker>();
 

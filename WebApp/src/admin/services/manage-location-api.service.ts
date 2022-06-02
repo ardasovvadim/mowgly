@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {LocationApiService} from '../../app/services/location-api.service';
 import {Observable} from 'rxjs';
 import {ApiService} from '../../app/services/api.service';
-import {LocationEditModel} from '../models/location.model';
+import {AdminLocalVmRequest, AdminLocationVm, LocationEditModel} from '../models/location.model';
+import {Page} from '../../app/models/page';
 
 @Injectable()
 export class ManageLocationApiService extends LocationApiService {
@@ -23,5 +24,9 @@ export class ManageLocationApiService extends LocationApiService {
 
   getById(id: string): Observable<LocationEditModel> {
     return this.apiService.get<LocationEditModel>(this.baseServiceName + '/' + id);
+  }
+
+  getList(request: AdminLocalVmRequest): Observable<Page<AdminLocationVm>> {
+    return this.apiService.post(this.baseServiceName + '/list', request);
   }
 }

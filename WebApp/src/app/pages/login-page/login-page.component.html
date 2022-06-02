@@ -1,0 +1,33 @@
+<div class="uk-card mt-100 uk-align-center mg-card" style="max-width: 600px; padding: 20px">
+
+    <div class="uk-card-header uk-text-center">
+        <h2>Авторизация</h2>
+    </div>
+
+    <form class="uk-form-stacked" [formGroup]="form" (ngSubmit)="login()">
+
+        <div class="uk-card-body">
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="email">Емейл</label>
+                <div class="uk-form-controls">
+                    <input type="text" class="uk-input" placeholder="Емейл" id="email" formControlName="email">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="password">Пароль</label>
+                <div class="uk-form-controls">
+                    <input type="password" class="uk-input" placeholder="Пароль" id="password"
+                           formControlName="password">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="uk-card-footer uk-text-center">
+            <button class="uk-button uk-button-primary" type="submit">Авторизоваться</button>
+        </div>
+    </form>
+
+</div>

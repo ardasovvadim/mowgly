@@ -48,6 +48,10 @@ export class OptionsApiService {
 
     return this.api.get(this.baseUrl + '/event', params);
   }
+
+  getCities(): Observable<string[]> {
+    return this.api.get(this.baseUrl + '/cities');
+  }
 }
 
 export interface OptionsRequest {

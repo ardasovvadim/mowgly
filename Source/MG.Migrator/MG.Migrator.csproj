@@ -14,4 +14,8 @@
     <ItemGroup>
       <ProjectReference Include="..\..\MG.WebHost\MG.WebHost.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Settings" />
+    </ItemGroup>
 </Project>

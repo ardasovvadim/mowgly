@@ -1,6 +1,8 @@
-using MG.Migrator.Settings;
 using MG.WebHost.Database;
+using MG.WebHost.Entities.Users;
 using MG.WebHost.MockData;
+using MG.WebHost.Settings;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -20,7 +22,7 @@ public class DbMigrationWorker : IHostedService
         await using var scope = ServiceProvider.CreateAsyncScope();
         var serviceProvider = scope.ServiceProvider;
         var logger = serviceProvider.GetRequiredService<ILogger<DbMigrationWorker>>();
-        var settings = serviceProvider.GetRequiredService<IOptions<ServiceSettings>>().Value;
+        var settings = serviceProvider.GetRequiredService<IOptions<DbInitializerSettings>>().Value;
         
         try
         {
@@ -47,7 +49,10 @@ public class DbMigrationWorker : IHostedService
             if (settings.SeedData)
             {
                 logger.LogInformation("Seeding mock data to DB...");
-                TestDbData.Initialize(context);
+                await TestDbData.Initialize(context, 
+                    ServiceProvider.GetRequiredService<UserManager<User>>(),
+                    ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>()
+                    );
             }
         }
         catch (Exception e)

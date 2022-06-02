@@ -16,5 +16,5 @@ public class News : BaseEntity
     public virtual User Author { get; set; }
 
     public Guid? TournamentId { get; set; }
-    public Tournament Tournament { get; set; }
+    public virtual Tournament Tournament { get; set; }
 }

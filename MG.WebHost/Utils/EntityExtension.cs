@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using MG.WebHost.Entities;
 using MG.WebHost.Entities.Interfaces;
 using MG.WebHost.Entities.Sections;
 using MG.WebHost.Entities.Users;
@@ -89,7 +85,7 @@ public static class EntityExtension
 
         return request.PageSize > 0 
             ? q.Skip(request.PageNumber * request.PageSize).Take(request.PageSize) 
-            : q;;
+            : q;
     }
 
     public static IQueryable<TEntity> WhereIf<TEntity>(

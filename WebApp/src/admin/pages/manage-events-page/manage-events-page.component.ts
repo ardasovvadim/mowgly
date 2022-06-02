@@ -42,7 +42,6 @@ export class ManageEventsPageComponent implements OnInit, AfterViewInit {
     }
     pageOptions: PageOptions = {...this.initialPageOptions};
 
-
     constructor(
         private readonly eventsApiService: ManageEventsApiService,
         private readonly router: Router

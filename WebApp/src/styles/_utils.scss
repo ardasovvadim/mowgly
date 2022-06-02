@@ -63,6 +63,10 @@
   margin-top: 500px;
 }
 
+.mg-margin-between > *:not(:last-of-type) {
+  margin-right: 10px;
+}
+
 .rotate-180 {
   transform: rotate(180deg);
 }
@@ -143,8 +147,16 @@
   background: $mg-green-main;
 }
 
+.mg-background-green-text {
+  background: $mg-green-text;
+}
+
 .mg-text-green-main {
   color: $mg-green-main;
+}
+
+.mg-text-green {
+  color: $mg-green-text;
 }
 
 .mg-pointer {

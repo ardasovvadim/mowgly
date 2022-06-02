@@ -55,6 +55,5 @@ export class ManageBlockComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.content);
   }
 }

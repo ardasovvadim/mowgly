@@ -1,5 +1,3 @@
-using MG.WebHost.Models;
-
 namespace MG.WebHost.Models.Locations
 {
     public record LocationVm : BaseDto

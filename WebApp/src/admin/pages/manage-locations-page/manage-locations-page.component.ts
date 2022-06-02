@@ -1,73 +1,100 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {LocationApiService} from '../../../app/services/location-api.service';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {LocationViewModel} from '../../../app/models/locations/location.view.model';
-import {ModalService} from '../../../app/services/modal.service';
 import {ManageLocationModalComponent} from './manage-location-modal/manage-location-modal.component';
-import {Subscription} from 'rxjs';
 import {ManageLocationApiService} from '../../services/manage-location-api.service';
-import {LocationEditModel} from '../../models/location.model';
+import {AdminLocationVm, LocationEditModel} from '../../models/location.model';
+import {PageOptions} from '../../../app/models/page';
+import {PaginationComponent} from '../../../app/mg-shared/components/pagination/pagination.component';
+import {toSortOrder} from '../../../app/services/events-api.service';
+import {tap} from 'rxjs';
+import {fadeInAnimation} from '../../../app/mg-shared/animations/fadeInAnimation';
+import {smoothHeight} from '../../../app/mg-shared/animations/smooth-height-anim.directive';
+import {OptionsApiService} from '../../../app/services/options-api.service';
 
 @Component({
-  selector: 'mg-manage-locations-page',
-  templateUrl: './manage-locations-page.component.html',
-  styleUrls: ['./manage-locations-page.component.scss'],
-  providers: [
-    ManageLocationApiService
-  ]
+    selector: 'mg-manage-locations-page',
+    templateUrl: './manage-locations-page.component.html',
+    styleUrls: ['./manage-locations-page.component.scss'],
+    providers: [
+        ManageLocationApiService,
+        OptionsApiService
+    ],
+    animations: [
+        fadeInAnimation,
+        smoothHeight
+    ],
 })
 export class ManageLocationsPageComponent implements OnInit, AfterViewInit {
 
-  originLocations: LocationViewModel[] = [];
-  get locations(): LocationViewModel[]  {
-    let result = this.originLocations;
+    cities: string[] = [];
+    data: AdminLocationVm[] = [];
+    filterCity: string | null = null;
+    filterText: string = null;
 
-    if (this.filteringCity != null)
-      result = this.originLocations.filter(l => l.city == this.filteringCity);
+    asc: boolean = true;
+    private readonly initialPageOptions = {
+        count: 0,
+        pageSize: 10,
+        pageNumber: 0
+    }
+    pageOptions: PageOptions = {...this.initialPageOptions};
 
-    if (this.filterText != null) {
-      const search = this.filterText as string;
-      result = result.filter(l => l.name.toLowerCase().includes(search.toLowerCase().trim()))
+    @ViewChild('pagination') pagination: PaginationComponent;
+    @ViewChild('manageLocationModalComponent') modal: ManageLocationModalComponent;
+    currentRowIndex: number = -1;
+
+    constructor(
+        private readonly locationService: ManageLocationApiService,
+        private readonly optionsService: OptionsApiService
+    ) {
     }
 
-    return result.sort((l1, l2) => l1.name > l2.name ? 1 : -1);
-  }
-  cities: string[] = [];
-  filteringCity: string | null = null;
-  filterText: string | null = null;
+    ngOnInit(): void {
+        this.refreshData();
+    }
 
-  @ViewChild('manageLocationModalComponent') modal: ManageLocationModalComponent;
+    addNew() {
+        this.modal.showLocation({} as LocationEditModel);
+    }
 
-  constructor(private locationService: ManageLocationApiService) {
-  }
+    edit(location: AdminLocationVm) {
+        this.locationService.getById(location.id)
+            .subscribe(data => {
+                this.modal.showLocation(data);
+            })
+    }
 
-  ngOnInit(): void {
-    this.refreshData();
-  }
-
-  addNew() {
-    this.modal.showLocation({} as LocationEditModel);
-  }
-
-  edit(location: LocationViewModel) {
-    this.locationService.getById(location.id)
-        .subscribe(data => {
-          this.modal.showLocation(data);
+    refreshData() {
+        this.locationService.getList({
+            filterCity: this.filterCity,
+            filterText: this.filterText,
+            pageNumber: this.pageOptions.pageNumber,
+            pageSize: this.pageOptions.pageSize,
+            sort: 'Name',
+            sortOrder: toSortOrder(this.asc)
         })
-  }
+            .pipe(
+                tap(data => {
+                    if (!data) {
+                        this.pageOptions = null;
+                        return
+                    }
 
-  refreshData() {
-    this.locationService
-        .getAll()
-        .subscribe(locations => {
-          this.originLocations = locations;
-          this.cities = locations
-              .map(l => l.city)
-              .filter((v, i, s) => s.indexOf(v) == i)
-              .sort();
-        });
-  }
+                    this.pageOptions = {
+                        pageNumber: data.pageNumber,
+                        pageSize: data.pageSize,
+                        count: data.count
+                    }
+                }),
+            )
+            .subscribe(data => {
+                this.data = data.elements?.sort();
+            });
 
-  ngAfterViewInit(): void {
-    this.modal.submittedAndClosed.subscribe(_ => this.refreshData());
-  }
+        this.optionsService.getCities().subscribe(data => this.cities = data);
+    }
+
+    ngAfterViewInit(): void {
+        this.modal.submittedAndClosed.subscribe(_ => this.refreshData());
+    }
 }

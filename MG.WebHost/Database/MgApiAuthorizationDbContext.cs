@@ -16,7 +16,7 @@ namespace MG.WebHost.Database;
 /// <typeparam name="TUser"></typeparam>
 /// <typeparam name="TRole"></typeparam>
 /// <typeparam name="TKey"></typeparam>
-public class MgApiAuthorizationDbContext<TUser, TRole, TKey> : IdentityDbContext<TUser, TRole, TKey>, IPersistedGrantDbContext
+public class MgApiAuthorizationDbContext<TUser, TRole, TKey> : IdentityDbContext<TUser, TRole, TKey>
     where TUser : IdentityUser<TKey>
     where TRole : IdentityRole<TKey>
     where TKey : IEquatable<TKey>

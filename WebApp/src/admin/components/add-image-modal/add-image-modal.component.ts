@@ -4,7 +4,6 @@ import {UiKit} from '../../../app/utils/ui-kit';
 import {ImageCroppModalComponent} from '../image-cropp-modal/image-cropp-modal.component';
 import {ManageImageApiService} from '../../services/manage-image-api.service';
 import GetCroppedCanvasOptions = Cropper.GetCroppedCanvasOptions;
-import {NewsBlock} from '../../../app/pages/news-page/news-details/news-details.component';
 
 @Component({
   selector: 'mg-add-image-modal',
@@ -25,6 +24,7 @@ export class AddImageModalComponent implements OnInit, AfterViewInit {
   @Input() pathPrefix: string = '';
   @Input() aspectRatio: number;
   @Input() saveOptions: GetCroppedCanvasOptions = {};
+  @Input() circleCropper: boolean = false;
   @Output() onImageAdded: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild('croppModalComponent') croppModalComponent: ImageCroppModalComponent;
 

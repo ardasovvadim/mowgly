@@ -163,6 +163,7 @@ export class NewsManageService {
     }
 
     publish() {
+        debugger;
         return this.newsApiService.addNews(this.data)
             .pipe(
                 tap(() => {

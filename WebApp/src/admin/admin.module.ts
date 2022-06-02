@@ -52,6 +52,8 @@ import { AddImageModalComponent } from './components/add-image-modal/add-image-m
 import { QuillEditorComponent } from './components/quill-editor/quill-editor.component';
 import { ChooseOrCreateEventModalComponent } from './pages/manage-news-page/manage-news-description-page/componenets/choose-or-create-event-modal/choose-or-create-event-modal.component';
 import { ManageTournamentResultsPageComponent } from './pages/manage-tournament-results-page/manage-tournament-results-page.component';
+import { ConcatUserTypesPipe } from './pipes/concat-user-types.pipe';
+import { HasFlagPipe } from './pipes/has-flag.pipe';
 
 @NgModule({
     declarations: [
@@ -88,6 +90,8 @@ import { ManageTournamentResultsPageComponent } from './pages/manage-tournament-
         QuillEditorComponent,
         ChooseOrCreateEventModalComponent,
         ManageTournamentResultsPageComponent,
+        ConcatUserTypesPipe,
+        HasFlagPipe,
     ],
     exports: [
         ManageModalComponent

@@ -41,7 +41,7 @@ export class AuthorizeService {
     // If you want to enable pop up authentication simply set this flag to false.
 
     private popUpDisabled = true;
-    private userManager?: UserManager;
+    userManager?: UserManager;
     private userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject<IUser | null>(null);
 
     public isAuthenticated(): Observable<boolean> {
@@ -169,7 +169,7 @@ export class AuthorizeService {
         return { status: AuthenticationResultStatus.Redirect };
     }
 
-    private async ensureUserManagerInitialized(): Promise<void> {
+    async ensureUserManagerInitialized(): Promise<void> {
         if (this.userManager !== undefined) {
             return;
         }

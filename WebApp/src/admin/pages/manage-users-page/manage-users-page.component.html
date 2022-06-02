@@ -1,38 +1,83 @@
-<div class="mg-tools uk-margin-medium-bottom">
+<div class="mg-tools uk-margin-medium-bottom uk-grid-small" uk-grid>
 
-  <div class="uk-search uk-search-default">
-    <a class="uk-search-icon-flip" uk-search-icon></a>
-    <input class="uk-search-input uk-input" type="search" placeholder="Поиск" [(ngModel)]="nameFiltering">
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <div class="uk-search uk-search-default w-100">
+      <a class="uk-search-icon-flip"
+         (click)="refreshData()"
+         uk-search-icon></a>
+      <input class="uk-search-input uk-input" type="search" placeholder="Поиск по названию"
+             (keyup.enter)="refreshData()" [(ngModel)]="filterText">
+    </div>
   </div>
 
-  <button class="uk-button uk-button-primary" type="button" (click)="addUser()">Добавить</button>
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <div class="uk-inline w-100">
+      <select class="uk-select" [(ngModel)]="userType" (ngModelChange)="refreshData()">
+        <option [value]="null">Выберите тип пользовтеля</option>
+        <option *ngFor="let type of userTypes" [value]="type.key">{{type.value}}</option>
+      </select>
+    </div>
+  </div>
 
-  <button class="uk-button uk-button-primary" type="button" (click)="refresh()">Обновить</button>
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <button class="uk-button uk-button-primary" type="button" (click)="modal.editUser(null)">
+      <span class="uk-margin-small-right" uk-icon="plus"></span>Добавить
+    </button>
+  </div>
+
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <button class="uk-button uk-button-primary w-100" type="button" (click)="refreshData()">
+      <span class="uk-margin-small-right" uk-icon="refresh"></span>Обновить
+    </button>
+  </div>
+
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <button class="uk-button uk-button-primary w-100" type="button" (click)="reset()">
+      <span class="uk-margin-small-right" uk-icon="close"></span>Сбросить
+    </button>
+  </div>
 
 </div>
 
-<table class="uk-table uk-table-divide uk-table-justify uk-background-muted">
+<div class="table-wrapper uk-overflow-auto">
 
-  <thead>
-  <tr>
-    <th>№</th>
-    <th>ФИО</th>
-    <th>Номер телефона</th>
-    <th>Email</th>
-  </tr>
-  </thead>
+  <table class="uk-table uk-table-divide uk-table-justify uk-background-muted" (mouseleave)="currentRowIndex = -1">
 
-  <tbody>
+    <thead>
+    <tr>
+      <th>№</th>
+      <th (click)="asc = !asc; refreshData()" class="mg-pointer">
+        ФИО
+        <ng-template [ngIf]="asc" [ngIfElse]="down"><span uk-icon="chevron-up"></span></ng-template>
+        <ng-template #down><span uk-icon="chevron-down"></span></ng-template>
+      </th>
+      <th>Емейл</th>
+      <th>Телефон</th>
+      <th>Тип</th>
+      <th></th>
+    </tr>
+    </thead>
 
-  <tr *ngFor="let user of data; let i = index">
+    <tbody style="display: table-row-group"  [smoothHeight]="data">
+    <tr *ngFor="let item of data; let i = index" (mouseenter)="currentRowIndex = i" class="uk-animation-fade uk-animation-fast">
+      <td class="uk-table-shrink" style="min-width: 50px">{{i + 1 + (pageOptions.pageNumber * pageOptions.pageSize)}}</td>
+      <td class="uk-table-shrink" style="min-width: 400px">{{item.fullName}}</td>
+      <td class="uk-table-expand" style="min-width: 300px">{{item.email}}</td>
+      <td class="uk-table-expand" style="min-width: 300px">{{item.phoneNumber}}</td>
+      <td class="uk-table-expand" style="min-width: 300px">{{item.userTypes | concatUserTypes}}</td>
+      <td>
+        <div [style.visibility]="currentRowIndex != i ? 'hidden' : ''">
+          <a class="uk-icon-button" uk-icon="pencil" (click)="modal.editUser(item.id)"></a>
+        </div>
+      </td>
+    </tr>
+    </tbody>
 
-    <td>{{i + 1}}</td>
-    <td>{{user | fio}}</td>
-    <td>{{user.phone}}</td>
-    <td>{{user.email}}</td>
+  </table>
 
-  </tr>
+  <mg-pagination [pageOptions]="pageOptions"
+                 (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
 
-  </tbody>
+</div>
 
-</table>
+<mg-manage-user-modal #modal></mg-manage-user-modal>
