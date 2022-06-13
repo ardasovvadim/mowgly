@@ -33,7 +33,9 @@ export class ManageTournamentResultModalComponent extends ManageModal {
   refreshStudentOptions = (filterText: string): Observable<IdName[]> => {
     return this.tournamentService.getStudents({
       filterText,
-      except: this.tournament?.results.map(r => r.student.id)
+      // student can take participant multiple times
+      except: []
+      // except: this.tournament?.results.map(r => r.student.id)
     });
   }
 

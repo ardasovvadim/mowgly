@@ -67,6 +67,8 @@ export class ManageNewsDescriptionPageComponent implements OnInit, AfterViewInit
             });
 
         this.newsManageService.$data.subscribe(data => {
+            // todo: delete
+            console.log(data)
             this.data = data;
         });
     }
@@ -98,6 +100,7 @@ export class ManageNewsDescriptionPageComponent implements OnInit, AfterViewInit
             .subscribe({
                 next: () => {
                     this.data.tournamentId = tournamentId;
+                    this.saveResult();
                 },
                 error: () => {}
             })
