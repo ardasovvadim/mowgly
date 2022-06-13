@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MgComponentService} from '../../services/mg-component.service';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'mg-app-layout',
@@ -7,7 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppLayoutComponent implements OnInit {
 
-  constructor() { }
+  isFooter: Observable<boolean> = this.mgComponentService.componentState$.pipe(
+      map(state => state.isBottomMap)
+  )
+
+  constructor(
+      private readonly mgComponentService: MgComponentService
+  ) { }
 
   ngOnInit(): void {
   }

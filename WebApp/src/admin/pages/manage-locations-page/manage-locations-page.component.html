@@ -17,7 +17,7 @@
     </select>
   </div>
 
-  <div class="uk-width-1-2@s uk-width-auto@m">
+  <div class="uk-width-1-2@s uk-width-auto@m" *mgMgIfPerm="'Permission.Location.Create'">
     <button class="uk-button uk-button-primary" type="button" (click)="addNew()">
       <span class="uk-margin-small-right" uk-icon="plus"></span>Добавить
     </button>

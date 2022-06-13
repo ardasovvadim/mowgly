@@ -1,1 +1,31 @@
-<p>manage-settings-page works!</p>
+<div class="uk-grid uk-child-width-1-2@m" uk-grid>
+    <div>
+        <div class="mg-card uk-card uk-padding-small" style="padding: 10px">
+            <div class="uk-card-body">
+                <h4>Telegram</h4>
+
+                <p><span class="uk-text-bolder">Error:</span> {{telegramStatus.error ?? 'no error'}}</p>
+
+                <div class="uk-margin">
+                    <label><input type="checkbox" class="uk-checkbox uk-disabled" [checked]="telegramStatus.tokenIsValid"> Token is valid</label>
+                </div>
+
+                <h4>Webhook info</h4>
+
+                <p class="uk-text-truncate"><span class="uk-text-bolder">Error:</span> {{telegramStatus.webHookInfo.url ?? 'no url'}}</p>
+                <p><span class="uk-text-bolder">Ip addr:</span> {{telegramStatus.webHookInfo.ipAddress ?? 'no ip'}}</p>
+                <p><span class="uk-text-bolder">Last error message:</span> {{telegramStatus.webHookInfo.lastErrorMessage ?? 'no error'}}</p>
+                <p><span class="uk-text-bolder">Last error date:</span> {{telegramStatus.webHookInfo.lastErrorDate ?? 'no error'}}</p>
+                <p><span class="uk-text-bolder">Pending updates:</span> {{telegramStatus.webHookInfo.pendingUpdateCount ?? 'no updates'}}</p>
+                <p><span class="uk-text-bolder">Is cert:</span> {{telegramStatus.webHookInfo.hasCustomCertificate ?? 'no cert'}}</p>
+
+                <div>
+                    <button class="uk-button uk-button-primary" (click)="resetTelegram()">
+                        <span class="uk-margin-small-right" uk-icon="icon: refresh"></span> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

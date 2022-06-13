@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Indexer, readImageAsDataUrl} from '../../../app/utils/utils';
 import {UiKit} from '../../../app/utils/ui-kit';
-import {ImageCroppModalComponent} from '../image-cropp-modal/image-cropp-modal.component';
+import {ImageCroppModalComponent} from '../../../app/mg-shared/components/image-cropp-modal/image-cropp-modal.component';
 import {ManageImageApiService} from '../../services/manage-image-api.service';
 import GetCroppedCanvasOptions = Cropper.GetCroppedCanvasOptions;
 

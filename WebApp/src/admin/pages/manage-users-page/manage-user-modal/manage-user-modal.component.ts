@@ -6,7 +6,7 @@ import {of} from 'rxjs';
 import {mgConfirm, mgSuccessNotification} from '../../../../app/utils/ui-kit';
 import {switchMap} from 'rxjs/operators';
 import {AddImageModalComponent} from '../../../components/add-image-modal/add-image-modal.component';
-import {ImageCroppModalComponent} from '../../../components/image-cropp-modal/image-cropp-modal.component';
+import {ImageCroppModalComponent} from '../../../../app/mg-shared/components/image-cropp-modal/image-cropp-modal.component';
 import {readImageAsDataUrl, toNormalDate} from '../../../../app/utils/utils';
 import {ManageImageApiService} from '../../../services/manage-image-api.service';
 import {ProfileMaps} from '../../../models/profile.model';
@@ -29,7 +29,6 @@ export class ManageUserModalComponent extends ModalBase {
 
   @Output() onSubmittedAndClosed: EventEmitter<void> = new EventEmitter<void>();
 
-  @ViewChild('addImageModal') addImageModal: AddImageModalComponent;
   @ViewChild('cropImageModal') cropImageModal: ImageCroppModalComponent;
 
   get isEditMode(): boolean {
@@ -120,16 +119,12 @@ export class ManageUserModalComponent extends ModalBase {
   }
 
 
-  displayImage(id: string) {
-      this.form.controls['avatar']?.setValue(id);
-      this.addImageModal.close();
-      this.open();
-  }
+  // displayImage(id: string) {
+  //     this.form.controls['avatar']?.setValue(id);
+  //     this.addImageModal.close();
+  //     this.open();
+  // }
 
-
-  onLoaded($event: Event) {
-    console.log($event)
-  }
 
   cropImage($event: Event) {
     readImageAsDataUrl($event, dataUrl => {

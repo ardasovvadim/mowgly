@@ -1,3 +1,4 @@
+using MG.WebHost.Config;
 using MG.WebHost.Entities.News;
 using MG.WebHost.Models;
 using MG.WebHost.Models.News;
@@ -30,7 +31,7 @@ public class NewsController : BaseController
         return await _newsService.GetNewsDetails(newsId);
     }
 
-    [HttpPost("list"), Authorize]
+    [HttpPost("list"), Authorize(MgPermissions.News.Get)]
     public async Task<Page<AdminNewsVm>> GetAdminListAsync(AdminGetNewsRequest request)
     {
         return await BaseService.GetListAsync<AdminNewsVm, News>(request, query =>
@@ -42,14 +43,14 @@ public class NewsController : BaseController
         });
     }
 
-    [HttpPost, Authorize]
+    [HttpPost, Authorize(MgPermissions.News.Create)]
     public async Task<NewsDetailsEditModel> AddNews(NewsDetailsEditModel request)
     {
         request.AuthorId = CurrentUserId;
         return await _newsService.AddNews(request);
     }
     
-    [HttpDelete("{newsId}"), Authorize]
+    [HttpDelete("{newsId}"), Authorize(MgPermissions.News.Delete)]
     public async Task DeleteNews(Guid newsId)
     {
         await _newsService.DeleteNews(newsId);

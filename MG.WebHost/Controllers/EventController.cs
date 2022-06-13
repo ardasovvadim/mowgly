@@ -1,9 +1,10 @@
-using System.Linq.Expressions;
+using MG.WebHost.Config;
 using MG.WebHost.Entities.Tournaments;
 using MG.WebHost.Models;
 using MG.WebHost.Models.Events;
 using MG.WebHost.Services;
 using MG.WebHost.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,13 +33,13 @@ public class EventController : BaseController
         });
     }
     
-    [HttpPost]
+    [HttpPost, Authorize(MgPermissions.Event.Create)]
     public async Task<EventVm> AddAsync(EventVm request)
     {
         return await _eventService.SaveAsync(request);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}"), Authorize(MgPermissions.Event.Delete)]
     public async Task DeleteAsync(Guid id)
     {
         await _eventService.DeleteAsync(id);

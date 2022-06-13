@@ -6,7 +6,7 @@
             <span class="uk-margin-small-right" uk-icon="download"></span>Сохранить
         </button>
     </div>
-    <div>
+    <div *mgMgIfPerm="'Permission.Location.Delete'">
         <button class="uk-button uk-button-danger" type="button" (click)="delete()" [disabled]="!editMode">
             <span class="uk-margin-small-right" uk-icon="trash"></span>Удалить
         </button>

@@ -1,9 +1,13 @@
 using AutoMapper;
+using MG.WebHost.JwtFeatures;
 using MG.WebHost.Repositories;
+using MG.WebHost.Security;
 using MG.WebHost.Services;
 using MG.WebHost.Settings;
+using MG.WebHost.Tasks;
 using MG.WebHost.Utils;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Telegram.Bot;
 
 namespace MG.WebHost.Config
 {
@@ -27,15 +31,37 @@ namespace MG.WebHost.Config
             services.AddScoped<ITournamentService, TournamentService>();
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<ITelegramService, TelegramService>();
+            services.AddScoped<ITelegramBotClient, TelegramBotClient>(sp =>
+            {
+                var secret = configuration.GetSection(TelegramSettings.Name)["Secret"];
+                return new TelegramBotClient(secret);
+            });
+            services.AddScoped<INotifierService, NotifierService>();
+
+            // Hosted Services
+            services.AddHostedService<QueuedHostedService>();
+            services.AddSingleton<IBackgroundTaskQueue>(_ => new BackgroundTaskQueue(50));
 
             // Utils
             services.AddSingleton<IEmailUtils, EmailUtils>();
             services.AddSingleton<IDirectoryUtils, DirectoryUtils>();
+            services.AddScoped<JwtHandler>();
+            services.AddScoped<CacheUtils>();
+            services.AddScoped<UserPermissionCache>();
+            
+            // Middleware
+            services.AddTransient<PermissionsMiddleware>();
 
             services.Configure<AppSettings>(configuration.GetSection(AppSettings.SettingsSection));
             services.Configure<SmtpSettings>(configuration.GetSection(SmtpSettings.SettingsSection));
             services.Configure<DbInitializerSettings>(configuration.GetSection(DbInitializerSettings.Name));
+            services.Configure<GoogleSettings>(configuration.GetSection(GoogleSettings.Name));
+            services.Configure<TelegramSettings>(configuration.GetSection(TelegramSettings.Name));
 
+            services.Configure<TelegramTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromMinutes(5));
+
+            // Tasks
             services.AddStartupTask<DbInitialization>();
 
             return services;

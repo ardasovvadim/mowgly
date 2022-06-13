@@ -1,3 +1,4 @@
+using MG.WebHost.Config;
 using MG.WebHost.Database;
 using MG.WebHost.Entities;
 using MG.WebHost.Entities.Emails;
@@ -7,14 +8,17 @@ using MG.WebHost.Entities.Sections;
 using MG.WebHost.Entities.Tournaments;
 using MG.WebHost.Entities.Users;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging;
 
 namespace MG.WebHost.MockData
 {
     public static class TestDbData
     {
-        public static async Task Initialize(MgContext context, UserManager<User> userManager, RoleManager<IdentityRole<Guid>> roleManager)
+        public static async Task Initialize(MgContext context, UserManager<User> userManager, RoleManager<Role> roleManager)
         {
-            var roles = await InitializeRoles(context, userManager, roleManager);
+            var permissions = await InitializePermissionsAsync(context);
+            var roles = await InitializeRoles(context, userManager, roleManager, permissions);
             var locations = InitializeLocations(context);
             var sections = InitializeSections(context, locations);
             var masters = await InitializeMasters(context, sections, roles, userManager);
@@ -25,20 +29,35 @@ namespace MG.WebHost.MockData
             var users = await InitializeUsers(context, userManager, roles);
         }
 
-        private static async Task<Dictionary<UserType, IdentityRole<Guid>>> InitializeRoles(MgContext context, UserManager<User> userManager, RoleManager<IdentityRole<Guid>> roleManager)
+        private static async Task<IEnumerable<Permission>> InitializePermissionsAsync(MgContext context)
+        {
+            var permissions = MgPermissions.GetPermissions().Select(p => new Permission { Name = p }).ToList();
+            
+            await context.Permissions.AddRangeAsync(permissions);
+            await context.SaveChangesAsync();
+            
+            return permissions;
+        }
+
+        private static async Task<Dictionary<UserType, Role>> InitializeRoles(MgContext context, UserManager<User> userManager, RoleManager<Role> roleManager, IEnumerable<Permission> permissions)
         {
             var roles = Enum.GetValues<UserType>()
                 .Where(v => v != UserType.None)
-                .Select(v => new KeyValuePair<UserType, IdentityRole<Guid>>(v, new IdentityRole<Guid>(v.ToString("G"))))
+                .Select(v => new KeyValuePair<UserType, Role>(v, new Role(v.ToString("G"))))
                 .ToList();
 
             foreach (var (key, value) in roles)
                 await roleManager.CreateAsync(value);
 
-            return new Dictionary<UserType, IdentityRole<Guid>>(roles);
+            var role = await context.Roles.FirstAsync(r => r.Name == UserType.Admin.ToString("G"));
+            role.Permissions.AddRange(permissions);
+
+            await context.SaveChangesAsync();
+
+            return new Dictionary<UserType, Role>(roles);
         }
 
-        private static async Task<IEnumerable<User>> InitializeUsers(MgContext context, UserManager<User> userManager, Dictionary<UserType, IdentityRole<Guid>> identityRoles)
+        private static async Task<IEnumerable<User>> InitializeUsers(MgContext context, UserManager<User> userManager, Dictionary<UserType, Role> identityRoles)
         {
             var users = new List<User>
             {
@@ -52,14 +71,25 @@ namespace MG.WebHost.MockData
                 }
             };
 
+            var adminUser = new User("Vadim", "Ardasov")
+            {
+                Id = Guid.NewGuid(),
+                Email = "ardasovvadim@gmail.com",
+                UserName = "ardasovvadim@gmail.com",
+                CreatedDate = DateTime.UtcNow,
+                UpdatedDate = DateTime.UtcNow,
+                UserTypes = UserType.Admin
+            };
+            await userManager.CreateAsync(adminUser, "vae4Kang$");
+
             context.Users.AddRange(users);
             await context.SaveChangesAsync();
             
+            users.Add(adminUser);
+            
             var adminRole = identityRoles[UserType.Admin].Name;
             foreach (var user in users)
-            {
                 await userManager.AddToRoleAsync(user, adminRole);
-            }
 
             return users;
         }
@@ -90,7 +120,7 @@ namespace MG.WebHost.MockData
             return tournaments;
         }
 
-        private static async Task<IEnumerable<User>> InitializeStudents(MgContext context, Dictionary<UserType, IdentityRole<Guid>> roles, UserManager<User> userManager)
+        private static async Task<IEnumerable<User>> InitializeStudents(MgContext context, Dictionary<UserType, Role> roles, UserManager<User> userManager)
         {
             var students = new List<User>
             {
@@ -194,7 +224,7 @@ namespace MG.WebHost.MockData
             return timetableRecords;
         }
 
-        private static async Task<List<User>> InitializeMasters(MgContext context, List<Section> sections, Dictionary<UserType, IdentityRole<Guid>> roles, UserManager<User> userManager)
+        private static async Task<List<User>> InitializeMasters(MgContext context, List<Section> sections, Dictionary<UserType, Role> roles, UserManager<User> userManager)
         {
             var images = new List<Image>
             {

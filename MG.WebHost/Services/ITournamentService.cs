@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using MG.WebHost.Entities.Enums;
 using MG.WebHost.Entities.Tournaments;

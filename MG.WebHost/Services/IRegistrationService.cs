@@ -1,53 +1,62 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoMapper;
 using MG.WebHost.Entities;
-using MG.WebHost.Entities.Emails;
-using MG.WebHost.Entities.Enums;
-using MG.WebHost.Entities.Users;
+using MG.WebHost.Exceptions;
 using MG.WebHost.Models.Registrations;
 using MG.WebHost.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace MG.WebHost.Services
 {
     public interface IRegistrationService
     {
-        Task RegistrationAsync(RegistrationDto dto);
+        Task RegistrationAsync(OrderDto dto);
+        Task MarkAsProcessedAsync(Guid id);
     }
 
     public class RegistrationService : IRegistrationService
     {
-        private readonly IRepository<User> _userRepository;
+        private IRepository<Order> Repository { get; }
         private readonly IMapper _mapper;
-        private readonly IEmailService _emailService;
+        private INotifierService NotifierService { get;  }
 
-        public RegistrationService(IRepository<User> userRepository, IMapper mapper, IEmailService emailService)
+        public RegistrationService(IMapper mapper, IRepository<Order> repository, INotifierService notifierService)
         {
-            _userRepository = userRepository;
             _mapper = mapper;
-            _emailService = emailService;
+            Repository = repository;
+            NotifierService = notifierService;
         }
 
-        public async Task RegistrationAsync(RegistrationDto dto)
+        public async Task RegistrationAsync(OrderDto dto)
         {
-            await _userRepository.BeginTransactionAsync();
+            var order = _mapper.Map<OrderDto, Order>(dto);
             
-            var newUserEntity = _mapper.Map<User>(dto);
-            await _userRepository.InsertAsync(newUserEntity);
+            await Repository.InsertAsync(order);
+            await Repository.SaveChangesAsync();
 
-            var admin = await _userRepository.GetQueryable().FirstOrDefaultAsync(u => u.UserTypes == UserType.Admin);
+            await NotifierService.OnNewOrderAsync(order);
+
+            // var admin = await User.GetQueryable().FirstOrDefaultAsync(u => u.UserTypes == UserType.Admin);
+            //
+            // await _emailService.SendEmailAsync(EmailTemplateKey.AdminRegistration,
+            //     "New registration",
+            //     admin,
+            //     new Dictionary<string, object> { { "user", dto with { Password = null } } });
+            // await _emailService.SendEmailAsync(EmailTemplateKey.UserRegistrationResponse,
+            //     "Registration",
+            //     newUserEntity,
+            //     new Dictionary<string, object> { { "user", dto with { Password = null } } });
+        }
+
+        public async Task MarkAsProcessedAsync(Guid id)
+        {
+            var order = await Repository.GetByIdAsync(id);
             
-            await _emailService.SendEmailAsync(EmailTemplateKey.AdminRegistration,
-                "New registration",
-                admin,
-                new Dictionary<string, object> { { "user", dto with { Password = null } } });
-            await _emailService.SendEmailAsync(EmailTemplateKey.UserRegistrationResponse,
-                "Registration",
-                newUserEntity,
-                new Dictionary<string, object> { { "user", dto with { Password = null } } });
+            if (order == null)
+                throw new BusinessException("Заявка не найдена");
 
-            await _userRepository.CommitTransactionAsync();
+            order.Processed = true;
+            Repository.Update(order);
+
+            await Repository.SaveChangesAsync();
         }
     }
 }

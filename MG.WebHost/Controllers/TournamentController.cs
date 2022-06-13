@@ -1,16 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MG.WebHost.Controllers;
-using MG.WebHost.Entities.Enums;
+using MG.WebHost.Config;
 using MG.WebHost.Entities.Tournaments;
-using MG.WebHost.Entities.Users;
 using MG.WebHost.Models;
 using MG.WebHost.Models.Tournaments;
-using MG.WebHost.Repositories;
 using MG.WebHost.Services;
-using MG.WebHost.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MG.WebHost.Controllers;
@@ -36,28 +29,25 @@ public class TournamentController : BaseController
         return await _tournamentService.GetStudents(request);
     }
     
-    // admin
-    [HttpPost]
+    [HttpPost, Authorize(MgPermissions.Tournament.Create)]
     public async Task<TournamentEditModel> AddTournament(TournamentEditModel request)
     {
         return await _tournamentService.AddTournament(request);
     }
     
-    // admin
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}"), Authorize(MgPermissions.Tournament.Delete)]
     public async Task DeleteTournament(Guid tournamentId)
     {
         await _tournamentService.DeleteTournament(tournamentId);
     }
     
-    // admin
-    [HttpPost("{id}/result")]
+    [HttpPost("{id}/result"), Authorize(MgPermissions.Tournament.Create)]
     public async Task<TournamentResultVm> AddTournamentResult([FromRoute] Guid id, [FromBody] TournamentResultEditModel request)
     {
         return await _tournamentService.AddTournamentResult(id, request);
     }
 
-    [HttpDelete("{tournamentId}/result/{tournamentResultId}")]
+    [HttpDelete("{tournamentId}/result/{tournamentResultId}"), Authorize(MgPermissions.Tournament.Delete)]
     public async Task DeleteTournamentResult(Guid tournamentId, Guid tournamentResultId)
     {
         await _tournamentService.DeleteTournamentResult(tournamentId, tournamentResultId);

@@ -1,3 +1,4 @@
+using MG.WebHost.Config;
 using MG.WebHost.Entities.Enums;
 using MG.WebHost.Entities.Users;
 using MG.WebHost.Models;
@@ -40,7 +41,7 @@ namespace MG.WebHost.Controllers
 
         #region Admin_rights
 
-        [HttpPost, Authorize(Roles = nameof(UserType.Admin))]
+        [HttpPost, Authorize(MgPermissions.Master.Get)]
         public async Task<Page<AdminMasterVm>> GetListAsync(GetMasterListRequest request)
         {
             return await _adminMasterService.GetListAsync(
@@ -69,14 +70,14 @@ namespace MG.WebHost.Controllers
             return Ok(master);
         }
 
-        [HttpPost("SaveEditModel"), Authorize]
+        [HttpPost("SaveEditModel"), Authorize(MgPermissions.Master.Create)]
         public async Task<IActionResult> SaveEditModel(MasterEditModel model)
         {
             var master = await _masterService.SaveAsync(model);
             return Ok(master);
         }
 
-        [HttpDelete("{id}"), Authorize]
+        [HttpDelete("{id}"), Authorize(MgPermissions.Master.Delete)]
         public async Task DeleteAsync(Guid id)
         {
             await _masterService.DeleteAsync(id);

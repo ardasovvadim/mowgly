@@ -3,6 +3,7 @@
                  (onSubmit)="submit()"
                  (onCancel)="cancel()"
                  (onDelete)="delete()"
+                 [deletePerm]="'Permission.Location.Delete'"
                  [isDeleteButton]="form.value.id">
   <form [formGroup]="form">
 

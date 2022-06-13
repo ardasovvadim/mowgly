@@ -1,3 +1,4 @@
+using MG.WebHost.Config;
 using MG.WebHost.Entities.Sections;
 using MG.WebHost.Models;
 using MG.WebHost.Models.Sections;
@@ -25,7 +26,7 @@ namespace MG.WebHost.Controllers
             return sections?.OrderBy(s => s.Profiles.FirstOrDefault(setting => setting.Name == SectionSettingKeys.CardOrder)?.Value ?? string.Empty);
         }
 
-        [HttpPost("list"), Authorize]
+        [HttpPost("list"), Authorize(MgPermissions.Section.Get)]
         public async Task<Page<AdminSectionVm>> GetListAsync(FilterPageRequest request)
         {
             return await _sectionService.GetListAsync<AdminSectionVm, Section>(
@@ -37,19 +38,19 @@ namespace MG.WebHost.Controllers
                 });
         }
 
-        [HttpGet("{id}"), Authorize]
+        [HttpGet("{id}"), Authorize(MgPermissions.Section.Get)]
         public async Task<SectionVm> GetByIdAsync(Guid id)
         {
             return await _sectionService.GetByIdAsync<SectionVm, Section>(id, nameof(Section.Settings));
         }
 
-        [HttpPost, Authorize]
+        [HttpPost, Authorize(MgPermissions.Section.Create)]
         public async Task<SectionVm> UpdateAsync(SectionVm request)
         {
             return await _sectionService.SaveAsync<SectionVm, Section>(request);
         }
 
-        [HttpDelete("{id}"), Authorize]
+        [HttpDelete("{id}"), Authorize(MgPermissions.Section.Delete)]
         public async Task DeleteAsync(Guid id) => await _sectionService.DeleteAsync<Section>(id);
     }
 }

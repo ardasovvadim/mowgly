@@ -26,7 +26,7 @@
                         <ng-template #imgAvatar>
                             <img class="uk-border-circle uk-background-primary"
                                  [src]="form.value.avatar | image"
-                                 (loadeddata)="onLoaded($event); imgAvatarErr = false;"
+                                 (loadeddata)="imgAvatarErr = false;"
                                  (error)="imgAvatarErr = true;"
                                  width="200"
                                  height="200"
@@ -142,7 +142,10 @@
 
             <div class="uk-modal-footer uk-text-right mg-margin-between">
                 <button class="uk-button uk-button-primary" type="button" (click)="submit()">Сохранить</button>
-                <button class="uk-button uk-button-danger" type="button" (click)="delete()">Удалить</button>
+                <button class="uk-button uk-button-danger"
+                        type="button"
+                        *mgMgIfPerm="'Permission.User.Delete'"
+                        (click)="delete()">Удалить</button>
                 <button class="uk-button uk-button-default" type="button" (click)="close()">Отмена</button>
             </div>
 

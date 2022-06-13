@@ -127,6 +127,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   //border: 1px solid red;
 }
 
+.user-default-avatar {
+  background: $mg-light-background;
+  color: $mg-green-text;
+}
+
 
 @media (max-width: $mg-breakpoint-xlarge) {
   .mg-max-xl-overflow-visible {

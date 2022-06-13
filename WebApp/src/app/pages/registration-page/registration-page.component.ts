@@ -14,11 +14,10 @@ import {BehaviorSubject, Subscription} from 'rxjs';
 import {RegistrationStateModel} from '../../models/registration/registration.state.model';
 import {RegistrationState} from '../../models/registration/registration.state';
 import {SectionVm} from '../../models/sections/section.view.model';
-import {SectionSettingKeys} from '../../models/sections/section-setting-keys';
 import {MasterVm} from '../../models/masterVm';
 import {MasterService} from '../../services/master.service';
 import {PersonalDataModel} from '../../models/registration/personal-data.model';
-import {RegistrationService} from '../../services/registration.service';
+import {OrderApiService} from '../../services/order-api.service';
 import {RegCompletedModalComponent} from './reg-completed-modal/reg-completed-modal.component';
 import {MasterSearchCriteria} from '../../models/masters/master-search-criteria.request';
 import {TRSearchCriteriaRequest} from '../../models/timetable-records/timetable-record-search-criteria.request';
@@ -28,7 +27,7 @@ import {TRSearchCriteriaRequest} from '../../models/timetable-records/timetable-
   templateUrl: './registration-page.component.html',
   styleUrls: ['./registration-page.component.scss'],
   animations: [fadeInAnimation],
-  providers: [RegistrationStateService, RegistrationService]
+  providers: [RegistrationStateService, OrderApiService]
 })
 export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -55,7 +54,7 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
               private sectionService: SectionService,
               private registrationStateService: RegistrationStateService,
               private masterService: MasterService,
-              private registrationService: RegistrationService) {
+              private registrationService: OrderApiService) {
     this.state = registrationStateService.getState();
     this.$currentStep = new BehaviorSubject<number>(this.state.currentStep);
   }
@@ -224,13 +223,15 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
       && this.state.selectedLocation != null
       && this.state.selectedMaster != null) {
 
-      personalData.locationId = this.state.selectedLocation;
-      personalData.sectionId = this.state.selectedSection;
-      personalData.masterId = this.state.selectedMaster;
-      personalData.birthday = null;
+      const request = {
+        ...personalData,
+        locationId: this.state.selectedLocation,
+        sectionId: this.state.selectedSection,
+        masterId: this.state.selectedMaster
+      } as PersonalDataModel;
 
       this.registrationService
-        .register(personalData)
+        .register(request)
         .subscribe(_ => {
           this.regCompletedModal?.open();
           this.regCompletedModal?.onClose.subscribe(_ => this.resetState());

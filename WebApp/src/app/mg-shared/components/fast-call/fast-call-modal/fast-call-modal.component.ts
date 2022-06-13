@@ -1,24 +1,30 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {ModalBase} from '../../../../interfaces/modal-base';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {FastCallData} from '../fast-call-data';
+import {OrderApiService} from '../../../../services/order-api.service';
+import {PersonalDataModel} from '../../../../models/registration/personal-data.model';
+import {mgSuccessNotification} from '../../../../utils/ui-kit';
 
 @Component({
   selector: 'mg-fast-call-modal',
   templateUrl: './fast-call-modal.component.html',
-  styleUrls: ['./fast-call-modal.component.scss']
+  styleUrls: ['./fast-call-modal.component.scss'],
+  providers: [
+      OrderApiService
+  ]
 })
 export class FastCallModalComponent extends ModalBase {
 
   @Output() onClosed: EventEmitter<void> = new EventEmitter<void>();
-  @Output() onSubmitted: EventEmitter<FastCallData> = new EventEmitter<FastCallData>();
+
   form: FormGroup = this.fb.group({
     'name': [''],
     'phone': ['']
   });
 
   constructor(
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly orderService: OrderApiService
   ) {
     super();
   }
@@ -28,10 +34,19 @@ export class FastCallModalComponent extends ModalBase {
 
   cancel() {
     this.close();
-    this.onClosed.emit();
   }
 
   submit() {
-    this.onSubmitted.emit(this.form.value);
+    if (this.form.invalid)
+      return;
+
+    this.orderService.register({
+      firstName: this.form.value.name,
+      phoneNumber: this.form.value.phone
+    } as PersonalDataModel).subscribe(() => {
+      this.close();
+      this.onClosed.emit();
+      mgSuccessNotification(`<span uk-icon="check" class="uk-margin-small-right"></span> Ваш запрос принят`);
+    })
   }
 }

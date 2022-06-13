@@ -14,6 +14,7 @@ export class ManageModalComponent {
   @Input() form: FormGroup = new FormGroup({});
   @Input() style: 'container' | 'center' = 'center';
   @Input() isDeleteButton = false;
+  @Input() deletePerm: string = null;
 
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();

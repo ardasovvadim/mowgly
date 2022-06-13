@@ -6,7 +6,7 @@ import {PageOptions} from '../../../app/models/page';
 import {toSortOrder} from '../../../app/services/events-api.service';
 import {tap} from 'rxjs';
 import {ManageNewsApiService} from '../../services/manage-news-api.service';
-import {AdminNewsVm} from '../../models/news.modal';
+import {AdminNewsVm} from '../../models/news.model';
 
 @Component({
     selector: 'mg-manage-news-page',

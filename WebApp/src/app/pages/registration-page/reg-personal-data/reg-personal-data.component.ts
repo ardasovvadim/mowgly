@@ -14,12 +14,9 @@ export class RegPersonalDataComponent implements OnInit {
   form = this.fb.group({
     firstName: [''],
     lastName: [''],
-    birthday: [''],
-    phoneNumber: [''],
     email: [''],
-    password: [''],
-    isParent: [false],
-    rememberMe: [false]
+    phoneNumber: [],
+    isParent: [false]
   });
 
   constructor(private fb: FormBuilder) { }

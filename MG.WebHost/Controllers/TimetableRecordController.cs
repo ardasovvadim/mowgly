@@ -1,3 +1,4 @@
+using MG.WebHost.Config;
 using MG.WebHost.Models.TimetableRecords;
 using MG.WebHost.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -26,13 +27,13 @@ namespace MG.WebHost.Controllers
             return await _timetableRecordService.GetTimeTableRecordsAsync(request);
         }
 
-        [HttpPost(nameof(AddTimetableRecordAsync)), Authorize]
+        [HttpPost(nameof(AddTimetableRecordAsync)), Authorize(MgPermissions.TimetableRecord.Create)]
         public async Task<TimetableRecordEditModel> AddTimetableRecordAsync(TimetableRecordEditModel request)
         {
             return await _timetableRecordService.AddTimetableRecordAsync(request);
         }
 
-        [HttpDelete("{id}"), Authorize]
+        [HttpDelete("{id}"), Authorize(MgPermissions.TimetableRecord.Delete)]
         public async Task DeleteTimetableRecordAsync(Guid id)
         {
             await _timetableRecordService.DeleteAsync(id);

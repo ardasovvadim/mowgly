@@ -31,12 +31,14 @@ public class User : IdentityUser<Guid>, IBaseEntity
     public string MiddleName { get; protected set; }
 
     public string NormalizedName { get; protected set; }
+    public long TelegramChatId { get; set; }
         
     public UserType UserTypes { get; set; }
     public DateTime? Birthday { get; set; }
 
     public virtual ICollection<UserProfile> Profiles { get; set; }
     public virtual ICollection<TimetableRecord> TimetableRecords { get; set; }
+    public virtual ICollection<Permission> Permissions { get; set; }
 
     public void SetName(string firstName, string lastName, string middleName)
     {
@@ -44,5 +46,11 @@ public class User : IdentityUser<Guid>, IBaseEntity
         LastName = lastName;
         MiddleName = middleName;
         NormalizedName = this.ConcatName().ToUpper();
+    }
+
+    public void SetEmail(string email)
+    {
+        UserName = Email = email;
+        NormalizedUserName = NormalizedName = email.ToUpper();
     }
 }

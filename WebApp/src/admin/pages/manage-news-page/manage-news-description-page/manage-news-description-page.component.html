@@ -14,7 +14,7 @@
                 </div>
             </ng-template>
             <ng-template #editMode>
-                <div>
+                <div *mgMgIfPerm="'Permission.News.Delete'">
                     <button class="uk-button uk-button-danger w-100" (click)="delete()">Удалить</button>
                 </div>
             </ng-template>

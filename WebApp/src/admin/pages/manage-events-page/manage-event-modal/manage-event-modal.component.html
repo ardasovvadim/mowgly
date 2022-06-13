@@ -3,6 +3,7 @@
                  (onCancel)="close()"
                  (onSubmit)="submit()"
                  (onDelete)="delete()"
+                 [deletePerm]="'Permission.Event.Delete'"
                  [isDeleteButton]="form.value.id != null">
 
   <form [formGroup]="form">

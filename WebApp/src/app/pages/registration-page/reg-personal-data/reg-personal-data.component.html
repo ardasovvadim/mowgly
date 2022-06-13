@@ -30,7 +30,7 @@
       </div>
       <p class="uk-link">Выбрать фото</p>
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit.emit(form.getRawValue())">
+      <form [formGroup]="form" (ngSubmit)="onSubmit.emit(form.value)">
         <div class="uk-margin">
           <input type="text" class="uk-input" placeholder="Имя" formControlName="firstName">
         </div>
@@ -38,24 +38,14 @@
           <input type="text" class="uk-input" placeholder="Фамилия" formControlName="lastName">
         </div>
         <div class="uk-margin">
-          <input type="text" class="uk-input" placeholder="Дата рождения" formControlName="birthday">
-        </div>
-        <div class="uk-margin">
           <input type="text" class="uk-input" placeholder="Номер телефона" formControlName="phoneNumber">
         </div>
         <div class="uk-margin">
           <input type="text" class="uk-input" placeholder="Email" formControlName="email">
         </div>
-        <div class="uk-margin">
-          <input type="password" class="uk-input" placeholder="Пароль" formControlName="password">
-        </div>
-        <div class="uk-margin-medium d-flex justify-content-between">
+        <div class="uk-margin-medium d-flex justify-content-between align-items-center">
           <label><input type="checkbox" class="uk-checkbox" formControlName="isParent">Родитель ученика</label>
-          <label><input type="checkbox" class="uk-checkbox" formControlName="rememberMe">Запомнить меня</label>
-        </div>
-
-        <div class="mg-card-bottom">
-          <button class="uk-button uk-button-primary">Отправить заявку</button>
+          <button class="uk-button uk-button-primary" type="submit">Отправить заявку</button>
         </div>
       </form>
 

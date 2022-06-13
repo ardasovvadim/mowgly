@@ -8,8 +8,13 @@ import {EventsPageComponent} from './pages/events-page/events-page.component';
 import {SchedulePageComponent} from './pages/schedule-page/schedule-page.component';
 import {NewsPageComponent} from './pages/news-page/news-page.component';
 import {NewsDetailsComponent} from './pages/news-page/news-details/news-details.component';
-import {NotFoundPageComponent} from './pages/not-found-page/not-found-page.component';
 import {LoginPageComponent} from './pages/login-page/login-page.component';
+import {UserRegistrationPageComponent} from './pages/user-registration-page/user-registration-page.component';
+import {UserProfilePageComponent} from './pages/user-profile-page/user-profile-page.component';
+import {AuthorizeGuard} from './guards/authorize.guard';
+import {ErrorPageComponent} from './pages/error-page/error-page.component';
+import {PersonalDataComponent} from './pages/user-profile-page/components/personal-data/personal-data.component';
+import {ChangePasswordComponent} from './pages/user-profile-page/components/change-password/change-password.component';
 
 const routes: Routes = [
     {path: 'admin', loadChildren: () => import('../admin/admin.module').then(m => m.AdminModule)},
@@ -25,15 +30,26 @@ const routes: Routes = [
             {path: 'news', component: NewsPageComponent},
             {path: 'news/:id', component: NewsDetailsComponent},
             {path: 'login', component: LoginPageComponent},
-            {path: '404', component: NotFoundPageComponent},
-            {path: '**', component: NotFoundPageComponent}
+            {path: 'user-registration', component: UserRegistrationPageComponent},
+            {
+                path: 'user-profile',
+                component: UserProfilePageComponent,
+                canActivate: [AuthorizeGuard],
+                children: [
+                    {path: '', component: PersonalDataComponent, data: {index: 0}},
+                    {path: 'change-password', component: ChangePasswordComponent, data: {index: 1}},
+                ]
+            },
+            {path: '404', component: ErrorPageComponent, data: {code: '404'}},
+            {path: '403', component: ErrorPageComponent, data: {code: '403'}},
+            {path: '**', component: ErrorPageComponent, data: {code: '404'}}
         ]
     },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {
 }

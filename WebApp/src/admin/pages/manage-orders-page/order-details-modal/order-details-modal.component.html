@@ -1,0 +1,81 @@
+<div [id]="id" uk-modal>
+    <div class="uk-modal-dialog">
+
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">Детали</h2>
+        </div>
+
+        <div class="uk-modal-body">
+
+            <form [formGroup]="form">
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="name">Имя</label>
+                    <div>
+                        <input readonly placeholder="Имя" type="text" class="uk-input" id="name" formControlName="name">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="phoneNumber">Номер телефона</label>
+                    <div>
+                        <input readonly placeholder="Номер телефона" type="text" class="uk-input" id="phoneNumber" formControlName="phoneNumber">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="email">Емейл</label>
+                    <div>
+                        <input readonly placeholder="Емейл" type="text" class="uk-input" id="email" formControlName="email">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="createdTime">Дата заявки</label>
+                    <div>
+                        <input readonly placeholder="Дата заявки" type="text" class="uk-input" id="createdTime" formControlName="createdTime">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="location">Филиал</label>
+                    <div>
+                        <input readonly placeholder="Филиал" type="text" class="uk-input" id="location" formControlName="location">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="section">Направление</label>
+                    <div>
+                        <input readonly placeholder="Направление" type="text" class="uk-input" id="section" formControlName="section">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="master">Инструктор</label>
+                    <div>
+                        <input readonly placeholder="Инструктор" type="text" class="uk-input" id="master" formControlName="master">
+                    </div>
+                </div>
+
+                <div class="uk-margin uk-disabled">
+                    <label for="isParent" class="uk-margin-medium-right"><input type="checkbox" class="uk-checkbox uk-disabled" id="isParent" formControlName="isParent"> Родитель</label>
+                    <label for="processed"><input type="checkbox" class="uk-checkbox uk-disabled" id="processed" formControlName="processed"> Заявка обработана</label>
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="uk-modal-footer uk-text-right">
+            <button class="uk-button uk-button-primary uk-margin-small-right"
+                    [hidden]="form.value.processed"
+                    *mgMgIfPerm="'Permission.Order.Edit'"
+                    type="button"
+                    (click)="closeOrder()">Закрыть заявку</button>
+            <button class="uk-button uk-button-default uk-modal-close" type="button" (click)="close()">Отменить</button>
+        </div>
+    </div>
+</div>

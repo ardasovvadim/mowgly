@@ -7,5 +7,6 @@ namespace MG.WebHost.Database
         public const string MasterProfileImage = nameof(MasterProfileImage);
         public const string MasterDescriptions = nameof(MasterDescriptions);
         public const string MasterWithImages = nameof(MasterWithImages);
+        public const string UserAvatar = nameof(UserAvatar);
     }
 }

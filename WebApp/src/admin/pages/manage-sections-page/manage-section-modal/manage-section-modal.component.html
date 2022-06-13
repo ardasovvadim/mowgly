@@ -1,4 +1,9 @@
-<mg-manage-modal [id]="id" [isDeleteButton]="isEditMode" (onSubmit)="submit()" (onDelete)="delete()" (onCancel)="modal.hide();">
+<mg-manage-modal [id]="id"
+                 [isDeleteButton]="isEditMode"
+                 (onSubmit)="submit()"
+                 (onDelete)="delete()"
+                 [deletePerm]="'Permission.Section.Delete'"
+                 (onCancel)="modal.hide();">
     <form [formGroup]="form">
 
         <!--    Name    -->

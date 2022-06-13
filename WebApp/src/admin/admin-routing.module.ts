@@ -13,11 +13,13 @@ import {
   ManageNewsDescriptionPageComponent
 } from './pages/manage-news-page/manage-news-description-page/manage-news-description-page.component';
 import {ManageEventsPageComponent} from './pages/manage-events-page/manage-events-page.component';
-import {AuthorizeGuard} from '../api-authorization/authorize.guard';
 import {ManageMasterPageComponent} from './pages/manage-masters-page/manage-master-page/manage-master-page.component';
 import {
   ManageTournamentResultsPageComponent
 } from './pages/manage-tournament-results-page/manage-tournament-results-page.component';
+import {AuthorizeGuard} from '../app/guards/authorize.guard';
+import {ManagePermissionsPageComponent} from './pages/manage-permissions-page/manage-permissions-page.component';
+import {PermissionGuard} from '../app/guards/permission.guard';
 
 const routes: Routes = [
   {
@@ -25,19 +27,20 @@ const routes: Routes = [
     component: AdminLayoutComponent,
     canActivate: [AuthorizeGuard],
     children: [
-      {path: '', redirectTo: 'schedule', pathMatch: 'full', canActivate: [AuthorizeGuard]},
-      {path: 'masters/:id', component: ManageMasterPageComponent, canActivate: [AuthorizeGuard]},
-      {path: 'masters', component: ManageMastersPageComponent, canActivate: [AuthorizeGuard]},
-      {path: 'news', component: ManageNewsPageComponent, canActivate: [AuthorizeGuard]},
-      {path: 'news/:id', component: ManageNewsDescriptionPageComponent, canActivate: [AuthorizeGuard]},
-      {path: 'orders', component: ManageOrdersPageComponent, canActivate: [AuthorizeGuard]},
-      {path: 'sections', component: ManageSectionsPageComponent, canActivate: [AuthorizeGuard]},
+      {path: '', redirectTo: 'schedule', pathMatch: 'full'},
+      {path: 'masters/:id', component: ManageMasterPageComponent, canActivate: [AuthorizeGuard, PermissionGuard], data: { permissions: ['Permission.Master.Create'] }},
+      {path: 'masters', component: ManageMastersPageComponent, canActivate: [AuthorizeGuard, PermissionGuard], data: { permissions: ['Permission.Master.Get'] }},
+      {path: 'news', component: ManageNewsPageComponent, canActivate: [AuthorizeGuard, PermissionGuard], data: { permissions: ['Permission.News.Get'] }},
+      {path: 'news/:id', component: ManageNewsDescriptionPageComponent, canActivate: [AuthorizeGuard, PermissionGuard], data: { permissions: ['Permission.News.Create'] }},
+      {path: 'orders', component: ManageOrdersPageComponent, canActivate: [AuthorizeGuard, PermissionGuard], data: { permissions: ['Permission.Order.Get'] }},
+      {path: 'sections', component: ManageSectionsPageComponent, canActivate: [AuthorizeGuard, PermissionGuard], data: { permissions: ['Permission.Section.Get'] }},
       {path: 'settings', component: ManageSettingsPageComponent, canActivate: [AuthorizeGuard]},
-      {path: 'users', component: ManageUsersPageComponent, canActivate: [AuthorizeGuard]},
-      {path: 'locations', component: ManageLocationsPageComponent, canActivate: [AuthorizeGuard]},
-      {path: 'schedule', component: ManageSchedulePageComponent, canActivate: [AuthorizeGuard]},
-      {path: 'events', component: ManageEventsPageComponent, canActivate: [AuthorizeGuard]},
-      {path: 'events/:id/results', component: ManageTournamentResultsPageComponent, canActivate: [AuthorizeGuard]},
+      {path: 'users', component: ManageUsersPageComponent, canActivate: [AuthorizeGuard, PermissionGuard], data: { permissions: ['Permission.User.Get'] }},
+      {path: 'locations', component: ManageLocationsPageComponent, canActivate: [AuthorizeGuard, PermissionGuard], data: { permissions: ['Permission.Location.Get'] }},
+      {path: 'schedule', component: ManageSchedulePageComponent, canActivate: [AuthorizeGuard, PermissionGuard], data: { permissions: ['Permission.TimetableRecord.Get'] }},
+      {path: 'events', component: ManageEventsPageComponent, canActivate: [AuthorizeGuard, PermissionGuard], data: { permissions: ['Permission.Event.Get'] }},
+      {path: 'events/:id/results', component: ManageTournamentResultsPageComponent, canActivate: [AuthorizeGuard, PermissionGuard], data: { permissions: ['Permission.Event.Create'] }},
+      {path: 'permissions', component: ManagePermissionsPageComponent, canActivate: [AuthorizeGuard, PermissionGuard], data: { permissions: ['Permission.Role.Get'] }},
     ]
   },
 

@@ -1,0 +1,41 @@
+<div class="mg-tools uk-margin-medium-bottom uk-grid-small" uk-grid>
+
+    <div class="uk-width-1-2@s uk-width-auto@m" *mgMgIfPerm="'Permission.Role.Create'">
+        <button class="uk-button uk-button-primary" type="button" (click)="save()">Сохранить</button>
+    </div>
+
+    <div class="uk-width-1-2@s uk-width-auto@m">
+        <button class="uk-button uk-button-primary w-100" type="button" (click)="refreshData()">
+            <span class="uk-margin-small-right" uk-icon="refresh"></span>Обновить
+        </button>
+    </div>
+
+</div>
+
+<div class="table-wrapper uk-overflow-auto">
+
+    <table class="uk-table uk-table-divide uk-table-justify uk-background-muted" (mouseleave)="currentRowIndex = -1">
+
+        <thead>
+        <tr>
+            <th>Разрешение</th>
+            <th *ngFor="let role of data?.roles">{{role.name}}</th>
+        </tr>
+        </thead>
+
+        <tbody style="display: table-row-group"  [smoothHeight]="data">
+        <tr *ngFor="let perm of data?.permissions; let i = index" (mouseenter)="currentRowIndex = i" class="uk-animation-fade uk-animation-fast">
+            <td class="uk-table-shrink" style="min-width: 300px">{{perm.name}}</td>
+            <td style="min-width: 100px" *ngFor="let role of data.roles">
+                <input type="checkbox"
+                       class="uk-checkbox"
+                       [class.uk-disabled]="!hasEditPerm"
+                       [checked]="role.permissions.includes(perm.id)"
+                       (change)="changePermission(perm, role)">
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>

@@ -1,0 +1,104 @@
+<div class="uk-card mt-100 uk-align-center mg-card" style="max-width: 600px; padding: 20px">
+
+    <div class="uk-card-header uk-text-center">
+        <h2>Регистрация</h2>
+    </div>
+
+    <form class="uk-form-stacked" [formGroup]="form" (ngSubmit)="register()">
+
+        <div class="uk-card-body">
+
+            <ng-template [ngIf]="errorHtml">
+                <div class="uk-margin uk-form-danger">
+                    <ul [innerHTML]="errorHtml"></ul>
+                </div>
+            </ng-template>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="firstName">
+                    Имя <sup>*</sup>
+                    <ng-template [ngIf]="hasError('firstName', 'required')">
+                        - это поле обязательное
+                    </ng-template>
+                </label>
+                <div class="uk-form-controls">
+                    <input type="text" class="uk-input" placeholder="Имя" id="firstName" formControlName="firstName">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="lastName">
+                    Фамилия <sup>*</sup>
+                    <ng-template [ngIf]="hasError('lastName', 'required')">
+                        - это поле обязательное
+                    </ng-template>
+                </label>
+                <div class="uk-form-controls">
+                    <input type="text" class="uk-input" placeholder="Фамилия" id="lastName" formControlName="lastName">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="middleName">Отчество</label>
+                <div class="uk-form-controls">
+                    <input type="text" class="uk-input" placeholder="Отчество" id="middleName" formControlName="middleName">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="email">
+                    Емейл <sup>*</sup>
+                    <ng-container *ngIf="hasError('email', 'required'); else emailEmail">
+                        - это поле обязательное
+                    </ng-container>
+                    <ng-template #emailEmail>
+                        <ng-container *ngIf="hasError('email', 'email')">
+                            - некорректный формат емейла
+                        </ng-container>
+                    </ng-template>
+                </label>
+                <div class="uk-form-controls">
+                    <input type="text" class="uk-input" placeholder="email@gmail.com" id="email" formControlName="email">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="password">
+                    Пароль <sup>*</sup>
+                    <ng-container *ngIf="hasError('password', 'required')">
+                        - это поле обязательное
+                    </ng-container>
+                </label>
+                <div class="uk-form-controls">
+                    <input type="password" class="uk-input" placeholder="Пароль" id="password" formControlName="password">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="confirmPassword">
+                    Подтвердите пароль <sup>*</sup>
+                    <ng-container *ngIf="hasError('confirmPassword', 'required'); else confirmPasswordMatch">
+                        - это поле обязательное
+                    </ng-container>
+                    <ng-template #confirmPasswordMatch>
+                        <ng-container *ngIf="hasError('confirmPassword', 'mustMatch')">
+                            - пароль должен совпадать
+                        </ng-container>
+                    </ng-template>
+                </label>
+                <div class="uk-form-controls">
+                    <input type="password" class="uk-input" placeholder="Подтвердите пароль" id="confirmPassword" formControlName="confirmPassword">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="uk-card-footer uk-text-center">
+            <button class="uk-button uk-button-primary uk-margin-small-right" type="submit">Зарегистрироваться</button>
+            <div class="uk-inline">
+                <mg-google-login text="signup_with" (onResponse)="onGoogleSignup($event)"></mg-google-login>
+            </div>
+        </div>
+    </form>
+
+</div>

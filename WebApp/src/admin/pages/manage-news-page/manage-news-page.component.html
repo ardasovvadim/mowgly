@@ -15,7 +15,7 @@
              (ngModelChange)="filterDate = $event; refreshData()" [ngModel]="filterDate">
     </div>
   </div>
-  <div>
+  <div *mgMgIfPerm="'Permission.News.Create'">
     <button class="uk-button uk-button-primary w-100" (click)="add()">Добавить</button>
   </div>
   <div>

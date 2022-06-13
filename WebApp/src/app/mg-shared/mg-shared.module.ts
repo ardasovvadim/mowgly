@@ -35,9 +35,16 @@ import {NewsPageComponent} from '../pages/news-page/news-page.component';
 import {AutocompleteInputComponent} from './components/autocomplete-input/autocomplete-input.component';
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {LoadingDirective} from './directives/loading.directive';
-import { PaginationComponent } from './components/pagination/pagination.component';
-import { SmoothHeightAnimDirective } from './animations/smooth-height-anim.directive';
-import { ListPipe } from './pipes/list.pipe';
+import {PaginationComponent} from './components/pagination/pagination.component';
+import {SmoothHeightAnimDirective} from './animations/smooth-height-anim.directive';
+import {ListPipe} from './pipes/list.pipe';
+import {HasErrorPipe} from './pipes/has-error.pipe';
+import {UserAvatarComponent} from './components/user-avatar/user-avatar.component';
+import {GoogleLoginComponent} from './components/google-login/google-login.component';
+import {ToUtcPipe} from './pipes/to-utc.pipe';
+import {AngularCropperjsModule} from 'angular-cropperjs';
+import {ImageCroppModalComponent} from './components/image-cropp-modal/image-cropp-modal.component';
+import { ListErrorsComponent } from './components/list-errors/list-errors.component';
 
 const components: any[] = [
     FooterComponent,
@@ -59,6 +66,7 @@ const components: any[] = [
     LocationCardComponent,
     BgComponent,
     NewsPageComponent,
+    ImageCroppModalComponent,
 ];
 
 @NgModule({
@@ -81,6 +89,11 @@ const components: any[] = [
         PaginationComponent,
         SmoothHeightAnimDirective,
         ListPipe,
+        HasErrorPipe,
+        UserAvatarComponent,
+        GoogleLoginComponent,
+        ToUtcPipe,
+        ListErrorsComponent,
     ],
     exports: [
         ...components,
@@ -98,12 +111,18 @@ const components: any[] = [
         PaginationComponent,
         SmoothHeightAnimDirective,
         ListPipe,
+        HasErrorPipe,
+        GoogleLoginComponent,
+        ToUtcPipe,
+        AngularCropperjsModule,
+        ListErrorsComponent,
     ],
     imports: [
         CommonModule,
         ReactiveFormsModule,
         RouterModule,
-        FormsModule
+        FormsModule,
+        AngularCropperjsModule,
     ]
 })
 export class MgSharedModule {

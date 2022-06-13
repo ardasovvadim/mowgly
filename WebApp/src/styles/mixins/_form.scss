@@ -1,4 +1,12 @@
+@import "~uikit/src/scss/variables";
+
 @mixin hook-form() {
   border: unset;
   border-bottom: $form-border-width solid $form-border;
+}
+
+.ng-submitted .ng-invalid,
+.ng-submitted .ng-invalid:focus {
+  color: $form-danger-color;
+  @if(mixin-exists(hook-form-danger)) {@include hook-form-danger();}
 }

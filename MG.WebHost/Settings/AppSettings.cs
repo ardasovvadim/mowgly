@@ -4,5 +4,6 @@ namespace MG.WebHost.Settings
     {
         public const string SettingsSection = "AppSettings";
         public bool DeleteDatabaseOnRun { get; set; }
+        public string SelfUrl { get; set; }
     }
 }

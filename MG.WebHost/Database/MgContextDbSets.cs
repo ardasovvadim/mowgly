@@ -2,6 +2,7 @@ using MG.WebHost.Entities;
 using MG.WebHost.Entities.Emails;
 using MG.WebHost.Entities.Enums;
 using MG.WebHost.Entities.Images;
+using MG.WebHost.Entities.Interfaces;
 using MG.WebHost.Entities.News;
 using MG.WebHost.Entities.Sections;
 using MG.WebHost.Entities.Tournaments;
@@ -17,7 +18,6 @@ namespace MG.WebHost.Database
         public DbSet<Location> Locations { get; set; }
         public DbSet<UserRequest> UserRequests { get; set; }
         public DbSet<GeneralSetting> Settings { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<TimetableRecord> TimetableRecords { get; set; }
         public DbSet<EmailQueue> EmailQueue { get; set; }
@@ -26,6 +26,8 @@ namespace MG.WebHost.Database
         public DbSet<Tournament> Tournaments { get; set; }
         public DbSet<TournamentResult> TournamentResults { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<Order> Orders { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,29 +49,73 @@ namespace MG.WebHost.Database
                 .HasForeignKey(e => e.TournamentId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
-           
+            modelBuilder.Entity<Permission>().ToTable(nameof(Permissions));
+            
+            modelBuilder.Entity<Order>(t =>
+                {
+                    t.ToTable(nameof(Orders))
+                        .HasOne(e => e.Section)
+                        .WithMany()
+                        .HasForeignKey(e => e.SectionId)
+                        .IsRequired(false);
+                    t.HasOne(e => e.Location)
+                        .WithMany()
+                        .HasForeignKey(e => e.LocationId)
+                        .IsRequired(false);
+                    t.HasOne(e => e.Master)
+                        .WithMany()
+                        .HasForeignKey(e => e.MasterId)
+                        .IsRequired(false);
+                });
+
             modelBuilder.ApplyGlobalFilters(e => !e.Deleted);
-           
-            SeedData(modelBuilder);
             
             base.OnModelCreating(modelBuilder);
         }
-        
-        private void SeedData(ModelBuilder modelBuilder)
+
+        public override int SaveChanges()
         {
-            var defaultUsers = new[]
-            {
-                new User
-                {
-                    Id = Guid.NewGuid(),
-                    Email = "ardasovvadim@gmail.com",
-                    CreatedDate = DateTime.UtcNow,
-                    UpdatedDate = DateTime.UtcNow,
-                    UserTypes = UserType.Admin
-                }
-            };
-            
-            modelBuilder.Entity<User>().HasData(defaultUsers);
+            OnSaveChanges();
+            return base.SaveChanges();
         }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            OnSaveChanges();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            OnSaveChanges();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+        {
+            OnSaveChanges();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        private void OnSaveChanges()
+        {
+            var insertedEntries = ChangeTracker.Entries()
+                .Where(x => x.State == EntityState.Added)
+                .Select(x => x.Entity);
+            
+            foreach(var insertedEntry in insertedEntries)
+                if(insertedEntry is IBaseEntity auditableEntity)
+                    auditableEntity.CreatedDate = DateTime.UtcNow;
+            
+            var modifiedEntries = this.ChangeTracker.Entries()
+                .Where(x => x.State == EntityState.Modified)
+                .Select(x => x.Entity);
+            
+            foreach (var modifiedEntry in modifiedEntries)
+                if (modifiedEntry is IBaseEntity auditableEntity)
+                    auditableEntity.UpdatedDate = DateTime.UtcNow;
+        }
+        
+        
     }
 }

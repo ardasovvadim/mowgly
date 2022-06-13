@@ -45,15 +45,20 @@ import {
 import {ManageTournamentModalComponent} from './components/manage-tournament-modal/manage-tournament-modal.component';
 import {ManageEventsPageComponent} from './pages/manage-events-page/manage-events-page.component';
 import {ManageEventModalComponent} from './pages/manage-events-page/manage-event-modal/manage-event-modal.component';
-import { ManageMasterPageComponent } from './pages/manage-masters-page/manage-master-page/manage-master-page.component';
-import {AngularCropperjsModule} from 'angular-cropperjs';
-import { ImageCroppModalComponent } from './components/image-cropp-modal/image-cropp-modal.component';
-import { AddImageModalComponent } from './components/add-image-modal/add-image-modal.component';
-import { QuillEditorComponent } from './components/quill-editor/quill-editor.component';
-import { ChooseOrCreateEventModalComponent } from './pages/manage-news-page/manage-news-description-page/componenets/choose-or-create-event-modal/choose-or-create-event-modal.component';
-import { ManageTournamentResultsPageComponent } from './pages/manage-tournament-results-page/manage-tournament-results-page.component';
-import { ConcatUserTypesPipe } from './pipes/concat-user-types.pipe';
-import { HasFlagPipe } from './pipes/has-flag.pipe';
+import {ManageMasterPageComponent} from './pages/manage-masters-page/manage-master-page/manage-master-page.component';
+import {AddImageModalComponent} from './components/add-image-modal/add-image-modal.component';
+import {QuillEditorComponent} from './components/quill-editor/quill-editor.component';
+import {
+    ChooseOrCreateEventModalComponent
+} from './pages/manage-news-page/manage-news-description-page/componenets/choose-or-create-event-modal/choose-or-create-event-modal.component';
+import {
+    ManageTournamentResultsPageComponent
+} from './pages/manage-tournament-results-page/manage-tournament-results-page.component';
+import {ConcatUserTypesPipe} from './pipes/concat-user-types.pipe';
+import {HasFlagPipe} from './pipes/has-flag.pipe';
+import {ManagePermissionsPageComponent} from './pages/manage-permissions-page/manage-permissions-page.component';
+import {MgIfPermDirective} from './directives/mg-if-perm.directive';
+import {OrderDetailsModalComponent} from './pages/manage-orders-page/order-details-modal/order-details-modal.component';
 
 @NgModule({
     declarations: [
@@ -85,16 +90,19 @@ import { HasFlagPipe } from './pipes/has-flag.pipe';
         ManageEventsPageComponent,
         ManageEventModalComponent,
         ManageMasterPageComponent,
-        ImageCroppModalComponent,
         AddImageModalComponent,
         QuillEditorComponent,
         ChooseOrCreateEventModalComponent,
         ManageTournamentResultsPageComponent,
         ConcatUserTypesPipe,
         HasFlagPipe,
+        ManagePermissionsPageComponent,
+        MgIfPermDirective,
+        OrderDetailsModalComponent,
     ],
     exports: [
-        ManageModalComponent
+        ManageModalComponent,
+        HasFlagPipe
     ],
     imports: [
         CommonModule,
@@ -103,8 +111,6 @@ import { HasFlagPipe } from './pipes/has-flag.pipe';
         FormsModule,
         MgSharedModule,
         TextFieldModule,
-        // custom
-        AngularCropperjsModule,
     ],
     providers: []
 })

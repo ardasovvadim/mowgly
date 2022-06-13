@@ -1,38 +1,66 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {AuthorizeService} from '../../../api-authorization/authorize.service';
-import {switchMap} from 'rxjs/operators';
-import {from} from 'rxjs';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthenticationService} from '../../services/authentication.service';
+import {LoginRequest, LoginResponse} from '../../models/user.model';
+import {ActivatedRoute, Router} from '@angular/router';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
-  selector: 'mg-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss']
+    selector: 'mg-login-page',
+    templateUrl: './login-page.component.html',
+    styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
 
-  form: FormGroup = this.fb.group({
-    email: [],
-    password: []
-  })
+    form: FormGroup = this.fb.group({
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required]]
+    })
+    submitted: boolean = false;
+    error: string;
 
-  constructor(
-      private readonly fb: FormBuilder,
-      private readonly authService: AuthorizeService
-  ) { }
+    private returnUrl: string;
 
-  ngOnInit(
+    constructor(
+        private readonly fb: FormBuilder,
+        private readonly authService: AuthenticationService,
+        private readonly router: Router,
+        private readonly activatedRoute: ActivatedRoute,
+        private readonly storage: StorageService,
+    ) {
+    }
 
-  ): void {
-  }
+    ngOnInit(): void {
+        this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/'
 
-  login() {
-    from(this.authService.ensureUserManagerInitialized())
-        .pipe(
-          switchMap(() => this.authService.userManager.signinRedirect())
-        )
-        .subscribe()
-    ;
+        if (this.authService.isAuthenticated) {
+            this.router.navigate([this.returnUrl]);
+        }
+    }
 
-  }
+    onLoginResponse(response: LoginResponse) {
+        if (!response.isSuccess) {
+            this.error = response.errorMessage;
+            return;
+        }
+
+        this.router.navigateByUrl(this.returnUrl);
+    }
+
+    login() {
+        this.error = null;
+        this.submitted = true;
+
+        if (this.form.invalid)
+            return;
+
+        this.authService
+            .login(this.form.value as LoginRequest)
+            .subscribe(response => this.onLoginResponse(response))
+    }
+
+    onGoogleSignIn(response: any) {
+        this.authService.signInWithGoogle(response)
+            .subscribe(data => this.onLoginResponse(data));
+    }
 }

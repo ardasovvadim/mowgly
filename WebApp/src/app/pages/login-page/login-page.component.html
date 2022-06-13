@@ -8,15 +8,37 @@
 
         <div class="uk-card-body">
 
+            <div class="uk-margin" *ngIf="error">
+                <div class="uk-alert-danger" uk-alert>
+                    <a class="uk-alert-close" uk-close></a>
+                    <p>{{error}}</p>
+                </div>
+            </div>
+
             <div class="uk-margin">
-                <label class="uk-form-label" for="email">Емейл</label>
+                <label class="uk-form-label" for="email">
+                    Емейл
+                    <ng-container *ngIf="form | hasError : 'email' : 'required' : submitted; else emailEmail">
+                        - это поле обязательное
+                    </ng-container>
+                    <ng-template #emailEmail>
+                        <ng-container *ngIf="form | hasError : 'email' : 'email' : submitted">
+                            - некорректный формат емейла
+                        </ng-container>
+                    </ng-template>
+                </label>
                 <div class="uk-form-controls">
                     <input type="text" class="uk-input" placeholder="Емейл" id="email" formControlName="email">
                 </div>
             </div>
 
             <div class="uk-margin">
-                <label class="uk-form-label" for="password">Пароль</label>
+                <label class="uk-form-label" for="password">
+                    Пароль
+                    <ng-template [ngIf]="form | hasError : 'password' : 'required' : submitted">
+                        - это поле обязательное
+                    </ng-template>
+                </label>
                 <div class="uk-form-controls">
                     <input type="password" class="uk-input" placeholder="Пароль" id="password"
                            formControlName="password">
@@ -25,8 +47,12 @@
 
         </div>
 
-        <div class="uk-card-footer uk-text-center">
-            <button class="uk-button uk-button-primary" type="submit">Авторизоваться</button>
+        <div class="uk-card-footer uk-text-center" uk-margin>
+            <button class="uk-button uk-button-primary uk-margin-small-right" type="submit">Войти</button>
+            <button class="uk-button uk-button-default" routerLink="/user-registration" type="button">Зарегистрироваться</button>
+            <div class="uk-inline">
+                <mg-google-login (onResponse)="onGoogleSignIn($event)" text="signin_with"></mg-google-login>
+            </div>
         </div>
     </form>
 

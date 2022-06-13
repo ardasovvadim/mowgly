@@ -8,7 +8,6 @@ import {
     NewsImageBlock
 } from '../../app/pages/news-page/news-details/news-details.component';
 import {StorageService} from '../../app/services/storage.service';
-import {UserDataService} from '../../app/services/user-data.service';
 import {
     ChooseOrCreateEventModalComponent
 } from '../pages/manage-news-page/manage-news-description-page/componenets/choose-or-create-event-modal/choose-or-create-event-modal.component';
@@ -47,7 +46,6 @@ export class NewsManageService {
 
     constructor(
         private readonly storageService: StorageService,
-        private readonly userData: UserDataService,
         private readonly newsApiService: ManageNewsApiService
     ) {
     }

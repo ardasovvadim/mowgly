@@ -14,7 +14,7 @@
     <div class="col-12 uk-margin-medium-top uk-text-right uk-modal-footer">
       <button type="submit" class="uk-button uk-button-primary uk-margin-right" (click)="submit()">Сохранить</button>
       <ng-template [ngIf]="isDeleteButton">
-        <button type="button" class="uk-button uk-button-danger uk-margin-right" (click)="delete()">Удалить</button>
+        <button type="button" class="uk-button uk-button-danger uk-margin-right" *mgMgIfPerm="deletePerm" (click)="delete()">Удалить</button>
       </ng-template>
       <button type="button" class="uk-button uk-button-default" (click)="cancel()">Отменить</button>
     </div>

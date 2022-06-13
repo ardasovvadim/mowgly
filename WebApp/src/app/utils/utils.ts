@@ -67,3 +67,9 @@ export function readImageAsDataUrl(event: Event, action: (dataUrl: string) => vo
 export function toNetDate(date: string) {
   return moment(date).format('YYYY-MM-DD')
 }
+
+export function getErrorListHtml(errors: string[]): string {
+  return errors
+      .filter((value, index, self) => self.indexOf(value) === index)
+      .map(it => `<li>${it}</li>`).join('\n');
+}

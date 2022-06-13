@@ -1,85 +1,61 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {StorageService} from '../../../services/storage.service';
-import {Subscription, timer} from 'rxjs';
+import {timer} from 'rxjs';
 import * as moment from 'moment';
-import {ModalService} from '../../../services/modal.service';
 import {FastCallModalComponent} from './fast-call-modal/fast-call-modal.component';
 
 @Component({
-  selector: 'mg-fast-call',
-  templateUrl: './fast-call.component.html',
-  styleUrls: ['./fast-call.component.scss']
+    selector: 'mg-fast-call',
+    templateUrl: './fast-call.component.html',
+    styleUrls: ['./fast-call.component.scss']
 })
-export class FastCallComponent implements OnInit, OnDestroy {
+export class FastCallComponent implements OnInit, AfterViewInit {
 
-  isDisplayed = false;
-  modal: FastCallModalComponent;
+    @ViewChild('modal') modal: FastCallModalComponent;
+    isDisplayed = false;
 
-  private readonly displayAfterSeconds = 10 * 1000;
-  private readonly repeatAfterDays = 1;
-  private readonly key = 'fast-call';
-  private readonly subscriptions: Subscription[] = [];
+    private readonly displayAfterSeconds = 10 * 1000;
+    private readonly repeatAfterDays = 1;
+    private readonly key = 'fast-call';
 
-  constructor(
-    private readonly storage: StorageService,
-    private readonly modalService: ModalService
-  ) { }
-
-  ngOnInit(): void {
-    const lastDisplayedTime = this.storage.get<string>(this.key);
-
-    if (!lastDisplayedTime) {
-      this.initializeModalAndDisplay();
-      return;
+    constructor(
+        private readonly storage: StorageService,
+    ) {
     }
 
-    const result = moment(lastDisplayedTime).diff(moment(), 'days');
-    if (result >= this.repeatAfterDays)
-      this.initializeModalAndDisplay();
-  }
+    ngOnInit(): void {
+    }
 
-  showModal() {
-    this.modal?.open();
-  }
+    showModal() {
+        this.modal?.open();
+    }
 
-  onClose() {
-    this.logTime();
-    this.isDisplayed = false;
-  }
+    onClose() {
+        this.logTime();
+        this.isDisplayed = false;
+    }
 
-  ngOnDestroy(): void {
-    this.modal && this.modalService.deleteModal(this.modal);
-    this.subscriptions?.forEach(s => s.unsubscribe());
-  }
+    private logTime() {
+        const lastDisplayedTime = moment().toString();
+        this.storage.set(this.key, lastDisplayedTime);
+    }
 
-  private initializeModalAndDisplay() {
-    this.modalService.createModal<FastCallModalComponent>({type: FastCallModalComponent})
-      .subscribe(modal => {
-        this.modal = modal;
-        if (modal) {
+    ngAfterViewInit(): void {
+        const lastDisplayedTime = this.storage.get<string>(this.key);
 
-          let sub = this.modal.onSubmitted.subscribe(data => {
-            // todo
-            this.modal.close();
-            this.onClose();
-          })
-          this.subscriptions.push(sub);
-
-          sub = this.modal.onClosed.subscribe(() => {
-            this.onClose();
-          });
-          this.subscriptions.push(sub);
-
-          timer(this.displayAfterSeconds).subscribe(() => {
-            this.isDisplayed = true;
-          });
-
+        if (!lastDisplayedTime) {
+            this.open();
+            return;
         }
-      })
-  }
 
-  private logTime() {
-    const lastDisplayedTime = moment().toString();
-    this.storage.set(this.key, lastDisplayedTime);
-  }
+        const result = moment(lastDisplayedTime).diff(moment(), 'days');
+        if (result >= this.repeatAfterDays)
+            this.open();
+    }
+
+    private open() {
+        timer(this.displayAfterSeconds).subscribe(() => {
+            this.isDisplayed = true;
+        });
+    }
 }

@@ -1,3 +1,4 @@
+using MG.WebHost.Config;
 using MG.WebHost.Entities;
 using MG.WebHost.Models;
 using MG.WebHost.Models.Locations;
@@ -25,7 +26,7 @@ namespace MG.WebHost.Controllers
 
         #region Admin
 
-        [HttpPost("list"), Authorize]
+        [HttpPost("list"), Authorize(MgPermissions.Location.Get)]
         public async Task<Page<AdminLocationVm>> GetListAsync(GetAdminLocationVmRequest request)
         {
             return await BaseService.GetListAsync<AdminLocationVm, Location>(request, query =>
@@ -37,19 +38,19 @@ namespace MG.WebHost.Controllers
             });
         }
 
-        [HttpGet("{id}"), Authorize]
+        [HttpGet("{id}"), Authorize(MgPermissions.Location.Get)]
         public async Task<LocationEditModel> GetByIdAsync(Guid id)
         {
             return await BaseService.GetByIdAsync<LocationEditModel, Location>(id, nameof(Location.Sections));
         }
         
-        [HttpPost, Authorize]
+        [HttpPost, Authorize(MgPermissions.Location.Create)]
         public async Task<LocationEditModel> Save(LocationEditModel model)
         {
             return await _locationService.Save(model);
         }
 
-        [HttpDelete("{locationId:guid}"), Authorize]
+        [HttpDelete("{locationId:guid}"), Authorize(MgPermissions.Location.Delete)]
         public async Task Delete(Guid locationId)
         { 
             await BaseService.DeleteAsync<Location>(locationId);

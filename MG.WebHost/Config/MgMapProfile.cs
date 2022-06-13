@@ -10,6 +10,7 @@ using MG.WebHost.Models.Events;
 using MG.WebHost.Models.Locations;
 using MG.WebHost.Models.Masters;
 using MG.WebHost.Models.News;
+using MG.WebHost.Models.Orders;
 using MG.WebHost.Models.Registrations;
 using MG.WebHost.Models.Sections;
 using MG.WebHost.Models.TimetableRecords;
@@ -50,8 +51,6 @@ namespace MG.WebHost.Config
                 .ReverseMap();
             CreateMap<User, MasterVm>()
                 .ForMember(d => d.Name, o => o.MapFrom(s => $"{s.FirstName} {s.LastName} {s.MiddleName}"));
-            CreateMap<RegistrationDto, User>()
-                .ForMember(d => d.UserTypes, o => o.MapFrom(s => s.IsParent ? UserType.Parent : UserType.Student));
             
             CreateMap<User, MasterEditModel>()
                 .ForMember(d => d.Phone, o => o.MapFrom(s => s.PhoneNumber))
@@ -63,6 +62,32 @@ namespace MG.WebHost.Config
                     d.SetName(s.FirstName, s.LastName, s.MiddleName);
                 })
                 ;
+
+            CreateMap<OrderDto, Order>()
+                .ConstructUsing((s, c) => new Order(s.FirstName, s.LastName));
+            
+            CreateMap<UserRegistrationDto, User>()
+                .AfterMap((s, d, c) =>
+                {
+                    d.SetName(s.FirstName, s.LastName, s.MiddleName);
+                    d.SetEmail(s.Email);
+                })
+                ;
+
+            CreateMap<User, UserProfileDto>()
+                .ForMember(d => d.Permissions, o => o.Ignore())
+                .ForMember(d => d.Name, o => o.MapFrom(s => s.ConcatName()))
+                ;
+
+            CreateMap<Order, OrderVm>()
+                .ForMember(d => d.CreatedTime, o => o.MapFrom(s => s.CreatedDate))
+                .ForMember(d => d.Master, o => o.MapFrom(s => s.Master.ConcatName()))
+                .ForMember(d => d.Location, o => o.MapFrom(s => s.Location.Name))
+                .ForMember(d => d.Section, o => o.MapFrom(s => s.Section.Name))
+                .AfterMap((s, d, c) =>
+                {
+                    d.Name = (s.LastName + " " + s.FirstName).Trim();
+                });
 
             CreateMap<Tournament, TournamentVm>()
                 .AfterMap((entity, dto) => { dto.Results = dto.Results.OrderBy(r => r.Place).ToList(); });
@@ -120,6 +145,14 @@ namespace MG.WebHost.Config
                     d.SetName(s.FirstName, s.LastName, s.MiddleName);
                 })
                 ;
+
+            CreateMap<User, UserProfileSaveDto>()
+                .ReverseMap()
+                .AfterMap((s, d, c) =>
+                {
+                    d.SetName(s.FirstName, s.LastName, s.MiddleName);
+                    d.SetEmail(s.Email);
+                });
         }
     }
 }

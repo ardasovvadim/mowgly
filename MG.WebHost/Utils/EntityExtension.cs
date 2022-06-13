@@ -35,13 +35,27 @@ public static class EntityExtension
         return str.ToString().Trim();
     }
     
-    public static void ApplyGlobalFilters(this ModelBuilder modelBuilder, Expression<Func<BaseEntity, bool>> expression)
+    public static string EscapeSymbols(this string str)
+    {
+        var symbols = "_*[]()~`>#+-=|{}.!";
+        var strBuilder = new StringBuilder(str);
+        
+        foreach (var t in symbols)
+        {
+            var s = t.ToString();
+            strBuilder.Replace(s, "\\" + s);
+        }
+
+        return strBuilder.ToString();
+    } 
+    
+    public static void ApplyGlobalFilters(this ModelBuilder modelBuilder, Expression<Func<IBaseEntity, bool>> expression)
     {
         var exceptTypes = new List<Type> { typeof(SectionSetting), typeof(UserProfile) };
         
         var entities = modelBuilder.Model
             .GetEntityTypes()
-            .Where(e => e.ClrType.IsSubclassOf(typeof(BaseEntity)) && !exceptTypes.Contains(e.ClrType))
+            .Where(e => e.ClrType.IsAssignableTo(typeof(IBaseEntity)) && !exceptTypes.Contains(e.ClrType))
             .Select(e => e.ClrType);
         foreach (var entity in entities)
         {

@@ -6,7 +6,7 @@ import {ManageMasterApiService} from '../../../services/manage-master-api.servic
 import {ActivatedRoute, Router} from '@angular/router';
 import {map, switchMap, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
-import {ImageCroppModalComponent} from '../../../components/image-cropp-modal/image-cropp-modal.component';
+import {ImageCroppModalComponent} from '../../../../app/mg-shared/components/image-cropp-modal/image-cropp-modal.component';
 import {ManageImageApiService} from '../../../services/manage-image-api.service';
 import {ProfileMaps} from '../../../models/profile.model';
 import {isGuid, toNormalDate} from '../../../../app/utils/utils';

@@ -13,15 +13,19 @@ import {RegPersonalDataComponent} from './pages/registration-page/reg-personal-d
 import {RegSectionComponent} from './pages/registration-page/reg-section/reg-section.component';
 import {AppLayoutComponent} from './pages/app-layout/app-layout.component';
 import {EventsPageComponent} from './pages/events-page/events-page.component';
-import {NotFoundPageComponent} from './pages/not-found-page/not-found-page.component';
 import {SchedulePageComponent} from './pages/schedule-page/schedule-page.component';
 import {NewsDetailsComponent} from './pages/news-page/news-details/news-details.component';
 import {MasterPageComponent} from './pages/master-page/master-page.component';
 import {RegCompletedModalComponent} from './pages/registration-page/reg-completed-modal/reg-completed-modal.component';
-import {AuthorizeInterceptor} from '../api-authorization/authorize.interceptor';
-import {ApiAuthorizationModule} from '../api-authorization/api-authorization.module';
-import { ScullyLibModule } from '@scullyio/ng-lib';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
+import {LoginPageComponent} from './pages/login-page/login-page.component';
+import {UserRegistrationPageComponent} from './pages/user-registration-page/user-registration-page.component';
+import {ErrorHandlerInterceptor} from './interceptors/error-handler.interceptor';
+import {AuthHandlerInterceptor} from './interceptors/auth-handler.interceptor';
+import {UserProfilePageComponent} from './pages/user-profile-page/user-profile-page.component';
+import {ErrorPageComponent} from './pages/error-page/error-page.component';
+import {AdminModule} from '../admin/admin.module';
+import { PersonalDataComponent } from './pages/user-profile-page/components/personal-data/personal-data.component';
+import { ChangePasswordComponent } from './pages/user-profile-page/components/change-password/change-password.component';
 
 @NgModule({
     declarations: [
@@ -35,14 +39,18 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
         AppLayoutComponent,
         SchedulePageComponent,
         EventsPageComponent,
-        NotFoundPageComponent,
         NewsDetailsComponent,
         MasterPageComponent,
         LoginPageComponent,
+        RegistrationPageComponent,
+        UserRegistrationPageComponent,
+        UserProfilePageComponent,
+        ErrorPageComponent,
+        PersonalDataComponent,
+        ChangePasswordComponent,
     ],
     imports: [
         BrowserModule,
-        ApiAuthorizationModule,
         AppRoutingModule,
         HttpClientModule,
 
@@ -51,10 +59,11 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
         AppRoutingModule,
         MgSharedModule,
         FormsModule,
-        ScullyLibModule,
+        AdminModule,
     ],
     providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
+        {provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: AuthHandlerInterceptor, multi: true}
     ],
     bootstrap: [AppComponent]
 })

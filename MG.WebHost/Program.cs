@@ -1,14 +1,16 @@
-using Duende.IdentityServer.Services;
+using System.Text;
 using MG.WebHost.Config;
 using MG.WebHost.Database;
+using MG.WebHost.Entities;
 using MG.WebHost.Entities.Users;
+using MG.WebHost.Security;
 using MG.WebHost.Services;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-using Microsoft.AspNetCore.Authentication;
+using MG.WebHost.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MG.WebHost
 {
@@ -41,52 +43,42 @@ namespace MG.WebHost
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddHttpContextAccessor();
 
-            builder.Services.AddDefaultIdentity<User>(options => { options.SignIn.RequireConfirmedAccount = true; })
-                .AddRoles<IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<MgContext>();
-
-            if (isDevelopment)
-                builder.Services.AddSingleton<ICorsPolicyService>((container) =>
+            builder.Services
+                .AddIdentity<User, Role>(options =>
                 {
-                    var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
-                    return new DefaultCorsPolicyService(logger)
-                    {
-                        // todo: not for production
-                        AllowedOrigins =
-                        {
-                            "https://localhost:4200",
-                        }
-                    };
-                });
-
-            builder.Services.AddIdentityServer()
-                .AddProfileService<MgProfileService>()
-                .AddApiAuthorization<User, MgContext>(config =>
-                {
-                    config.Clients.AddIdentityServerSPA("MG.WebApp", conf =>
-                    {
-                        // conf.
-                    });
-                    // config.Clients.First().AlwaysIncludeUserClaimsInIdToken = true;
-                    // config.Clients.AddRange(IdentityConfig.GetClients());
+                    options.SignIn.RequireConfirmedAccount = true;
+                    options.User.RequireUniqueEmail = false;
+                    options.Password.RequireNonAlphanumeric = false;
                 })
-                ;
+                .AddEntityFrameworkStores<MgContext>()
+                .AddTokenProvider<TelegramTokenProvider>(TelegramTokenProvider.ProviderName);
 
-            builder.Services.AddAuthentication()
-                .AddGoogle(o =>
+            var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+            builder.Services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    o.ClientId = "483436574759-ulj2gtbglcb0beia4ggpjm9bc5d2ufr8.apps.googleusercontent.com";
-                    o.ClientSecret = "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";
-                    o.SignInScheme = IdentityConstants.ExternalScheme;
-                })
-                .AddIdentityServerJwt();
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["validIssuer"],
+                    ValidAudience = jwtSettings["validAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
+                };
+            });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                foreach (var perm in MgPermissions.GetPermissions())
+                    options.AddPolicy(perm, c => c.RequireClaim(MgClaim.Permission, perm));
+            });
 
             builder.Services.AddDistributedMemoryCache();
-
-            if (builder.Environment.IsProduction())
-                builder.Services.Configure<JwtBearerOptions>(
-                    IdentityServerJwtConstants.IdentityServerJwtBearerScheme,
-                    options => options.Authority = builder.Configuration["Authority"]);
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
@@ -150,7 +142,7 @@ namespace MG.WebHost
                 app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthentication();
-            app.UseIdentityServer();
+            app.UseMiddleware<PermissionsMiddleware>();
             app.UseAuthorization();
 
             app.MapControllerRoute(
