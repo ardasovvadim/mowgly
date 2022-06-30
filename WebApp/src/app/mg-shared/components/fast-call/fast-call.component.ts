@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {StorageService} from '../../../services/storage.service';
-import {timer} from 'rxjs';
+import {delay, timer} from 'rxjs';
 import * as moment from 'moment';
 import {FastCallModalComponent} from './fast-call-modal/fast-call-modal.component';
 
@@ -44,6 +44,7 @@ export class FastCallComponent implements OnInit, AfterViewInit {
         const lastDisplayedTime = this.storage.get<string>(this.key);
 
         if (!lastDisplayedTime) {
+
             this.open();
             return;
         }

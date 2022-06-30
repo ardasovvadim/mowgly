@@ -1,7 +1,9 @@
 <nav class="row align-items-stretch">
 
     <div class="col-auto">
-        <img routerLink="/" class="logo-image" src="/assets/img/logo.png" alt="logo">
+        <a routerLink="/">
+            <img class="logo-image" src="/assets/img/logo.png" loading="lazy" alt="logo">
+        </a>
     </div>
 
     <div *ngIf="isLargeMenu" class="col-auto menu-lg">
@@ -10,14 +12,18 @@
             <div *ngFor="let link of links" class="mg-navbar-item">
 
                 <div class="wrapper">
-                    <a [class.mr-5]="!!link.children" (click)="goToLink(link.link)"
+                    <a [class.mr-5]="!!link.children"
+                       [routerLink]="link.link"
+                       (click)="onRouteChange(link.ancher)"
                        routerLinkActive="active">{{link.name}}</a>
                     <span *ngIf="!!link.children" uk-icon="chevron-down"></span>
                 </div>
 
                 <div *ngIf="!!link.children" class="uk-navbar-dropdown" uk-dropdown>
                     <ul *ngFor="let sublink of link.children" class="uk-nav uk-navbar-dropdown-nav">
-                        <li><a (click)="goToLink(sublink.link)" routerLinkActive="active">{{sublink.name}}</a></li>
+                        <li><a [routerLink]="sublink.link"
+                               (click)="onRouteChange(sublink.link)"
+                               routerLinkActive="active">{{sublink.name}}</a></li>
                     </ul>
                 </div>
 
@@ -30,7 +36,7 @@
         <div class="avatar">
             <a *ngIf="isAuthenticated$ | async; else login" (click)="logout()">Выйти</a>
             <ng-template #login>
-                <a *ngIf="!(isAuthenticated$ | async)" routerLink="/login">Войти</a>
+                <a *ngIf="!(isAuthenticated$ | async)" routerLink="/login">Увійти</a>
             </ng-template>
 
             <mg-user-avatar [size]="64" (click)="goToProfile()"></mg-user-avatar>
@@ -62,10 +68,14 @@
             <div class="mg-burger-navbar">
 
                 <div *ngFor="let link of links" class="mg-burger-navbar-item">
-                    <a (click)="goToLink(link.link)" routerLinkActive="active" class="uk-h2">{{link.name}}</a>
+                    <a (click)="onRouteChange(link.link)"
+                       [routerLink]="link.link"
+                       routerLinkActive="active" class="uk-h2">{{link.name}}</a>
                     <hr>
                     <div *ngIf="!!link.children" class="mg-burger-subnavbar">
-                        <a *ngFor="let sublink of link.children" (click)="goToLink(sublink.link)"
+                        <a *ngFor="let sublink of link.children"
+                           [routerLink]="sublink.link"
+                           (click)="onRouteChange(sublink.link)"
                            routerLinkActive="active" class="uk-display-block">{{sublink.name}}</a>
                     </div>
                 </div>

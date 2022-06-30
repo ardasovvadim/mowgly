@@ -6,7 +6,7 @@
         <ng-template [ngIf]="data?.imageUrl">
           <div class="uk-card-media-left uk-cover-container">
             <!--    todo: alt    -->
-            <img [src]="data.imageUrl | image" alt="article image" uk-cover>
+            <img [src]="data.imageUrl | image" alt="article image" loading="lazy" uk-cover>
             <canvas width="600" height="400"></canvas>
           </div>
         </ng-template>
@@ -68,15 +68,16 @@
             </div>
 
             <div>
-              <a href="#" class="uk-button uk-button-text" [routerLink]="['/news']">Назад к новостям <span
-                uk-icon="arrow-left"></span></a>
+              <a href="#" class="uk-button uk-button-text" [routerLink]="['/news']">
+                Назад к новинам <span uk-icon="arrow-left"></span>
+              </a>
             </div>
           </div>
         </div>
       </div>
     </ng-template>
     <ng-template #notFound>
-      <h3 class="uk-text-center mt-200">Новость не найдена = (</h3>
+      <h3 class="uk-text-center mt-200">Новина не знайдена = (</h3>
     </ng-template>
   </div>
 

@@ -6,7 +6,7 @@ import {AdminLocationVm, LocationEditModel} from '../../models/location.model';
 import {PageOptions} from '../../../app/models/page';
 import {PaginationComponent} from '../../../app/mg-shared/components/pagination/pagination.component';
 import {toSortOrder} from '../../../app/services/events-api.service';
-import {tap} from 'rxjs';
+import {finalize, tap} from 'rxjs';
 import {fadeInAnimation} from '../../../app/mg-shared/animations/fadeInAnimation';
 import {smoothHeight} from '../../../app/mg-shared/animations/smooth-height-anim.directive';
 import {OptionsApiService} from '../../../app/services/options-api.service';
@@ -42,6 +42,7 @@ export class ManageLocationsPageComponent implements OnInit, AfterViewInit {
     @ViewChild('pagination') pagination: PaginationComponent;
     @ViewChild('manageLocationModalComponent') modal: ManageLocationModalComponent;
     currentRowIndex: number = -1;
+    loading = false;
 
     constructor(
         private readonly locationService: ManageLocationApiService,
@@ -65,6 +66,7 @@ export class ManageLocationsPageComponent implements OnInit, AfterViewInit {
     }
 
     refreshData() {
+        this.loading = true;
         this.locationService.getList({
             filterCity: this.filterCity,
             filterText: this.filterText,
@@ -86,6 +88,7 @@ export class ManageLocationsPageComponent implements OnInit, AfterViewInit {
                         count: data.count
                     }
                 }),
+                finalize(() => this.loading = false)
             )
             .subscribe(data => {
                 this.data = data.elements?.sort();

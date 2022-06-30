@@ -1,5 +1,5 @@
 <div class="col-12 mt-100">
-  <h1 class="uk-text-center">Новости</h1>
+  <h1 class="uk-text-center">Новини</h1>
 </div>
 
 <div class="row justify-content-center uk-position-relative">
@@ -14,7 +14,7 @@
           <ng-template [ngIf]="news.imageUrl">
             <div class="uk-card-media-left uk-cover-container">
               <!--    todo: alt    -->
-              <img [src]="news.imageUrl | image" alt="article image" uk-cover>
+              <img [src]="news.imageUrl | image" alt="article image" loading="lazy" uk-cover>
               <canvas width="600" height="400"></canvas>
             </div>
           </ng-template>
@@ -34,7 +34,7 @@
               </div>
 
               <div>
-                <a href="#" class="uk-button uk-button-text" [routerLink]="['/news', news.id]">Продолжить читать <span uk-icon="arrow-right"></span></a>
+                <a href="#" class="uk-button uk-button-text" [routerLink]="['/news', news.id]">Продовжити читати <span uk-icon="arrow-right"></span></a>
               </div>
             </div>
           </div>
@@ -44,12 +44,12 @@
       </div>
     </ng-template>
     <ng-template #noData>
-      <h3 class="uk-text-center">Новостей пока нет = (</h3>
+      <h3 class="uk-text-center">Новие пока що немає = (</h3>
     </ng-template>
   </div>
 
 
     <!--    todo -->
-<!--    <img class="mg-bg absolute-x-center" style="top: -100px; width: auto" src="/assets/img/bg-15.png" alt="background">-->
+<!--    <img class="mg-bg absolute-x-center" loading="lazy" style="top: -100px; width: auto" src="/assets/img/bg-15.png" alt="background">-->
 
 </div>

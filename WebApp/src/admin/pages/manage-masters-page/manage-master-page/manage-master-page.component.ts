@@ -5,11 +5,11 @@ import {DataType} from '../../../../app/models/data-type';
 import {ManageMasterApiService} from '../../../services/manage-master-api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {map, switchMap, tap} from 'rxjs/operators';
-import {of} from 'rxjs';
+import {delay, finalize, of} from 'rxjs';
 import {ImageCroppModalComponent} from '../../../../app/mg-shared/components/image-cropp-modal/image-cropp-modal.component';
 import {ManageImageApiService} from '../../../services/manage-image-api.service';
 import {ProfileMaps} from '../../../models/profile.model';
-import {isGuid, toNormalDate} from '../../../../app/utils/utils';
+import {goToExternalLink, isGuid, toNormalDate} from '../../../../app/utils/utils';
 import {applyProfileMappingToData, applyProfileMappingToForm} from '../../../utils/settings';
 import {mgConfirm, mgSuccessNotification} from '../../../../app/utils/ui-kit';
 
@@ -49,6 +49,10 @@ export class ManageMasterPageComponent implements OnInit, AfterViewInit {
     defaultAvatar: string = '/assets/img/masters/avatars/default.png';
     defaultProfileImage: string = '/assets/img/masters/avatars/default.png';
     imagesToDelete: string[] = [];
+
+    isSaving = false;
+    isDeleting = false;
+
 
     private profileMappings: ProfileMaps = {
         'avatar': {key: 'CardMasterAvatarImage', type: DataType.Image, defaultValue: this.defaultAvatar},
@@ -96,6 +100,7 @@ export class ManageMasterPageComponent implements OnInit, AfterViewInit {
         applyProfileMappingToData(this.profileMappings, request);
         const isNew = !request.id
 
+        this.isSaving = true;
         this.masterService
             .save(request)
             .pipe(
@@ -105,7 +110,8 @@ export class ManageMasterPageComponent implements OnInit, AfterViewInit {
                         return this.imageApi.deleteImages(this.imagesToDelete);
 
                     return of(null);
-                })
+                }),
+                finalize(() => this.isSaving = false)
             )
             .subscribe(() => {
                 this.imagesToDelete = [];
@@ -116,12 +122,12 @@ export class ManageMasterPageComponent implements OnInit, AfterViewInit {
     }
 
     delete() {
-        mgConfirm('Вы уверены что хотите удалить инструктора?')
+        mgConfirm('Вы уверены что хотите удалить Інструктора?')
             .pipe(
                 switchMap(() => this.masterService.delete(this.form.value.id))
             )
             .subscribe(() => {
-                mgSuccessNotification('Инструктор удален')
+                mgSuccessNotification('Інструктор удален')
                 this.router.navigate(['../'], {relativeTo: this.activeRoute})
             })
     }
@@ -189,5 +195,9 @@ export class ManageMasterPageComponent implements OnInit, AfterViewInit {
                 const array = control.value as any[];
                 control.setValue(array.filter(v => v != imageUrl));
             })
+    }
+
+    goToViewProfile() {
+        goToExternalLink('/master/' + this.form.value['id']);
     }
 }

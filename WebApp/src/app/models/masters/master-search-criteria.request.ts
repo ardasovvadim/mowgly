@@ -1,6 +1,8 @@
-import {PageRequest} from '../page-request';
+import {FilterPageRequest} from '../page-request';
 
-export interface MasterSearchCriteria extends PageRequest {
+export interface MasterSearchCriteria extends FilterPageRequest {
   sectionIds: string[];
   locationIds: string[];
+  section: string;
+  city: string;
 }

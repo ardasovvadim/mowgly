@@ -5,61 +5,63 @@
       <a class="uk-search-icon-flip"
          (click)="refreshData()"
          uk-search-icon></a>
-      <input class="uk-search-input uk-input" type="search" placeholder="Поиск по названию"
+      <input class="uk-search-input uk-input" type="search" placeholder="Пошук за назвою"
              (keyup.enter)="refreshData()" [(ngModel)]="filterText">
     </div>
   </div>
 
   <div class="uk-width-1-2@s uk-width-auto@m" *mgMgIfPerm="'Permission.Section.Create'">
     <button class="uk-button uk-button-primary" type="button" (click)="create()">
-      <span class="uk-margin-small-right" uk-icon="plus"></span>Добавить
+      <span class="uk-margin-small-right" uk-icon="plus"></span>Додати
     </button>
   </div>
 
   <div class="uk-width-1-2@s uk-width-auto@m">
     <button class="uk-button uk-button-primary w-100" type="button" (click)="refreshData()">
-      <span class="uk-margin-small-right" uk-icon="refresh"></span>Обновить
+      <span class="uk-margin-small-right" uk-icon="refresh"></span>Оновити
     </button>
   </div>
 
 </div>
 
-<div class="table-wrapper uk-overflow-auto">
+<div [mgLoading]="loading">
+  <div class="table-wrapper uk-overflow-auto">
 
-  <table class="uk-table uk-table-divide uk-table-justify uk-background-muted" (mouseleave)="currentRowIndex = -1">
+    <table class="uk-table uk-table-divide uk-table-justify uk-background-muted" (mouseleave)="currentRowIndex = -1">
 
-    <thead>
-    <tr>
-      <th>№</th>
-      <th>Название секции</th>
-      <th>Дата создания</th>
-      <th>Дата изменения</th>
-      <th>Количество инструкторов</th>
-      <th></th>
-    </tr>
-    </thead>
+      <thead>
+      <tr>
+        <th>№</th>
+        <th>Назва напрямку</th>
+        <th>Час створення</th>
+        <th>Час зміни</th>
+        <th>Кількість інструкторів</th>
+        <th></th>
+      </tr>
+      </thead>
 
-    <tbody style="display: table-row-group"  [smoothHeight]="data">
-    <tr *ngFor="let section of data; let i = index" (mouseenter)="currentRowIndex = i" class="uk-animation-fade uk-animation-fast">
-      <td class="uk-table-shrink"
-          style="min-width: 50px">{{i + 1 + (pageOptions.pageNumber * pageOptions.pageSize)}}</td>
-      <td style="min-width: 400px">{{section.name}}</td>
-      <td style="min-width: 150px">{{section.createdDate | date : 'dd-MM-yyyy'}}</td>
-      <td style="min-width: 150px">{{section.updatedDate | date : 'dd-MM-yyyy'}}</td>
-      <td style="min-width: 150px">{{section.masterCount}}</td>
-      <td>
-        <div [style.visibility]="currentRowIndex != i ? 'hidden' : ''">
-          <a class="uk-icon-button" uk-icon="pencil" (click)="edit(section)"></a>
-        </div>
-      </td>
-    </tr>
-    </tbody>
+      <tbody style="display: table-row-group"  [smoothHeight]="data">
+      <tr *ngFor="let section of data; let i = index" (mouseenter)="currentRowIndex = i" class="uk-animation-fade uk-animation-fast">
+        <td class="uk-table-shrink"
+            style="min-width: 50px">{{i + 1 + (pageOptions.pageNumber * pageOptions.pageSize)}}</td>
+        <td style="min-width: 400px">{{section.name}}</td>
+        <td style="min-width: 150px">{{section.createdDate | date : 'dd-MM-yyyy'}}</td>
+        <td style="min-width: 150px">{{section.updatedDate | date : 'dd-MM-yyyy'}}</td>
+        <td style="min-width: 150px">{{section.masterCount}}</td>
+        <td>
+          <div [style.visibility]="currentRowIndex != i ? 'hidden' : ''">
+            <a class="uk-icon-button" uk-icon="pencil" (click)="edit(section)"></a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
 
-  </table>
+    </table>
 
-  <mg-pagination [pageOptions]="pageOptions"
-                 (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
+    <mg-pagination [pageOptions]="pageOptions"
+                   (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
 
+  </div>
 </div>
 
-<mg-manage-section-modal #modal (onSubmittedAndClosed)="refreshData()"></mg-manage-section-modal>
+<mg-manage-section-modal #modal (onClosed)="refreshData()"></mg-manage-section-modal>

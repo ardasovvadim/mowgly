@@ -5,7 +5,7 @@
             <a class="uk-search-icon-flip"
                (click)="refreshData()"
                uk-search-icon></a>
-            <input class="uk-search-input uk-input" type="search" placeholder="Поиск по инструктору"
+            <input class="uk-search-input uk-input" type="search" placeholder="Пошук по інструктору"
                    (keyup.enter)="refreshData()"
                    (ngModelChange)="filterText = $event;" [ngModel]="filterText">
         </div>
@@ -13,86 +13,87 @@
 
     <div class="uk-width-1-2@s uk-width-auto@m">
         <select class="uk-select" [(ngModel)]="cityFilter" (ngModelChange)="refreshData()">
-            <option [ngValue]="null">Все города</option>
+            <option [ngValue]="null">Всі міста</option>
             <option *ngFor="let city of options?.cities" [ngValue]="city">{{city}}</option>
         </select>
     </div>
 
     <div class="uk-width-1-2@s uk-width-auto@m">
         <select class="uk-select" [(ngModel)]="locationFilter" (ngModelChange)="refreshData()">
-            <option [ngValue]="null">Все филиалы</option>
+            <option [ngValue]="null">Всі філіали</option>
             <option *ngFor="let location of options?.locations" [ngValue]="location.id">{{location.name}}</option>
         </select>
     </div>
 
     <div class="uk-width-1-2@s uk-width-auto@m">
         <select class="uk-select" [(ngModel)]="sectionFilter" (ngModelChange)="refreshData()">
-            <option [ngValue]="null">Все направления</option>
+            <option [ngValue]="null">Всі напрямки</option>
             <option *ngFor="let section of options?.sections" [ngValue]="section.id">{{section.name}}</option>
         </select>
     </div>
 
     <div class="uk-width-1-2@s uk-width-auto@m" *mgMgIfPerm="'Permission.TimetableRecord.Create'">
-        <button class="uk-button uk-button-primary" type="button" (click)="addTimeslot()">Добавить</button>
+        <button class="uk-button uk-button-primary" type="button" (click)="addTimeslot()">Додати</button>
     </div>
 
     <div class="uk-width-1-2@s uk-width-auto@m">
-        <button class="uk-button uk-button-primary" type="button" (click)="refreshData()">Обновить</button>
+        <button class="uk-button uk-button-primary" type="button" (click)="refreshData()">Оновити</button>
     </div>
 
 </div>
 
+<div [mgLoading]="loading">
+    <div class="table-wrapper uk-position-relative" style="height: 600px; overflow: scroll">
 
-<div class="table-wrapper uk-position-relative" style="height: 600px; overflow: scroll">
+        <!-- It's shit but to do header sticky there is no other way -->
 
-    <!-- It's shit but to do header sticky there is no other way -->
+       <table class="uk-table uk-table-divide uk-table-justify uk-background-muted w-100 mg-sticky-header">
+            <thead>
+            <tr>
+                <th>Час</th>
+                <th>Пн</th>
+                <th>Вт</th>
+                <th>Ср</th>
+                <th>Чт</th>
+                <th>Пт</th>
+                <th>Сб</th>
+                <th>Нд</th>
+            </tr>
+            </thead>
+        </table>
 
-   <table class="uk-table uk-table-divide uk-table-justify uk-background-muted w-100 mg-sticky-header">
-        <thead>
-        <tr>
-            <th>Время</th>
-            <th>Пн</th>
-            <th>Вт</th>
-            <th>Ср</th>
-            <th>Чт</th>
-            <th>Пт</th>
-            <th>Сб</th>
-            <th>Вс</th>
-        </tr>
-        </thead>
-    </table>
+        <table class="uk-table uk-table-divide uk-table-justify timetable-table mg-no-select">
 
-    <table class="uk-table uk-table-divide uk-table-justify timetable-table mg-noselect">
+            <tbody>
 
-        <tbody>
+            <tr *ngFor="let dayTime of dayTimes">
 
-        <tr *ngFor="let dayTime of dayTimes">
+                <td>{{dayTime}}</td>
 
-            <td>{{dayTime}}</td>
+                <td *ngFor="let day of dayOfWeek">
 
-            <td *ngFor="let day of dayOfWeek">
+                    <ng-container *ngIf="isBusy(day, dayTime); else freeSlot">
+                        <div class="timeslot-wrapper">
+                            <mg-timetable-slot *ngIf="isBuildBusySlot(day, dayTime)"
+                                               (click)="editTimeslot(getBusySlot(day, dayTime));"
+                                               [options]="options"
+                                               [masters]="masters"
+                                               [data]="getBusySlot(day, dayTime)"></mg-timetable-slot>
+                        </div>
+                    </ng-container>
 
-                <ng-container *ngIf="isBusy(day, dayTime); else freeSlot">
-                    <div class="timeslot-wrapper">
-                        <mg-timetable-slot *ngIf="isBuildBusySlot(day, dayTime)"
-                                           (click)="editTimeslot(getBusySlot(day, dayTime));"
-                                           [options]="options"
-                                           [masters]="masters"
-                                           [data]="getBusySlot(day, dayTime)"></mg-timetable-slot>
-                    </div>
-                </ng-container>
+                    <ng-template #freeSlot>
+                        <div class="hidden-wrapper" (click)="addTimeslot(day, dayTime)">-</div>
+                    </ng-template>
 
-                <ng-template #freeSlot>
-                    <div class="hidden-wrapper" (click)="addTimeslot(day, dayTime)">-</div>
-                </ng-template>
+                </td>
 
-            </td>
+            </tr>
 
-        </tr>
+            </tbody>
 
-        </tbody>
-
-    </table>
+        </table>
+    </div>
 </div>
 
 <mg-manage-timeslot-modal #manageModal></mg-manage-timeslot-modal>

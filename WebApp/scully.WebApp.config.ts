@@ -5,6 +5,7 @@ require('@notiz/scully-plugin-lazy-images');
 
 /** this loads the default render plugin, remove when switching to something else. */
 import '@scullyio/scully-plugin-puppeteer'
+import {DisableAngular} from 'scully-plugin-disable-angular';
 
 const postRenderers = [MinifyHtml, 'lazyImages', 'seoHrefOptimize'];
 
@@ -42,6 +43,11 @@ registerPlugin(
     'routeProcess',
     'removeUserIds',
     (routes: HandledRoute[]): Promise<HandledRoute[]> => {
+      // routes.forEach(r => {
+      //   if (!r.postRenderers)
+      //     r.postRenderers = [];
+      //   r.postRenderers.push(DisableAngular)
+      // });
       return Promise.resolve(routes.filter(r => routeList.includes(r.route)));
     });
 

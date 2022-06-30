@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {IdName} from '../../../models/timetable-records/timetable-record.view.model';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Observable, Subscription} from 'rxjs';
@@ -98,8 +98,13 @@ export class AutocompleteInputComponent implements OnInit, ControlValueAccessor 
     }
 
     writeValue(obj: IdName): void {
-        this.selectedIdName = obj ?? null;
-        this.filteringName = obj?.name ?? '';
+        this._options = [];
+        this.highlightIndex = -1;
+        this.displayOptions = false;
+        this.isOptionsFocused = false;
+
+        this.selectedIdName = obj;
+        this.filteringName = obj?.name;
     }
 
     registerOnTouched(fn: any): void {}

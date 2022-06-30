@@ -6,7 +6,7 @@ import {toSortOrder} from '../../../app/services/events-api.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {PaginationComponent} from '../../../app/mg-shared/components/pagination/pagination.component';
 import {PageOptions} from '../../../app/models/page';
-import {tap} from 'rxjs';
+import {finalize, tap} from 'rxjs';
 import {fadeInAnimation} from '../../../app/mg-shared/animations/fadeInAnimation';
 import {smoothHeight} from '../../../app/mg-shared/animations/smooth-height-anim.directive';
 import {Router} from '@angular/router';
@@ -41,6 +41,7 @@ export class ManageEventsPageComponent implements OnInit, AfterViewInit {
         pageNumber: 0
     }
     pageOptions: PageOptions = {...this.initialPageOptions};
+    loading = false;
 
     constructor(
         private readonly eventsApiService: ManageEventsApiService,
@@ -66,6 +67,7 @@ export class ManageEventsPageComponent implements OnInit, AfterViewInit {
     }
 
     refreshData() {
+        this.loading = true;
         this.eventsApiService.getList({
             actionDate: this.filterDate,
             filterText: this.filterText,
@@ -87,6 +89,7 @@ export class ManageEventsPageComponent implements OnInit, AfterViewInit {
                         count: data.count
                     }
                 }),
+                finalize(() => this.loading = false)
             )
             .subscribe(data => {
                 this.data = data.elements;

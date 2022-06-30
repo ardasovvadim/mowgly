@@ -6,7 +6,6 @@ using MG.WebHost.Services;
 using MG.WebHost.Settings;
 using MG.WebHost.Tasks;
 using MG.WebHost.Utils;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Telegram.Bot;
 
 namespace MG.WebHost.Config
@@ -25,7 +24,6 @@ namespace MG.WebHost.Config
             services.AddScoped<ITimetableRecordService, TimetableRecordService>();
             services.AddScoped<IMasterService, MasterService>();
             services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IEmailSender, EmailService>();
             services.AddScoped<IRegistrationService, RegistrationService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ITournamentService, TournamentService>();
@@ -58,6 +56,7 @@ namespace MG.WebHost.Config
             services.Configure<DbInitializerSettings>(configuration.GetSection(DbInitializerSettings.Name));
             services.Configure<GoogleSettings>(configuration.GetSection(GoogleSettings.Name));
             services.Configure<TelegramSettings>(configuration.GetSection(TelegramSettings.Name));
+            services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.Name));
 
             services.Configure<TelegramTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromMinutes(5));
 

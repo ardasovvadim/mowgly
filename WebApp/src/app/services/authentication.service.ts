@@ -51,6 +51,10 @@ export class AuthenticationService {
         return this.storage.get('token');
     }
 
+    getRefreshToken(): string {
+        return this.storage.get('refreshToken');
+    }
+
     signInWithGoogle(response): Observable<LoginResponse> {
         return this.obtainLoginResponse(this.api.post(this.servicePrefix + '/signin-google', response));
     }
@@ -63,6 +67,7 @@ export class AuthenticationService {
                         return;
 
                     this.storage.set('token', response.token);
+                    this.storage.set('refreshToken', response.refreshToken);
                     this.isAuthenticatedSub.next(true);
                 })
             );
@@ -70,5 +75,19 @@ export class AuthenticationService {
 
     signupWithGoogle(response: any): Observable<UserValidationResponse> {
         return this.api.post(this.servicePrefix + '/signup-google', response);
+    }
+
+    refreshToken(): Observable<LoginResponse> {
+        return this.api.post<LoginResponse>(this.servicePrefix + '/refresh', {
+            refreshToken: this.getRefreshToken(),
+            accessToken: this.getToken()
+        }).pipe(
+            tap(response => {
+                if (response.isSuccess) {
+                    this.storage.set('token', response.token);
+                    this.storage.set('refreshToken', response.refreshToken);
+                }
+            })
+        );
     }
 }

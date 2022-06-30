@@ -1,6 +1,6 @@
 using MG.WebHost.Entities;
+using MG.WebHost.Entities.Auth;
 using MG.WebHost.Entities.Emails;
-using MG.WebHost.Entities.Enums;
 using MG.WebHost.Entities.Images;
 using MG.WebHost.Entities.Interfaces;
 using MG.WebHost.Entities.News;
@@ -8,7 +8,6 @@ using MG.WebHost.Entities.Sections;
 using MG.WebHost.Entities.Tournaments;
 using MG.WebHost.Entities.Users;
 using MG.WebHost.Utils;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace MG.WebHost.Database
@@ -28,6 +27,7 @@ namespace MG.WebHost.Database
         public DbSet<News> News { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<MgLoginModel> LoginModels { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,6 +50,13 @@ namespace MG.WebHost.Database
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
             modelBuilder.Entity<Permission>().ToTable(nameof(Permissions));
+            modelBuilder.Entity<MgLoginModel>(t =>
+            {
+                t.ToTable(nameof(LoginModels));
+                t.HasOne<User>()
+                    .WithOne()
+                    .HasForeignKey<MgLoginModel>(e => e.UserId);
+            });
             
             modelBuilder.Entity<Order>(t =>
                 {

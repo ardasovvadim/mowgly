@@ -5,7 +5,7 @@
             <a class="uk-search-icon-flip"
                (click)="refreshData()"
                uk-search-icon></a>
-            <input class="uk-search-input uk-input" type="search" placeholder="Поиск по названию"
+            <input class="uk-search-input uk-input" type="search" placeholder="Пошук за назвою"
                    (keyup.enter)="refreshData()" [(ngModel)]="filterText">
         </div>
     </div>
@@ -20,71 +20,73 @@
 
     <div>
         <button class="uk-button uk-button-primary w-100" type="button" (click)="refreshData()">
-            <span class="uk-margin-small-right" uk-icon="refresh"></span>Обновить
+            <span class="uk-margin-small-right" uk-icon="refresh"></span>Оновити
         </button>
     </div>
 
     <div>
         <button class="uk-button uk-button-primary w-100" type="button" (click)="reset()">
-            <span class="uk-margin-small-right" uk-icon="close"></span>Сбросить
+            <span class="uk-margin-small-right" uk-icon="close"></span>Скинути фільтри
         </button>
     </div>
 
     <div *mgMgIfPerm="'Permission.Order.Notification'">
         <button class="uk-button uk-button-primary w-100" type="button" (click)="generateTelegramLink()">
-            <span uk-icon="icon: mail" class="uk-margin-small-right"></span> Подписаться
+            <span uk-icon="icon: mail" class="uk-margin-small-right"></span> Підписатися
         </button>
     </div>
 
 </div>
 
-<div class="table-wrapper uk-overflow-auto">
+<div [mgLoading]="loading">
+    <div class="table-wrapper uk-overflow-auto">
 
-    <table class="uk-table uk-table-divide uk-table-justify uk-background-muted" (mouseleave)="currentRowIndex = -1">
+        <table class="uk-table uk-table-divide uk-table-justify uk-background-muted" (mouseleave)="currentRowIndex = -1">
 
-        <thead>
-        <tr>
-            <th>№</th>
-            <th>Заявка принята</th>
-            <th>Имя</th>
-            <th>Емейл</th>
-            <th>Номер телефона</th>
-            <th>Родитель</th>
-            <th (click)="asc = !asc; refreshData()" class="mg-pointer">
-                Время заявки
-                <ng-template [ngIf]="asc" [ngIfElse]="down"><span uk-icon="chevron-up"></span></ng-template>
-                <ng-template #down><span uk-icon="chevron-down"></span></ng-template>
-            </th>
-            <th></th>
-        </tr>
-        </thead>
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>Заявка прийнята</th>
+                <th>Імʼя</th>
+                <th>Емейл</th>
+                <th>Номер телефону</th>
+                <th>Батько</th>
+                <th (click)="asc = !asc; refreshData()" class="mg-pointer">
+                    Час заявки
+                    <ng-template [ngIf]="asc" [ngIfElse]="down"><span uk-icon="chevron-up"></span></ng-template>
+                    <ng-template #down><span uk-icon="chevron-down"></span></ng-template>
+                </th>
+                <th></th>
+            </tr>
+            </thead>
 
-        <tbody style="display: table-row-group"  [smoothHeight]="data">
-        <tr *ngFor="let item of data; let i = index" (mouseenter)="currentRowIndex = i" class="uk-animation-fade uk-animation-fast">
-            <td class="uk-table-shrink" style="min-width: 50px">{{i + 1 + (pageOptions.pageNumber * pageOptions.pageSize)}}</td>
-            <td style="min-width: 50px">
-                <input type="checkbox" [checked]="item.processed" class="uk-checkbox uk-disabled">
-            </td>
-            <td style="min-width: 250px">{{item.name}}</td>
-            <td style="min-width: 250px">{{item.email}}</td>
-            <td style="min-width: 250px">{{item.phoneNumber}}</td>
-            <td style="min-width: 50px">
-                <input type="checkbox" [checked]="item.isParent" class="uk-checkbox uk-disabled">
-            </td>
-            <td class="uk-table-shrink" style="min-width: 200px">{{item.createdTime | toUtc | date : 'dd-MM-yyyy HH:mm'}}</td>
-            <td>
-                <div [style.visibility]="currentRowIndex != i ? 'hidden' : ''">
-                    <a class="uk-icon-button" uk-icon="pencil" (click)="details(item)"></a>
-                </div>
-            </td>
-        </tr>
-        </tbody>
+            <tbody style="display: table-row-group"  [smoothHeight]="data">
+            <tr *ngFor="let item of data; let i = index" (mouseenter)="currentRowIndex = i" class="uk-animation-fade uk-animation-fast">
+                <td class="uk-table-shrink" style="min-width: 50px">{{i + 1 + (pageOptions.pageNumber * pageOptions.pageSize)}}</td>
+                <td style="min-width: 50px">
+                    <input type="checkbox" [checked]="item.processed" class="uk-checkbox uk-disabled">
+                </td>
+                <td style="min-width: 250px">{{item.name}}</td>
+                <td style="min-width: 250px">{{item.email}}</td>
+                <td style="min-width: 250px">{{item.phoneNumber}}</td>
+                <td style="min-width: 50px">
+                    <input type="checkbox" [checked]="item.isParent" class="uk-checkbox uk-disabled">
+                </td>
+                <td class="uk-table-shrink" style="min-width: 200px">{{item.createdTime | toUtc | date : 'dd-MM-yyyy HH:mm'}}</td>
+                <td>
+                    <div [style.visibility]="currentRowIndex != i ? 'hidden' : ''">
+                        <a class="uk-icon-button" uk-icon="pencil" (click)="details(item)"></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
 
-    </table>
+        </table>
 
-    <mg-pagination [pageOptions]="pageOptions"
-                   (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
+        <mg-pagination [pageOptions]="pageOptions"
+                       (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
 
+    </div>
 </div>
 
 <mg-order-details-modal #modal (onChanged)="refreshData()" (onClose)="onCloseModal()"></mg-order-details-modal>

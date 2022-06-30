@@ -8,14 +8,14 @@ import {ModalService} from '../../services/modal.service';
 import {
   TimetableRecordModalComponent
 } from '../../mg-shared/components/timetable-record-modal/timetable-record-modal.component';
-import {SectionService} from '../../services/section.service';
+import {SectionApiService} from '../../services/section-api.service';
 import {RegistrationStateService} from '../../services/registration-state.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {RegistrationStateModel} from '../../models/registration/registration.state.model';
 import {RegistrationState} from '../../models/registration/registration.state';
 import {SectionVm} from '../../models/sections/section.view.model';
 import {MasterVm} from '../../models/masterVm';
-import {MasterService} from '../../services/master.service';
+import {MasterApiService} from '../../services/master-api.service';
 import {PersonalDataModel} from '../../models/registration/personal-data.model';
 import {OrderApiService} from '../../services/order-api.service';
 import {RegCompletedModalComponent} from './reg-completed-modal/reg-completed-modal.component';
@@ -38,10 +38,10 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
   private $currentStep: BehaviorSubject<RegistrationState>;
   public state: RegistrationStateModel;
   public steps: string[] = [
-    'Шаг №1 - Выбор филиала',
-    'Шаг №2 - Выбор направления',
-    'Шаг №3 - Выбор Тренера',
-    'Шаг №4 - Региcтрация ученика'
+    'Шаг №1 - Вибір філії',
+    'Шаг №2 - Вибір напряму',
+    'Шаг №3 - Вибір інструктора',
+    'Шаг №4 - Реєстрація учня'
   ];
   public ukSwitcher: any = null;
   public timetableModal: TimetableRecordModalComponent | null = null;
@@ -51,9 +51,9 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
 
   constructor(private locationService: LocationApiService,
               private modalService: ModalService,
-              private sectionService: SectionService,
+              private sectionService: SectionApiService,
               private registrationStateService: RegistrationStateService,
-              private masterService: MasterService,
+              private masterService: MasterApiService,
               private registrationService: OrderApiService) {
     this.state = registrationStateService.getState();
     this.$currentStep = new BehaviorSubject<number>(this.state.currentStep);

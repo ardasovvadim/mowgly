@@ -70,6 +70,8 @@ export class ManageSchedulePageComponent implements OnInit, AfterViewInit {
 
     refreshData(): void {
         this.loading = true;
+        this.cdr.detectChanges();
+
         this.timetableService.getTimeTableRecords({
             city: this.cityFilter,
             sectionId: this.sectionFilter,
@@ -77,7 +79,10 @@ export class ManageSchedulePageComponent implements OnInit, AfterViewInit {
             filterText: this.filterText
         })
             .pipe(
-                finalize(() => this.loading = false),
+                finalize(() => {
+                    this.loading = false;
+                    this.cdr.detectChanges();
+                }),
             )
             .subscribe(data => {
                 this.response = data;

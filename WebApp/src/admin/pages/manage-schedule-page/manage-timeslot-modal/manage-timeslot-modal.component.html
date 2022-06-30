@@ -4,7 +4,7 @@
         <button class="uk-modal-close-default" type="button" uk-close></button>
 
         <div class="uk-modal-header">
-            <h3 class="uk-modal-title">Форма редактирования</h3>
+            <h3 class="uk-modal-title">Форма редагування</h3>
         </div>
 
         <div class="uk-modal-body">
@@ -13,7 +13,7 @@
                 <!--    Day of week    -->
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="dayOfWeek">День недели:</label>
+                    <label class="uk-form-label" for="dayOfWeek">День неділі:</label>
                     <div class="uk-form-controls">
                         <select class="uk-select" formControlName="dayOfWeek" id="dayOfWeek">
                             <option [ngValue]="null">Выберите день недели</option>
@@ -26,12 +26,12 @@
 
                 <div class="uk-margin row">
                     <div class="col-md-6">
-                        <label class="uk-form-label" for="startTime">Время начала:</label>
+                        <label class="uk-form-label" for="startTime">Час початку:</label>
                         <div class="uk-form-controls"><input type="time" class="uk-input" formControlName="startTime"
                                                              id="startTime"></div>
                     </div>
                     <div class="col-md-6">
-                        <label class="uk-form-label" for="endTime">Время конца:</label>
+                        <label class="uk-form-label" for="endTime">Час кінця:</label>
                         <div class="uk-form-controls"><input type="time" class="uk-input" formControlName="endTime"
                                                              id="endTime"></div>
                     </div>
@@ -40,7 +40,7 @@
                 <!--  Location  -->
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="locationId">Филиал:</label>
+                    <label class="uk-form-label" for="locationId">Філіал:</label>
                     <div class="uk-form-controls">
                         <select class="uk-select" formControlName="locationId" id="locationId">
                             <option [ngValue]="null">Выберите филиал</option>
@@ -52,7 +52,7 @@
                 <!--  Section  -->
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="sectionId">Направление:</label>
+                    <label class="uk-form-label" for="sectionId">Напрямок:</label>
                     <div class="uk-form-controls">
                         <select class="uk-select" formControlName="sectionId" id="sectionId">
                             <option [ngValue]="null">Выберите направление</option>
@@ -63,8 +63,8 @@
                 </div>
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="masterId">Инструктор:</label>
-                    <mg-autocomplete-input placeholder="Выберите инструктора"
+                    <label class="uk-form-label" for="masterId">Інструктор:</label>
+                    <mg-autocomplete-input placeholder="Выберите Інструктора"
                                            id="masterId"
                                            [optionsSource]="refreshMasterOptions()"
                                            formControlName="masterId"></mg-autocomplete-input>
@@ -74,13 +74,13 @@
         </div>
 
         <div class="col-12 uk-margin-medium-top uk-text-right uk-modal-footer">
-            <button type="submit" class="uk-button uk-button-primary uk-margin-right" (click)="submit()">Сохранить
+            <button type="submit" class="uk-button uk-button-primary uk-margin-right" (click)="submit()">Зберігти
             </button>
             <ng-template [ngIf]="isEditMode" *mgMgIfPerm="'Permission.TimetableRecord.Delete'">
                 <button type="button" class="uk-button uk-button-danger uk-margin-right" (click)="delete()">Удалить
                 </button>
             </ng-template>
-            <button type="button" class="uk-button uk-button-default" (click)="close()">Отменить</button>
+            <button type="button" class="uk-button uk-button-default" (click)="close()">Відмінити</button>
         </div>
 
     </div>

@@ -29,6 +29,8 @@ export class QuillEditorComponent implements AfterViewInit, ControlValueAccessor
     propagateChange = (_: any) => {};
     disabled: boolean = false;
 
+    @Input() height: number = null;
+
     @Input() placeholder: string = '';
     @Input() displayToolBar: boolean = true;
 

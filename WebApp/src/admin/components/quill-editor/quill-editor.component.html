@@ -46,4 +46,6 @@
 
 </div>
 
-<div [id]="containerId" class="mg-editor-container"></div>
+<div [id]="containerId"
+     [style.height]="height ? height + 'px' : null"
+     class="mg-editor-container uk-overflow-auto"></div>

@@ -1,7 +1,7 @@
 <div class="uk-card mt-100 uk-align-center mg-card" style="max-width: 600px; padding: 20px">
 
     <div class="uk-card-header uk-text-center">
-        <h2>Регистрация</h2>
+        <h2>Регістрація</h2>
     </div>
 
     <form class="uk-form-stacked" [formGroup]="form" (ngSubmit)="register()">
@@ -16,32 +16,32 @@
 
             <div class="uk-margin">
                 <label class="uk-form-label" for="firstName">
-                    Имя <sup>*</sup>
+                    Імʼя <sup>*</sup>
                     <ng-template [ngIf]="hasError('firstName', 'required')">
-                        - это поле обязательное
+                        - це поле обов'язкове
                     </ng-template>
                 </label>
                 <div class="uk-form-controls">
-                    <input type="text" class="uk-input" placeholder="Имя" id="firstName" formControlName="firstName">
+                    <input type="text" class="uk-input" placeholder="Імʼя" id="firstName" formControlName="firstName">
                 </div>
             </div>
 
             <div class="uk-margin">
                 <label class="uk-form-label" for="lastName">
-                    Фамилия <sup>*</sup>
+                    Прізвище <sup>*</sup>
                     <ng-template [ngIf]="hasError('lastName', 'required')">
-                        - это поле обязательное
+                        - це поле обов'язкове
                     </ng-template>
                 </label>
                 <div class="uk-form-controls">
-                    <input type="text" class="uk-input" placeholder="Фамилия" id="lastName" formControlName="lastName">
+                    <input type="text" class="uk-input" placeholder="Прізвище" id="lastName" formControlName="lastName">
                 </div>
             </div>
 
             <div class="uk-margin">
-                <label class="uk-form-label" for="middleName">Отчество</label>
+                <label class="uk-form-label" for="middleName">По-батькові</label>
                 <div class="uk-form-controls">
-                    <input type="text" class="uk-input" placeholder="Отчество" id="middleName" formControlName="middleName">
+                    <input type="text" class="uk-input" placeholder="По-батькові" id="middleName" formControlName="middleName">
                 </div>
             </div>
 
@@ -49,11 +49,11 @@
                 <label class="uk-form-label" for="email">
                     Емейл <sup>*</sup>
                     <ng-container *ngIf="hasError('email', 'required'); else emailEmail">
-                        - это поле обязательное
+                        - це поле обов'язкове
                     </ng-container>
                     <ng-template #emailEmail>
                         <ng-container *ngIf="hasError('email', 'email')">
-                            - некорректный формат емейла
+                            - некоректний формат емейлу
                         </ng-container>
                     </ng-template>
                 </label>
@@ -66,7 +66,7 @@
                 <label class="uk-form-label" for="password">
                     Пароль <sup>*</sup>
                     <ng-container *ngIf="hasError('password', 'required')">
-                        - это поле обязательное
+                        - це поле обов'язкове
                     </ng-container>
                 </label>
                 <div class="uk-form-controls">
@@ -76,25 +76,25 @@
 
             <div class="uk-margin">
                 <label class="uk-form-label" for="confirmPassword">
-                    Подтвердите пароль <sup>*</sup>
+                    Підтвердіть пароль <sup>*</sup>
                     <ng-container *ngIf="hasError('confirmPassword', 'required'); else confirmPasswordMatch">
-                        - это поле обязательное
+                        - це поле обов'язкове
                     </ng-container>
                     <ng-template #confirmPasswordMatch>
                         <ng-container *ngIf="hasError('confirmPassword', 'mustMatch')">
-                            - пароль должен совпадать
+                            - пароль має збігатися
                         </ng-container>
                     </ng-template>
                 </label>
                 <div class="uk-form-controls">
-                    <input type="password" class="uk-input" placeholder="Подтвердите пароль" id="confirmPassword" formControlName="confirmPassword">
+                    <input type="password" class="uk-input" placeholder="Підтвердіть пароль" id="confirmPassword" formControlName="confirmPassword">
                 </div>
             </div>
 
         </div>
 
         <div class="uk-card-footer uk-text-center">
-            <button class="uk-button uk-button-primary uk-margin-small-right" type="submit">Зарегистрироваться</button>
+            <button class="uk-button uk-button-primary uk-margin-small-right" type="submit">Зареєструватись</button>
             <div class="uk-inline">
                 <mg-google-login text="signup_with" (onResponse)="onGoogleSignup($event)"></mg-google-login>
             </div>

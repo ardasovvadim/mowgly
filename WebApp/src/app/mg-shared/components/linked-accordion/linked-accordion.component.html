@@ -1,55 +1,59 @@
 <div class="row mg-linked-acc" *ngIf="lgBreakpoint">
 
-  <div class="col-lg-5 col-xl-4">
-    <div class="mg-linked-acc-left">
-      <h1>Наши группы</h1>
-      <div class="mg-linked-acc-links">
-        <a *ngFor="let price of prices" [class.active]="price == currentPrice" (click)="currentPrice = price">{{price.title}}</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-7 col-xl-8 uk-position-relative">
-
-    <div class="mg-card">
-      <h3 [@fadeInAnimation]="currentPrice">{{currentPrice.title}}</h3>
-      <p [@fadeInAnimation]="currentPrice">{{currentPrice.description}}</p>
-      <div class="mg-card-bottom">
-        <div class="wrapper">
-          <a><mg-icon color="green-main" icon="calendar"></mg-icon> Посмотреть расписание</a>
-          <p>Цена - <span [@fadeInAnimation]="currentPrice">{{currentPrice.price}}</span></p>
+  <ng-container *ngIf="currentSection">
+    <div class="col-lg-5 col-xl-4">
+      <div class="mg-linked-acc-left">
+        <h1>Наші групи</h1>
+        <div class="mg-linked-acc-links">
+          <a *ngFor="let section of data" [class.active]="section == currentSection" (click)="currentSection = section">{{section.name}}</a>
         </div>
-        <button class="uk-button uk-button-primary ml-auto">Узнать больше</button>
       </div>
-
     </div>
 
-    <img class="mg-bg mg-linked-acc-bg" src="/assets/img/bg-6.png">
-  </div>
+    <div class="col-lg-7 col-xl-8 uk-position-relative">
+
+      <div class="mg-card">
+        <h3 [@fadeInAnimation]="currentSection">{{currentSection.name}}</h3>
+        <p [@fadeInAnimation]="currentSection" [innerHTML]="currentSection.profiles | settingValue: 'MainDescription' : 'Опису не має' | safeHtml"></p>
+        <div class="mg-card-bottom">
+          <div class="wrapper">
+            <a (click)="displaySchedule(currentSection.id)"><mg-icon class="uk-margin-small-right" color="green-main" icon="calendar"></mg-icon> Переглянути розклад</a>
+            <p>Цена - <span [@fadeInAnimation]="currentSection">{{currentSection.profiles | settingValue : 'Price'}}</span></p>
+          </div>
+          <button class="uk-button uk-button-primary ml-auto" [routerLink]="['/registration']">Дізнатися більше</button>
+        </div>
+
+      </div>
+
+      <img class="mg-bg mg-linked-acc-bg" loading="lazy" src="/assets/img/bg-6.png">
+    </div>
+  </ng-container>
 
 </div>
 
 <div *ngIf="!lgBreakpoint" class="mg-linked-acc">
   <ul [id]="accordionId" uk-accordion="collapsible: false">
-    <li *ngFor="let price of prices" [class.uk-open]="price == accordionCurrentPrice" (click)="currentPrice = price">
+    <li *ngFor="let section of data" [class.uk-open]="section == currentSection">
 
-      <a class="uk-accordion-title mg-accordion-title" href="#">{{price.title}}</a>
+      <a class="uk-accordion-title mg-accordion-title">{{section.name}}</a>
 
       <div class="uk-accordion-content">
         <div class="mg-card">
 
-          <h3>{{price.title}}</h3>
+          <h3>{{section?.name}}</h3>
 
-          <p>{{price.description}}</p>
+          <div [innerHtml]="section.profiles | settingValue: 'MainDescription' : 'Опису не має' | safeHtml"></div>
 
           <div class="mg-card-bottom">
 
             <div class="wrapper">
-              <a><mg-icon color="green-main" icon="calendar"></mg-icon> Посмотреть расписание</a>
-              <p>Цена - <span>{{price.price}}</span></p>
+              <a (click)="displaySchedule(section.id)"><mg-icon color="green-main" icon="calendar"></mg-icon> Переглянути розклад</a>
+              <p>Ціна - <span>{{section.profiles | settingValue: 'Price'}}</span></p>
             </div>
 
-            <button class="uk-button uk-button-primary">Узнать больше</button>
+            <a [routerLink]="['/registration']">
+              <button class="uk-button uk-button-primary">Дізнатися більше</button>
+            </a>
 
           </div>
 
@@ -58,3 +62,5 @@
     </li>
   </ul>
 </div>
+
+<mg-timetable-record-modal #timetable></mg-timetable-record-modal>

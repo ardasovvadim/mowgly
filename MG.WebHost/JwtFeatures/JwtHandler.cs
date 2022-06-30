@@ -17,15 +17,15 @@ public class JwtHandler
         _jwtSettings = configuration.GetSection("JwtSettings");
     }
 
-    public SigningCredentials GetSigningCredentials()
+    private SigningCredentials GetSigningCredentials()
     {
-        var key = Encoding.UTF8.GetBytes(_jwtSettings.GetSection("securityKey").Value);
+        var key = Encoding.UTF8.GetBytes(_jwtSettings.GetSection("SecurityKey").Value);
         var secret = new SymmetricSecurityKey(key);
 
         return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
     }
 
-    public List<Claim> GetClaims(User user)
+    private IEnumerable<Claim> GetClaims(User user)
     {
         var claims = new List<Claim>
         {
@@ -36,13 +36,13 @@ public class JwtHandler
         return claims;
     }
 
-    public JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
+    private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, IEnumerable<Claim> claims)
     {
         var tokenOptions = new JwtSecurityToken(
-            issuer: _jwtSettings["validIssuer"],
-            audience: _jwtSettings["validAudience"],
+            issuer: _jwtSettings["ValidIssuer"],
+            audience: _jwtSettings["ValidAudience"],
             claims: claims,
-            expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSettings["expiryInMinutes"])),
+            expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(_jwtSettings["ExpiryInMinutes"])),
             signingCredentials: signingCredentials);
 
         return tokenOptions;
@@ -56,19 +56,11 @@ public class JwtHandler
         return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
     }
     
-    public string GenerateAccessToken(IEnumerable<Claim> claims)
+    public string GenerateToken(IEnumerable<Claim> claims)
     {
-        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
-        var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-        var tokeOptions = new JwtSecurityToken(
-            issuer: "https://localhost:5001",
-            audience: "https://localhost:5001",
-            claims: claims,
-            expires: DateTime.Now.AddMinutes(5),
-            signingCredentials: signinCredentials
-        );
-        var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-        return tokenString;
+        var signingCredentials = GetSigningCredentials();
+        var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
+        return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
     }
     
     public string GenerateRefreshToken()
@@ -83,18 +75,21 @@ public class JwtHandler
     {
         var tokenValidationParameters = new TokenValidationParameters
         {
-            ValidateAudience = false, //you might want to validate the audience and issuer depending on your use case
-            ValidateIssuer = false,
+            ValidateAudience = true,
+            ValidAudience = _jwtSettings["ValidAudience"],
+            ValidateIssuer = true,
+            ValidIssuer = _jwtSettings["ValidIssuer"],
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345")),
-            ValidateLifetime = false //here we are saying that we don't care about the token's expiration date
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.GetSection("securityKey").Value)),
+            ValidateLifetime = false
         };
         var tokenHandler = new JwtSecurityTokenHandler();
-        SecurityToken securityToken;
-        var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
-        var jwtSecurityToken = securityToken as JwtSecurityToken;
-        if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+        var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
+        
+        if (securityToken is not JwtSecurityToken jwtSecurityToken 
+            || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
             throw new SecurityTokenException("Invalid token");
+        
         return principal;
     }
 }

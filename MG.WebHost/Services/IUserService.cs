@@ -1,14 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Google.Apis.Auth;
 using MG.WebHost.Database;
 using MG.WebHost.Entities;
+using MG.WebHost.Entities.Auth;
 using MG.WebHost.Entities.Enums;
 using MG.WebHost.Entities.Users;
 using MG.WebHost.Exceptions;
 using MG.WebHost.JwtFeatures;
 using MG.WebHost.Models.Auth;
 using MG.WebHost.Models.Users;
+using MG.WebHost.Repositories;
 using MG.WebHost.Settings;
 using MG.WebHost.Utils;
 using Microsoft.AspNetCore.Identity;
@@ -30,6 +32,7 @@ namespace MG.WebHost.Services
         Task<UserValidationResponseDto> SaveProfileAsync(Guid userId, UserProfileSaveDto request);
         Task<UserProfileSaveDto> GetEditProfileAsync(Guid userId);
         Task<UserValidationResponseDto> ChangePasswordAsync(Guid userId, ChangePasswordRequestDto request);
+        Task<LoginResponseDto> RefreshTokenAsync(RefreshTokenRequest request);
     }
 
     public class UserService : BaseService, IUserService
@@ -40,13 +43,17 @@ namespace MG.WebHost.Services
         private UserManager<User> UserManager { get; }
         private JwtHandler JwtHandler { get; }
         private GoogleSettings GoogleSettings { get; }
+        private IRepository<MgLoginModel> LoginModelRepo { get; }
+        private readonly JwtSettings _jwtSettings;
 
-        public UserService(IServiceProvider serviceProvider, UserManager<User> userManager, JwtHandler jwtHandler, CacheUtils cache, IOptions<GoogleSettings> googleOptions) : base(serviceProvider)
+        public UserService(IServiceProvider serviceProvider, UserManager<User> userManager, JwtHandler jwtHandler, CacheUtils cache, IOptions<GoogleSettings> googleOptions, IRepository<MgLoginModel> loginModelRepo, IOptions<JwtSettings> jwtOptions) : base(serviceProvider)
         {
             UserManager = userManager;
             JwtHandler = jwtHandler;
             Cache = cache;
+            LoginModelRepo = loginModelRepo;
             GoogleSettings = googleOptions.Value;
+            _jwtSettings = jwtOptions.Value;
         }
 
         public async Task<UserEditModel> SaveAsync(UserEditModel request)
@@ -127,8 +134,40 @@ namespace MG.WebHost.Services
             if (user == null || !await UserManager.CheckPasswordAsync(user, request.Password))
                 return new LoginResponseDto { IsSuccess = false, ErrorMessage = "Неправильный емейл или пароль" };
 
+            return await GetUserLoginResponseAsync(user);
+        }
+
+        private async Task<LoginResponseDto> GetUserLoginResponseAsync(User user)
+        {
             var token = JwtHandler.GenerateToken(user);
-            return new LoginResponseDto { Token = token, IsSuccess = true };
+            var refreshToken = JwtHandler.GenerateRefreshToken();
+            var refreshTokenExpiration = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpiryInDays);
+
+            var loginModel = await LoginModelRepo.GetQueryable().FirstOrDefaultAsync(e => e.UserId == user.Id);
+            if (loginModel != null)
+            {
+                loginModel.RefreshToken = refreshToken;
+                loginModel.RefreshTokenExpiryTime = refreshTokenExpiration;
+            }
+            else
+            {
+                loginModel = new MgLoginModel
+                {
+                    UserId = user.Id,
+                    RefreshToken = refreshToken,
+                    RefreshTokenExpiryTime = refreshTokenExpiration
+                };
+                await LoginModelRepo.InsertAsync(loginModel);
+            }
+
+            await LoginModelRepo.SaveChangesAsync();
+            
+            return new LoginResponseDto
+            {
+                Token = token, 
+                RefreshToken = refreshToken,
+                IsSuccess = true
+            };
         }
 
         public async Task<UserProfileDto> GetProfileAsync(Guid userId)
@@ -185,11 +224,7 @@ namespace MG.WebHost.Services
             var user = await UserManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
 
             if (user != null)
-                return new LoginResponseDto
-                {
-                    IsSuccess = true,
-                    Token = JwtHandler.GenerateToken(user)
-                };
+                return await GetUserLoginResponseAsync(user);
 
             user = await UserManager.FindByEmailAsync(payload.Email);
 
@@ -209,11 +244,7 @@ namespace MG.WebHost.Services
                     IsSuccess = false
                 };
 
-            return new LoginResponseDto
-            {
-                IsSuccess = true,
-                Token = JwtHandler.GenerateToken(user)
-            };
+            return await GetUserLoginResponseAsync(user);
         }
 
         public async Task<UserValidationResponseDto> SignUpGoogleAsync(GoogleRequest request)
@@ -308,6 +339,41 @@ namespace MG.WebHost.Services
             {
                 Errors = result.Errors.Select(e => e.Description).ToList(),
                 IsSuccess = result.Succeeded
+            };
+        }
+
+        public async Task<LoginResponseDto> RefreshTokenAsync(RefreshTokenRequest request)
+        {
+            LoginResponseDto BadResponse(string message = null) => new() { IsSuccess = false, ErrorMessage = message ?? "Неверный запрос клиента" };
+            var loginModelRepo = Repository<MgLoginModel>();
+            ClaimsPrincipal principal;
+            try
+            {
+                principal = JwtHandler.GetPrincipalFromExpiredToken(request.AccessToken);
+            }
+            catch (Exception e)
+            {
+                return BadResponse(e.Message);
+            }
+
+            if (!Guid.TryParse(principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value, out var userId))
+                return BadResponse();
+
+            var user = await loginModelRepo.GetQueryable().FirstOrDefaultAsync(e => e.UserId == userId);
+            if (user is null || user.RefreshToken != request.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+                return BadResponse();
+            
+            var newAccessToken = JwtHandler.GenerateToken(principal.Claims);
+            var newRefreshToken = JwtHandler.GenerateRefreshToken();
+            user.RefreshToken = newRefreshToken;
+            
+            await loginModelRepo.SaveChangesAsync();
+
+            return new LoginResponseDto
+            {
+                IsSuccess = true,
+                Token = newAccessToken,
+                RefreshToken = newRefreshToken
             };
         }
 

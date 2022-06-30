@@ -9,7 +9,6 @@ using MG.WebHost.Entities.Tournaments;
 using MG.WebHost.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Packaging;
 
 namespace MG.WebHost.MockData
 {
@@ -50,7 +49,7 @@ namespace MG.WebHost.MockData
                 await roleManager.CreateAsync(value);
 
             var role = await context.Roles.FirstAsync(r => r.Name == UserType.Admin.ToString("G"));
-            role.Permissions.AddRange(permissions);
+            permissions.ToList().ForEach(p => role.Permissions.Add(p));
 
             await context.SaveChangesAsync();
 

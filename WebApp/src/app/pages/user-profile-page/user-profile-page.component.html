@@ -3,14 +3,14 @@
     <div class="uk-column-span uk-width-1-5@m"></div>
 
     <div class="uk-width-4-5@m">
-        <h3 *ngIf="currentTab == 0">Профиль</h3>
-        <h3 *ngIf="currentTab == 1">Изменить пароль</h3>
+        <h3 *ngIf="currentTab == 0">Профіль</h3>
+        <h3 *ngIf="currentTab == 1">Змінити пароль</h3>
     </div>
 
     <div class="uk-width-1-5@m">
         <ul class="uk-tab-right" uk-tab>
-            <li [class.uk-active]="currentTab == 0" [routerLink]="'/user-profile'"><a>Профиль</a></li>
-            <li [class.uk-active]="currentTab == 1" [routerLink]="'/user-profile/change-password'"><a>Смена пароля</a></li>
+            <li [class.uk-active]="currentTab == 0" [routerLink]="'/user-profile'"><a>Профіль</a></li>
+            <li [class.uk-active]="currentTab == 1" [routerLink]="'/user-profile/change-password'"><a>Змінити пароль</a></li>
         </ul>
     </div>
 

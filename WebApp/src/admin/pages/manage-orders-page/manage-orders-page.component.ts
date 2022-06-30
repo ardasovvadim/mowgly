@@ -6,7 +6,7 @@ import {ManageEventModalComponent} from '../manage-events-page/manage-event-moda
 import {PaginationComponent} from '../../../app/mg-shared/components/pagination/pagination.component';
 import {PageOptions} from '../../../app/models/page';
 import {toSortOrder} from '../../../app/services/events-api.service';
-import {delay, tap} from 'rxjs';
+import {delay, finalize, tap} from 'rxjs';
 import {untilDestroyed} from '@ngneat/until-destroy';
 import {fadeInAnimation} from '../../../app/mg-shared/animations/fadeInAnimation';
 import {smoothHeight} from '../../../app/mg-shared/animations/smooth-height-anim.directive';
@@ -51,6 +51,7 @@ export class ManageOrdersPageComponent implements AfterViewInit {
         pageNumber: 0
     }
     pageOptions: PageOptions = {...this.initialPageOptions};
+    loading = false;
 
     constructor(
         private readonly orderApiService: ManageOrderApiService,
@@ -65,6 +66,7 @@ export class ManageOrdersPageComponent implements AfterViewInit {
     }
 
     refreshData() {
+        this.loading = true;
         this.orderApiService.getList({
             createdDate: this.filterDate,
             processed: this.processed,
@@ -87,6 +89,7 @@ export class ManageOrdersPageComponent implements AfterViewInit {
                         count: data.count
                     }
                 }),
+                finalize(() => this.loading = false)
             )
             .subscribe(data => {
                 this.data = data.elements;

@@ -4,11 +4,9 @@ using MG.WebHost.Database;
 using MG.WebHost.Entities;
 using MG.WebHost.Entities.Users;
 using MG.WebHost.Security;
-using MG.WebHost.Services;
 using MG.WebHost.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -66,8 +64,8 @@ namespace MG.WebHost
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtSettings["validIssuer"],
-                    ValidAudience = jwtSettings["validAudience"],
+                    ValidIssuer = jwtSettings["ValidIssuer"],
+                    ValidAudience = jwtSettings["ValidAudience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
                 };
             });
@@ -111,7 +109,12 @@ namespace MG.WebHost
 
         private static WebApplication Configure(this WebApplication app)
         {
-            app.Environment.IsDevelopment();
+            using var scope = app.Services.CreateScope();
+            var sp = scope.ServiceProvider;
+            var logger = sp.GetRequiredService<ILogger<IHostLifetime>>();
+            
+            logger.LogInformation("Environment: {env}", app.Environment.EnvironmentName);
+            
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -150,7 +153,7 @@ namespace MG.WebHost
                 pattern: "api/{controller}/{action=Index}/{id?}");
             app.MapRazorPages();
 
-            app.MapFallbackToFile("index.html");
+            app.MapFallbackToFile("404.html");
 
             return app;
         }

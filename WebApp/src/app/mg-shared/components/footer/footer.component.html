@@ -1,79 +1,65 @@
 <div id="el-9">
-
-  <img class="bg-top" src="../../../../assets/img/bg-9.png">
-  <div class="cover-top" (click)="goToGoogleMapLink()"></div>
-
-  <div class="mg-card">
-
-    <div class="wrapper">
-        <h3>Как нас найти</h3>
-        <p>{{currentIndex+1}}. {{places[currentIndex].name}}</p>
-        <p>{{places[currentIndex].description}}</p>
-    </div>
-
-    <div class="mg-card-bottom">
-      <span [class.uk-disabled]="currentIndex == 0" (click)="previous()"><mg-icon width="100" icon="long-arrow" color="green-main"></mg-icon></span>
-<!--        <span ></mg-icon></span>-->
-      <span *ngFor="let place of places; let i = index" [class.uk-active]="currentIndex == i" (click)="currentIndex = i">{{i+1}}</span>
-      <span [class.uk-disabled]="currentIndex == places.length - 1" (click)="next()"><mg-icon width="100" rotate="right" icon="long-arrow" color="green-main"></mg-icon></span>
-    </div>
-
-  </div>
-
-  <div id="footer-map" (click)="goToGoogleMapLink()">
-    <iframe
-      [src]="getGoogleApiLink(places[currentIndex])"
-      id="map"
-      allowfullscreen="false"
-      aria-hidden="false"
-      tabindex="0">
-    </iframe>
-  </div>
-
-  <div class="contacts">
-
-    <h1>Контакты</h1>
-    <hr>
-    <div class="contacts-wrapper">
-      <div class="contact-block">
-        <div class="contact-line">
-          <div class="icon"><img src="../../../../assets/img/icons/mail.svg"></div>
-          <div class="name">Основная</div>
-          <div class="value">mowglyteam@gmail.com</div>
+    <img class="bg-top mg-no-select" src="/assets/img/bg-9.png" loading="lazy">
+    <div class="cover-top" (click)="goToGoogleMapLink()"></div>
+    <div class="mg-card">
+        <div class="wrapper w-100"><h3>Як нас знайти</h3>
+            <p>{{currentIndex + 1}}. {{currentLocation?.name}}</p>
+            <p>{{currentLocation?.address}}</p></div>
+        <div class="mg-card-bottom">
+            <span [class.uk-disabled]="currentIndex == 0" class="uk-link"
+                  (click)="previous()">
+                <span uk-icon="icon: arrow-left"
+                      class="green-main"></span>
+            </span>
+            <span *ngFor="let location of data; let i = index" class="uk-margin-small-right uk-link"
+                  [class.uk-text-secondary]="currentIndex != i" [class.uk-text-primary]="currentIndex == i"
+                  (click)="changeCurrentItem(location, i)">{{i + 1}}</span>
+            <a [class.uk-disabled]="currentIndex == data.length - 1" class="uk-link" (click)="next()">
+                <span uk-icon="icon: arrow-right" class="green-main"></span>
+            </a>
         </div>
-        <div class="contact-line">
-          <div class="icon"><img src="../../../../assets/img/icons/mail.svg"></div>
-          <div class="name">Запасная</div>
-          <div class="value">sensei@mowgly.com.ua</div>
-        </div>
-      </div>
-      <div class="contact-block">
-        <div class="contact-line">
-          <div class="icon"><img src="../../../../assets/img/icons/phone.svg"></div>
-          <div class="name">Kyivstar</div>
-          <div class="value">+380 (067) 700-555-3</div>
-        </div>
-        <div class="contact-line">
-          <div class="icon"><img src="../../../../assets/img/icons/phone.svg"></div>
-          <div class="name">Life</div>
-          <div class="value">+380 (063) 700-555-3</div>
-        </div>
-      </div>
     </div>
-
-    <div class="bottom-copy mt-100">
-      <p>© Mowgly 2020 - All rights reserved</p>
-
-      <div class="icons ml-auto">
-        <a href=""><mg-icon icon="vk" color="white"></mg-icon></a>
-        <a href=""><mg-icon icon="instagram" color="white"></mg-icon></a>
-        <a href=""><mg-icon icon="facebook" color="white"></mg-icon></a>
-      </div>
+    <div id="footer-map" class="mg-no-select" (click)="goToGoogleMapLink()">
+        <iframe [src]="currentLocation?.googleMapsEmbeddedLink | safeUrl" id="map" allowfullscreen="false"
+                aria-hidden="false" tabindex="0"></iframe>
     </div>
-
-  </div>
-
-  <img class="bg-bottom" src="../../../../assets/img/bg-10.png">
-  <div class="cover-bottom" (click)="goToGoogleMapLink()"></div>
-
+    <div class="contacts">
+        <h1>Контакти</h1>
+        <hr>
+        <div class="contacts-wrapper">
+            <div class="contact-block">
+                <div class="contact-line">
+                    <div class="icon"><img src="/assets/img/icons/mail.svg" loading="lazy"></div>
+                    <div class="name">Основна</div>
+                    <div class="value">mowglyteam@gmail.com</div>
+                </div>
+                <div class="contact-line">
+                    <div class="icon"><img src="/assets/img/icons/mail.svg" loading="lazy"></div>
+                    <div class="name">Запасна</div>
+                    <div class="value">sensei@mowgly.com.ua</div>
+                </div>
+            </div>
+            <div class="contact-block">
+                <div class="contact-line">
+                    <div class="icon"><img src="/assets/img/icons/phone.svg" loading="lazy"></div>
+                    <div class="name">Kyivstar</div>
+                    <div class="value">+380 (067) 700-555-3</div>
+                </div>
+                <div class="contact-line">
+                    <div class="icon"><img src="/assets/img/icons/phone.svg" loading="lazy"></div>
+                    <div class="name">Life</div>
+                    <div class="value">+380 (063) 700-555-3</div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-copy mt-100"><p>© Mowgly 2020 - All rights reserved</p>
+            <div class="icons ml-auto"><a href="https://www.instagram.com/mowgly.karate.club/" target="_blank">
+                <mg-icon icon="instagram" color="white"></mg-icon>
+            </a><a href="https://www.facebook.com/JungleTeamMowgly/" target="_blank">
+                <mg-icon icon="facebook" color="white"></mg-icon>
+            </a></div>
+        </div>
+    </div>
+    <img class="bg-bottom mg-no-select" src="/assets/img/bg-10.png" loading="lazy">
+    <div class="cover-bottom" (click)="goToGoogleMapLink()"></div>
 </div>

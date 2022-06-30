@@ -1,5 +1,5 @@
 <div class="uk-text-center mt-100" [id]="sectionUpId">
-  <h1 [@fadeInAnimation]="masterInfo">Инструктора</h1>
+  <h1 [@fadeInAnimation]="masterInfo">Інструктора</h1>
   <h3>{{masterInfo.name}}</h3>
 </div>
 
@@ -15,23 +15,24 @@
       <div class="d-flex uk-flex-wrap">
         <a (click)="displayTimetables()">
           <span class="uk-margin-right"><mg-icon color="green-main" icon="calendar"></mg-icon></span>
-          Посмотреть расписание
+          Переглянути розклад
         </a>
 
         <div class="uk-margin-auto-left">
-          <a href="#">
-            <mg-icon color="green-main" icon="vk"></mg-icon>
-          </a>
-          <a href="#">
+          <span class="uk-link"
+                (click)="goTo('MasterInstagramLink')"
+                *ngIf="masterInfo.profiles | settingValue : 'MasterInstagramLink'">
             <mg-icon color="green-main" icon="instagram"></mg-icon>
-          </a>
-          <a href="#">
+          </span>
+          <span class="uk-link"
+                (click)="goTo('MasterInstagramLink')"
+                *ngIf="masterInfo.profiles | settingValue : 'MasterFacebookLink'">
             <mg-icon color="green-main" icon="facebook"></mg-icon>
-          </a>
+          </span>
         </div>
       </div>
 
-      <img src="/assets/img/master-bg.png" class="mg-bg absolute-xy-center" alt="master background">
+      <img src="/assets/img/master-bg.png" class="mg-bg absolute-xy-center" loading="lazy" alt="master background">
     </div>
 
   </div>
@@ -41,13 +42,13 @@
     <div id="manageMasterDescription" class="wrapper uk-position-relative">
       <ng-content select="[manageMasterDescription]"></ng-content>
 
-      <ng-template [ngIf]="masterInfo.profiles | containsSetting: 'MasterDescriptions'"
+      <ng-template [ngIf]="masterInfo.profiles | settingValue: 'MasterDescriptions'"
                    [ngIfElse]="elseBlock">
         <div [innerHTML]="masterInfo.profiles | settingValue: 'MasterDescriptions'"></div>
       </ng-template>
 
       <ng-template #elseBlock>
-        <p>Информации об инструкторе пока еще нет = (</p>
+        <p>Інформації про інструктора поки що немає = (</p>
       </ng-template>
 
     </div>
@@ -58,15 +59,15 @@
 
 <div class="uk-position-relative">
 
-  <img id="bg-7" loading="lazy" src="/assets/img/bg-14.png" alt="background" class="mg-bg absolute-x-center">
+  <img id="bg-7" loading="lazy" src="/assets/img/bg-14.png" alt="background" loading="lazy" class="mg-bg absolute-x-center">
 
   <ng-template [ngIf]="masterInfo.profiles | containsSetting: 'MasterWithImages'">
-    <img id="bg-6" loading="lazy" src="/assets/img/bg-13.png" alt="background" class="mg-bg absolute-xy-center">
+    <img id="bg-6" loading="lazy" src="/assets/img/bg-13.png" alt="background" loading="lazy" class="mg-bg absolute-xy-center">
 
     <div class="mt-300 mg-image-gallery"
          [hidden]="(masterInfo.profiles | settingValue: 'MasterWithImages').length == 0">
 
-      <h1>Фотографии с инструктором</h1>
+      <h1>Фотографії з інструктором</h1>
       <hr>
 
       <div class="wrapper">
@@ -83,12 +84,12 @@
 
   <div id="more-masters">
 
-    <h1>Еще инструктора</h1>
+    <h1>Ще інструктора</h1>
 
     <div class="mt-50">
       <mg-master-slider [cardBottomRef]="cardBottomRef" [masters]="otherMasters">
         <ng-template let-master #cardBottomRef>
-          <button class="uk-button uk-button-primary mt-2" routerLink="/master/{{master.id}}">Узнать больше</button>
+          <button class="uk-button uk-button-primary mt-2" routerLink="/master/{{master.id}}">Дізнатися більше</button>
         </ng-template>
       </mg-master-slider>
     </div>
@@ -99,9 +100,8 @@
 
 <div class="mt-200 uk-text-center" id="text-1">
   <div class="wrapper">
-    <h1>Ждём вас клубе!</h1>
-    <p>Клуб активно развивается во всех направлениях спортивной и общественной деятельности, привлекая в свои ряды все
-      новых и новых приверженцев этого прекрасного вида спорта и образа жизни!</p>
-    <button class="uk-button uk-button-primary uk-margin" routerLink="/registration" type="button">Записаться</button>
+    <h1>Чекаємо на вас!</h1>
+    <p>Клуб активно розвивається у всіх напрямках спортивної та громадської діяльності, залучаючи до своїх лав все нових та нових прихильників цього прекрасного виду спорту та способу життя!</p>
+    <button class="uk-button uk-button-primary uk-margin" routerLink="/registration" type="button">Записатись</button>
   </div>
 </div>

@@ -17,18 +17,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     public isLargeMenu: boolean;
     public links = [
-        {name: 'Главная', link: '/'},
-        {name: 'Новости', link: '/news'},
-        {name: 'Ближайшие события', link: '/events'},
+        {name: 'Головна', link: '/'},
+        {name: 'Новини', link: '/news'},
+        {name: 'Найближчі події', link: '/events'},
         {
-            name: 'Клубная информация',
+            name: 'Клубна інформація',
             children: [
-                {name: 'Расписание', link: '/schedule'},
-                {name: 'Календарь событий', link: '/events'},
-                {name: 'Данкай', link: '/events'},
+                {name: 'Розклад', link: '/schedule'},
+                {name: 'Календар подій', link: '/events'},
+                {name: 'Інструктора', link: '/masters'}
             ]
         },
-        {name: 'Как нас найти', link: '#'},
+        {name: 'Як нас знайти', ancher: '#'},
     ]
 
     isAuthenticated$: Observable<boolean> = this.authService.isAuthenticated$;
@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
     }
 
-    goToLink(link: string) {
+    onRouteChange(link: string) {
         if (!this.isLargeMenu)
             UiKit.offcanvas('#offcanvas-overlay').hide();
 
@@ -62,8 +62,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
             scrollTo('el-9', -200);
             return;
         }
-
-        this.router.navigate([link]);
     }
 
     logout() {

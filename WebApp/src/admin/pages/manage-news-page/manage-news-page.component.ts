@@ -4,7 +4,7 @@ import {fadeInAnimation} from '../../../app/mg-shared/animations/fadeInAnimation
 import {smoothHeight} from '../../../app/mg-shared/animations/smooth-height-anim.directive';
 import {PageOptions} from '../../../app/models/page';
 import {toSortOrder} from '../../../app/services/events-api.service';
-import {tap} from 'rxjs';
+import {finalize, tap} from 'rxjs';
 import {ManageNewsApiService} from '../../services/manage-news-api.service';
 import {AdminNewsVm} from '../../models/news.model';
 
@@ -35,6 +35,7 @@ export class ManageNewsPageComponent implements OnInit {
         pageNumber: 0
     }
     pageOptions: PageOptions = {...this.initialPageOptions};
+    loading = false;
 
 
     constructor(
@@ -50,6 +51,7 @@ export class ManageNewsPageComponent implements OnInit {
     }
 
     refreshData() {
+        this.loading = true;
         this.manageNewsApiService.getList({
             publishedDate: this.filterDate,
             filterText: this.filterText,
@@ -71,6 +73,7 @@ export class ManageNewsPageComponent implements OnInit {
                         count: data.count
                     }
                 }),
+                finalize(() => this.loading = false)
             )
             .subscribe(data => {
                 this.data = data.elements;

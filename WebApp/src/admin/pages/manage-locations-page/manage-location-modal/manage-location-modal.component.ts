@@ -29,6 +29,7 @@ export class ManageLocationModalComponent extends ModalBase {
     address: [''],
     city: [''],
     googleMapsLink: [''],
+    googleMapsEmbeddedLink: [''],
     sections: [[]]
   });
 

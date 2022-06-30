@@ -1,6 +1,6 @@
 <div class="row mt-100" id="scroll-point">
     <div class="col-12">
-        <h1 class="uk-text-center">Календарь событий</h1>
+        <h1 class="uk-text-center">Календар подій</h1>
 
         <div class="mg-tools mt-50 uk-grid-small" uk-grid>
 
@@ -9,7 +9,7 @@
                     <a class="uk-search-icon-flip"
                        (click)="refreshData()"
                        uk-search-icon></a>
-                    <input class="uk-search-input uk-input" type="search" placeholder="Поиск"
+                    <input class="uk-search-input uk-input" type="search" placeholder="Пошук"
                            (keyup.enter)="refreshData()"
                            (ngModelChange)="filterText = $event;" [ngModel]="filterText">
                 </div>
@@ -18,20 +18,20 @@
             <div class="uk-width-1-2@s uk-width-auto@m">
                 <div class="uk-inline w-100">
                     <span class="uk-form-icon uk-form-icon-flip mg-text-green-main" uk-icon="icon: calendar"></span>
-                    <input class="uk-input" type="date" placeholder="Дата события"
+                    <input class="uk-input" type="date" placeholder="Дата події"
                            (ngModelChange)="filterDate = $event; refreshData()" [ngModel]="filterDate">
                 </div>
             </div>
 
             <div class="uk-width-1-2@s uk-width-auto@m">
                 <button class="uk-button uk-button-primary w-100" type="button" (click)="refreshData()">
-                    <span class="uk-margin-small-right" uk-icon="refresh"></span>Обновить
+                    <span class="uk-margin-small-right" uk-icon="refresh"></span>Оновити
                 </button>
             </div>
 
             <div class="uk-width-1-2@s uk-width-auto@m">
                 <button class="uk-button uk-button-primary w-100" type="button" (click)="reset()">
-                    <span class="uk-margin-small-right" uk-icon="close"></span>Сбросить
+                    <span class="uk-margin-small-right" uk-icon="close"></span>Скинути фільтри
                 </button>
             </div>
 
@@ -40,7 +40,7 @@
     </div>
 
     <div class="col-12 mt-50 uk-position-relative">
-        <div class="mg-card">
+        <div class="mg-card" [mgLoading]="loading">
 
             <div class="uk-overflow-auto">
                 <table class="uk-table uk-table-divide uk-table-justify">
@@ -49,13 +49,13 @@
                     <tr>
                         <th>№</th>
                         <th (click)="asc = !asc; refreshData()" class="mg-pointer">
-                            Дата события
+                            Дата події
                             <ng-template [ngIf]="asc" [ngIfElse]="down"><span uk-icon="chevron-up"></span></ng-template>
                             <ng-template #down><span uk-icon="chevron-down"></span></ng-template>
                         </th>
-                        <th>Название турнира</th>
-                        <th>Адрес</th>
-                        <th>Учасники</th>
+                        <th>Назва турніру</th>
+                        <th>Адреса</th>
+                        <th>Участники</th>
                     </tr>
                     </thead>
 
@@ -79,7 +79,6 @@
                            (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
 
         </div>
-
 
         <mg-bg [offset]="-180"></mg-bg>
 

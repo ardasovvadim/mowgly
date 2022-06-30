@@ -3,17 +3,17 @@
   <div class="col-lg-6">
 
     <div class="mg-card">
-      <h3>Важная информация</h3>
-      <p>Членство в Центе только индивидуальное. Прием в члены Центра осуществляется  с 4х-летнего возраста. Лица, которые не достигли 14-летнего возраста, принимаются в Центр после подачи письменного заявления от родителей или опекунов.</p>
+      <h3>Важлива інформація</h3>
+      <p>Членство у Центі лише індивідуальне. Прийом до членів Центру здійснюється з 4-річного віку. Особи, які не досягли 14-річного віку, приймаються до Центру після подання письмової заяви від батьків чи опікунів.</p>
     </div>
 
     <div class="mg-card">
-      <h3>Что нужно для вступления в клуб</h3>
+      <h3>Що потрібно для вступу до клубу</h3>
       <ul>
-        <li>Предоставить справку от терапевта о допуске к занятиям спортом.</li>
-        <li>Предоставить ксерокопию свидетельства о рождении</li>
-        <li>Две фотографии 3х4.</li>
-        <li>Спортивную тренировочную форму (первого месяца к занятиям допускаються только в кимоно)</li>
+        <li>Надати довідку від терапевта про допуск до занять спортом</li>
+        <li>Надати ксерокопію свідоцтва про народження</li>
+        <li>Дві фотографії 3х4</li>
+        <li>Спортивну тренувальну форму (першого місяця до занять допускаються лише у кімоно)</li>
       </ul>
     </div>
 
@@ -21,31 +21,53 @@
 
   <div class="col-lg-6">
 
-    <div class="mg-card uk-text-center">
+    <div class="mg-card">
 
-      <h1>Анкета ученика</h1>
-      <p>Каратэ — Учебно-тренировочная группа</p>
-      <div class="mg-card-image">
-        <img src="assets/img/personal-photo.png" alt="personal photo">
+      <div class="uk-text-center">
+        <h1>Анкета учня</h1>
+        <p>Карате — Навчально-тренувальна група</p>
       </div>
-      <p class="uk-link">Выбрать фото</p>
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit.emit(form.value)">
+      <div class="mg-card-image uk-align-center uk-margin-small">
+        <div class="uk-border-circle uk-overflow-hidden user-default-avatar"
+             style="padding: 5px; width: 128px; height: 128px;">
+          <div class="uk-border-circle uk-overflow-hidden w-100 uk-text-center">
+            <span uk-icon="icon: avatar;"></span>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="uk-margin">
-          <input type="text" class="uk-input" placeholder="Имя" formControlName="firstName">
+          <label for="firstName" class="uk-form-label">
+            Ім'я <sup>*</sup>
+            <ng-template [ngIf]="hasError('firstName', 'required')">
+              - це поле обов'язкове
+            </ng-template>
+          </label>
+          <input type="text" class="uk-input" placeholder="Імʼя" formControlName="firstName" id="firstName">
         </div>
         <div class="uk-margin">
-          <input type="text" class="uk-input" placeholder="Фамилия" formControlName="lastName">
+          <label for="lastName" class="uk-form-label">Прізвище</label>
+          <input type="text" class="uk-input" placeholder="Прізвище" formControlName="lastName" id="lastName">
         </div>
         <div class="uk-margin">
-          <input type="text" class="uk-input" placeholder="Номер телефона" formControlName="phoneNumber">
+          <label for="phoneNumber" class="uk-form-label">
+            Номер телефону
+            <sup>*</sup>
+            <ng-template [ngIf]="hasError('phoneNumber', 'required')">
+              - це поле обов'язкове
+            </ng-template>
+          </label>
+          <input type="text" class="uk-input" placeholder="Номер телефону" formControlName="phoneNumber" id="phoneNumber">
         </div>
         <div class="uk-margin">
-          <input type="text" class="uk-input" placeholder="Email" formControlName="email">
+          <label for="email" class="uk-form-label">Емейл</label>
+          <input type="text" class="uk-input" placeholder="Емейл" formControlName="email" id="email">
         </div>
         <div class="uk-margin-medium d-flex justify-content-between align-items-center">
-          <label><input type="checkbox" class="uk-checkbox" formControlName="isParent">Родитель ученика</label>
-          <button class="uk-button uk-button-primary" type="submit">Отправить заявку</button>
+          <label><input type="checkbox" class="uk-checkbox" formControlName="isParent">Батько</label>
+          <button class="uk-button uk-button-primary" type="submit">Відправити заявку</button>
         </div>
       </form>
 

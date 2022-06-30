@@ -3,30 +3,30 @@
         <button class="uk-modal-close-default" type="button" uk-close></button>
 
         <div class="uk-modal-header">
-            <h2 class="uk-modal-title">Выберите событие</h2>
+            <h2 class="uk-modal-title">Виберіть подію</h2>
         </div>
 
         <div class="uk-modal-body">
 
             <div class="uk-margin uk-inline w-100">
                 <span class="uk-form-icon uk-form-icon-flip mg-text-green-main" uk-icon="icon: calendar"></span>
-                <input class="uk-input" type="date" placeholder="Дата события" [(ngModel)]="filterDate">
+                <input class="uk-input" type="date" placeholder="Дата події" [(ngModel)]="filterDate">
             </div>
 
             <div class="uk-margin">
                 <mg-autocomplete-input [optionsSource]="eventsSource"
                                        #eventOptions
-                                       placeholder="Начните писать название события"></mg-autocomplete-input>
+                                       placeholder="Начните писать Назва события"></mg-autocomplete-input>
             </div>
 
             <div class="uk-margin">
-                <p>Или создайте <a (click)="createNewEvent()">новое событие</a></p>
+                <p>Інаше ствовіть <a (click)="createNewEvent()">нову подію</a></p>
             </div>
         </div>
 
         <div class="uk-modal-footer uk-text-right">
-            <button class="uk-button uk-button-primary uk-margin-right" (click)="addResults(eventOptions.selectedIdName)">Добавить результаты</button>
-            <button class="uk-button uk-button-default" (click)="modal.hide()">Отмена</button>
+            <button class="uk-button uk-button-primary uk-margin-right" (click)="addResults(eventOptions.selectedIdName)">Додати результати</button>
+            <button class="uk-button uk-button-default" (click)="modal.hide()">Відміна</button>
         </div>
     </div>
 </div>

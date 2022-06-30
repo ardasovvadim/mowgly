@@ -1,13 +1,13 @@
-<mg-manage-modal [title]="'Добавить видео'"
+<mg-manage-modal [title]="'Додати видео'"
                  [id]="id"
                  (onCancel)="close()"
                  (onSubmit)="submit()"
                  [isDeleteButton]="false">
 
   <div class="uk-margin">
-    <label class="uk-form-label" for="videoUrl">Ссылка на видео:</label>
+    <label class="uk-form-label" for="videoUrl">Посилання на відео:</label>
     <div class="uk-form-controls">
-      <input type="text" class="uk-input" placeholder="Вставте ссылку с изображением" [(ngModel)]="videoUrl" id="videoUrl">
+      <input type="text" class="uk-input" placeholder="Вставте посилання на відео" [(ngModel)]="videoUrl" id="videoUrl">
     </div>
   </div>
 

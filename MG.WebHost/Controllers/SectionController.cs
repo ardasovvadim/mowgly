@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using MG.WebHost.Config;
 using MG.WebHost.Entities.Sections;
 using MG.WebHost.Models;
@@ -22,8 +23,14 @@ namespace MG.WebHost.Controllers
         [HttpPost("GetSectionsByLocationId")]
         public async Task<IEnumerable<SectionVm>> GetSectionsByLocationIdAsync(SearchSectionRequest request)
         {
-            var sections = await _sectionService.GetAsync<SectionVm, Section>(section => section.Locations.Any(l => l.Id == request.LocationId), $"{nameof(Section.Settings)}");
-            return sections?.OrderBy(s => s.Profiles.FirstOrDefault(setting => setting.Name == SectionSettingKeys.CardOrder)?.Value ?? string.Empty);
+            return (await BaseService.GetListAsync<SectionVm, Section>(
+                new PageRequest { PageNumber = 0, PageSize = int.MaxValue, SortOrder = SortOrder.Asc, Sort = "Name" },
+                query =>
+                {
+                    return query
+                        .WhereIf(request.LocationId != null, s => s.Locations.Any(l => l.Id == request.LocationId))
+                        .Include(e => e.Settings);
+                }))?.Elements;
         }
 
         [HttpPost("list"), Authorize(MgPermissions.Section.Get)]

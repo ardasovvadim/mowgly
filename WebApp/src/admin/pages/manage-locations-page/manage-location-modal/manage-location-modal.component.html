@@ -10,22 +10,22 @@
     <!--    Name    -->
 
     <div class="uk-margin">
-      <label class="uk-form-label" for="name">Название:</label>
-      <div class="uk-form-controls"><input type="text" class="uk-input" placeholder="Название" formControlName="name" id="name"></div>
+      <label class="uk-form-label" for="name">Назва:</label>
+      <div class="uk-form-controls"><input type="text" class="uk-input" placeholder="Назва" formControlName="name" id="name"></div>
     </div>
 
     <!--    Address    -->
 
     <div class="uk-margin">
-      <label class="uk-form-label" for="address">Адрес:</label>
-      <div class="uk-form-controls"><input type="text" class="uk-input" placeholder="Адрес" formControlName="address" id="address"></div>
+      <label class="uk-form-label" for="address">Адреса:</label>
+      <div class="uk-form-controls"><input type="text" class="uk-input" placeholder="Адреса" formControlName="address" id="address"></div>
     </div>
 
     <!--    City    -->
 
     <div class="uk-margin">
-      <label class="uk-form-label" for="city">Город:</label>
-      <div class="uk-form-controls"><input type="text" class="uk-input" placeholder="Город" formControlName="city" id="city"></div>
+      <label class="uk-form-label" for="city">Місто:</label>
+      <div class="uk-form-controls"><input type="text" class="uk-input" placeholder="Місто" formControlName="city" id="city"></div>
     </div>
 
     <!--    Google link    -->
@@ -35,8 +35,15 @@
       <div class="uk-form-controls"><input type="text" class="uk-input" placeholder="Google link" formControlName="googleMapsLink" id="googleLink"></div>
     </div>
 
+    <!--    Google embedded link    -->
+
+    <div class="uk-margin">
+      <label class="uk-form-label" for="googleMapsEmbeddedLink">Google embedded link:</label>
+      <div class="uk-form-controls"><input type="text" class="uk-input" placeholder="Google embedded link" formControlName="googleMapsEmbeddedLink" id="googleMapsEmbeddedLink"></div>
+    </div>
+
     <div class="uk-margin" uk-margin>
-      <label class="uk-form-label uk-display-block">Секции:</label>
+      <label class="uk-form-label uk-display-block">Напрямок:</label>
       <button type="button"
               *ngFor="let section of form.value.sections"
               class="uk-button uk-button-primary uk-button-small uk-margin-small-right">
@@ -47,7 +54,7 @@
         <mg-autocomplete-input [optionsSource]="updateSections"
                                #sectionAutocomplete
                                (onOptionSelected)="addSection($event)"
-                               placeholder="Введите название секции"></mg-autocomplete-input>
+                               placeholder="Введіть Назва секции"></mg-autocomplete-input>
       </div>
 
     </div>

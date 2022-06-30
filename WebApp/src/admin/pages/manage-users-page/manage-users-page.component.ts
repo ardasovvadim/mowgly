@@ -6,7 +6,7 @@ import {smoothHeight} from '../../../app/mg-shared/animations/smooth-height-anim
 import {PaginationComponent} from '../../../app/mg-shared/components/pagination/pagination.component';
 import {PageOptions} from '../../../app/models/page';
 import {toSortOrder} from '../../../app/services/events-api.service';
-import {tap} from 'rxjs';
+import {finalize, tap} from 'rxjs';
 import {ManageUserApiService} from '../../services/manage-user-api.service';
 import {ManageUserModalComponent} from './manage-user-modal/manage-user-modal.component';
 
@@ -42,6 +42,7 @@ export class ManageUsersPageComponent implements OnInit {
     }
     pageOptions: PageOptions = {...this.initialPageOptions};
     userType: UserType = null;
+    loading = false;
 
     constructor(
         private readonly modalService: ModalService,
@@ -54,6 +55,7 @@ export class ManageUsersPageComponent implements OnInit {
     }
 
     refreshData() {
+        this.loading = true;
         this.userApiService.getList({
             userType: +this.userType,
             filterText: this.filterText,
@@ -75,6 +77,7 @@ export class ManageUsersPageComponent implements OnInit {
                         count: data.count
                     }
                 }),
+                finalize(() => this.loading = false)
             )
             .subscribe(data => {
                 this.data = data.elements;

@@ -1,7 +1,7 @@
 <ng-template [ngIf]="!timetableGroups || !timetableGroups.length">
   <div class="uk-overflow-auto">
     <table class="uk-table uk-table-divide uk-table-justify">
-      <caption>Направление - Город - Филиал</caption>
+      <caption>Напрямок - Місто - Філіал</caption>
 
       <thead>
       <tr>
@@ -13,7 +13,7 @@
         <th>Чт</th>
         <th>Пт</th>
         <th>Сб</th>
-        <th>Вс</th>
+        <th>Нд</th>
       </tr>
       </thead>
 
@@ -49,7 +49,7 @@
       <th>Чт</th>
       <th>Пт</th>
       <th>Сб</th>
-      <th>Вс</th>
+      <th>Нд</th>
     </tr>
     </thead>
 
@@ -57,7 +57,7 @@
     <tr *ngFor="let master of group.masters; let i = index">
       <td>{{i + 1}}</td>
       <td>{{master.masterName}}</td>
-      <td *ngFor="let day of [1, 2, 3, 4, 5, 6, 0]">{{displayTime(master.timetables, day)}}</td>
+      <td *ngFor="let day of [1, 2, 3, 4, 5, 6, 0]" style="min-width: 150px">{{displayTime(master.timetables, day)}}</td>
     </tr>
     </tbody>
 

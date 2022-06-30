@@ -44,7 +44,8 @@ import {GoogleLoginComponent} from './components/google-login/google-login.compo
 import {ToUtcPipe} from './pipes/to-utc.pipe';
 import {AngularCropperjsModule} from 'angular-cropperjs';
 import {ImageCroppModalComponent} from './components/image-cropp-modal/image-cropp-modal.component';
-import { ListErrorsComponent } from './components/list-errors/list-errors.component';
+import {ListErrorsComponent} from './components/list-errors/list-errors.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 const components: any[] = [
     FooterComponent,
@@ -67,6 +68,7 @@ const components: any[] = [
     BgComponent,
     NewsPageComponent,
     ImageCroppModalComponent,
+    LoadingDirective,
 ];
 
 @NgModule({
@@ -85,7 +87,6 @@ const components: any[] = [
         NewsImageBlockComponent,
         AutocompleteInputComponent,
         ConfirmDialogComponent,
-        LoadingDirective,
         PaginationComponent,
         SmoothHeightAnimDirective,
         ListPipe,
@@ -94,6 +95,7 @@ const components: any[] = [
         GoogleLoginComponent,
         ToUtcPipe,
         ListErrorsComponent,
+        LoaderComponent,
     ],
     exports: [
         ...components,
@@ -107,7 +109,6 @@ const components: any[] = [
         NewsTournamentTableComponent,
         NewsImageBlockComponent,
         AutocompleteInputComponent,
-        LoadingDirective,
         PaginationComponent,
         SmoothHeightAnimDirective,
         ListPipe,
@@ -116,6 +117,7 @@ const components: any[] = [
         ToUtcPipe,
         AngularCropperjsModule,
         ListErrorsComponent,
+        UserAvatarComponent,
     ],
     imports: [
         CommonModule,

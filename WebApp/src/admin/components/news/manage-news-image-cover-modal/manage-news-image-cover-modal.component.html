@@ -1,4 +1,4 @@
-<mg-manage-modal [title]="'Добавить изображение'"
+<mg-manage-modal [title]="'Додати изображение'"
                  [id]="id"
                  (onCancel)="close()"
                  (onSubmit)="submit()"
@@ -6,20 +6,20 @@
 
   <form [formGroup]="form">
     <div class="uk-margin">
-      <label class="uk-form-label" for="url">Изображение:</label>
+      <label class="uk-form-label" for="url">Зображення:</label>
       <div class="uk-form-controls">
-        <input readonly="true" type="text" class="uk-input" placeholder="Ссылка или маркер изображения" formControlName="url" id="url">
+        <input readonly="true" type="text" class="uk-input" placeholder="Посилання або маркер зображення" formControlName="url" id="url">
       </div>
     </div>
 
     <div class="uk-margin">
-      <p class="uk-text-middle">Добавить новое <a (click)="addNewImage()">изображение</a></p>
+      <p class="uk-text-middle">Додати нове <a (click)="addNewImage()">зображення</a></p>
     </div>
 
     <div *ngIf="showCaptionInput" class="uk-margin">
-      <label class="uk-form-label" for="caption">Подпись:</label>
+      <label class="uk-form-label" for="caption">Підпис:</label>
       <div class="uk-form-controls">
-        <input type="text" class="uk-input" placeholder="Добавьте подпись картинки" formControlName="caption" id="caption">
+        <input type="text" class="uk-input" placeholder="Додайте підпис зображення" formControlName="caption" id="caption">
       </div>
     </div>
   </form>

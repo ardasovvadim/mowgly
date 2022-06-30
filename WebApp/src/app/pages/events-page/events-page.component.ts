@@ -3,7 +3,7 @@ import {EventVm} from '../../models/events/event-vm';
 import {EventsApiService, toSortOrder} from '../../services/events-api.service';
 import {PaginationComponent} from '../../mg-shared/components/pagination/pagination.component';
 import {PageOptions} from '../../models/page';
-import {tap} from 'rxjs';
+import {delay, finalize, tap} from 'rxjs';
 import {fadeInAnimation} from '../../mg-shared/animations/fadeInAnimation';
 import {smoothHeight} from '../../mg-shared/animations/smooth-height-anim.directive';
 import {Router} from '@angular/router';
@@ -36,6 +36,7 @@ export class EventsPageComponent implements OnInit {
     }
 
     pageOptions: PageOptions = {...this.initialPageOptions};
+    loading: boolean = false;
 
     constructor(
         private readonly eventsApiService: EventsApiService,
@@ -48,6 +49,7 @@ export class EventsPageComponent implements OnInit {
     }
 
     refreshData() {
+        this.loading = true;
         this.eventsApiService.getList({
             actionDate: this.filterDate,
             filterText: this.filterText,
@@ -69,6 +71,9 @@ export class EventsPageComponent implements OnInit {
                         count: data.count
                     }
                 }),
+                finalize(() => {
+                    this.loading = false;
+                })
             )
             .subscribe(data => {
                 this.data = data.elements;

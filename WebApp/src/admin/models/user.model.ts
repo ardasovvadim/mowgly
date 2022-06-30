@@ -52,7 +52,7 @@ export enum UserType {
 export const userTypes = [
   {key: UserType.Moderator, value: 'Модератор'},
   {key: UserType.Student, value: 'Ученик'},
-  {key: UserType.Master, value: 'Инструктор'},
+  {key: UserType.Master, value: 'Інструктор'},
   {key: UserType.Admin, value: 'Администратор'},
   {key: UserType.Parent, value: 'Родитель'},
 ]

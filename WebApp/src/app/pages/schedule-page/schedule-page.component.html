@@ -1,44 +1,44 @@
 <div class="row mt-100">
 
     <div class="col-12">
-        <h1 class="uk-text-center">Расписание</h1>
+        <h1 class="uk-text-center">Розклад</h1>
 
         <div class="mg-tools uk-margin-medium-bottom mt-50 uk-grid-small" uk-grid>
             <div class="uk-width-1-2@s uk-width-auto@m">
                 <select class="uk-select" [(ngModel)]="filteringCity">
-                    <option [ngValue]="null">Все города</option>
+                    <option [ngValue]="null">Всі міста</option>
                     <option *ngFor="let city of options?.cities" [ngValue]="city">{{city}}</option>
                 </select>
             </div>
             <div class="uk-width-1-2@s uk-width-auto@m">
                 <select class="uk-select" [(ngModel)]="filteringLocation">
-                    <option [ngValue]="null">Все филиалы</option>
+                    <option [ngValue]="null">Всі філіали</option>
                     <option *ngFor="let location of options?.locations"
                             [ngValue]="location.id">{{location.name}}</option>
                 </select>
             </div>
             <div class="uk-width-1-2@s uk-width-auto@m">
                 <select class="uk-select" [(ngModel)]="filteringSection">
-                    <option [ngValue]="null">Все направления</option>
+                    <option [ngValue]="null">Всі напрямки</option>
                     <option *ngFor="let section of options?.sections" [ngValue]="section.id">{{section.name}}</option>
                 </select>
             </div>
             <div class="uk-width-1-2@s uk-width-auto@m">
-                <button class="uk-button uk-button-primary" (click)="refreshData()">Обновить</button>
+                <button class="uk-button uk-button-primary" (click)="refreshData()">Оновити</button>
             </div>
         </div>
 
     </div>
 
-    <div class="col-12 mt-50 uk-position-relative mg-background-light">
-        <div class="mg-card">
+    <div class="col-12 mt-50 uk-position-relative">
+        <div class="mg-card" [mgLoading]="loading">
 
             <mg-timetable-record-table #timetable></mg-timetable-record-table>
 
         </div>
 
         <!--    todo -->
-        <img class="mg-bg absolute-x-center" style="top: -180px" src="/assets/img/bg-15.png" alt="background">
+        <img class="mg-bg absolute-x-center" style="top: -180px" src="/assets/img/bg-15.png" loading="lazy" alt="background">
 
     </div>
 

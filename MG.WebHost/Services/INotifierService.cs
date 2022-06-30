@@ -67,7 +67,7 @@ public class NotifierService : BaseService, INotifierService
             text.AppendLine();
             
             if (fullName.IsNotNullOrEmpty())
-                text.AppendLine($"Имя {(order.IsParent ? "родителя" : "ребенка")}: {fullName}");
+                text.AppendLine($"Имя: {fullName}");
             if (order.Email.IsNotNullOrEmpty())
                 text.AppendLine($"Емейл: {order.Email}");
             if (order.PhoneNumber.IsNotNullOrEmpty())

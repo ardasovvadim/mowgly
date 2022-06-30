@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {ManageModal} from '../manage-modal/manage-modal';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ManageTournamentApiService} from '../../services/manage-tournament-api.service';
@@ -9,6 +9,9 @@ import {
 import {IdName} from '../../../app/models/timetable-records/timetable-record.view.model';
 import {catchError, Observable} from 'rxjs';
 import {mgConfirm} from '../../../app/utils/ui-kit';
+import {
+  AutocompleteInputComponent
+} from '../../../app/mg-shared/components/autocomplete-input/autocomplete-input.component';
 
 @Component({
   selector: 'mg-manage-tournament-result-modal',
@@ -75,7 +78,7 @@ export class ManageTournamentResultModalComponent extends ManageModal {
   manageResult(tournament: TournamentResultsData, result: TournamentResult) {
     this.tournament = tournament;
     this.result = result;
-    this.form.reset(result, {emitEvent: false})
+    this.form.reset(result);
     this.open();
   }
 

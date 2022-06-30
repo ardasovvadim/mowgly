@@ -26,6 +26,7 @@ import {ErrorPageComponent} from './pages/error-page/error-page.component';
 import {AdminModule} from '../admin/admin.module';
 import { PersonalDataComponent } from './pages/user-profile-page/components/personal-data/personal-data.component';
 import { ChangePasswordComponent } from './pages/user-profile-page/components/change-password/change-password.component';
+import { MastersPageComponent } from './pages/masters-page/masters-page.component';
 
 @NgModule({
     declarations: [
@@ -48,6 +49,7 @@ import { ChangePasswordComponent } from './pages/user-profile-page/components/ch
         ErrorPageComponent,
         PersonalDataComponent,
         ChangePasswordComponent,
+        MastersPageComponent,
     ],
     imports: [
         BrowserModule,

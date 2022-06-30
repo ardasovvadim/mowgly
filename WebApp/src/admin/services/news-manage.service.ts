@@ -90,7 +90,7 @@ export class NewsManageService {
             case NewsBlockType.Image: {
                 const defaultImageBlockData = {
                     url: 'https://autosdutriomphe.fr/wp-content/uploads/2018/04/default-image.png',
-                    caption: 'Подпись'
+                    caption: 'Підпис'
                 } as NewsImageBlock;
                 newBlock.data = JSON.stringify(defaultImageBlockData);
                 break;
@@ -127,7 +127,7 @@ export class NewsManageService {
     saveState() {
         if (this.isEditMode) {
             this.storageService.set(this.saveKey, this.data);
-            mgSuccessNotification(`<span uk-icon="check" class="uk-margin-small-right"></span> Данные сохранены`);
+            mgSuccessNotification(`<span uk-icon="check" class="uk-margin-small-right"></span> Дані збережені`);
         }
     }
 
@@ -140,7 +140,7 @@ export class NewsManageService {
     private newData = (): NewsDetailsVm => {
         return {
             title: 'Заголовок',
-            description: 'Описание',
+            description: 'Опис',
             // todo: not sure
             createdDate: moment().toISOString(),
         } as NewsDetailsVm;

@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {MasterService} from '../../app/services/master.service';
+import {MasterApiService} from '../../app/services/master-api.service';
 import {ApiService} from '../../app/services/api.service';
 import {Observable} from 'rxjs';
 import {AdminMasterVm, GetMasterListRequest, MasterEditModel} from '../models/master-edit-model';
 import {Page} from '../../app/models/page';
 
 @Injectable()
-export class ManageMasterApiService extends MasterService {
+export class ManageMasterApiService extends MasterApiService {
 
     constructor(protected api: ApiService) {
         super(api);

@@ -5,7 +5,7 @@
       <a class="uk-search-icon-flip"
          (click)="refreshData()"
          uk-search-icon></a>
-      <input class="uk-search-input uk-input" type="search" placeholder="Поиск по названию"
+      <input class="uk-search-input uk-input" type="search" placeholder="Пошук за ім'ям"
              (keyup.enter)="refreshData()" [(ngModel)]="filterText">
     </div>
   </div>
@@ -13,7 +13,7 @@
   <div class="uk-width-1-2@s uk-width-auto@m">
     <div class="uk-inline w-100">
       <select class="uk-select" [(ngModel)]="userType" (ngModelChange)="refreshData()">
-        <option [value]="null">Выберите тип пользовтеля</option>
+        <option [value]="null">Виберіть тип користувача</option>
         <option *ngFor="let type of userTypes" [value]="type.key">{{type.value}}</option>
       </select>
     </div>
@@ -21,25 +21,26 @@
 
   <div class="uk-width-1-2@s uk-width-auto@m" *mgMgIfPerm="'Permission.User.Create'">
     <button class="uk-button uk-button-primary" type="button" (click)="modal.editUser(null)">
-      <span class="uk-margin-small-right" uk-icon="plus"></span>Добавить
+      <span class="uk-margin-small-right" uk-icon="plus"></span>Додати
     </button>
   </div>
 
   <div class="uk-width-1-2@s uk-width-auto@m">
     <button class="uk-button uk-button-primary w-100" type="button" (click)="refreshData()">
-      <span class="uk-margin-small-right" uk-icon="refresh"></span>Обновить
+      <span class="uk-margin-small-right" uk-icon="refresh"></span>Оновити
     </button>
   </div>
 
   <div class="uk-width-1-2@s uk-width-auto@m">
     <button class="uk-button uk-button-primary w-100" type="button" (click)="reset()">
-      <span class="uk-margin-small-right" uk-icon="close"></span>Сбросить
+      <span class="uk-margin-small-right" uk-icon="close"></span>Скинути фільтри
     </button>
   </div>
 
 </div>
 
-<div class="table-wrapper uk-overflow-auto">
+<div [mgLoading]="loading">
+  <div class="table-wrapper uk-overflow-auto">
 
   <table class="uk-table uk-table-divide uk-table-justify uk-background-muted" (mouseleave)="currentRowIndex = -1">
 
@@ -78,6 +79,7 @@
   <mg-pagination [pageOptions]="pageOptions"
                  (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
 
+</div>
 </div>
 
 <mg-manage-user-modal #modal></mg-manage-user-modal>

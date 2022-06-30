@@ -16,7 +16,7 @@ namespace MG.WebHost.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("LocationSection", b =>
@@ -32,6 +32,38 @@ namespace MG.WebHost.Migrations
                     b.HasIndex("SectionsId");
 
                     b.ToTable("LocationSection");
+                });
+
+            modelBuilder.Entity("MG.WebHost.Entities.Auth.MgLoginModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("LoginModels", (string)null);
                 });
 
             modelBuilder.Entity("MG.WebHost.Entities.Emails.EmailQueue", b =>
@@ -176,6 +208,9 @@ namespace MG.WebHost.Migrations
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("GoogleMapsEmbeddedLink")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("GoogleMapsLink")
                         .HasColumnType("longtext");
@@ -794,6 +829,15 @@ namespace MG.WebHost.Migrations
                     b.HasOne("MG.WebHost.Entities.Sections.Section", null)
                         .WithMany()
                         .HasForeignKey("SectionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MG.WebHost.Entities.Auth.MgLoginModel", b =>
+                {
+                    b.HasOne("MG.WebHost.Entities.Users.User", null)
+                        .WithOne()
+                        .HasForeignKey("MG.WebHost.Entities.Auth.MgLoginModel", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -22,6 +22,7 @@ export interface LoginResponse {
     isSuccess: boolean;
     errorMessage: string;
     token: string;
+    refreshToken: string;
 }
 
 export interface UserProfile {

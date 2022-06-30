@@ -19,11 +19,11 @@
                 <label class="uk-form-label" for="email">
                     Емейл
                     <ng-container *ngIf="form | hasError : 'email' : 'required' : submitted; else emailEmail">
-                        - это поле обязательное
+                        - це поле обов'язкове
                     </ng-container>
                     <ng-template #emailEmail>
                         <ng-container *ngIf="form | hasError : 'email' : 'email' : submitted">
-                            - некорректный формат емейла
+                            - некоректний формат емейлу
                         </ng-container>
                     </ng-template>
                 </label>
@@ -36,7 +36,7 @@
                 <label class="uk-form-label" for="password">
                     Пароль
                     <ng-template [ngIf]="form | hasError : 'password' : 'required' : submitted">
-                        - это поле обязательное
+                        - це поле обов'язкове
                     </ng-template>
                 </label>
                 <div class="uk-form-controls">
@@ -48,8 +48,8 @@
         </div>
 
         <div class="uk-card-footer uk-text-center" uk-margin>
-            <button class="uk-button uk-button-primary uk-margin-small-right" type="submit">Войти</button>
-            <button class="uk-button uk-button-default" routerLink="/user-registration" type="button">Зарегистрироваться</button>
+            <button class="uk-button uk-button-primary uk-margin-small-right" type="submit">Увійти</button>
+            <button class="uk-button uk-button-default" routerLink="/user-registration" type="button">Зареєструватись</button>
             <div class="uk-inline">
                 <mg-google-login (onResponse)="onGoogleSignIn($event)" text="signin_with"></mg-google-login>
             </div>

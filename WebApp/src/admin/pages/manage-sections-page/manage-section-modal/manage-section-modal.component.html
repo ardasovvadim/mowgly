@@ -2,25 +2,40 @@
                  [isDeleteButton]="isEditMode"
                  (onSubmit)="submit()"
                  (onDelete)="delete()"
+                 [style]="'center'"
                  [deletePerm]="'Permission.Section.Delete'"
                  (onCancel)="modal.hide();">
     <form [formGroup]="form">
 
         <!--    Name    -->
         <div class="uk-margin">
-            <label class="uk-form-label" for="name">Название:</label>
+            <label class="uk-form-label" for="name">Назва:</label>
             <div class="uk-form-controls">
-                <input type="text" class="uk-input" placeholder="Название" formControlName="name" id="name">
+                <input type="text" class="uk-input" placeholder="Назва" formControlName="name" id="name">
+            </div>
+        </div>
+
+        <!--    Price    -->
+        <div class="uk-margin">
+            <label class="uk-form-label" for="price">Ціна:</label>
+            <div class="uk-form-controls">
+                <input type="text" class="uk-input" placeholder="Ціна" formControlName="price" id="price">
             </div>
         </div>
 
         <!--    Description    -->
         <div class="uk-margin">
-            <h3>Описание:</h3>
-            <div class="mg-quill-field">
-                <mg-quill-editor placeholder="Введите текст..."
-                                 formControlName="description"></mg-quill-editor>
-            </div>
+            <h3>Опис на карточці:</h3>
+            <mg-quill-editor placeholder="Введіть текст..."
+                             [height]="250"
+                             formControlName="description"></mg-quill-editor>
+        </div>
+
+        <div class="uk-margin">
+            <h3>Опис на головній сторінці:</h3>
+            <mg-quill-editor placeholder="Введіть текст..."
+                             [height]="250"
+                             formControlName="mainDescription"></mg-quill-editor>
         </div>
     </form>
 </mg-manage-modal>

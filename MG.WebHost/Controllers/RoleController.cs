@@ -7,7 +7,6 @@ using MG.WebHost.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Packaging;
 
 namespace MG.WebHost.Controllers;
 
@@ -60,7 +59,7 @@ public class RoleController : BaseController
             var newPermIds = dtoRole.Permissions.Where(id => role.Permissions.All(p => p.Id != id)).ToList();
             var newPerms = permissions.Where(p => newPermIds.Contains(p.Id)).ToList();
             if (newPerms.Any())
-                role.Permissions.AddRange(newPerms);
+                newPerms.ForEach(p => role.Permissions.Add(p));
         }
 
         await Cache.ClearCacheAsync();

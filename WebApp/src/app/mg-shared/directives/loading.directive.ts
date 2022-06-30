@@ -1,41 +1,52 @@
-import {AfterViewInit, Directive, ElementRef, Input, Renderer2} from '@angular/core';
-import {Indexer} from '../../utils/utils';
+import {
+    ComponentRef,
+    Directive,
+    ElementRef,
+    HostBinding,
+    Input,
+    OnChanges,
+    OnInit,
+    Renderer2,
+    SimpleChanges,
+    ViewContainerRef
+} from '@angular/core';
+import {LoaderComponent} from '../components/loader/loader.component';
 
 @Directive({
     selector: '[mgLoading]'
 })
-export class LoadingDirective implements AfterViewInit {
+export class LoadingDirective implements OnInit, OnChanges {
 
-    private id = Indexer.getId()
-    private indicator: any;
+    @HostBinding("style.position") hostPosition: string = "relative";
+    @HostBinding("style.overflow") overflow: string = "hidden";
 
-    @Input() set mgLoading(value: boolean) {
-        const el = this.targetRef.nativeElement;
+    @Input() mgLoading: boolean = false;
+    @Input() mgLoadingBg: boolean = true;
+    private loader: ComponentRef<LoaderComponent>;
 
-        if (value) {
-            el.classList.add('mg-loading')
-
-            this.indicator = this.render.createElement('div')
-            this.indicator.id = this.id;
-            this.indicator.setAttribute('uk-spinner', '');
-            this.render.appendChild(el, this.indicator);
-
-        } else {
-            el.classList.remove('mg-loading')
-
-            this.render.removeChild(el, this.indicator);
-        }
-    }
+    @Input() loadingColor: 'white' | 'green' = 'green';
 
     constructor(
-        private targetRef: ElementRef,
-        private readonly render: Renderer2
+        private readonly targetRef: ElementRef,
+        private readonly renderer: Renderer2,
+        private readonly viewContainerRef: ViewContainerRef
     ) {
     }
 
-    ngAfterViewInit(): void {
-        this.targetRef.nativeElement.style.position = 'relative';
-        this.targetRef.nativeElement.style.overflow = 'hidden';
+    ngOnInit(): void {
+        this.loader = this.viewContainerRef.createComponent<LoaderComponent>(LoaderComponent);
+        this.loader.instance.loading = this.mgLoading;
+        this.loader.instance.loaderColor = this.loadingColor;
+        this.loader.instance.loadingBg = this.mgLoadingBg;
+        this.targetRef.nativeElement.appendChild(this.loader.location.nativeElement);
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (!this.loader)
+            return;
+
+        this.overflow = this.mgLoading ? 'hidden' : 'visible';
+        this.loader.instance.loading = this.mgLoading;
     }
 
 }

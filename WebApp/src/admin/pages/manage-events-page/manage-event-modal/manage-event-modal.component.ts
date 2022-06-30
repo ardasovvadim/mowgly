@@ -73,7 +73,7 @@ export class ManageEventModalComponent extends ManageModal {
 
     changeResults() {
         if (this.valueChanged) {
-            mgConfirm('Сохранить изменения')
+            mgConfirm('Зберігти изменения')
                 .pipe(
                     switchMap(() => this.manageApiService.add(this.form.value))
                 )

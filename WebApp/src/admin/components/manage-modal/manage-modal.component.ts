@@ -10,7 +10,7 @@ import {Indexer} from '../../../app/utils/utils';
 export class ManageModalComponent {
 
   @Input() id: string = `manage-modal-${Indexer.getId()}`;
-  @Input() title: string = 'Форма редактирования';
+  @Input() title: string = 'Форма редагування';
   @Input() form: FormGroup = new FormGroup({});
   @Input() style: 'container' | 'center' = 'center';
   @Input() isDeleteButton = false;

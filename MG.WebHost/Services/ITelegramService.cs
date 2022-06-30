@@ -22,7 +22,7 @@ public interface ITelegramService
     Task<BotStatusResponseDto> GetStatusAsync();
     Task ProcessUpdateAsync(Update update);
     Task<string> GetTokenLinkAsync(Guid userId);
-    Task SendMessageAsync(long id, string message);
+    Task SendMessageAsync(long chatId, string message);
 }
 
 public class TelegramService : BaseService, ITelegramService
@@ -128,7 +128,20 @@ public class TelegramService : BaseService, ITelegramService
                         var displayName = user.ConcatName();
 
                         await Client.SendTextMessageAsync(chatId, $"Авторизация пройдена {displayName}. Вы подписались на обновления.");
+                    } 
+                    else if (text.StartsWith("/unsubscribe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var userRepo = Repository<User>();
+                        var users = await userRepo.GetAsync(e => e.TelegramChatId == chatId);
+                        
+                        foreach (var user in users)
+                            user.TelegramChatId = 0;
+                        
+                        await userRepo.SaveChangesAsync();
+                        
+                        await Client.SendTextMessageAsync(chatId, $"Вы успешно отписались от обновлений.");
                     }
+                    
                     break;
                 }
             }
@@ -180,9 +193,9 @@ public class TelegramService : BaseService, ITelegramService
         return uri.ToString();
     }
 
-    public async Task SendMessageAsync(long id, string message)
+    public async Task SendMessageAsync(long chatId, string message)
     {
-        await Client.SendTextMessageAsync(id, message, ParseMode.Html);
+        await Client.SendTextMessageAsync(chatId, message, ParseMode.Html);
     }
 
     private void LogUpdate(Update update, string message)

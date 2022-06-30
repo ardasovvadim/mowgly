@@ -1,4 +1,4 @@
-<mg-manage-modal [title]="'Добавить событие'"
+<mg-manage-modal [title]="'Додати событие'"
                  [id]="id"
                  (onCancel)="close()"
                  (onSubmit)="submit()"
@@ -9,14 +9,14 @@
   <form [formGroup]="form">
 
     <div class="uk-margin">
-      <label class="uk-form-label" for="tournamentName">Название турнира:</label>
+      <label class="uk-form-label" for="tournamentName">Назва турніру:</label>
       <div class="uk-form-controls">
-        <input type="text" class="uk-input" placeholder="Название турнира" formControlName="tournamentName" id="tournamentName">
+        <input type="text" class="uk-input" placeholder="Назва турнира" formControlName="tournamentName" id="tournamentName">
       </div>
     </div>
 
     <div class="uk-margin">
-      <label class="uk-form-label" for="actionDate">Дата проведения:</label>
+      <label class="uk-form-label" for="actionDate">Дата проведення:</label>
       <div class="uk-inline w-100">
         <span class="uk-form-icon uk-form-icon-flip mg-text-green-main" uk-icon="icon: calendar"></span>
         <input type="date" class="uk-input" placeholder="Дата проведения" formControlName="actionDate" id="actionDate">
@@ -24,14 +24,14 @@
     </div>
 
     <div class="uk-margin">
-      <label class="uk-form-label" for="address">Адресс:</label>
+      <label class="uk-form-label" for="address">Адреса:</label>
       <div class="uk-form-controls">
-        <input type="text" class="uk-input" placeholder="Адресс" formControlName="address" id="address">
+        <input type="text" class="uk-input" placeholder="Адресас" formControlName="address" id="address">
       </div>
     </div>
 
     <div class="uk-margin">
-      <label class="uk-form-label" for="googleMapLink">Ссылка на google карты:</label>
+      <label class="uk-form-label" for="googleMapLink">Посилання на google карты:</label>
       <div class="uk-form-controls">
         <input type="text" class="uk-input" placeholder="Ссылка" formControlName="googleMapLink" id="googleMapLink">
       </div>
@@ -40,12 +40,12 @@
     <div class="uk-margin">
       <label class="uk-form-label" for="participants">Учасники:</label>
       <div class="uk-form-controls">
-        <input type="text" class="uk-input" placeholder="Учасники" formControlName="participants" id="participants">
+        <input type="text" class="uk-input" placeholder="Участники" formControlName="participants" id="participants">
       </div>
     </div>
 
     <div class="uk-margin-medium-top" *ngIf="editMode">
-      <p class="uk-margin-remove">Изменить <a (click)="changeResults()">таблицу результатов</a></p>
+      <p class="uk-margin-remove">Редагувати <a (click)="changeResults()">таблицю результатів</a></p>
     </div>
 
 

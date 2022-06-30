@@ -4,6 +4,10 @@
   width: 100%;
 }
 
+.h-100 {
+  height: 100%;
+}
+
 .max-w-80 {
   max-width: 80%;
 }
@@ -153,6 +157,10 @@
 
 .mg-text-green-main {
   color: $mg-green-main;
+}
+
+.mg-text-white {
+  color: $mg-white;
 }
 
 .mg-text-green {

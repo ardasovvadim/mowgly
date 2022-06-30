@@ -2,7 +2,7 @@
 
   <div [id]="elementId" class="mg-gallery-white-frame" uk-slideshow="animation: fade; min-height: 350; max-height: 400">
     <ul class="uk-slideshow-items">
-      <li *ngFor="let path of imgPaths"><img [src]="path" uk-cover /></li>
+      <li *ngFor="let path of imgPaths"><img [src]="path" uk-cover loading="lazy" /></li>
     </ul>
   </div>
 

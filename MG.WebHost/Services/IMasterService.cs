@@ -34,7 +34,11 @@ namespace MG.WebHost.Services
             };
             
             var query = Repository.GetQueryable()
-                .Where(user => user.UserTypes == UserType.Master);
+                .Where(user => user.UserTypes == UserType.Master)
+                .WhereIf(request.FilterText.IsNotNullOrEmpty(), e => e.NormalizedName.Contains(request.FilterText.Trim()))
+                .WhereIf(request.City.IsNotNullOrEmpty(), e => e.TimetableRecords.Any(t => t.Location.City.Contains(request.City.Trim())))
+                .WhereIf(request.Section != null, e => e.TimetableRecords.Any(t => t.SectionId == request.Section))
+                ;
 
             if (request.LocationIds.Any() && request.SectionIds.Any())
                 query = query.Where(u => u.TimetableRecords.Any(t => request.LocationIds.Contains(t.LocationId) && request.SectionIds.Contains(t.SectionId)));
@@ -64,7 +68,9 @@ namespace MG.WebHost.Services
             {
                 UserProfileKeys.MasterDescriptions,
                 UserProfileKeys.MasterProfileImage,
-                UserProfileKeys.MasterWithImages
+                UserProfileKeys.MasterWithImages,
+                UserProfileKeys.MasterInstagramLink,
+                UserProfileKeys.MasterFacebookLink
             };
             
             var entity = await Repository

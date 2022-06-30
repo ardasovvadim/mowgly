@@ -1,11 +1,9 @@
-﻿using Google.Apis.Auth;
-using MG.WebHost.Config;
+﻿using MG.WebHost.Config;
 using MG.WebHost.Entities.Users;
 using MG.WebHost.Models;
 using MG.WebHost.Models.Auth;
 using MG.WebHost.Models.Users;
 using MG.WebHost.Services;
-using MG.WebHost.Settings;
 using MG.WebHost.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -103,5 +101,14 @@ namespace MG.WebHost.Controllers
             return await _userService.SignUpGoogleAsync(request);
         }
         
+        [HttpPost]
+        [Route("refresh")]
+        public async Task<IActionResult> RefreshAsync(RefreshTokenRequest request)
+        {
+            if (request is null)
+                return BadRequest("Invalid client request");
+
+            return Ok(await _userService.RefreshTokenAsync(request));
+        }
     }
 }

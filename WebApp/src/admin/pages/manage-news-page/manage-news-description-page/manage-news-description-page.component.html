@@ -3,19 +3,19 @@
 
         <div uk-grid class="uk-grid-small uk-child-width-1-2@m uk-child-width-auto@l uk-margin">
             <div>
-                <button class="uk-button uk-button-primary w-100" (click)="publish()">Опубликовать</button>
+                <button class="uk-button uk-button-primary w-100" (click)="publish()">Опубліковати</button>
             </div>
             <ng-template [ngIf]="!data.id" [ngIfElse]="editMode">
                 <div>
-                    <button class="uk-button uk-button-default w-100" (click)="saveResult()">Сохранить</button>
+                    <button class="uk-button uk-button-default w-100" (click)="saveResult()">Зберігти</button>
                 </div>
                 <div>
-                    <button class="uk-button uk-button-default w-100" (click)="reset()">Очистить</button>
+                    <button class="uk-button uk-button-default w-100" (click)="reset()">Очистити</button>
                 </div>
             </ng-template>
             <ng-template #editMode>
                 <div *mgMgIfPerm="'Permission.News.Delete'">
-                    <button class="uk-button uk-button-danger w-100" (click)="delete()">Удалить</button>
+                    <button class="uk-button uk-button-danger w-100" (click)="delete()">Видалити</button>
                 </div>
             </ng-template>
         </div>
@@ -34,7 +34,7 @@
                 <div class="uk-overlay-primary uk-position-cover mg-hover-opacity">
                     <div class="uk-position-center">
                         <button class="uk-button uk-button-primary" (click)="editImageCover()">
-                            <span uk-icon="icon: camera" class="uk-margin-right"></span> Добавить обложку
+                            <span uk-icon="icon: camera" class="uk-margin-right"></span> Додати обложку
                         </button>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                                                 (onBlockEdit)="editTextBlock(block)"
                                                 (onHovered)="textEditor.displayToolBar = $event"
                                                 [block]="block">
-                                                <mg-quill-editor placeholder="Введите текст..."
+                                                <mg-quill-editor placeholder="Введіть текст..."
                                                                  #textEditor
                                                                  [displayToolBar]="false"
                                                                  [(ngModel)]="block.data"></mg-quill-editor>

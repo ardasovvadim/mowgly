@@ -1,4 +1,4 @@
-<mg-manage-modal [title]="'Добавить результат'"
+<mg-manage-modal [title]="'Додати результат'"
                  [id]="id"
                  (onCancel)="close()"
                  (onSubmit)="submit()"
@@ -8,7 +8,7 @@
     <form [formGroup]="form">
         <div class="uk-margin">
             <label class="uk-form-label" for="place">ФИО учасника:</label>
-            <mg-autocomplete-input placeholder="Имя участника"
+            <mg-autocomplete-input placeholder="Імʼя участника"
                                    [optionsSource]="refreshStudentOptions"
                                    formControlName="student"></mg-autocomplete-input>
         </div>
@@ -17,7 +17,7 @@
         <div class="uk-margin">
             <label class="uk-form-label" for="place">Место:</label>
             <div class="uk-form-controls">
-                <input type="text" class="uk-input" placeholder="Введите место на соревнованиях" formControlName="place"
+                <input type="text" class="uk-input" placeholder="Введіть место на соревнованиях" formControlName="place"
                        id="place">
             </div>
         </div>
@@ -25,7 +25,7 @@
         <div class="uk-margin">
             <label class="uk-form-label" for="score">Счет:</label>
             <div class="uk-form-controls">
-                <input type="text" class="uk-input" placeholder="Введите счет" formControlName="score" id="score">
+                <input type="text" class="uk-input" placeholder="Введіть счет" formControlName="score" id="score">
             </div>
         </div>
 

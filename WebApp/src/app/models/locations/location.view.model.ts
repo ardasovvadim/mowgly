@@ -4,4 +4,5 @@ export interface LocationViewModel {
   address: string;
   city: string;
   googleMapsLink: string;
+  googleMapsEmbeddedLink: string;
 }

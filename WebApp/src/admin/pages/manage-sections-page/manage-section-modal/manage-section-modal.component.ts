@@ -31,12 +31,16 @@ export class ManageSectionModalComponent implements AfterViewInit {
         id: [null],
         name: [''],
         description: [''],
-        profiles: [[]]
+        profiles: [[]],
+        mainDescription: [''],
+        price: ['']
     });
     modal: any;
 
     private profileMappings: ProfileMaps = {
-        'description': {key: 'CardDescription', type: DataType.Html}
+        'description': {key: 'CardDescription', type: DataType.Html},
+        'mainDescription': {key: 'MainDescription', type: DataType.Html},
+        'price': {key: 'Price', type: DataType.String},
     }
 
     constructor(

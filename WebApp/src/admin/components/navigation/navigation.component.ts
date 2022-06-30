@@ -9,14 +9,14 @@ import {UserService} from '../../../app/services/user.service';
 export class NavigationComponent implements OnInit {
 
   private originRoutes: {name: string, link: string, permission: string}[] = [
-    {name: 'Новости', link: 'news', permission: 'Permission.News.Get'},
-    {name: 'Формы', link: 'orders', permission: null},
-    {name: 'Иструктора', link: 'masters', permission: 'Permission.Master.Get'},
-    {name: 'Филиалы', link: 'locations', permission: 'Permission.Location.Get'},
-    {name: 'Направления', link: 'sections', permission: 'Permission.Section.Get'},
-    {name: 'Пользователи', link: 'users', permission: 'Permission.User.Get'},
-    {name: 'Расписание', link: 'schedule', permission: 'Permission.TimetableRecord.Get'},
-    {name: 'События', link: 'events', permission: 'Permission.Event.Get'},
+    {name: 'Новини', link: 'news', permission: 'Permission.News.Get'},
+    {name: 'Форми', link: 'orders', permission: null},
+    {name: 'Інструктора', link: 'masters', permission: 'Permission.Master.Get'},
+    {name: 'Філіали', link: 'locations', permission: 'Permission.Location.Get'},
+    {name: 'Напрямки', link: 'sections', permission: 'Permission.Section.Get'},
+    {name: 'Користувачі', link: 'users', permission: 'Permission.User.Get'},
+    {name: 'Розклад', link: 'schedule', permission: 'Permission.TimetableRecord.Get'},
+    {name: 'Події', link: 'events', permission: 'Permission.Event.Get'},
     {name: 'Права', link: 'permissions', permission: 'Permission.Role.Get'},
   ]
 

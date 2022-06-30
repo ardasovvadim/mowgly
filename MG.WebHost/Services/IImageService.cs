@@ -17,37 +17,44 @@ namespace MG.WebHost.Services
         Task DeleteAsync(IEnumerable<Guid> ids);
     }
 
-    // todo: add cache
     public class ImageService : IImageService
     {
         private readonly IRepository<Image> _imageRepository;
         private readonly IDirectoryUtils _directoryUtils;
         private readonly ILogger<ImageService> _logger;
-        private const string ImageFolder = "wwwroot/Images";
+        private const string ImageFolder = "Images";
+        private readonly CacheUtils _cache;
 
         public ImageService(
             IRepository<Image> imageRepository,
-            IDirectoryUtils directoryUtils, ILogger<ImageService> logger)
+            IDirectoryUtils directoryUtils, ILogger<ImageService> logger, CacheUtils cache)
         {
             _imageRepository = imageRepository;
             _directoryUtils = directoryUtils;
             _logger = logger;
+            _cache = cache;
         }
 
         public async Task<ImageDto> GetImagePhysicalPathOrDefault(Guid imageGuid)
         {
-            var image = await _imageRepository.GetByIdAsync(imageGuid);
-            if (image == null)
-                return null;
-            var subPath = Path.Combine(ImageFolder, image.PhysicalImageSubPath);
-            var folderFullPath = _directoryUtils.CombinePathFromRoot(subPath);
-            var imageFolderFullPath = _directoryUtils.EnsureFolderCreated(folderFullPath);
-            
-            return new ImageDto
+            return await _cache.GetOrSetAsync(imageGuid.ToString(), async () =>
             {
-                Extension = image.Extension,
-                PhysicalImageSubPath = Path.Combine(imageFolderFullPath, $"{image.Id}{image.Extension}")
-            };
+                var image = await _imageRepository.GetByIdAsync(imageGuid);
+                if (image == null)
+                    return null;
+                var subPath = Path.Combine(ImageFolder, image.PhysicalImageSubPath);
+                var folderFullPath = _directoryUtils.CombinePathFromRoot(subPath);
+                var imageFolderFullPath = _directoryUtils.EnsureFolderCreated(folderFullPath);
+
+                return new ImageDto
+                {
+                    Extension = image.Extension,
+                    PhysicalImageSubPath = Path.Combine(imageFolderFullPath, $"{image.Id}{image.Extension}")
+                };
+            }, new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1)
+            });
         }
 
         public async Task<Guid> AddAsync(ImageCreateDto request)
@@ -111,6 +118,7 @@ namespace MG.WebHost.Services
                 
                     File.Delete(fullImagePath);
                     await _imageRepository.DeleteAsync(id);
+                    await _cache.RemoveAsync(id.ToString());
                 }
                 catch (Exception e)
                 {

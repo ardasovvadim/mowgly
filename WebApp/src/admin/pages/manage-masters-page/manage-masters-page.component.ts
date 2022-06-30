@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {tap} from 'rxjs';
+import {finalize, tap} from 'rxjs';
 import {ManageMasterApiService} from '../../services/manage-master-api.service';
 import {AdminMasterVm} from '../../models/master-edit-model';
 import {toSortOrder} from '../../../app/services/events-api.service';
@@ -42,6 +42,7 @@ export class ManageMastersPageComponent {
     pageOptions: PageOptions = {...this.initialPageOptions};
     sectionFilter: string = null;
     sections: IdName[] = [];
+    loading = false;
 
     constructor(
         private manageMasterService: ManageMasterApiService,
@@ -54,6 +55,7 @@ export class ManageMastersPageComponent {
     }
 
     refreshData() {
+        this.loading = true;
         this.manageMasterService.getList({
             filterText: this.filterText,
             sectionId: this.sectionFilter,
@@ -75,6 +77,7 @@ export class ManageMastersPageComponent {
                         count: data.count
                     }
                 }),
+                finalize(() => this.loading = false)
             )
             .subscribe(data => {
                 this.data = data.elements;

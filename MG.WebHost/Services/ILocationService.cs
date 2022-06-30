@@ -27,16 +27,19 @@ public class LocationService : BaseService, ILocationService
             : await locationRepo.GetByIdAsync(request.Id.Value, nameof(Location.Sections));
         
         Mapper.Map(request, entity);
-        
-        var sections = await sectionRepository.GetAsync(s => request.Sections.Select(s2 => s2.Id).Contains(s.Id));
-        foreach (var section in sections)
-            if (!entity.Sections.Contains(section))
-                entity.Sections.Add(section);
-        
-        if (!isNew)
-            foreach (var section in entity.Sections)
-                if (request.Sections.All(s => s.Id != section.Id))
-                    entity.Sections.Remove(section);
+
+        if (request.Sections != null)
+        {
+            var sections = await sectionRepository.GetAsync(s => request.Sections.Select(s2 => s2.Id).Contains(s.Id));
+            foreach (var section in sections)
+                if (!entity.Sections.Contains(section))
+                    entity.Sections.Add(section);
+            
+            if (!isNew)
+                foreach (var section in entity.Sections)
+                    if (request.Sections.All(s => s.Id != section.Id))
+                        entity.Sections.Remove(section);
+        }
 
         if (isNew)
             await locationRepo.InsertAsync(entity);

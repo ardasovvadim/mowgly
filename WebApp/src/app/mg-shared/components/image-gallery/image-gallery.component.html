@@ -3,7 +3,7 @@
   <ul class="uk-slider-items uk-child-width-1-2@s uk-child-width-1-3@xl uk-grid">
     <li *ngFor="let url of imageUrls; let i = index">
       <div class="mg-card">
-        <img loading="lazy" [src]="url | image" alt="image with master {{i+1}}">
+        <img loading="lazy" [src]="url | image" loading="lazy" alt="image with master {{i+1}}">
       </div>
     </li>
   </ul>

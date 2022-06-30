@@ -4,7 +4,7 @@
         <button class="uk-modal-close-default" type="button" uk-close></button>
 
         <div class="uk-modal-header">
-            <h3 class="uk-modal-title">Профиль пользователя</h3>
+            <h3 class="uk-modal-title">Профіль користувача</h3>
         </div>
 
         <form [formGroup]="form" (ngSubmit)="submit()">
@@ -36,7 +36,7 @@
                         </ng-template>
 
                         <div class="uk-margin uk-text-center">
-                            <a>Изменить фото</a>
+                            <a>Змінити фото</a>
                             <input type="file" id="cardImage" accept="image/*" (change)="cropImage($event)">
                         </div>
                     </div>
@@ -46,9 +46,9 @@
                         <!--     First name     -->
 
                         <div class="uk-margin">
-                            <label class="uk-form-label" for="firstName">Имя:</label>
+                            <label class="uk-form-label" for="firstName">Імʼя:</label>
                             <div class="uk-form-controls">
-                                <input type="text" class="uk-input" placeholder="Имя" formControlName="firstName"
+                                <input type="text" class="uk-input" placeholder="Імʼя" formControlName="firstName"
                                        id="firstName">
                             </div>
                         </div>
@@ -56,9 +56,9 @@
                         <!--     Last name     -->
 
                         <div class="uk-margin">
-                            <label class="uk-form-label" for="lastName">Фамилия:</label>
+                            <label class="uk-form-label" for="lastName">Прізвище:</label>
                             <div class="uk-form-controls">
-                                <input type="text" class="uk-input" placeholder="Фамилия" formControlName="lastName"
+                                <input type="text" class="uk-input" placeholder="Прізвище" formControlName="lastName"
                                        id="lastName">
                             </div>
                         </div>
@@ -66,9 +66,9 @@
                         <!--     Middle name     -->
 
                         <div class="uk-margin">
-                            <label class="uk-form-label" for="middleName">Отчетсво:</label>
+                            <label class="uk-form-label" for="middleName">По-батькові:</label>
                             <div class="uk-form-controls">
-                                <input type="text" class="uk-input" placeholder="Отчество"
+                                <input type="text" class="uk-input" placeholder="По-батькові"
                                        formControlName="middleName"
                                        id="middleName">
                             </div>
@@ -81,12 +81,12 @@
                         <!--     Birthday name     -->
 
                         <div class="uk-margin">
-                            <label class="uk-form-label" for="birthday">Дата рождения:</label>
+                            <label class="uk-form-label" for="birthday">Дата народження:</label>
                             <div class="uk-form-controls">
                                 <div class="uk-inline w-100">
                               <span class="uk-form-icon uk-form-icon-flip mg-text-green-main"
                                     uk-icon="icon: calendar"></span>
-                                    <input type="date" class="uk-input" placeholder="Дата рождения"
+                                    <input type="date" class="uk-input" placeholder="Дата народження"
                                            formControlName="birthday"
                                            id="birthday">
                                 </div>
@@ -106,9 +106,9 @@
                         <!--     Phone Number     -->
 
                         <div class="uk-margin">
-                            <label class="uk-form-label" for="phoneNumber">Мобильный телефон:</label>
+                            <label class="uk-form-label" for="phoneNumber">Мобільний телефон:</label>
                             <div class="uk-form-controls">
-                                <input type="tel" class="uk-input" placeholder="Мобильный телефон"
+                                <input type="tel" class="uk-input" placeholder="Мобільний телефон"
                                        formControlName="phoneNumber"
                                        id="phoneNumber">
                             </div>
@@ -118,7 +118,7 @@
                     <!--     4 COLUMN     -->
                     <div>
                         <div class="uk-margin" uk-form-custom>
-                            <label>Тип пользователя:</label>
+                            <label>Тип користувача:</label>
                             <div class="uk-margin-small" *ngFor="let type of userTypes">
                                 <label>
                                     <input class="uk-checkbox"
@@ -141,12 +141,12 @@
             </div>
 
             <div class="uk-modal-footer uk-text-right mg-margin-between">
-                <button class="uk-button uk-button-primary" type="button" (click)="submit()">Сохранить</button>
+                <button class="uk-button uk-button-primary" type="button" (click)="submit()">Зберігти</button>
                 <button class="uk-button uk-button-danger"
                         type="button"
                         *mgMgIfPerm="'Permission.User.Delete'"
                         (click)="delete()">Удалить</button>
-                <button class="uk-button uk-button-default" type="button" (click)="close()">Отмена</button>
+                <button class="uk-button uk-button-default" type="button" (click)="close()">Відміна</button>
             </div>
 
         </form>

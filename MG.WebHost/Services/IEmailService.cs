@@ -1,14 +1,10 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MailKit.Security;
-using MG.WebHost.Entities;
 using MG.WebHost.Entities.Emails;
 using MG.WebHost.Entities.Users;
 using MG.WebHost.Repositories;
 using MG.WebHost.Settings;
 using MG.WebHost.Utils;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MimeKit;
@@ -16,7 +12,7 @@ using MimeKit.Text;
 
 namespace MG.WebHost.Services
 {
-    public interface IEmailService : IEmailSender
+    public interface IEmailService
     {
         Task SendEmailAsync(EmailTemplateKey emailTemplateKey, string title, User recipient, IDictionary<string, object> objects);
     }

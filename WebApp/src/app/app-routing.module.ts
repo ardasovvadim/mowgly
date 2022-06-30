@@ -15,6 +15,7 @@ import {AuthorizeGuard} from './guards/authorize.guard';
 import {ErrorPageComponent} from './pages/error-page/error-page.component';
 import {PersonalDataComponent} from './pages/user-profile-page/components/personal-data/personal-data.component';
 import {ChangePasswordComponent} from './pages/user-profile-page/components/change-password/change-password.component';
+import {MastersPageComponent} from './pages/masters-page/masters-page.component';
 
 const routes: Routes = [
     {path: 'admin', loadChildren: () => import('../admin/admin.module').then(m => m.AdminModule)},
@@ -25,6 +26,7 @@ const routes: Routes = [
             {path: '', component: MainPageComponent},
             {path: 'registration', component: RegistrationPageComponent},
             {path: 'master/:id', component: MasterPageComponent},
+            {path: 'masters', component: MastersPageComponent},
             {path: 'events', component: EventsPageComponent},
             {path: 'schedule', component: SchedulePageComponent},
             {path: 'news', component: NewsPageComponent},
@@ -48,7 +50,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'top'})],
     exports: [RouterModule]
 })
 export class AppRoutingModule {

@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {tap} from 'rxjs';
+import {finalize, tap} from 'rxjs';
 import {ManageSectionModalComponent} from './manage-section-modal/manage-section-modal.component';
 import {PageOptions} from '../../../app/models/page';
 import {toSortOrder} from '../../../app/services/events-api.service';
@@ -36,6 +36,7 @@ export class ManageSectionsPageComponent implements OnInit, AfterViewInit {
         pageNumber: 0
     }
     pageOptions: PageOptions = {...this.initialPageOptions};
+    loading = false;
 
     constructor(
         private readonly sectionApi: ManageSectionApiService) {
@@ -55,6 +56,7 @@ export class ManageSectionsPageComponent implements OnInit, AfterViewInit {
     }
 
     refreshData() {
+        this.loading = true;
         this.sectionApi.getList({
             filterText: this.filterText,
             pageNumber: this.pageOptions.pageNumber,
@@ -75,6 +77,7 @@ export class ManageSectionsPageComponent implements OnInit, AfterViewInit {
                         count: data.count
                     }
                 }),
+                finalize(() => this.loading = false)
             )
             .subscribe(data => {
                 this.data = data.elements;

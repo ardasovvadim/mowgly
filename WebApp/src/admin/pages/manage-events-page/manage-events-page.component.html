@@ -5,7 +5,7 @@
       <a class="uk-search-icon-flip"
          (click)="refreshData()"
          uk-search-icon></a>
-      <input class="uk-search-input uk-input" type="search" placeholder="Поиск по названию"
+      <input class="uk-search-input uk-input" type="search" placeholder="Пошук за назвою"
              (keyup.enter)="refreshData()" [(ngModel)]="filterText">
     </div>
   </div>
@@ -13,73 +13,75 @@
   <div class="uk-width-1-2@s uk-width-auto@m">
     <div class="uk-inline w-100">
       <span class="uk-form-icon uk-form-icon-flip mg-text-green-main" uk-icon="icon: calendar"></span>
-      <input class="uk-input" type="date" placeholder="Дата события"
+      <input class="uk-input" type="date" placeholder="Дата події"
              (ngModelChange)="filterDate = $event; refreshData()" [ngModel]="filterDate">
     </div>
   </div>
 
   <div class="uk-width-1-2@s uk-width-auto@m" *mgMgIfPerm="'Permission.Event.Create'">
     <button class="uk-button uk-button-primary" type="button" (click)="add()">
-      <span class="uk-margin-small-right" uk-icon="plus"></span>Добавить
+      <span class="uk-margin-small-right" uk-icon="plus"></span>Додати
     </button>
   </div>
 
   <div class="uk-width-1-2@s uk-width-auto@m">
     <button class="uk-button uk-button-primary w-100" type="button" (click)="refreshData()">
-      <span class="uk-margin-small-right" uk-icon="refresh"></span>Обновить
+      <span class="uk-margin-small-right" uk-icon="refresh"></span>Оновити
     </button>
   </div>
 
   <div class="uk-width-1-2@s uk-width-auto@m">
     <button class="uk-button uk-button-primary w-100" type="button" (click)="reset()">
-      <span class="uk-margin-small-right" uk-icon="close"></span>Сбросить
+      <span class="uk-margin-small-right" uk-icon="close"></span>Скинути фільтри
     </button>
   </div>
 
 </div>
 
-<div class="table-wrapper uk-overflow-auto">
+<div [mgLoading]="loading">
+  <div class="table-wrapper uk-overflow-auto">
 
-  <table class="uk-table uk-table-divide uk-table-justify uk-background-muted" (mouseleave)="currentRowIndex = -1">
+    <table class="uk-table uk-table-divide uk-table-justify uk-background-muted" (mouseleave)="currentRowIndex = -1">
 
-    <thead>
-    <tr>
-      <th>№</th>
-      <th (click)="asc = !asc; refreshData()" class="mg-pointer">
-        Дата события
-        <ng-template [ngIf]="asc" [ngIfElse]="down"><span uk-icon="chevron-up"></span></ng-template>
-        <ng-template #down><span uk-icon="chevron-down"></span></ng-template>
-      </th>
-      <th>Название турнира</th>
-      <th>Адрес</th>
-      <th>Учасники</th>
-      <th></th>
-    </tr>
-    </thead>
+      <thead>
+      <tr>
+        <th>№</th>
+        <th (click)="asc = !asc; refreshData()" class="mg-pointer">
+          Дата події
+          <ng-template [ngIf]="asc" [ngIfElse]="down"><span uk-icon="chevron-up"></span></ng-template>
+          <ng-template #down><span uk-icon="chevron-down"></span></ng-template>
+        </th>
+        <th>Назва турніру</th>
+        <th>Адреса</th>
+        <th>Учасники</th>
+        <th></th>
+      </tr>
+      </thead>
 
-    <tbody style="display: table-row-group"  [smoothHeight]="data">
-    <tr *ngFor="let event of data; let i = index" (mouseenter)="currentRowIndex = i" class="uk-animation-fade uk-animation-fast">
-      <td class="uk-table-shrink"
-          style="min-width: 50px">{{i + 1 + (pageOptions.pageNumber * pageOptions.pageSize)}}</td>
-      <td class="uk-table-shrink"
-          style="min-width: 150px">{{event.actionDate | date : 'dd-MM-yyyy'}}</td>
-      <td class="uk-table-expand"
-          style="min-width: 400px" [class.uk-link]="!!event.newsId" (click)="goToNews(event.newsId)">{{event.tournamentName}}</td>
-      <td style="min-width: 100px">{{event.address}}</td>
-      <td style="min-width: 100px">{{event.participants}}</td>
-      <td>
-        <div [style.visibility]="currentRowIndex != i ? 'hidden' : ''">
-          <a class="uk-icon-button" uk-icon="pencil" (click)="edit(event)"></a>
-        </div>
-      </td>
-    </tr>
-    </tbody>
+      <tbody style="display: table-row-group"  [smoothHeight]="data">
+      <tr *ngFor="let event of data; let i = index" (mouseenter)="currentRowIndex = i" class="uk-animation-fade uk-animation-fast">
+        <td class="uk-table-shrink"
+            style="min-width: 50px">{{i + 1 + (pageOptions.pageNumber * pageOptions.pageSize)}}</td>
+        <td class="uk-table-shrink"
+            style="min-width: 150px">{{event.actionDate | date : 'dd-MM-yyyy'}}</td>
+        <td class="uk-table-expand"
+            style="min-width: 400px" [class.uk-link]="!!event.newsId" (click)="goToNews(event.newsId)">{{event.tournamentName}}</td>
+        <td style="min-width: 100px">{{event.address}}</td>
+        <td style="min-width: 100px">{{event.participants}}</td>
+        <td>
+          <div [style.visibility]="currentRowIndex != i ? 'hidden' : ''">
+            <a class="uk-icon-button" uk-icon="pencil" (click)="edit(event)"></a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
 
-  </table>
+    </table>
 
-  <mg-pagination [pageOptions]="pageOptions"
-                 (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
+    <mg-pagination [pageOptions]="pageOptions"
+                   (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
 
+  </div>
 </div>
 
 <mg-manage-event-modal #manageModal></mg-manage-event-modal>

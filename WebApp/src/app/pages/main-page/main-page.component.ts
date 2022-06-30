@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MasterService} from '../../services/master.service';
+import {MasterApiService} from '../../services/master-api.service';
 import {MasterVm} from '../../models/masterVm';
 import {MasterSearchCriteria} from '../../models/masters/master-search-criteria.request';
 
@@ -17,7 +17,7 @@ export class MainPageComponent implements OnInit {
     'assets/img/photo-3.png',
   ]
 
-  constructor(private masterService: MasterService) {
+  constructor(private masterService: MasterApiService) {
 
   }
 
