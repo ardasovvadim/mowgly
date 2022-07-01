@@ -3,7 +3,7 @@
   <div class="uk-position-relative">
 
     <ul class="uk-slider-items uk-child-width-1-2@l uk-child-width-1-3@xl">
-        <li *ngFor="let master of masters" class="xy-center">
+        <li *ngFor="let master of masters" class="x-center">
           <div class="wrapper">
             <mg-master-card [master]="master">
               <ng-container *ngTemplateOutlet="cardBottomRef; context: {$implicit: master}"></ng-container>

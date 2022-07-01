@@ -2,7 +2,7 @@
 
     <div class="col-auto">
         <a routerLink="/">
-            <img class="logo-image" src="/assets/img/logo.png" loading="lazy" alt="logo">
+            <img class="logo-image" src="/assets/img/logo.webp" loading="lazy" alt="logo">
         </a>
     </div>
 
@@ -34,7 +34,7 @@
     <div *ngIf="isLargeMenu" class="col-auto d-flex ml-auto">
 
         <div class="avatar">
-            <a *ngIf="isAuthenticated$ | async; else login" (click)="logout()">Выйти</a>
+            <a *ngIf="isAuthenticated$ | async; else login" (click)="logout()">Вийти</a>
             <ng-template #login>
                 <a *ngIf="!(isAuthenticated$ | async)" routerLink="/login">Увійти</a>
             </ng-template>
@@ -83,34 +83,34 @@
                 <div class="mg-burger-navbar-item">
                     <a class="uk-h2">Контактная информация</a>
                     <hr>
-
-                    <div class="mg-contact-row">
-                        <div class="wrapper">
-                            <mg-icon icon="email" color="green-main"></mg-icon>
-                            <span>Основная</span>
-                        </div>
-                        <a href="">mowglyteam@gmail.com</a>
+                    <div class="uk-margin">
+                        <a class="mg-text-white" href="https://www.instagram.com/mowgly.karate.club/"
+                           target="_blank">
+                            <span class="uk-margin-small-right" uk-icon="icon: instagram;"></span> Instagram
+                        </a>
                     </div>
-                    <div class="mg-contact-row">
-                        <div class="wrapper">
-                            <mg-icon icon="email" color="green-main"></mg-icon>
-                            <span>Запасная</span>
-                        </div>
-                        <a href="">sensei@mowgly.com.ua</a>
+                    <div class="uk-margin">
+                        <a class="mg-text-white" href="https://www.facebook.com/JungleTeamMowgly/"
+                           target="_blank">
+                            <span class="uk-margin-small-right" uk-icon="icon: facebook;"></span> Facebook
+                        </a>
                     </div>
-                    <div class="mg-contact-row">
-                        <div class="wrapper">
-                            <mg-icon icon="phone" color="green-main"></mg-icon>
-                            <span>Kyivstar</span>
-                        </div>
-                        <a href="">+380 (067) 700-555-3</a>
+                    <div class="uk-margin">
+                        <a class="mg-text-white" href="tel:+380 (067) 700-555-3"
+                           target="_blank">
+                            <span class="uk-margin-small-right" uk-icon="icon: receiver;"></span> +380 (067) 700-555-3
+                        </a>
                     </div>
-                    <div class="mg-contact-row">
-                        <div class="wrapper">
-                            <mg-icon icon="phone" color="green-main"></mg-icon>
-                            <span>Life</span>
-                        </div>
-                        <a href="">+380 (063) 700-555-3 </a>
+                    <div class="uk-margin">
+                        <a class="mg-text-white" href="tel:+380 (063) 700-555-3"
+                           target="_blank">
+                            <span class="uk-margin-small-right" uk-icon="icon: receiver;"></span> +380 (063) 700-555-3
+                        </a>
+                    </div>
+                    <div class="uk-margin">
+                        <a class="mg-text-white" href="mailto:mowglyteam@gmail.com" target="_blank">
+                            <span class="uk-margin-small-right" uk-icon="icon: mail;"></span> mowglyteam@gmail.com
+                        </a>
                     </div>
                 </div>
 

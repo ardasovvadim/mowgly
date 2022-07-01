@@ -46,8 +46,8 @@ export class ManageMasterPageComponent implements OnInit, AfterViewInit {
         achievements: [''],
     });
     tab: number = 0;
-    defaultAvatar: string = '/assets/img/masters/avatars/default.png';
-    defaultProfileImage: string = '/assets/img/masters/avatars/default.png';
+    defaultAvatar: string = '/assets/img/masters/avatars/default.webp';
+    defaultProfileImage: string = '/assets/img/masters/avatars/default.webp';
     imagesToDelete: string[] = [];
 
     isSaving = false;

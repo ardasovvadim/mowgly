@@ -46,28 +46,19 @@ a {
   &-item {
     vertical-align: center;
 
-    .mg-contact-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
     &:not(:last-of-type) {
       margin-bottom: 10px;
     }
 
-    .mg-contact-row {
-
-      .wrapper span { margin-left: 10px }
-
-      &:not(:last-of-type) {
-        margin-bottom: 20px;
-      }
-    }
   }
 
-  .mg-burger-subnavbar a:not(:last-of-type) {
-    margin-bottom: 10px;
+  .mg-burger-subnavbar {
+
+    margin-bottom: 20px;
+
+    a {
+      margin-bottom: 10px;
+    }
   }
 }
 

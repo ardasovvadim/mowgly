@@ -34,7 +34,7 @@
                 <div class="col-md-6 col-xl-auto" *ngFor="let location of group.value">
                   <div class="wrapper">
                     <mg-location-card [location]="location">
-                        <button (click)="chooseLocation(location)" class="uk-button uk-button-primary ml-auto">Вибрати</button>
+                        <button (click)="chooseLocation(location)" class="uk-button uk-button-primary ml-auto">Обрати</button>
                     </mg-location-card>
                   </div>
                 </div>
@@ -66,7 +66,7 @@
 
             <div class="d-flex align-items-center justify-content-between uk-flex-wrap">
               <a (click)="showMasterTimeTableRecords(master)"><span class="uk-margin-right"><mg-icon color="green-main" icon="calendar"></mg-icon></span>Розклад</a>
-              <button (click)="masterSelected(master)" class="uk-button uk-button-primary">Вибрати</button>
+              <button (click)="masterSelected(master)" class="uk-button uk-button-primary">Обрати</button>
             </div>
 
           </ng-template>
@@ -81,6 +81,6 @@
 
   </div>
 
-  <img src="assets/img/bg-11.png" class="mg-bg absolute-xy-center" loading="lazy" alt="background">
+  <img src="assets/img/bg-11.webp" class="mg-bg absolute-xy-center" loading="lazy" alt="background">
 
 </div>

@@ -12,9 +12,9 @@ export class MainPageComponent implements OnInit {
 
   public masters: MasterVm[] = [];
   imgPaths: string[] = [
-    'assets/img/photo-1.png',
-    'assets/img/photo-2.png',
-    'assets/img/photo-3.png',
+    'assets/img/photo-1.webp',
+    'assets/img/photo-2.webp',
+    'assets/img/photo-3.webp',
   ]
 
   constructor(private masterService: MasterApiService) {

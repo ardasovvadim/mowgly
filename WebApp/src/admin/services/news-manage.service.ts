@@ -89,7 +89,7 @@ export class NewsManageService {
         switch (type) {
             case NewsBlockType.Image: {
                 const defaultImageBlockData = {
-                    url: 'https://autosdutriomphe.fr/wp-content/uploads/2018/04/default-image.png',
+                    url: 'https://autosdutriomphe.fr/wp-content/uploads/2018/04/default-image.webp',
                     caption: 'Підпис'
                 } as NewsImageBlock;
                 newBlock.data = JSON.stringify(defaultImageBlockData);

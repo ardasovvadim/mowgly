@@ -1,6 +1,8 @@
 <div id="el-9">
-    <img class="bg-top mg-no-select" src="/assets/img/bg-9.png" loading="lazy">
+
+    <img class="bg-top mg-no-select" src="/assets/img/bg-9.webp" loading="lazy">
     <div class="cover-top" (click)="goToGoogleMapLink()"></div>
+
     <div class="mg-card">
         <div class="wrapper w-100"><h3>Як нас знайти</h3>
             <p>{{currentIndex + 1}}. {{currentLocation?.name}}</p>
@@ -19,47 +21,57 @@
             </a>
         </div>
     </div>
+
     <div id="footer-map" class="mg-no-select" (click)="goToGoogleMapLink()">
         <iframe [src]="currentLocation?.googleMapsEmbeddedLink | safeUrl" id="map" allowfullscreen="false"
                 aria-hidden="false" tabindex="0"></iframe>
     </div>
+
     <div class="contacts">
         <h1>Контакти</h1>
         <hr>
-        <div class="contacts-wrapper">
-            <div class="contact-block">
-                <div class="contact-line">
-                    <div class="icon"><img src="/assets/img/icons/mail.svg" loading="lazy"></div>
-                    <div class="name">Основна</div>
-                    <div class="value">mowglyteam@gmail.com</div>
+        <div class="uk-child-width-auto@l" uk-grid uk-margin>
+            <div>
+                <div class="uk-margin">
+                    <a class="mg-text-white" href="https://www.instagram.com/mowgly.karate.club/"
+                       target="_blank">
+                        <span class="uk-margin-small-right" uk-icon="icon: instagram;"></span> Instagram
+                    </a>
                 </div>
-                <div class="contact-line">
-                    <div class="icon"><img src="/assets/img/icons/mail.svg" loading="lazy"></div>
-                    <div class="name">Запасна</div>
-                    <div class="value">sensei@mowgly.com.ua</div>
-                </div>
-            </div>
-            <div class="contact-block">
-                <div class="contact-line">
-                    <div class="icon"><img src="/assets/img/icons/phone.svg" loading="lazy"></div>
-                    <div class="name">Kyivstar</div>
-                    <div class="value">+380 (067) 700-555-3</div>
-                </div>
-                <div class="contact-line">
-                    <div class="icon"><img src="/assets/img/icons/phone.svg" loading="lazy"></div>
-                    <div class="name">Life</div>
-                    <div class="value">+380 (063) 700-555-3</div>
+                <div class="uk-margin">
+                    <a class="mg-text-white" href="https://www.facebook.com/JungleTeamMowgly/"
+                       target="_blank">
+                        <span class="uk-margin-small-right" uk-icon="icon: facebook;"></span> Facebook
+                    </a>
                 </div>
             </div>
+            <div>
+                <div class="uk-margin">
+                    <a class="mg-text-white" href="tel:+380 (067) 700-555-3"
+                       target="_blank">
+                        <span class="uk-margin-small-right" uk-icon="icon: receiver;"></span> +380 (067) 700-555-3
+                    </a>
+                </div>
+                <div class="uk-margin">
+                    <a class="mg-text-white" href="tel:+380 (063) 700-555-3"
+                       target="_blank">
+                        <span class="uk-margin-small-right" uk-icon="icon: receiver;"></span> +380 (063) 700-555-3
+                    </a>
+                </div>
+            </div>
+            <div class="uk-margin-auto-bottom">
+                <a class="mg-text-white" href="mailto:mowglyteam@gmail.com" target="_blank">
+                    <span class="uk-margin-small-right" uk-icon="icon: mail;"></span> mowglyteam@gmail.com
+                </a>
+            </div>
+            <div class="uk-margin-auto-left uk-margin-auto-bottom">
+                <p>© Mowgly 2020 - All rights reserved</p>
+            </div>
         </div>
-        <div class="bottom-copy mt-100"><p>© Mowgly 2020 - All rights reserved</p>
-            <div class="icons ml-auto"><a href="https://www.instagram.com/mowgly.karate.club/" target="_blank">
-                <mg-icon icon="instagram" color="white"></mg-icon>
-            </a><a href="https://www.facebook.com/JungleTeamMowgly/" target="_blank">
-                <mg-icon icon="facebook" color="white"></mg-icon>
-            </a></div>
-        </div>
+
     </div>
-    <img class="bg-bottom mg-no-select" src="/assets/img/bg-10.png" loading="lazy">
+
+    <img class="mg-no-select bg-bottom" src="/assets/img/bg-10.webp" loading="lazy">
     <div class="cover-bottom" (click)="goToGoogleMapLink()"></div>
+
 </div>

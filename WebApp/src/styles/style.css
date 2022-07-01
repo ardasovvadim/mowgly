@@ -468,7 +468,7 @@ header nav .contacts a:not(:last-of-type) {
   width: 100vw;
   top: -200px;
   bottom: -500px;
-  background: url("../assets/img/bg-11.png");
+  background: url("../assets/img/bg-11.webp");
 }
 
 .record-row .back-btn {

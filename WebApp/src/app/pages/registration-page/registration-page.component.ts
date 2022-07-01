@@ -38,10 +38,10 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
   private $currentStep: BehaviorSubject<RegistrationState>;
   public state: RegistrationStateModel;
   public steps: string[] = [
-    'Шаг №1 - Вибір філії',
-    'Шаг №2 - Вибір напряму',
-    'Шаг №3 - Вибір інструктора',
-    'Шаг №4 - Реєстрація учня'
+    'Крок №1 - Вибір філії',
+    'Крок №2 - Вибір напряму',
+    'Крок №3 - Вибір інструктора',
+    'Крок №4 - Реєстрація учня'
   ];
   public ukSwitcher: any = null;
   public timetableModal: TimetableRecordModalComponent | null = null;
