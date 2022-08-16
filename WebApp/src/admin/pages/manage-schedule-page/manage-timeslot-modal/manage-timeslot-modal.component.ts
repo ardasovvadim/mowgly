@@ -36,7 +36,8 @@ export class ManageTimeslotModalComponent implements AfterViewInit {
         endTime: ['', [Validators.required]],
         locationId: [null, [Validators.required]],
         sectionId: [{value: null, disabled: true}, [Validators.required]],
-        masterId: [{value: null, disabled: true}, [Validators.required]]
+        masterId: [{value: null, disabled: true}, [Validators.required]],
+        group: [null]
     });
 
     dayOfWeek: { key: number, value: string }[] = [

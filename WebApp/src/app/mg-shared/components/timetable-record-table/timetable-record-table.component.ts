@@ -33,9 +33,7 @@ export class TimetableRecordTableComponent implements OnInit {
     );
   }
 
-  displayTime(timetables: TimetableRecordVm[], day: DayOfWeek) {
-    const timetable = timetables?.find(t => t.dayOfWeek == day);
-    return timetable != null ? `${timetable.startTime} - ${timetable.endTime}` : '-';
+  getTimeRecords(timetables: TimetableRecordVm[], day: number): TimetableRecordVm[] {
+    return timetables?.filter(t => t.dayOfWeek == day) ?? [];
   }
-
 }

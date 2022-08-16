@@ -18,5 +18,7 @@ namespace MG.WebHost.Entities
         public DayOfWeek DayOfWeek { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
+
+        public int? Group { get; set; }
     }
 }

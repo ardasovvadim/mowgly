@@ -46,16 +46,20 @@ namespace MG.WebHost.Services
             var query = FilterQuery(_repository.GetQueryable(), criteria);
 
             // todo: probably needs refactor
-            query = query.Include(r => r.Master)
+            query = query
+                .Include(r => r.Master)
                 .Include(r => r.Section)
                 .Include(r => r.Location);
 
             var entities = await query.ToListAsync();
             var timetableLocationGroups = new List<TimetableRecordLocationGroupVm>();
 
-            foreach (var filteringGroup in entities.GroupBy(e => new { e.LocationId, e.SectionId }))
+            foreach (var filteringGroup in entities.GroupBy(e => new { e.LocationId, e.SectionId, e.Group }))
             {
-                var locationFilteredEntities = entities.Where(e => e.LocationId == filteringGroup.Key.LocationId && e.SectionId == filteringGroup.Key.SectionId).ToList();
+                var locationFilteredEntities = entities.Where(e =>
+                    e.LocationId == filteringGroup.Key.LocationId
+                    && e.SectionId == filteringGroup.Key.SectionId
+                    && e.Group == filteringGroup.Key.Group).ToList();
                 var timetableMasterGroups = new List<TimetableRecordMasterGroupVm>();
 
                 foreach (var masterId in locationFilteredEntities.Select(e => e.MasterId).Distinct())
@@ -69,7 +73,7 @@ namespace MG.WebHost.Services
                     var masterEntity = masterFilteredEntities.First();
                     timetableMasterGroups.Add(new TimetableRecordMasterGroupVm
                     {
-                        MasterName = $"{masterEntity.Master.FirstName} {masterEntity.Master.LastName}",
+                        MasterName = masterEntity.Master.ConcatName(),
                         MasterId = masterEntity.MasterId,
                         Timetables = timetables
                     });
@@ -86,7 +90,8 @@ namespace MG.WebHost.Services
                     LocationName = locationEntity.Location.Name,
                     SectionId = locationEntity.SectionId,
                     SectionName = locationEntity.Section.Name,
-                    Masters = timetableMasterGroups
+                    Masters = timetableMasterGroups,
+                    Group = locationEntity.Group
                 });
             }
 

@@ -36,7 +36,14 @@ namespace MG.WebHost.Database
             modelBuilder.Entity<GeneralSetting>().ToTable(nameof(Settings)).HasDiscriminator<string>("SettingsType");
             modelBuilder.Entity<User>().ToTable(nameof(Users));
             modelBuilder.Entity<Section>().ToTable(nameof(Sections));
-            modelBuilder.Entity<TimetableRecord>().ToTable(nameof(TimetableRecords));
+            modelBuilder.Entity<TimetableRecord>(t =>
+            {
+                t.ToTable(nameof(TimetableRecords));
+                t
+                    .Property(p => p.Group)
+                    .HasDefaultValue(null)
+                    .IsRequired(false);
+            });
             modelBuilder.Entity<EmailQueue>().ToTable(nameof(EmailQueue));
             modelBuilder.Entity<EmailTemplate>().ToTable(nameof(EmailTemplates));
             modelBuilder.Entity<Image>().ToTable(nameof(Images));

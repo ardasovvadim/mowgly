@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace MG.WebHost.Models.TimetableRecords
 {
     public record TimetableRecordLocationGroupVm
@@ -10,6 +7,7 @@ namespace MG.WebHost.Models.TimetableRecords
         public string LocationName { get; set; }
         public Guid SectionId { get; set; }
         public string SectionName { get; set; }
+        public int? Group { get; set; }
         public IEnumerable<TimetableRecordMasterGroupVm> Masters { get; set; }
     }
 

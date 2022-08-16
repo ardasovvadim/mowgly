@@ -16,7 +16,7 @@
                     <label class="uk-form-label" for="dayOfWeek">День неділі:</label>
                     <div class="uk-form-controls">
                         <select class="uk-select" formControlName="dayOfWeek" id="dayOfWeek">
-                            <option [ngValue]="null">Выберите день недели</option>
+                            <option [ngValue]="null">Виберіть день недели</option>
                             <option *ngFor="let item of dayOfWeek" [ngValue]="item.key">{{item.value}}</option>
                         </select>
                     </div>
@@ -43,7 +43,7 @@
                     <label class="uk-form-label" for="locationId">Філіал:</label>
                     <div class="uk-form-controls">
                         <select class="uk-select" formControlName="locationId" id="locationId">
-                            <option [ngValue]="null">Выберите филиал</option>
+                            <option [ngValue]="null">Виберіть филиал</option>
                             <option *ngFor="let item of locationSections" [ngValue]="item.id">{{item.name}}</option>
                         </select>
                     </div>
@@ -55,19 +55,33 @@
                     <label class="uk-form-label" for="sectionId">Напрямок:</label>
                     <div class="uk-form-controls">
                         <select class="uk-select" formControlName="sectionId" id="sectionId">
-                            <option [ngValue]="null">Выберите направление</option>
+                            <option [ngValue]="null">Виберіть направление</option>
                             <option *ngFor="let item of selectedLocation?.sections"
                                     [ngValue]="item.id">{{item.name}}</option>
                         </select>
                     </div>
                 </div>
 
+                <!--  Master  -->
+
                 <div class="uk-margin">
                     <label class="uk-form-label" for="masterId">Інструктор:</label>
-                    <mg-autocomplete-input placeholder="Выберите Інструктора"
+                    <mg-autocomplete-input placeholder="Виберіть Інструктора"
                                            id="masterId"
                                            [optionsSource]="refreshMasterOptions()"
                                            formControlName="masterId"></mg-autocomplete-input>
+                </div>
+
+                <!--  Group  -->
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="sectionId">Група:</label>
+                    <div class="uk-form-controls">
+                        <select class="uk-select" formControlName="group" id="group">
+                            <option [ngValue]="null">Виберіть групу</option>
+                            <option *ngFor="let i of [1, 2, 3, 4, 5]" [ngValue]="i">{{i}} група</option>
+                        </select>
+                    </div>
                 </div>
 
             </form>

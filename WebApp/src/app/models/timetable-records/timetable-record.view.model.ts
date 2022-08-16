@@ -6,6 +6,7 @@ export class TimetableRecordLocationGroupVm {
   sectionName: string = '';
   locationId: string = '';
   locationName: string = '';
+  group?: number;
   masters: TimetableRecordMasterGroupVm[] = [];
 }
 
@@ -35,6 +36,7 @@ export interface TimetableRecordEditModel {
   dayOfWeek?: number;
   startTime: string;
   endTime: string;
+  group?: number;
 }
 
 export class TimetableRecordMasterGroupVm {

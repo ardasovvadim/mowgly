@@ -11,7 +11,12 @@
   <hr>
   <p>Інструктор:</p>
   <p>{{master}}</p>
-  <p>Напрямок:</p>
+  <p class="section">Напрямок:</p>
   <p>{{section}}</p>
+  <ng-container *ngIf="originData?.group">
+    <p class="section">Група: {{originData?.group}}</p>
+  </ng-container>
+  <p class="section">Філіал:</p>
+  <p>{{location}}</p>
 
 </div>
