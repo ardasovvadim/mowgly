@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import {
   CachedItem,
   ChangePasswordRequest,
-  UserEditProfile,
+  UserEditProfile, UserInviteDto,
   UserProfile,
   UserValidationResponse
 } from '../models/user.model';
 import * as moment from 'moment/moment';
 import {StorageService} from './storage.service';
 import {AuthenticationService} from './authentication.service';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {ApiService} from './api.service';
-import {filter, map} from 'rxjs/operators';
+import {filter, map, switchMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -37,28 +37,23 @@ export class UserService {
       private readonly authService: AuthenticationService,
       private readonly api: ApiService
   ) {
-    this.authService.isAuthenticated$.subscribe(isAuthenticated =>{
-      if (isAuthenticated) {
-        const profile = this.storage.get<CachedItem<UserProfile>>('profile');
-        if (profile) {
-          this.profileSub.next(profile.item);
-        }
-        if (profile == null || moment().isAfter(moment(profile.time))) {
-          this.refreshProfile();
-        }
-      } else {
-        this.clearProfile();
-      }
-    });
+    this.authService.isAuthenticated$
+        .pipe(
+            switchMap(isAuthenticated => {
+              if (isAuthenticated) {
+                return this.getProfile();
+              } else {
+                return of(null);
+              }
+            })
+        )
+        .subscribe(profile => {
+            this.profileSub.next(profile);
+        });
   }
 
   refreshProfile() {
     this.getProfile().subscribe(data => {
-      this.storage.set('profile', {
-        time: moment().add(15, 'minutes').format(),
-        item: data
-      } as CachedItem<UserProfile>);
-
       this.profileSub.next(data);
     })
   }
@@ -91,5 +86,9 @@ export class UserService {
 
   changePassword(request: ChangePasswordRequest): Observable<UserValidationResponse> {
     return this.api.post(this.servicePrefix + '/change-password', request);
+  }
+
+  getInvitation(token: string): Observable<UserInviteDto> {
+    return this.api.get<UserInviteDto>(this.servicePrefix + '/invite/' + token);
   }
 }

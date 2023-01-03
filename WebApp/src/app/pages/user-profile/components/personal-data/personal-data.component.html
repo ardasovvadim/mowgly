@@ -1,0 +1,140 @@
+<ng-template [ngIf]="isMaster$ | async" [ngIfElse]="userProfile">
+    <mg-edit-master-profile [master]="profile" [editMode]="true" [errorHtml]="errorHtml" #masterProfileComponent>
+        <div class="uk-margin">
+            <button class="uk-button uk-button-primary" type="submit" (click)="saveMasterProfile()">
+                <span class="uk-margin-small-right" uk-icon="icon: download"></span>Зберігти
+            </button>
+        </div>
+    </mg-edit-master-profile>
+</ng-template>
+
+<ng-template #userProfile>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <div>
+            <button class="uk-button uk-button-primary" type="submit">
+                <span class="uk-margin-small-right" uk-icon="icon: download"></span>Зберігти
+            </button>
+        </div>
+
+        <div class="uk-margin">
+            <mg-list-errors [errorHtml]="errorHtml"></mg-list-errors>
+        </div>
+
+        <div class="uk-modal-body">
+            <div class="uk-grid-small" uk-grid>
+
+                <!--     1 COLUMN     -->
+                <div uk-form-custom>
+
+                    <div class="uk-border-circle mg-background-green-main uk-overflow-hidden"
+                         *ngIf="!form.value.avatar || imgAvatarErr; else imgAvatar"
+                         style="padding: 10px;width: 200px; height: 200px;">
+                        <div class="uk-border-circle uk-overflow-hidden mg-text-green">
+                            <a uk-icon="icon: avatar;"></a>
+                        </div>
+                    </div>
+
+                    <ng-template #imgAvatar>
+                        <img class="uk-border-circle uk-background-primary"
+                             [src]="form.value.avatar | image"
+                             (loadeddata)="imgAvatarErr = false;"
+                             (error)="imgAvatarErr = true;"
+                             width="200"
+                             height="200"
+                             loading="lazy"
+                             style="padding: 10px"
+                             alt="Master card image avatar">
+                    </ng-template>
+
+                    <div class="uk-margin uk-text-center">
+                        <a>Змінити фото</a>
+                        <input type="file" id="cardImage" accept="image/*" (change)="cropImage($event)">
+                    </div>
+                </div>
+
+                <!--     2 COLUMN     -->
+                <div>
+                    <!--     First name     -->
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="firstName">Імʼя:</label>
+                        <div class="uk-form-controls">
+                            <input type="text" class="uk-input" placeholder="Імʼя" formControlName="firstName"
+                                   id="firstName">
+                        </div>
+                    </div>
+
+                    <!--     Last name     -->
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="lastName">Прізвище:</label>
+                        <div class="uk-form-controls">
+                            <input type="text" class="uk-input" placeholder="Прізвище" formControlName="lastName"
+                                   id="lastName">
+                        </div>
+                    </div>
+
+                    <!--     Middle name     -->
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="middleName">По-батькові:</label>
+                        <div class="uk-form-controls">
+                            <input type="text" class="uk-input" placeholder="По-батькові"
+                                   formControlName="middleName"
+                                   id="middleName">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--     3 COLUMN     -->
+                <div>
+                    <!--     Birthday name     -->
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="birthday">Дата народження:</label>
+                        <div class="uk-form-controls">
+                            <div class="uk-inline w-100">
+                              <span class="uk-form-icon uk-form-icon-flip mg-text-green-main"
+                                    uk-icon="icon: calendar"></span>
+                                <input type="date" class="uk-input" placeholder="Дата народження"
+                                       formControlName="birthday"
+                                       id="birthday">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--     Email     -->
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="email">Емейл:</label>
+                        <div class="uk-form-controls">
+                            <input type="email" class="uk-input" placeholder="Емейл" formControlName="email"
+                                   id="email">
+                        </div>
+                    </div>
+
+                    <!--     Phone Number     -->
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="phoneNumber">Мобільний телефон:</label>
+                        <div class="uk-form-controls">
+                            <input type="tel" class="uk-input" placeholder="Мобільний телефон"
+                                   formControlName="phoneNumber"
+                                   id="phoneNumber">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <mg-image-cropp-modal #cropImageModal
+                                  [circleCropper]="true"
+                                  [saveOptions]="{width: 200, height: 200}"
+                                  (onSave)="onImageCropped($event)"
+                                  [aspectRatio]="1"></mg-image-cropp-modal>
+        </div>
+
+    </form>
+</ng-template>

@@ -1,9 +1,10 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {OrderVm} from '../../../models/order.model';
 import {FormBuilder} from '@angular/forms';
-import {mgOnEvent, mgSuccessNotification, UiKit} from '../../../../app/utils/ui-kit';
+import {mgConfirm, mgOnEvent, mgSuccessNotification, UiKit} from '../../../../app/utils/ui-kit';
 import {DatePipe} from '@angular/common';
 import {ManageOrderApiService} from '../../../services/manage-order-api.service';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
     selector: 'mg-order-details-modal',
@@ -33,6 +34,7 @@ export class OrderDetailsModalComponent implements OnInit, AfterViewInit {
 
     @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
     @Output() onClose: EventEmitter<void> = new EventEmitter<void>();
+    isEditMode: boolean = false;
 
     constructor(
         private readonly fb: FormBuilder,
@@ -46,6 +48,7 @@ export class OrderDetailsModalComponent implements OnInit, AfterViewInit {
             ...order,
             createdTime: this.datePipe.transform(order.createdTime + 'Z', 'dd-MM-yyyy HH:mm')
         } as OrderVm);
+        this.isEditMode = !!this.form.value.id;
         this.modal.show();
     }
 
@@ -62,7 +65,7 @@ export class OrderDetailsModalComponent implements OnInit, AfterViewInit {
     closeOrder() {
         this.orderService.markAsProcessed(this.form.value.id)
             .subscribe(() => {
-                mgSuccessNotification(`<span uk-icon="check" class="uk-margin-small-right"></span>  Заявка обработанна`);
+                mgSuccessNotification(`<span uk-icon="check" class="uk-margin-small-right"></span> Форма оброблена`);
                 this.onChanged.emit();
                 this.close();
             });
@@ -70,5 +73,17 @@ export class OrderDetailsModalComponent implements OnInit, AfterViewInit {
 
     close() {
         this.modal.hide();
+    }
+
+    delete() {
+        mgConfirm('Видалити форму?')
+            .pipe(
+                switchMap(() => this.orderService.delete(this.form.value.id))
+            )
+            .subscribe(() => {
+                mgSuccessNotification(`<span uk-icon="check" class="uk-margin-small-right"></span> Форма видалена`);
+                this.onChanged.emit();
+                this.close();
+            });
     }
 }

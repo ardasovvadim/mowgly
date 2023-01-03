@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve  --port 4200 --ssl --ssl-cert $HOME/.aspnet/https/mowgly-web-app.pem --ssl-key $HOME/.aspnet/https/mowgly-web-app.key",
+    "start": "ng build --watch --configuration development",
     "build": "ng build",
     "build:prod": "rm -r dist && ng build --configuration production --stats-json && npx scully",
     "watch": "ng build --watch --configuration development",

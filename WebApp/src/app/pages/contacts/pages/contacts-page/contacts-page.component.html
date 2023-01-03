@@ -1,0 +1,55 @@
+<h1 class="uk-text-center mt-50">Як нас знайти</h1>
+
+<div class="uk-text-center mt-20">
+    <div class="uk-flex uk-flex-center">
+        <span [class.uk-disabled]="currentIndex == 0" class="uk-link"
+              (click)="previous()"><span uk-icon="icon: arrow-left" class="green-main"></span>Попередній</span>
+        <div>
+            <p class="mx-3 my-0 mg-text-green mg-pointer">{{currentLocation?.name ?? '...'}}</p>
+            <div uk-dropdown="mode: click">
+                <ul class="uk-nav uk-dropdown-nav">
+                    <li *ngFor="let location of locations" [class.uk-active]="location == currentLocation">
+                        <a (click)="chooseLocation(location)">{{location.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <span [class.uk-disabled]="currentIndex == locations?.length - 1" class="uk-link" (click)="next()">Наступний<span
+                uk-icon="icon: arrow-right" class="green-main"></span>
+        </span>
+    </div>
+    <ng-template [ngIf]="currentLocation?.googleMapsLink" [ngIfElse]="withoutLink">
+        <p class="mg-text-green uk-link mg-pointer" (click)="goToMaps(currentLocation.googleMapsLink)">
+            Адреса: {{currentLocation?.address ?? '...'}} <span uk-icon="icon: link"></span>
+        </p>
+    </ng-template>
+    <ng-template #withoutLink>
+        <p>Адреса: {{currentLocation?.address ?? '...'}}</p>
+    </ng-template>
+</div>
+
+<div class="mg-card mt-50">
+    <div style="width: 100%; height: 500px" class="xy-center">
+        <ng-template [ngIf]="currentLocation?.googleMapsEmbeddedLink" [ngIfElse]="displayAddress">
+            <iframe [src]="(currentLocation?.googleMapsEmbeddedLink | safeUrl) ?? null"
+                    id="map"
+                    width="100%"
+                    height="500px"
+                    allowfullscreen="false"
+                    loading="lazy"
+                    aria-hidden="false"
+                    target="_blank"
+                    tabindex="0"></iframe>
+        </ng-template>
+        <ng-template #displayAddress>
+            <h3>
+                <span uk-icon="icon: link; ratio: 1.5"></span>
+                Немає посилання на Google Maps
+            </h3>
+        </ng-template>
+    </div>
+</div>
+
+<div class="mt-300">
+    <mg-footer-contacts></mg-footer-contacts>
+</div>

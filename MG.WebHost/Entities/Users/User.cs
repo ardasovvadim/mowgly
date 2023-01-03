@@ -51,6 +51,6 @@ public class User : IdentityUser<Guid>, IBaseEntity
     public void SetEmail(string email)
     {
         UserName = Email = email;
-        NormalizedUserName = NormalizedName = email.ToUpper();
+        NormalizedUserName = NormalizedEmail = email.ToUpper();
     }
 }

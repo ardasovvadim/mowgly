@@ -28,6 +28,8 @@ namespace MG.WebHost.Database
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<MgLoginModel> LoginModels { get; set; }
+        public DbSet<UserInvite> UserInvites { get; set; }
+        public DbSet<OneTimeTask> OneTimeTasks { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -81,6 +83,10 @@ namespace MG.WebHost.Database
                         .HasForeignKey(e => e.MasterId)
                         .IsRequired(false);
                 });
+            
+            modelBuilder.Entity<UserInvite>(t => t.ToTable(nameof(UserInvites)));
+
+            modelBuilder.Entity<OneTimeTask>(t => t.ToTable(nameof(OneTimeTasks)));
 
             modelBuilder.ApplyGlobalFilters(e => !e.Deleted);
             

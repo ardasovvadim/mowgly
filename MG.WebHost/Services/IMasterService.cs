@@ -30,11 +30,11 @@ namespace MG.WebHost.Services
             var cardMasterProfileKeys = new []
             {
                 UserProfileKeys.CardMasterAchievements,
-                UserProfileKeys.CardMasterAvatarImage
+                UserProfileKeys.UserAvatar
             };
             
             var query = Repository.GetQueryable()
-                .Where(user => user.UserTypes == UserType.Master)
+                .Where(user => (user.UserTypes & UserType.Master) == UserType.Master)
                 .WhereIf(request.FilterText.IsNotNullOrEmpty(), e => e.NormalizedName.Contains(request.FilterText.Trim()))
                 .WhereIf(request.City.IsNotNullOrEmpty(), e => e.TimetableRecords.Any(t => t.Location.City.Contains(request.City.Trim())))
                 .WhereIf(request.Section != null, e => e.TimetableRecords.Any(t => t.SectionId == request.Section))

@@ -90,4 +90,8 @@ export class AuthenticationService {
             })
         );
     }
+
+    registerWithInvite(token: string, request: RegistrationModel): Observable<UserValidationResponse> {
+        return this.api.post(this.servicePrefix + '/invite/' + token, request);
+    }
 }

@@ -75,6 +75,14 @@
                     *mgMgIfPerm="'Permission.Order.Edit'"
                     type="button"
                     (click)="closeOrder()">Закрити заявку</button>
+            <ng-template [ngIf]="isEditMode">
+                <button type="button"
+                        class="uk-button uk-button-danger uk-margin-right"
+                        *mgMgIfPerm="'Permission.Order.Delete'"
+                        (click)="delete()">
+                    Видалити
+                </button>
+            </ng-template>
             <button class="uk-button uk-button-default uk-modal-close" type="button" (click)="close()">Відмінити</button>
         </div>
     </div>

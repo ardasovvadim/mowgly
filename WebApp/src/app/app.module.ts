@@ -18,15 +18,11 @@ import {NewsDetailsComponent} from './pages/news-page/news-details/news-details.
 import {MasterPageComponent} from './pages/master-page/master-page.component';
 import {RegCompletedModalComponent} from './pages/registration-page/reg-completed-modal/reg-completed-modal.component';
 import {LoginPageComponent} from './pages/login-page/login-page.component';
-import {UserRegistrationPageComponent} from './pages/user-registration-page/user-registration-page.component';
 import {ErrorHandlerInterceptor} from './interceptors/error-handler.interceptor';
 import {AuthHandlerInterceptor} from './interceptors/auth-handler.interceptor';
-import {UserProfilePageComponent} from './pages/user-profile-page/user-profile-page.component';
 import {ErrorPageComponent} from './pages/error-page/error-page.component';
 import {AdminModule} from '../admin/admin.module';
-import { PersonalDataComponent } from './pages/user-profile-page/components/personal-data/personal-data.component';
-import { ChangePasswordComponent } from './pages/user-profile-page/components/change-password/change-password.component';
-import { MastersPageComponent } from './pages/masters-page/masters-page.component';
+import {MastersPageComponent} from './pages/masters-page/masters-page.component';
 
 @NgModule({
     declarations: [
@@ -44,11 +40,7 @@ import { MastersPageComponent } from './pages/masters-page/masters-page.componen
         MasterPageComponent,
         LoginPageComponent,
         RegistrationPageComponent,
-        UserRegistrationPageComponent,
-        UserProfilePageComponent,
         ErrorPageComponent,
-        PersonalDataComponent,
-        ChangePasswordComponent,
         MastersPageComponent,
     ],
     imports: [

@@ -13,6 +13,7 @@ namespace MG.WebHost.Repositories
         void Update(TEntity entity);
         Task<bool> DeleteAsync(Guid id);
         Task<bool> IsExistsAsync(Guid id);
+        Task<bool> IsExistsAsync(Expression<Func<TEntity, bool>> expression);
         Task SaveChangesAsync();
         Task<IDisposable> BeginTransactionAsync();
         Task CommitTransactionAsync();

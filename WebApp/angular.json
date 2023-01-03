@@ -45,7 +45,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/web-app",
+            "outputPath": "../MG.WebHost/wwwroot",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -112,8 +112,7 @@
               "browserTarget": "WebApp:build:production"
             },
             "development": {
-              "browserTarget": "WebApp:build:development",
-              "proxyConfig": "proxy.conf.js"
+              "browserTarget": "WebApp:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -101,6 +101,11 @@ namespace MG.WebHost.Repositories
             return DbSet.AnyAsync(entity => entity.Id == id && !entity.Deleted);
         }
 
+        public async Task<bool> IsExistsAsync(Expression<Func<TEntity, bool>> expression)
+        {
+            return await DbSet.AnyAsync(expression);
+        }
+
         public Task SaveChangesAsync()
         {
             return Context.SaveChangesAsync();

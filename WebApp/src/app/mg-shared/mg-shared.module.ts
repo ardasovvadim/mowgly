@@ -45,7 +45,10 @@ import {ToUtcPipe} from './pipes/to-utc.pipe';
 import {AngularCropperjsModule} from 'angular-cropperjs';
 import {ImageCroppModalComponent} from './components/image-cropp-modal/image-cropp-modal.component';
 import {ListErrorsComponent} from './components/list-errors/list-errors.component';
-import { LoaderComponent } from './components/loader/loader.component';
+import {LoaderComponent} from './components/loader/loader.component';
+import {AddImageModalComponent} from './components/add-image-modal/add-image-modal.component';
+import {QuillEditorComponent} from './components/quill-editor/quill-editor.component';
+import { FooterContactsComponent } from './components/footer-contacts/footer-contacts.component';
 
 const components: any[] = [
     FooterComponent,
@@ -69,6 +72,8 @@ const components: any[] = [
     NewsPageComponent,
     ImageCroppModalComponent,
     LoadingDirective,
+    AddImageModalComponent,
+    QuillEditorComponent
 ];
 
 @NgModule({
@@ -96,8 +101,16 @@ const components: any[] = [
         ToUtcPipe,
         ListErrorsComponent,
         LoaderComponent,
+        FooterContactsComponent,
     ],
     exports: [
+        // ---
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule,
+        FormsModule,
+        AngularCropperjsModule,
+        // ---
         ...components,
         PxPipe,
         FioPipe,
@@ -118,6 +131,7 @@ const components: any[] = [
         AngularCropperjsModule,
         ListErrorsComponent,
         UserAvatarComponent,
+        FooterContactsComponent,
     ],
     imports: [
         CommonModule,

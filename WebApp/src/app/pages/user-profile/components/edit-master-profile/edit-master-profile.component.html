@@ -1,0 +1,236 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+    <ng-content>
+    </ng-content>
+
+    <ul id="switcher" uk-tab="animation: uk-animation-fade">
+        <li><a href="#" (click)="tab = 0">Основна інформація</a></li>
+        <li><a href="#" (click)="tab = 1">Подробиці</a></li>
+    </ul>
+
+    <mg-list-errors [errorHtml]="errorHtml"></mg-list-errors>
+
+    <ul class="uk-switcher uk-margin-medium">
+
+        <!----------------------     FIRST TAB     ---------------------->
+
+        <li>
+            <ng-container *ngIf="tab == 0">
+                <div class="uk-grid-small" uk-grid>
+
+                    <!--     1 COLUMN     -->
+                    <div uk-form-custom>
+                        <img class="uk-border-circle uk-background-primary"
+                             [src]="form.value.avatar | image"
+                             (error)="form.value['avatar'] = defaultAvatar"
+                             width="200"
+                             height="200"
+                             loading="lazy"
+                             style="padding: 10px"
+                             alt="Master card image avatar">
+                        <div class="uk-margin uk-text-center">
+                            <a>Змінити фото</a>
+                            <input type="file" id="cardImage" accept="image/*" (change)="cropImage($event)">
+                        </div>
+                    </div>
+
+                    <!--     2 COLUMN     -->
+                    <div>
+                        <!--     First name     -->
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="firstName">
+                                Імʼя <sup>*</sup>
+                                <ng-template [ngIf]="hasError('firstName', 'required')">
+                                    - це поле обов'язкове
+                                </ng-template>
+                            </label>
+                            <div class="uk-form-controls">
+                                <input type="text" class="uk-input" placeholder="Імʼя" formControlName="firstName" id="firstName">
+                            </div>
+                        </div>
+
+                        <!--     Last name     -->
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="lastName">
+                                Прізвище <sup>*</sup>
+                                <ng-template [ngIf]="hasError('lastName', 'required')">
+                                    - це поле обов'язкове
+                                </ng-template>
+                            </label>
+                            <div class="uk-form-controls">
+                                <input type="text" class="uk-input" placeholder="Прізвище" formControlName="lastName"
+                                       id="lastName">
+                            </div>
+                        </div>
+
+                        <!--     Middle name     -->
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="middleName">По-батькові</label>
+                            <div class="uk-form-controls">
+                                <input type="text" class="uk-input" placeholder="По-батькові" formControlName="middleName"
+                                       id="middleName">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--     3 COLUMN     -->
+                    <div>
+                        <!--     Birthday name     -->
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="birthday">Дата народження</label>
+                            <div class="uk-form-controls">
+                                <div class="uk-inline w-100">
+                                <span class="uk-form-icon uk-form-icon-flip mg-text-green-main"
+                                      uk-icon="icon: calendar"></span>
+                                    <input type="date" class="uk-input" placeholder="Дата народження"
+                                           formControlName="birthday"
+                                           id="birthday">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--     Email     -->
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="email">
+                                Емейл <sup>*</sup>
+                                <ng-container *ngIf="hasError('email', 'required'); else emailEmail">
+                                    - це поле обов'язкове
+                                </ng-container>
+                                <ng-template #emailEmail>
+                                    <ng-container *ngIf="hasError('email', 'email')">
+                                        - некоректний формат емейлу
+                                    </ng-container>
+                                </ng-template>
+                            </label>
+                            <div class="uk-form-controls">
+                                <input type="email" class="uk-input" placeholder="Емейл" formControlName="email"
+                                       id="email">
+                            </div>
+                        </div>
+
+                        <!--     Phone     -->
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="phone">Мобільний телефон</label>
+                            <div class="uk-form-controls">
+                                <input type="tel" class="uk-input" placeholder="Мобільний телефон"
+                                       formControlName="phone"
+                                       id="phone">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="instagramUrl">Instagram</label>
+                            <div class="uk-inline w-100">
+                                <a class="uk-form-icon" href="#" uk-icon="icon: instagram"></a>
+                                <input type="text" class="uk-input" placeholder="Введіть ссылку на профиль в instagram" formControlName="instagram" id="instagramUrl">
+                            </div>
+                        </div>
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="facebook">Facebook</label>
+                            <div class="uk-inline w-100">
+                                <span class="uk-form-icon" uk-icon="icon: facebook"></span>
+                                <input type="text" class="uk-input" placeholder="Введіть ссылку на профиль в facebook" formControlName="facebook" id="facebook">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <mg-image-cropp-modal #cropModal
+                                      [circleCropper]="true"
+                                      [aspectRatio]="1"
+                                      [saveOptions]="{width: 200, height: 200}"
+                                      (onSave)="displayImage($event)"></mg-image-cropp-modal>
+            </ng-container>
+        </li>
+
+        <!----------------------     SECOND TAB     ---------------------->
+        <li>
+            <ng-container *ngIf="tab == 1">
+
+                <div class="uk-grid uk-grid-row-large uk-child-width-1-2@m uk-grid-divider" uk-grid>
+
+                    <!--     PROFILE IMAGE COLUMN     -->
+                    <div class="x-center">
+                        <div class="uk-inline" uk-form-custom>
+                            <h3>Фото інструктора</h3>
+                            <img loading="lazy"
+                                 class="mg-background-green-main"
+                                 [src]="form.value['profileImage'] | image"
+                                 width="400"
+                                 height="500"
+                                 style="padding: 10px"
+                                 alt="Изображение профиля Інструктора">
+                            <div class="uk-margin uk-text-center">
+                                <a>Изменить фото</a>
+                                <input type="file" id="profileImage" accept="image/*" (change)="cropProfileImage($event)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--     DESCRIPTION COLUMN     -->
+                    <div>
+                        <h3>Опис</h3>
+                        <mg-quill-editor placeholder="Введіть текст..."
+                                         [height]="400"
+                                         formControlName="description"></mg-quill-editor>
+                    </div>
+
+                    <!--     CARD DESCRIPTION COLUMN     -->
+                    <div class="mg-quill-field">
+                        <h3>Опис карточки</h3>
+                        <mg-quill-editor placeholder="Введіть опис..."
+                                         [height]="150"
+                                         formControlName="achievements">
+                            <div class="mg-editor" style="display: none"></div>
+                        </mg-quill-editor>
+                    </div>
+
+                    <!--     PHOTOS COLUMN     -->
+                    <div class="w-100">
+                        <h3>Фото с інструктором</h3>
+                        <button type="button" class="uk-button uk-button-primary uk-margin-medium-bottom" (click)="addImageModal.open()">Додати</button>
+                        <div uk-grid="masonry: true" class="uk-grid uk-child-width-auto@s">
+                            <div *ngFor="let image of form.value['images']" class="on-hover">
+                                <img class="mg-background-green-main"
+                                     style="padding: 5px;"
+                                     [src]="image | image"
+                                     height="300"
+                                     width="400">
+                                <div class="mg-btn-delete uk-position-absolute uk-padding-small uk-position-top-right">
+                                    <a uk-icon="icon: close" (click)="deleteImage(image)"></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <mg-add-image-modal #addImageModal
+                                            [aspectRatio]="4/3"
+                                            [saveOptions]="{width: 800, height: 600}"
+                                            pathPrefix="photo-with-masters"
+                                            (onImageAdded)="addImageModal.close(); form.get('images')?.value?.push($event)"></mg-add-image-modal>
+                    </div>
+
+
+                </div>
+
+                <mg-image-cropp-modal #cropProfileImageModal
+                                      [circleCropper]="false"
+                                      [aspectRatio]="4/5"
+                                      [saveOptions]="{width: 400, height: 500}"
+                                      (onSave)="changeProfilePicture($event)"></mg-image-cropp-modal>
+
+            </ng-container>
+        </li>
+    </ul>
+
+
+</form>

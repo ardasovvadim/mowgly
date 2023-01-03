@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 {name: 'Інструктора', link: '/masters'}
             ]
         },
-        {name: 'Як нас знайти', ancher: '#'},
+        {name: 'Як нас знайти', link: '/contacts'},
     ]
 
     isAuthenticated$: Observable<boolean> = this.authService.isAuthenticated$;

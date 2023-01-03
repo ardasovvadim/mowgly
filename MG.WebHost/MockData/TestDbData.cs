@@ -278,7 +278,7 @@ namespace MG.WebHost.MockData
                         },
                         new()
                         {
-                            Name = UserProfileKeys.CardMasterAvatarImage,
+                            Name = UserProfileKeys.UserAvatar,
                             Value = "assets/img/masters/master-4.png",
                             DataType = DataType.Image
                         },
@@ -318,7 +318,7 @@ namespace MG.WebHost.MockData
                         },
                         new()
                         {
-                            Name = UserProfileKeys.CardMasterAvatarImage,
+                            Name = UserProfileKeys.UserAvatar,
                             Value = "assets/img/masters/master-2.png",
                             DataType = DataType.Image
                         }
@@ -340,7 +340,7 @@ namespace MG.WebHost.MockData
                         },
                         new()
                         {
-                            Name = UserProfileKeys.CardMasterAvatarImage,
+                            Name = UserProfileKeys.UserAvatar,
                             Value = "assets/img/masters/master-2.png",
                             DataType = DataType.Image
                         }

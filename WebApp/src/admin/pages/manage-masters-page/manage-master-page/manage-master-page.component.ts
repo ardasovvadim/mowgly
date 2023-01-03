@@ -5,9 +5,11 @@ import {DataType} from '../../../../app/models/data-type';
 import {ManageMasterApiService} from '../../../services/manage-master-api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {map, switchMap, tap} from 'rxjs/operators';
-import {delay, finalize, of} from 'rxjs';
-import {ImageCroppModalComponent} from '../../../../app/mg-shared/components/image-cropp-modal/image-cropp-modal.component';
-import {ManageImageApiService} from '../../../services/manage-image-api.service';
+import {finalize, of} from 'rxjs';
+import {
+    ImageCroppModalComponent
+} from '../../../../app/mg-shared/components/image-cropp-modal/image-cropp-modal.component';
+import {ManageImageApiService} from '../../../../app/services/manage-image-api.service';
 import {ProfileMaps} from '../../../models/profile.model';
 import {goToExternalLink, isGuid, toNormalDate} from '../../../../app/utils/utils';
 import {applyProfileMappingToData, applyProfileMappingToForm} from '../../../utils/settings';
@@ -53,9 +55,8 @@ export class ManageMasterPageComponent implements OnInit, AfterViewInit {
     isSaving = false;
     isDeleting = false;
 
-
     private profileMappings: ProfileMaps = {
-        'avatar': {key: 'CardMasterAvatarImage', type: DataType.Image, defaultValue: this.defaultAvatar},
+        'avatar': {key: 'UserAvatar', type: DataType.Image, defaultValue: this.defaultAvatar},
         'profileImage': {key: 'MasterProfileImage', type: DataType.Image, defaultValue: this.defaultProfileImage},
         'description': {key: 'MasterDescriptions', type: DataType.Html},
         'instagram': {key: 'MasterInstagramLink', type: DataType.String},

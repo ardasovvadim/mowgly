@@ -153,6 +153,8 @@ namespace MG.WebHost.Config
                     d.SetName(s.FirstName, s.LastName, s.MiddleName);
                     d.SetEmail(s.Email);
                 });
+
+            CreateMap<UserInvite, InviteUserDto>();
         }
     }
 }

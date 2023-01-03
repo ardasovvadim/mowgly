@@ -48,9 +48,9 @@
         </div>
 
         <div class="uk-card-footer uk-text-center" uk-margin>
-            <button class="uk-button uk-button-primary uk-margin-small-right" type="submit">Увійти</button>
-            <button class="uk-button uk-button-default" routerLink="/user-registration" type="button">Зареєструватись</button>
-            <div class="uk-inline">
+            <button class="uk-button uk-button-primary" type="submit">Увійти</button>
+            <button class="uk-button uk-button-default uk-margin-small-left" routerLink="/user-registration" type="button">Зареєструватись</button>
+            <div class="uk-inline uk-margin-small-left">
                 <mg-google-login (onResponse)="onGoogleSignIn($event)" text="signin_with"></mg-google-login>
             </div>
         </div>

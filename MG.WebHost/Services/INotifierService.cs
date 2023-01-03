@@ -14,6 +14,7 @@ namespace MG.WebHost.Services;
 public interface INotifierService
 {
     Task OnNewOrderAsync(Order order);
+    Task OnUserInviteAsync(UserInvite invite);
 }
 
 public class NotifierService : BaseService, INotifierService
@@ -108,5 +109,10 @@ public class NotifierService : BaseService, INotifierService
                 Logger.LogError(e, "Error during sending notification to telegram.");
             }
         });
+    }
+
+    public Task OnUserInviteAsync(UserInvite invite)
+    {
+        return Task.CompletedTask;
     }
 }

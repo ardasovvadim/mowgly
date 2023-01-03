@@ -1,77 +1,38 @@
-<div id="el-9">
+<div id="el-9" [style.height]="(isFooterMap$ | async) ? '1000px' : '500px'">
 
-    <img class="bg-top mg-no-select" src="/assets/img/bg-9.webp" loading="lazy">
-    <div class="cover-top" (click)="goToGoogleMapLink()"></div>
+    <ng-template [ngIf]="isFooterMap$ | async">
+        <img class="bg-top mg-no-select" src="/assets/img/bg-9.webp" loading="lazy">
+        <div class="cover-top" (click)="goToGoogleMapLink()"></div>
 
-    <div class="mg-card">
-        <div class="wrapper w-100"><h3>Як нас знайти</h3>
-            <p>{{currentIndex + 1}}. {{currentLocation?.name}}</p>
-            <p>{{currentLocation?.address}}</p></div>
-        <div class="mg-card-bottom">
-            <span [class.uk-disabled]="currentIndex == 0" class="uk-link"
-                  (click)="previous()">
-                <span uk-icon="icon: arrow-left"
-                      class="green-main"></span>
-            </span>
-            <span *ngFor="let location of data; let i = index" class="uk-margin-small-right uk-link"
-                  [class.uk-text-secondary]="currentIndex != i" [class.uk-text-primary]="currentIndex == i"
-                  (click)="changeCurrentItem(location, i)">{{i + 1}}</span>
-            <a [class.uk-disabled]="currentIndex == data.length - 1" class="uk-link" (click)="next()">
-                <span uk-icon="icon: arrow-right" class="green-main"></span>
-            </a>
-        </div>
-    </div>
-
-    <div id="footer-map" class="mg-no-select" (click)="goToGoogleMapLink()">
-        <iframe [src]="currentLocation?.googleMapsEmbeddedLink | safeUrl" id="map" allowfullscreen="false"
-                aria-hidden="false" tabindex="0"></iframe>
-    </div>
-
-    <div class="contacts">
-        <h1>Контакти</h1>
-        <hr>
-        <div class="uk-child-width-auto@l" uk-grid uk-margin>
-            <div>
-                <div class="uk-margin">
-                    <a class="mg-text-white" href="https://www.instagram.com/mowgly.karate.club/"
-                       target="_blank">
-                        <span class="uk-margin-small-right" uk-icon="icon: instagram;"></span> Instagram
-                    </a>
-                </div>
-                <div class="uk-margin">
-                    <a class="mg-text-white" href="https://www.facebook.com/JungleTeamMowgly/"
-                       target="_blank">
-                        <span class="uk-margin-small-right" uk-icon="icon: facebook;"></span> Facebook
-                    </a>
-                </div>
-            </div>
-            <div>
-                <div class="uk-margin">
-                    <a class="mg-text-white" href="tel:+380 (067) 700-555-3"
-                       target="_blank">
-                        <span class="uk-margin-small-right" uk-icon="icon: receiver;"></span> +380 (067) 700-555-3
-                    </a>
-                </div>
-                <div class="uk-margin">
-                    <a class="mg-text-white" href="tel:+380 (063) 700-555-3"
-                       target="_blank">
-                        <span class="uk-margin-small-right" uk-icon="icon: receiver;"></span> +380 (063) 700-555-3
-                    </a>
-                </div>
-            </div>
-            <div class="uk-margin-auto-bottom">
-                <a class="mg-text-white" href="mailto:mowglyteam@gmail.com" target="_blank">
-                    <span class="uk-margin-small-right" uk-icon="icon: mail;"></span> mowglyteam@gmail.com
+        <div class="mg-card">
+            <div class="wrapper w-100"><h3>Як нас знайти</h3>
+                <p>{{currentIndex + 1}}. {{currentLocation?.name}}</p>
+                <p>{{currentLocation?.address}}</p></div>
+            <div class="mg-card-bottom">
+                <span [class.uk-disabled]="currentIndex == 0" class="uk-link"
+                      (click)="previous()">
+                    <span uk-icon="icon: arrow-left"
+                          class="green-main"></span>
+                </span>
+                <span *ngFor="let location of data; let i = index" class="uk-margin-small-right uk-link"
+                      [class.uk-text-secondary]="currentIndex != i" [class.uk-text-primary]="currentIndex == i"
+                      (click)="changeCurrentItem(location, i)">{{i + 1}}</span>
+                <a [class.uk-disabled]="currentIndex == data.length - 1" class="uk-link" (click)="next()">
+                    <span uk-icon="icon: arrow-right" class="green-main"></span>
                 </a>
             </div>
-            <div class="uk-margin-auto-left uk-margin-auto-bottom">
-                <p>© Mowgly 2020 - All rights reserved</p>
-            </div>
         </div>
 
+        <div id="footer-map" class="mg-no-select" (click)="goToGoogleMapLink()"></div>
+
+    </ng-template>
+
+    <div id="footer-contacts">
+        <mg-footer-contacts></mg-footer-contacts>
     </div>
 
-    <img class="mg-no-select bg-bottom" src="/assets/img/bg-10.webp" loading="lazy">
-    <div class="cover-bottom" (click)="goToGoogleMapLink()"></div>
+    <ng-template [ngIf]="isFooterMap$ | async">
+        <div class="cover-bottom" (click)="goToGoogleMapLink()"></div>
+    </ng-template>
 
 </div>

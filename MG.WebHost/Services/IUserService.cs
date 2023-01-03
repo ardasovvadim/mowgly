@@ -33,6 +33,9 @@ namespace MG.WebHost.Services
         Task<UserProfileSaveDto> GetEditProfileAsync(Guid userId);
         Task<UserValidationResponseDto> ChangePasswordAsync(Guid userId, ChangePasswordRequestDto request);
         Task<LoginResponseDto> RefreshTokenAsync(RefreshTokenRequest request);
+        Task<InviteMasterResponseDto> InviteUserAsync(InviteMasterDto dto);
+        Task<InviteUserDto> GetInviteUserAsync(Guid token);
+        Task<UserValidationResponseDto> RegisterByInvitationAsync(Guid token, UserRegistrationDto request);
     }
 
     public class UserService : BaseService, IUserService
@@ -45,13 +48,15 @@ namespace MG.WebHost.Services
         private GoogleSettings GoogleSettings { get; }
         private IRepository<MgLoginModel> LoginModelRepo { get; }
         private readonly JwtSettings _jwtSettings;
+        private readonly INotifierService _notificationService;
 
-        public UserService(IServiceProvider serviceProvider, UserManager<User> userManager, JwtHandler jwtHandler, CacheUtils cache, IOptions<GoogleSettings> googleOptions, IRepository<MgLoginModel> loginModelRepo, IOptions<JwtSettings> jwtOptions) : base(serviceProvider)
+        public UserService(IServiceProvider serviceProvider, UserManager<User> userManager, JwtHandler jwtHandler, CacheUtils cache, IOptions<GoogleSettings> googleOptions, IRepository<MgLoginModel> loginModelRepo, IOptions<JwtSettings> jwtOptions, INotifierService notificationService) : base(serviceProvider)
         {
             UserManager = userManager;
             JwtHandler = jwtHandler;
             Cache = cache;
             LoginModelRepo = loginModelRepo;
+            _notificationService = notificationService;
             GoogleSettings = googleOptions.Value;
             _jwtSettings = jwtOptions.Value;
         }
@@ -72,7 +77,7 @@ namespace MG.WebHost.Services
                 request.UserTypes ??= UserType.None;
 
                 var user = isNew
-                    ? new User { UserTypes = UserType.Master }
+                    ? new User ()
                     : await repo.GetByIdAsync(request.Id.Value, nameof(User.Profiles));
 
                 if (user == null)
@@ -186,10 +191,9 @@ namespace MG.WebHost.Services
 
         private async Task<User> GetUserProfileImplAsync(Guid userId)
         {
-            var profileKeys = new[] { UserProfileKeys.UserAvatar };
             return await Repository<User>()
                 .GetQueryable()
-                .Include(u => u.Profiles.Where(p => profileKeys.Contains(p.Name)))
+                .Include(u => u.Profiles)
                 .FirstOrDefaultAsync(u => u.Id == userId);
         }
 
@@ -375,6 +379,82 @@ namespace MG.WebHost.Services
                 Token = newAccessToken,
                 RefreshToken = newRefreshToken
             };
+        }
+
+        // TODO: add perm
+        // migrationBuilder.Sql("INSERT INTO Permissions ([Id], [Name], [CreatedDate], [Deleted]) VALUES (N'B160A8AE-65F4-4A11-BCB9-6CACD896F785', N'Permission.User.Invite', GETDATE(), 0)");
+        public async Task<InviteMasterResponseDto> InviteUserAsync(InviteMasterDto dto)
+        {
+            Check.NotNullOrEmpty(dto.Email, nameof(dto.Email));
+            Check.NotNullOrEmpty(dto.Name, nameof(dto.Name));
+            
+            var userRepo = Repository<User>();
+
+            if (await userRepo.IsExistsAsync(u => u.NormalizedEmail == dto.Email.ToUpper()))
+                return new InviteMasterResponseDto
+                {
+                    Errors = new[] { "Користувач із таким емейлом вже існує" },
+                    IsSuccess = false
+                };
+
+            var invite = new UserInvite
+            {
+                Name = dto.Name,
+                Email = dto.Email,
+                SendEmail = dto.SendEmail,
+                Expiration = DateTime.UtcNow.AddDays(2)
+            };
+
+            var userInviteRepo = Repository<UserInvite>();
+            await userInviteRepo.InsertAsync(invite);
+            await userInviteRepo.SaveChangesAsync();
+
+            await _notificationService.OnUserInviteAsync(invite);
+
+            return new InviteMasterResponseDto
+            {
+                InviteId = invite.Id,
+                IsSuccess = true,
+                InviteLink = LinkHelper.GetInviteLink(invite.Id)
+            };
+        }
+
+        public async Task<InviteUserDto> GetInviteUserAsync(Guid token)
+        {
+            return Mapper.Map<InviteUserDto>(await GetInviteAsync(token));
+        }
+
+        public async Task<UserValidationResponseDto> RegisterByInvitationAsync(Guid token, UserRegistrationDto request)
+        {
+            _ = await GetInviteAsync(token);
+            var result = await RegisterAsync(request);
+
+            if (!result.IsSuccess) return result;
+            
+            var repo = Repository<UserInvite>();
+            await repo.DeleteAsync(token);
+            await repo.SaveChangesAsync();
+
+            var user = await UserManager.FindByEmailAsync(request.Email);
+            user.UserTypes |= UserType.Master;
+            await UserManager.UpdateAsync(user);
+            await UserManager.AddToRoleAsync(user, UserType.Master.ToString("G"));
+
+            return result;
+        }
+        
+        private async Task<UserInvite> GetInviteAsync(Guid token)
+        {
+            var repo = Repository<UserInvite>();
+            var invite = await repo.GetByIdAsync(token);
+            
+            if (invite is null)
+                throw new BusinessException("Запрошення не знайдено");
+            
+            if (invite.Expiration <= DateTime.UtcNow)
+                throw new BusinessException("Запрошення застаріло");
+
+            return invite;
         }
 
         private async Task<GoogleJsonWebSignature.Payload> VerifyGoogleToken(GoogleRequest request)

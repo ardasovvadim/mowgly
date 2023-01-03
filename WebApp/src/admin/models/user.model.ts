@@ -56,3 +56,9 @@ export const userTypes = [
   {key: UserType.Admin, value: 'Администратор'},
   {key: UserType.Parent, value: 'Родитель'},
 ]
+
+export interface InviteMasterResponse {
+  inviteLink: string;
+  errors: string[];
+  isSuccess: boolean;
+}

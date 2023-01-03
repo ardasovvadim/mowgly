@@ -1,13 +1,5 @@
-import {AbstractControl} from '@angular/forms';
-
-// @ts-ignore
-FormGroup.prototype.getStringAndTrim = getStringAndTrim;
-
-interface FormGroup extends AbstractControl {
-  getStringAndTrim: typeof getStringAndTrim;
-}
-
-function getStringAndTrim(this: FormGroup, key: string) {
-  const value = this.get(key)?.value as string;
-  return value?.trim();
+export function errorsToHtml(errors: string[]): string {
+  return errors.filter((value, index, self) => {
+    return self.indexOf(value) === index;
+  }).map(it => `<li>${it}</li>`).join('\n');
 }

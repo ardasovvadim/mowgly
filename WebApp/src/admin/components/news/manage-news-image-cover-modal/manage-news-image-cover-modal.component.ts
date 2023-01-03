@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NewsBlock, NewsImageBlock} from '../../../../app/pages/news-page/news-details/news-details.component';
 import {Indexer} from '../../../../app/utils/utils';
 import {UiKit} from '../../../../app/utils/ui-kit';
-import {AddImageModalComponent} from '../../add-image-modal/add-image-modal.component';
+import {AddImageModalComponent} from '../../../../app/mg-shared/components/add-image-modal/add-image-modal.component';
 
 @Component({
   selector: 'mg-manage-news-image-cover-modal',

@@ -54,3 +54,9 @@ export interface ChangePasswordRequest {
     currentPassword: string;
     newPassword: string;
 }
+
+export interface UserInviteDto {
+    id: string;
+    name: string;
+    email: string;
+}

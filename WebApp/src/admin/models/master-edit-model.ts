@@ -24,6 +24,6 @@ export interface MasterEditModel {
   phone: string;
   masterDescriptions: string;
   cardMasterAchievements: string;
-  cardMasterAvatarImage: string;
+  UserAvatar: string;
   profiles: GeneralSettingVm[];
 }

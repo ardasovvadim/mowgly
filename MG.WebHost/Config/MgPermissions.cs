@@ -13,6 +13,7 @@ public static class MgPermissions
         public const string Get = Prefix + ".Get";
         public const string Create = Prefix + ".Create";
         public const string Delete = Prefix + ".Delete";
+        public const string Invite = Prefix + ".Invite";
     }
 
     public static class Tournament
@@ -92,6 +93,8 @@ public static class MgPermissions
         
         public const string Get = Prefix + ".Get";
         public const string Edit = Prefix + ".Edit";
+        public const string Delete = Prefix + ".Delete";
+        // TODO: add to migration
         public const string Notification = Prefix + ".Notification";
     }
 

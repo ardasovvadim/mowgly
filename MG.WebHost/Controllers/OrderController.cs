@@ -47,5 +47,11 @@ namespace MG.WebHost.Controllers
         {
             await _registrationService.MarkAsProcessedAsync(id);
         }
+        
+        [HttpDelete("{id}"), Authorize(MgPermissions.Order.Delete)]
+        public async Task DeleteAsync(Guid id)
+        {
+            await BaseService.DeleteAsync<Order>(id);
+        }
     }
 }

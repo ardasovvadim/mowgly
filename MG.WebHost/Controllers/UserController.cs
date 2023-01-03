@@ -1,4 +1,5 @@
 ﻿using MG.WebHost.Config;
+using MG.WebHost.Entities.Enums;
 using MG.WebHost.Entities.Users;
 using MG.WebHost.Models;
 using MG.WebHost.Models.Auth;
@@ -101,14 +102,32 @@ namespace MG.WebHost.Controllers
             return await _userService.SignUpGoogleAsync(request);
         }
         
-        [HttpPost]
-        [Route("refresh")]
+        [HttpPost("refresh")]
         public async Task<IActionResult> RefreshAsync(RefreshTokenRequest request)
         {
             if (request is null)
                 return BadRequest("Invalid client request");
 
             return Ok(await _userService.RefreshTokenAsync(request));
+        }
+
+        // TODO: add permission
+        [HttpPost("invite"), Authorize]
+        public async Task<IActionResult> InviteUserAsync(InviteMasterDto request)
+        {
+            return Ok(await _userService.InviteUserAsync(request));
+        }
+        
+        [HttpGet("invite/{token}")]
+        public async Task<IActionResult> GetInviteUserAsync(Guid token)
+        {
+            return Ok(await _userService.GetInviteUserAsync(token));
+        }
+        
+        [HttpPost("invite/{token}")]
+        public async Task<UserValidationResponseDto> RegisterByInvitationAsync(Guid token, UserRegistrationDto request)
+        {
+            return await _userService.RegisterByInvitationAsync(token, request);
         }
     }
 }

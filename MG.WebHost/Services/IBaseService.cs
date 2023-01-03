@@ -41,10 +41,11 @@ public interface IBaseService
 
 public class BaseService : IBaseService
 {
-    private IServiceProvider ServiceProvider { get; }
+    protected IServiceProvider ServiceProvider { get; }
     protected IMapper Mapper => ServiceProvider.GetService<IMapper>();
     protected IRepository<TEntity> Repository<TEntity>() where TEntity : class, IBaseEntity => ServiceProvider.GetRequiredService<IRepository<TEntity>>();
     protected ILogger<IBaseService> Logger => ServiceProvider.GetRequiredService<ILogger<IBaseService>>();
+    protected ILinkHelper LinkHelper => ServiceProvider.GetRequiredService<ILinkHelper>();
 
     public BaseService(IServiceProvider serviceProvider)
     {

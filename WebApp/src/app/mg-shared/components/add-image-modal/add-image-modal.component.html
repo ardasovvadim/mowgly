@@ -1,0 +1,32 @@
+<div [id]="id" uk-modal>
+    <div class="uk-modal-dialog uk-margin-auto-vertical">
+        <div class="uk-modal-body">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <h2 class="uk-modal-title">Додати зображення</h2>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="url">Посилання:</label>
+                <div class="uk-form-controls">
+                    <input type="text" class="uk-input" placeholder="Введіть посилання" id="url" [(ngModel)]="imageUrl">
+                </div>
+            </div>
+            <div class="uk-margin">
+                <span class="uk-text-middle">Або завантажити з </span>
+                <div class="mg-pointer" uk-form-custom>
+                    <input type="file" (change)="fileChosen($event)" [(ngModel)]="imagePath">
+                    <span class="uk-link">файлової системи</span>
+                </div>
+            </div>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close uk-margin-small-right" type="button">Відмінити</button>
+            <button class="uk-button uk-button-primary" type="button" (click)="onImageAdded.emit(imageUrl)">Зберігти</button>
+        </div>
+    </div>
+</div>
+
+
+<mg-image-cropp-modal #croppModalComponent
+                      [aspectRatio]="aspectRatio"
+                      [saveOptions]="saveOptions"
+                      [circleCropper]="circleCropper"
+                      (onSave)="imageCropped($event)"></mg-image-cropp-modal>

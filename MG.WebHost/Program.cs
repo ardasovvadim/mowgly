@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace MG.WebHost
 {
-    internal static class Program
+    public static class Program
     {
         private const string MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
 
@@ -21,7 +22,7 @@ namespace MG.WebHost
             await CreateWebAppBuilder(args).Build().Configure().RunWithTasksAsync();
         }
 
-        private static WebApplicationBuilder CreateWebAppBuilder(string[] args)
+        public static WebApplicationBuilder CreateWebAppBuilder(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -82,7 +83,18 @@ namespace MG.WebHost
             builder.Services.AddRazorPages();
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(o =>
+            {
+                o.SwaggerDoc("v1", new OpenApiInfo { Title = "MG API", Version = "v1" });
+                o.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+            });
 
             if (isDevelopment)
             {
@@ -107,7 +119,7 @@ namespace MG.WebHost
             return builder;
         }
 
-        private static WebApplication Configure(this WebApplication app)
+        public static WebApplication Configure(this WebApplication app)
         {
             using var scope = app.Services.CreateScope();
             var sp = scope.ServiceProvider;
@@ -152,13 +164,31 @@ namespace MG.WebHost
                 name: "api",
                 pattern: "api/{controller}/{action=Index}/{id?}");
             app.MapRazorPages();
+            
+            app.UseWhen(ctx =>
+            {
+                var path = ctx.Request.Path;
+                return !path.StartsWithSegments("/api");
+            }, cfg =>
+            {
+                cfg.Use((ctx, next) =>
+                {
+                    if (ctx.GetEndpoint() != null)
+                        return next();
 
-            app.MapFallbackToFile("404.html");
+                    ctx.Request.Path = "/index.html";
+                    return next();
+                });
+
+                cfg.UseStaticFiles();
+            });
+
+            // app.MapFallbackToFile("404.html");
 
             return app;
         }
         
-        private static async Task RunWithTasksAsync(this WebApplication app)
+        public static async Task RunWithTasksAsync(this WebApplication app)
         {
             var startupTasks = app.Services.GetServices<IStartupTask>();
 

@@ -11,7 +11,7 @@ import {Observable} from 'rxjs';
 export class AppLayoutComponent implements OnInit {
 
   isFooter: Observable<boolean> = this.mgComponentService.componentState$.pipe(
-      map(state => state.isBottomMap)
+      map(state => state.isFooterBar)
   )
 
   constructor(

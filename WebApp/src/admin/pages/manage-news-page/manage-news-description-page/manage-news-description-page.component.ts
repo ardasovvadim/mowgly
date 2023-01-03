@@ -18,7 +18,7 @@ import {
 } from '../../../components/news/manage-news-video-modal/manage-news-video-modal.component';
 import {mgConfirm, mgPrompt, mgSuccessNotification} from '../../../../app/utils/ui-kit';
 import {ManageNewsApiService} from '../../../services/manage-news-api.service';
-import {AddImageModalComponent} from '../../../components/add-image-modal/add-image-modal.component';
+import {AddImageModalComponent} from '../../../../app/mg-shared/components/add-image-modal/add-image-modal.component';
 import {
     ChooseOrCreateEventModalComponent
 } from './componenets/choose-or-create-event-modal/choose-or-create-event-modal.component';

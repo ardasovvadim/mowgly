@@ -46,8 +46,6 @@ import {ManageTournamentModalComponent} from './components/manage-tournament-mod
 import {ManageEventsPageComponent} from './pages/manage-events-page/manage-events-page.component';
 import {ManageEventModalComponent} from './pages/manage-events-page/manage-event-modal/manage-event-modal.component';
 import {ManageMasterPageComponent} from './pages/manage-masters-page/manage-master-page/manage-master-page.component';
-import {AddImageModalComponent} from './components/add-image-modal/add-image-modal.component';
-import {QuillEditorComponent} from './components/quill-editor/quill-editor.component';
 import {
     ChooseOrCreateEventModalComponent
 } from './pages/manage-news-page/manage-news-description-page/componenets/choose-or-create-event-modal/choose-or-create-event-modal.component';
@@ -59,6 +57,9 @@ import {HasFlagPipe} from './pipes/has-flag.pipe';
 import {ManagePermissionsPageComponent} from './pages/manage-permissions-page/manage-permissions-page.component';
 import {MgIfPermDirective} from './directives/mg-if-perm.directive';
 import {OrderDetailsModalComponent} from './pages/manage-orders-page/order-details-modal/order-details-modal.component';
+import {
+    InviteMasterModalComponent
+} from './pages/manage-masters-page/invite-master-modal/invite-master-modal.component';
 
 @NgModule({
     declarations: [
@@ -90,8 +91,6 @@ import {OrderDetailsModalComponent} from './pages/manage-orders-page/order-detai
         ManageEventsPageComponent,
         ManageEventModalComponent,
         ManageMasterPageComponent,
-        AddImageModalComponent,
-        QuillEditorComponent,
         ChooseOrCreateEventModalComponent,
         ManageTournamentResultsPageComponent,
         ConcatUserTypesPipe,
@@ -99,6 +98,7 @@ import {OrderDetailsModalComponent} from './pages/manage-orders-page/order-detai
         ManagePermissionsPageComponent,
         MgIfPermDirective,
         OrderDetailsModalComponent,
+        InviteMasterModalComponent,
     ],
     exports: [
         ManageModalComponent,

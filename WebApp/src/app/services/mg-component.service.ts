@@ -7,7 +7,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
 export class MgComponentService {
 
   private readonly componentStateSub: BehaviorSubject<ComponentState> = new BehaviorSubject<ComponentState>({
-    isBottomMap: true
+    isFooterBar: true,
+    isFooterMap: true
   });
 
   componentState$: Observable<ComponentState> = this.componentStateSub.asObservable();
@@ -20,5 +21,6 @@ export class MgComponentService {
 }
 
 export interface ComponentState {
-  isBottomMap: boolean;
+  isFooterBar: boolean;
+  isFooterMap: boolean;
 }

@@ -24,6 +24,13 @@
     </button>
   </div>
 
+  <!-- TODO: add permission -->
+  <div class="uk-width-1-2@s uk-width-auto@m">
+    <button class="uk-button uk-button-primary" type="button" (click)="inviteModal.open()">
+      <span class="uk-margin-small-right" uk-icon="plus"></span>Запросити
+    </button>
+  </div>
+
   <div class="uk-width-1-2@s uk-width-auto@m">
     <button class="uk-button uk-button-primary w-100" type="button" (click)="refreshData()">
       <span class="uk-margin-small-right" uk-icon="refresh"></span>Оновити
@@ -80,3 +87,5 @@
 
   </div>
 </div>
+
+<mg-invite-master-modal #inviteModal></mg-invite-master-modal>

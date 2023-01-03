@@ -1,4 +1,3 @@
-using AutoMapper;
 using MG.WebHost.JwtFeatures;
 using MG.WebHost.Repositories;
 using MG.WebHost.Security;
@@ -30,6 +29,7 @@ namespace MG.WebHost.Config
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ITelegramService, TelegramService>();
+            services.AddScoped<ILazyProvider, LazyProvider>();
             services.AddScoped<ITelegramBotClient, TelegramBotClient>(sp =>
             {
                 var secret = configuration.GetSection(TelegramSettings.Name)["Secret"];
@@ -42,11 +42,12 @@ namespace MG.WebHost.Config
             services.AddSingleton<IBackgroundTaskQueue>(_ => new BackgroundTaskQueue(50));
 
             // Utils
-            services.AddSingleton<IEmailUtils, EmailUtils>();
-            services.AddSingleton<IDirectoryUtils, DirectoryUtils>();
-            services.AddScoped<JwtHandler>();
-            services.AddScoped<CacheUtils>();
-            services.AddScoped<UserPermissionCache>();
+            services.AddTransient<IEmailUtils, EmailUtils>();
+            services.AddTransient<IDirectoryUtils, DirectoryUtils>();
+            services.AddTransient<ILinkHelper, LinkHelper>();
+            services.AddTransient<JwtHandler>();
+            services.AddTransient<CacheUtils>();
+            services.AddTransient<UserPermissionCache>();
             
             // Middleware
             services.AddTransient<PermissionsMiddleware>();
@@ -62,6 +63,7 @@ namespace MG.WebHost.Config
 
             // Tasks
             services.AddStartupTask<DbInitialization>();
+            services.AddStartupTask<MoveMasterCardImageToUserAvatarOnceStartupTask>();
 
             return services;
         }

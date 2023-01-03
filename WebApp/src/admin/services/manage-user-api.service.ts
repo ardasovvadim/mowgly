@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ApiService} from '../../app/services/api.service';
 import {Page} from '../../app/models/page';
 import {Observable} from 'rxjs';
-import {AdminUserVm, UserEditModel, UserGetListRequest} from '../models/user.model';
+import {AdminUserVm, InviteMasterResponse, UserEditModel, UserGetListRequest} from '../models/user.model';
 
 @Injectable()
 export class ManageUserApiService {
@@ -28,5 +28,9 @@ export class ManageUserApiService {
 
     delete(id: string): Observable<void> {
         return this.api.delete(this.prefix + '/' + id);
+    }
+
+    invite(request: any): Observable<InviteMasterResponse> {
+        return this.api.post(this.prefix + '/invite', request);
     }
 }
