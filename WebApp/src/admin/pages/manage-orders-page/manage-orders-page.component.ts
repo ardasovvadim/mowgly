@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {EventVm} from '../../../app/models/events/event-vm';
 import {ManageEventsApiService} from '../../services/manage-events-api.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ManageEventModalComponent} from '../manage-events-page/manage-event-modal/manage-event-modal.component';
+import {ManageEventModalComponent} from '../../shared-admin/components/manage-event-modal/manage-event-modal.component';
 import {PaginationComponent} from '../../../app/mg-shared/components/pagination/pagination.component';
 import {PageOptions} from '../../../app/models/page';
 import {toSortOrder} from '../../../app/services/events-api.service';

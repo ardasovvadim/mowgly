@@ -48,7 +48,7 @@ import {ListErrorsComponent} from './components/list-errors/list-errors.componen
 import {LoaderComponent} from './components/loader/loader.component';
 import {AddImageModalComponent} from './components/add-image-modal/add-image-modal.component';
 import {QuillEditorComponent} from './components/quill-editor/quill-editor.component';
-import { FooterContactsComponent } from './components/footer-contacts/footer-contacts.component';
+import {FooterContactsComponent} from './components/footer-contacts/footer-contacts.component';
 
 const components: any[] = [
     FooterComponent,

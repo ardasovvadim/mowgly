@@ -10,7 +10,7 @@ import {
 import {StorageService} from '../../app/services/storage.service';
 import {
     ChooseOrCreateEventModalComponent
-} from '../pages/manage-news-page/manage-news-description-page/componenets/choose-or-create-event-modal/choose-or-create-event-modal.component';
+} from '../shared-admin/components/choose-or-create-event-modal/choose-or-create-event-modal.component';
 import {ManageNewsApiService} from './manage-news-api.service';
 import {mgSuccessNotification} from '../../app/utils/ui-kit';
 

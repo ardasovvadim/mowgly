@@ -1,0 +1,30 @@
+@import "src/styles/variables";
+
+.timeslot {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background: $mg-green-main;
+  border-radius: 15px;
+  padding: 10px;
+  color: $mg-white;
+  box-shadow: 5px 5px 10px rgb(0 0 0 / 20%);
+  transition: box-shadow 0.2s ease-in-out;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: 10px 10px 10px rgb(0 0 0 / 20%);
+  }
+
+  hr {
+    margin: 3px 0 5px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  > p {
+    font-size: .8rem;
+  }
+}

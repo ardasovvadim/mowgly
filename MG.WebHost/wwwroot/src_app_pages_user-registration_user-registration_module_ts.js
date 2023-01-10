@@ -1,7 +1,7 @@
 "use strict";
 (self["webpackChunkWebApp"] = self["webpackChunkWebApp"] || []).push([["src_app_pages_user-registration_user-registration_module_ts"],{
 
-/***/ 584:
+/***/ 80584:
 /*!***********************************************!*\
   !*** ./src/app/guards/not-authorize.guard.ts ***!
   \***********************************************/
@@ -11,10 +11,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "NotAuthorizeGuard": () => (/* binding */ NotAuthorizeGuard)
 /* harmony export */ });
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ 3399);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 8259);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ 53399);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 18259);
 /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/authentication.service */ 7053);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ 8750);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ 48750);
 
 
 
@@ -38,7 +38,7 @@ NotAuthorizeGuard.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_
 
 /***/ }),
 
-/***/ 5912:
+/***/ 65912:
 /*!***********************************************************************************!*\
   !*** ./src/app/pages/user-registration/guards/user-invitation-validator.guard.ts ***!
   \***********************************************************************************/
@@ -48,12 +48,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "UserInvitationValidatorGuard": () => (/* binding */ UserInvitationValidatorGuard)
 /* harmony export */ });
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ 2426);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ 5249);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ 3399);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 8259);
-/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../services/user.service */ 3071);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 3903);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ 82426);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ 75249);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ 53399);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 18259);
+/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../services/user.service */ 73071);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 73903);
 
 
 
@@ -96,7 +96,7 @@ UserInvitationValidatorGuard.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPOR
 
 /***/ }),
 
-/***/ 5347:
+/***/ 65347:
 /*!****************************************************************************************************!*\
   !*** ./src/app/pages/user-registration/user-registration-page/user-registration-page.component.ts ***!
   \****************************************************************************************************/
@@ -106,13 +106,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "UserRegistrationPageComponent": () => (/* binding */ UserRegistrationPageComponent)
 /* harmony export */ });
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ 6410);
-/* harmony import */ var _utils_form_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utils/form-utils */ 65);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 8259);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ 36410);
+/* harmony import */ var _utils_form_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utils/form-utils */ 70065);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 18259);
 /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../services/authentication.service */ 7053);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 3903);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 8750);
-/* harmony import */ var _mg_shared_components_google_login_google_login_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mg-shared/components/google-login/google-login.component */ 3570);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 73903);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 48750);
+/* harmony import */ var _mg_shared_components_google_login_google_login_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mg-shared/components/google-login/google-login.component */ 83570);
 
 
 
@@ -362,7 +362,7 @@ UserRegistrationPageComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPOR
 
 /***/ }),
 
-/***/ 2996:
+/***/ 82996:
 /*!*****************************************************************************!*\
   !*** ./src/app/pages/user-registration/user-registration-routing.module.ts ***!
   \*****************************************************************************/
@@ -372,11 +372,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "UserRegistrationRoutingModule": () => (/* binding */ UserRegistrationRoutingModule)
 /* harmony export */ });
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 3903);
-/* harmony import */ var _user_registration_page_user_registration_page_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user-registration-page/user-registration-page.component */ 5347);
-/* harmony import */ var _guards_user_invitation_validator_guard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./guards/user-invitation-validator.guard */ 5912);
-/* harmony import */ var _guards_not_authorize_guard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../guards/not-authorize.guard */ 584);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 8259);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 73903);
+/* harmony import */ var _user_registration_page_user_registration_page_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user-registration-page/user-registration-page.component */ 65347);
+/* harmony import */ var _guards_user_invitation_validator_guard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./guards/user-invitation-validator.guard */ 65912);
+/* harmony import */ var _guards_not_authorize_guard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../guards/not-authorize.guard */ 80584);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 18259);
 
 
 
@@ -400,7 +400,7 @@ UserRegistrationRoutingModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPOR
 
 /***/ }),
 
-/***/ 4871:
+/***/ 84871:
 /*!*********************************************************************!*\
   !*** ./src/app/pages/user-registration/user-registration.module.ts ***!
   \*********************************************************************/
@@ -410,11 +410,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "UserRegistrationModule": () => (/* binding */ UserRegistrationModule)
 /* harmony export */ });
-/* harmony import */ var _user_registration_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user-registration-routing.module */ 2996);
-/* harmony import */ var _user_registration_page_user_registration_page_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user-registration-page/user-registration-page.component */ 5347);
-/* harmony import */ var _mg_shared_mg_shared_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mg-shared/mg-shared.module */ 1839);
-/* harmony import */ var _guards_user_invitation_validator_guard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./guards/user-invitation-validator.guard */ 5912);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 8259);
+/* harmony import */ var _user_registration_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user-registration-routing.module */ 82996);
+/* harmony import */ var _user_registration_page_user_registration_page_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user-registration-page/user-registration-page.component */ 65347);
+/* harmony import */ var _mg_shared_mg_shared_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mg-shared/mg-shared.module */ 51839);
+/* harmony import */ var _guards_user_invitation_validator_guard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./guards/user-invitation-validator.guard */ 65912);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 18259);
 
 
 

@@ -1,7 +1,7 @@
 "use strict";
 (self["webpackChunkWebApp"] = self["webpackChunkWebApp"] || []).push([["src_app_pages_user-profile_user-profile_module_ts"],{
 
-/***/ 8730:
+/***/ 98730:
 /*!**********************************!*\
   !*** ./src/admin/utils/forms.ts ***!
   \**********************************/
@@ -28,13 +28,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ChangePasswordComponent": () => (/* binding */ ChangePasswordComponent)
 /* harmony export */ });
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ 6410);
-/* harmony import */ var _utils_ui_kit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../utils/ui-kit */ 9377);
-/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../utils/utils */ 9860);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 8259);
-/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../services/user.service */ 3071);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ 36410);
+/* harmony import */ var _utils_ui_kit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../utils/ui-kit */ 89377);
+/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../utils/utils */ 49860);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 18259);
+/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../services/user.service */ 73071);
 /* harmony import */ var _mg_shared_components_list_errors_list_errors_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../mg-shared/components/list-errors/list-errors.component */ 5622);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 8750);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 48750);
 
 
 
@@ -161,7 +161,7 @@ ChangePasswordComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MO
 
 /***/ }),
 
-/***/ 6436:
+/***/ 76436:
 /*!****************************************************************************************************!*\
   !*** ./src/app/pages/user-profile/components/edit-master-profile/edit-master-profile.component.ts ***!
   \****************************************************************************************************/
@@ -171,20 +171,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "EditMasterProfileComponent": () => (/* binding */ EditMasterProfileComponent)
 /* harmony export */ });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 8259);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/forms */ 6410);
-/* harmony import */ var _models_data_type__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../models/data-type */ 7141);
-/* harmony import */ var _services_manage_image_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../services/manage-image-api.service */ 2839);
-/* harmony import */ var _admin_utils_settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../admin/utils/settings */ 6087);
-/* harmony import */ var _utils_ui_kit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../utils/ui-kit */ 9377);
-/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../utils/utils */ 9860);
-/* harmony import */ var _admin_utils_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../admin/utils/forms */ 8730);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 3903);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 18259);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/forms */ 36410);
+/* harmony import */ var _models_data_type__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../models/data-type */ 27141);
+/* harmony import */ var _services_manage_image_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../services/manage-image-api.service */ 42839);
+/* harmony import */ var _admin_utils_settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../admin/utils/settings */ 96087);
+/* harmony import */ var _utils_ui_kit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../utils/ui-kit */ 89377);
+/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../utils/utils */ 49860);
+/* harmony import */ var _admin_utils_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../admin/utils/forms */ 98730);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 73903);
 /* harmony import */ var _mg_shared_components_list_errors_list_errors_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../mg-shared/components/list-errors/list-errors.component */ 5622);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common */ 8750);
-/* harmony import */ var _mg_shared_components_image_cropp_modal_image_cropp_modal_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../mg-shared/components/image-cropp-modal/image-cropp-modal.component */ 5587);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common */ 48750);
+/* harmony import */ var _mg_shared_components_image_cropp_modal_image_cropp_modal_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../mg-shared/components/image-cropp-modal/image-cropp-modal.component */ 45587);
 /* harmony import */ var _mg_shared_components_quill_editor_quill_editor_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../mg-shared/components/quill-editor/quill-editor.component */ 8370);
-/* harmony import */ var _mg_shared_components_add_image_modal_add_image_modal_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../mg-shared/components/add-image-modal/add-image-modal.component */ 8429);
+/* harmony import */ var _mg_shared_components_add_image_modal_add_image_modal_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../mg-shared/components/add-image-modal/add-image-modal.component */ 78429);
 /* harmony import */ var _mg_shared_pipes_image_pipe__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../mg-shared/pipes/image.pipe */ 1913);
 
 
@@ -557,7 +557,7 @@ EditMasterProfileComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED
 
 /***/ }),
 
-/***/ 4319:
+/***/ 54319:
 /*!****************************************************************************************!*\
   !*** ./src/app/pages/user-profile/components/personal-data/personal-data.component.ts ***!
   \****************************************************************************************/
@@ -567,19 +567,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PersonalDataComponent": () => (/* binding */ PersonalDataComponent)
 /* harmony export */ });
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/forms */ 6410);
-/* harmony import */ var _models_data_type__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../models/data-type */ 7141);
-/* harmony import */ var _admin_utils_settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../admin/utils/settings */ 6087);
-/* harmony import */ var _utils_ui_kit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../utils/ui-kit */ 9377);
-/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../utils/utils */ 9860);
-/* harmony import */ var _services_manage_image_api_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../services/manage-image-api.service */ 2839);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs/operators */ 3399);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 8259);
-/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../services/user.service */ 3071);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common */ 8750);
-/* harmony import */ var _edit_master_profile_edit_master_profile_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../edit-master-profile/edit-master-profile.component */ 6436);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/forms */ 36410);
+/* harmony import */ var _models_data_type__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../models/data-type */ 27141);
+/* harmony import */ var _admin_utils_settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../admin/utils/settings */ 96087);
+/* harmony import */ var _utils_ui_kit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../utils/ui-kit */ 89377);
+/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../utils/utils */ 49860);
+/* harmony import */ var _services_manage_image_api_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../services/manage-image-api.service */ 42839);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs/operators */ 53399);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 18259);
+/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../services/user.service */ 73071);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common */ 48750);
+/* harmony import */ var _edit_master_profile_edit_master_profile_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../edit-master-profile/edit-master-profile.component */ 76436);
 /* harmony import */ var _mg_shared_components_list_errors_list_errors_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../mg-shared/components/list-errors/list-errors.component */ 5622);
-/* harmony import */ var _mg_shared_components_image_cropp_modal_image_cropp_modal_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../mg-shared/components/image-cropp-modal/image-cropp-modal.component */ 5587);
+/* harmony import */ var _mg_shared_components_image_cropp_modal_image_cropp_modal_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../mg-shared/components/image-cropp-modal/image-cropp-modal.component */ 45587);
 /* harmony import */ var _mg_shared_pipes_image_pipe__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../mg-shared/pipes/image.pipe */ 1913);
 
 
@@ -599,11 +599,9 @@ __webpack_require__.r(__webpack_exports__);
 
 const _c0 = ["masterProfileComponent"];
 const _c1 = ["cropImageModal"];
-
 function PersonalDataComponent_ng_template_0_Template(rf, ctx) {
   if (rf & 1) {
     const _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "mg-edit-master-profile", 2, 3)(2, "div", 4)(3, "button", 5);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("click", function PersonalDataComponent_ng_template_0_Template_button_click_3_listener() {
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r5);
@@ -614,13 +612,11 @@ function PersonalDataComponent_ng_template_0_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](5, "\u0417\u0431\u0435\u0440\u0456\u0433\u0442\u0438 ");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
   }
-
   if (rf & 2) {
     const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("master", ctx_r0.profile)("editMode", true)("errorHtml", ctx_r0.errorHtml);
   }
 }
-
 function PersonalDataComponent_ng_template_2_div_10_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "div", 34)(1, "div", 35);
@@ -628,11 +624,9 @@ function PersonalDataComponent_ng_template_2_div_10_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()();
   }
 }
-
 function PersonalDataComponent_ng_template_2_ng_template_11_Template(rf, ctx) {
   if (rf & 1) {
     const _r11 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "img", 37);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("loadeddata", function PersonalDataComponent_ng_template_2_ng_template_11_Template_img_loadeddata_0_listener() {
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r11);
@@ -646,24 +640,20 @@ function PersonalDataComponent_ng_template_2_ng_template_11_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipe"](1, "image");
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
   }
-
   if (rf & 2) {
     const ctx_r8 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("src", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipeBind1"](1, 1, ctx_r8.form.value.avatar), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵsanitizeUrl"]);
   }
 }
-
 const _c2 = function () {
   return {
     width: 200,
     height: 200
   };
 };
-
 function PersonalDataComponent_ng_template_2_Template(rf, ctx) {
   if (rf & 1) {
     const _r14 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵgetCurrentView"]();
-
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](0, "form", 7);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵlistener"]("ngSubmit", function PersonalDataComponent_ng_template_2_Template_form_ngSubmit_0_listener() {
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵrestoreView"](_r14);
@@ -734,10 +724,8 @@ function PersonalDataComponent_ng_template_2_Template(rf, ctx) {
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]()()();
   }
-
   if (rf & 2) {
     const _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵreference"](12);
-
     const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("formGroup", ctx_r2.form);
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵadvance"](6);
@@ -748,7 +736,6 @@ function PersonalDataComponent_ng_template_2_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("circleCropper", true)("saveOptions", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpureFunction0"](7, _c2))("aspectRatio", 1);
   }
 }
-
 class PersonalDataComponent {
   constructor(userService, fb, imageService) {
     this.userService = userService;
@@ -774,16 +761,13 @@ class PersonalDataComponent {
     this.errorHtml = null;
     this.isMaster$ = this.userService.profile$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_12__.map)(profile => {
       var _a, _b;
-
       return (_b = (_a = profile === null || profile === void 0 ? void 0 : profile.roles) === null || _a === void 0 ? void 0 : _a.some(r => r === 'Master')) !== null && _b !== void 0 ? _b : false;
     }));
     this.profile = null;
   }
-
   ngOnInit() {
     this.refreshProfile();
   }
-
   submit() {
     this.errorHtml = null;
     this.profileFormSubmitted = true;
@@ -791,7 +775,6 @@ class PersonalDataComponent {
     const request = this.form.value;
     (0,_admin_utils_settings__WEBPACK_IMPORTED_MODULE_1__.applyProfileMappingToData)(this.profileMappings, request);
   }
-
   updateUserData(request) {
     this.userService.updateUserData(request).subscribe(response => {
       if (response.isSuccess) {
@@ -803,26 +786,22 @@ class PersonalDataComponent {
       }
     });
   }
-
   cropImage($event) {
     (0,_utils_utils__WEBPACK_IMPORTED_MODULE_3__.readImageAsDataUrl)($event, dataUrl => {
       this.cropImageModal.imageUrl = dataUrl;
       this.cropImageModal.open();
     });
   }
-
   onImageCropped(imageUrl) {
     this.imageService.add({
       dataUrl: imageUrl,
       pathPrefix: 'avatar'
     }).subscribe(id => {
       var _a;
-
       (_a = this.form.controls['avatar']) === null || _a === void 0 ? void 0 : _a.setValue(id);
       this.cropImageModal.close();
     });
   }
-
   refreshProfile() {
     this.userService.getEditProfile().subscribe(profile => {
       this.profile = profile;
@@ -831,19 +810,15 @@ class PersonalDataComponent {
       this.form.reset(profile);
     });
   }
-
   saveMasterProfile() {
     const request = this.masterProfileComponent.submit();
     if (!request) return;
     this.updateUserData(request);
   }
-
 }
-
 PersonalDataComponent.ɵfac = function PersonalDataComponent_Factory(t) {
   return new (t || PersonalDataComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_services_user_service__WEBPACK_IMPORTED_MODULE_5__.UserService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_services_manage_image_api_service__WEBPACK_IMPORTED_MODULE_4__.ManageImageApiService));
 };
-
 PersonalDataComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineComponent"]({
   type: PersonalDataComponent,
   selectors: [["mg-personal-data"]],
@@ -852,10 +827,8 @@ PersonalDataComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODUL
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵviewQuery"](_c0, 5);
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵviewQuery"](_c1, 5);
     }
-
     if (rf & 2) {
       let _t;
-
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵloadQuery"]()) && (ctx.masterProfileComponent = _t.first);
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵloadQuery"]()) && (ctx.cropImageModal = _t.first);
     }
@@ -870,10 +843,8 @@ PersonalDataComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODUL
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipe"](1, "async");
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplate"](2, PersonalDataComponent_ng_template_2_Template, 53, 8, "ng-template", null, 1, _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtemplateRefExtractor"]);
     }
-
     if (rf & 2) {
       const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵreference"](3);
-
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngIf", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpipeBind1"](1, 2, ctx.isMaster$))("ngIfElse", _r1);
     }
   },
@@ -884,7 +855,7 @@ PersonalDataComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODUL
 
 /***/ }),
 
-/***/ 6671:
+/***/ 66671:
 /*!*******************************************************************************************!*\
   !*** ./src/app/pages/user-profile/pages/user-profile-page/user-profile-page.component.ts ***!
   \*******************************************************************************************/
@@ -894,10 +865,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "UserProfilePageComponent": () => (/* binding */ UserProfilePageComponent)
 /* harmony export */ });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 8259);
-/* harmony import */ var _services_mg_component_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../services/mg-component.service */ 6260);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ 3903);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ 8750);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 18259);
+/* harmony import */ var _services_mg_component_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../services/mg-component.service */ 26260);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ 73903);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ 48750);
 
 
 
@@ -965,7 +936,7 @@ UserProfilePageComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_M
 
 /***/ }),
 
-/***/ 3376:
+/***/ 23376:
 /*!*******************************************************************!*\
   !*** ./src/app/pages/user-profile/user-profile-routing.module.ts ***!
   \*******************************************************************/
@@ -975,11 +946,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "UserProfileRoutingModule": () => (/* binding */ UserProfileRoutingModule)
 /* harmony export */ });
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 3903);
-/* harmony import */ var _pages_user_profile_page_user_profile_page_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pages/user-profile-page/user-profile-page.component */ 6671);
-/* harmony import */ var _components_personal_data_personal_data_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/personal-data/personal-data.component */ 4319);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 73903);
+/* harmony import */ var _pages_user_profile_page_user_profile_page_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pages/user-profile-page/user-profile-page.component */ 66671);
+/* harmony import */ var _components_personal_data_personal_data_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/personal-data/personal-data.component */ 54319);
 /* harmony import */ var _components_change_password_change_password_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/change-password/change-password.component */ 6613);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 8259);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 18259);
 
 
 
@@ -1006,7 +977,7 @@ UserProfileRoutingModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_M
 
 /***/ }),
 
-/***/ 1749:
+/***/ 71749:
 /*!***********************************************************!*\
   !*** ./src/app/pages/user-profile/user-profile.module.ts ***!
   \***********************************************************/
@@ -1016,13 +987,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "UserProfileModule": () => (/* binding */ UserProfileModule)
 /* harmony export */ });
-/* harmony import */ var _user_profile_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user-profile-routing.module */ 3376);
-/* harmony import */ var _pages_user_profile_page_user_profile_page_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pages/user-profile-page/user-profile-page.component */ 6671);
-/* harmony import */ var _components_personal_data_personal_data_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/personal-data/personal-data.component */ 4319);
+/* harmony import */ var _user_profile_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user-profile-routing.module */ 23376);
+/* harmony import */ var _pages_user_profile_page_user_profile_page_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pages/user-profile-page/user-profile-page.component */ 66671);
+/* harmony import */ var _components_personal_data_personal_data_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/personal-data/personal-data.component */ 54319);
 /* harmony import */ var _components_change_password_change_password_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/change-password/change-password.component */ 6613);
-/* harmony import */ var _mg_shared_mg_shared_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../mg-shared/mg-shared.module */ 1839);
-/* harmony import */ var _components_edit_master_profile_edit_master_profile_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/edit-master-profile/edit-master-profile.component */ 6436);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 8259);
+/* harmony import */ var _mg_shared_mg_shared_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../mg-shared/mg-shared.module */ 51839);
+/* harmony import */ var _components_edit_master_profile_edit_master_profile_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/edit-master-profile/edit-master-profile.component */ 76436);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 18259);
 
 
 

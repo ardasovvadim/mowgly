@@ -1,7 +1,7 @@
 "use strict";
 (self["webpackChunkWebApp"] = self["webpackChunkWebApp"] || []).push([["src_app_pages_contacts_contacts_module_ts"],{
 
-/***/ 9493:
+/***/ 99493:
 /*!***********************************************************!*\
   !*** ./src/app/pages/contacts/contacts-routing.module.ts ***!
   \***********************************************************/
@@ -11,9 +11,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ContactsRoutingModule": () => (/* binding */ ContactsRoutingModule)
 /* harmony export */ });
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ 3903);
-/* harmony import */ var _pages_contacts_page_contacts_page_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pages/contacts-page/contacts-page.component */ 4498);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 8259);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ 73903);
+/* harmony import */ var _pages_contacts_page_contacts_page_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pages/contacts-page/contacts-page.component */ 44498);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 18259);
 
 
 
@@ -29,7 +29,7 @@ ContactsRoutingModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODU
 
 /***/ }),
 
-/***/ 464:
+/***/ 50464:
 /*!***************************************************!*\
   !*** ./src/app/pages/contacts/contacts.module.ts ***!
   \***************************************************/
@@ -39,11 +39,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ContactsModule": () => (/* binding */ ContactsModule)
 /* harmony export */ });
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 8750);
-/* harmony import */ var _contacts_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./contacts-routing.module */ 9493);
-/* harmony import */ var _pages_contacts_page_contacts_page_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pages/contacts-page/contacts-page.component */ 4498);
-/* harmony import */ var _mg_shared_mg_shared_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mg-shared/mg-shared.module */ 1839);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 8259);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 48750);
+/* harmony import */ var _contacts_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./contacts-routing.module */ 99493);
+/* harmony import */ var _pages_contacts_page_contacts_page_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pages/contacts-page/contacts-page.component */ 44498);
+/* harmony import */ var _mg_shared_mg_shared_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mg-shared/mg-shared.module */ 51839);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 18259);
 
 
 
@@ -65,7 +65,7 @@ ContactsModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_3__[
 
 /***/ }),
 
-/***/ 4498:
+/***/ 44498:
 /*!*******************************************************************************!*\
   !*** ./src/app/pages/contacts/pages/contacts-page/contacts-page.component.ts ***!
   \*******************************************************************************/
@@ -75,12 +75,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ContactsPageComponent": () => (/* binding */ ContactsPageComponent)
 /* harmony export */ });
-/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../utils/utils */ 9860);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 8259);
-/* harmony import */ var _services_mg_component_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../services/mg-component.service */ 6260);
-/* harmony import */ var _services_location_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../services/location-api.service */ 8883);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 8750);
-/* harmony import */ var _mg_shared_components_footer_contacts_footer_contacts_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../mg-shared/components/footer-contacts/footer-contacts.component */ 5571);
+/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../utils/utils */ 49860);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 18259);
+/* harmony import */ var _services_mg_component_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../services/mg-component.service */ 26260);
+/* harmony import */ var _services_location_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../services/location-api.service */ 58883);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 48750);
+/* harmony import */ var _mg_shared_components_footer_contacts_footer_contacts_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../mg-shared/components/footer-contacts/footer-contacts.component */ 65571);
 /* harmony import */ var _mg_shared_pipes_safe_url_pipe__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../mg-shared/pipes/safe-url.pipe */ 6455);
 
 

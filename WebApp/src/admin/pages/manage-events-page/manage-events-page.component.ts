@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {EventVm} from '../../../app/models/events/event-vm';
 import {ManageEventsApiService} from '../../services/manage-events-api.service';
-import {ManageEventModalComponent} from './manage-event-modal/manage-event-modal.component';
+import {ManageEventModalComponent} from '../../shared-admin/components/manage-event-modal/manage-event-modal.component';
 import {toSortOrder} from '../../../app/services/events-api.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {PaginationComponent} from '../../../app/mg-shared/components/pagination/pagination.component';
