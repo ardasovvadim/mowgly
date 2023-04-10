@@ -3,6 +3,7 @@ import {ComponentState, MgComponentService} from '../../../../services/mg-compon
 import {LocationApiService} from '../../../../services/location-api.service';
 import {LocationViewModel} from '../../../../models/locations/location.view.model';
 import {goToExternalLink} from '../../../../utils/utils';
+import {GMapsUtils} from "../../../../utils/g-maps-utils";
 
 @Component({
   selector: 'mg-contacts-page',
@@ -54,7 +55,11 @@ export class ContactsPageComponent implements OnInit, OnDestroy {
     this.currentIndex = index;
   }
 
-  goToMaps(googleMapsLink: string) {
-    goToExternalLink(googleMapsLink);
+  goToMaps(location: LocationViewModel) {
+    goToExternalLink(GMapsUtils.getMapUrl(location.address));
+  }
+
+  getUrl(location: LocationViewModel) {
+    return GMapsUtils.getEmbedUrl(location.address);
   }
 }

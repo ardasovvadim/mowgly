@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {ModalBase} from '../../../../app/interfaces/modal-base';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LocationViewModel} from '../../../../app/models/locations/location.view.model';
 import {LocationEditModel} from '../../../models/location.model';
 import {ManageLocationApiService} from '../../../services/manage-location-api.service';
@@ -25,13 +25,14 @@ export class ManageLocationModalComponent extends ModalBase {
   location: LocationViewModel = {} as LocationEditModel;
   form: FormGroup = this.fb.group({
     id: [''],
-    name: [''],
-    address: [''],
-    city: [''],
+    name: ['', [Validators.required]],
+    address: ['', [Validators.required]],
+    city: ['', [Validators.required]],
     googleMapsLink: [''],
     googleMapsEmbeddedLink: [''],
     sections: [[]]
   });
+  formSubmitted = false;
 
   updateSections = (filterText: string) => this.optionsService.getSectionOptions(null, filterText, this.form.value.sections?.map(s => s.id));
 
@@ -49,6 +50,8 @@ export class ManageLocationModalComponent extends ModalBase {
   }
 
   submit() {
+    this.formSubmitted = true;
+
     if (this.form.invalid)
       return;
 
@@ -61,6 +64,8 @@ export class ManageLocationModalComponent extends ModalBase {
   }
 
   showLocation(location: LocationEditModel) {
+    this.formSubmitted = false;
+
     this.location = location;
     this.form.reset(location, {emitEvent: false});
     this.open();
@@ -103,5 +108,9 @@ export class ManageLocationModalComponent extends ModalBase {
     let value = control.value as IdName[] ?? [];
     value = value.filter(s => s != section);
     control.setValue(value);
+  }
+
+  hasError(control: string, error: string) {
+    return this.formSubmitted && this.form.controls[control]?.hasError(error)
   }
 }

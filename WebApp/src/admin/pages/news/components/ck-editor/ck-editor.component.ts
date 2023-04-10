@@ -2,6 +2,10 @@ import {Component, forwardRef, Input, OnInit, ViewChild, ViewEncapsulation} from
 import * as Editor from 'ckeditor5-custom-build/build/ckeditor';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CKEditorComponent} from "@ckeditor/ckeditor5-angular";
+import {CKEditor5} from "@ckeditor/ckeditor5-angular/ckeditor";
+import {UserService} from "../../../../../app/services/user.service";
+import {AuthenticationService} from "../../../../../app/services/authentication.service";
+import {environment} from "../../../../../environments/environment";
 
 const noop = () => {
 };
@@ -15,19 +19,35 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     selector: 'mg-ck-editor',
     templateUrl: './ck-editor.component.html',
     styleUrls: ['./ck-editor.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR
+    ]
 })
 export class CkEditorComponent implements OnInit, ControlValueAccessor {
 
     @ViewChild('editor') editorComponent: CKEditorComponent;
-    @Input() data = '';
+    @Input() data = '<p>Hello, world!</p>';
+    @Input() set extraConfig(value: CKEditor5.Config) {
+        this.config = Object.assign(this.config, value);
+    }
 
-    public editor = Editor;
+    public Editor = Editor;
     onChangeCallback: any = noop;
     onTouchCallback: any = noop;
     disabled: boolean = false;
+    config: CKEditor5.Config = {
+        simpleUpload: {
+            uploadUrl: '/api/image/news',
+            headers: {
+                Authorization: `Bearer ${this.authenticationService.getToken()}`
+            }
+        }
+    };
 
-    constructor() {
+    constructor(
+        private readonly authenticationService: AuthenticationService,
+    ) {
     }
 
     ngOnInit(): void {
@@ -50,8 +70,6 @@ export class CkEditorComponent implements OnInit, ControlValueAccessor {
     }
 
     onChange() {
-        if (this.editorComponent) {
-            this.onChangeCallback(this.editorComponent.data);
-        }
+        this.onChangeCallback(this.data);
     }
 }

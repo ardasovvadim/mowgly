@@ -4,6 +4,7 @@ using MG.WebHost.Security;
 using MG.WebHost.Services;
 using MG.WebHost.Settings;
 using MG.WebHost.Tasks;
+using MG.WebHost.Tasks.OneTimeTasks;
 using MG.WebHost.Utils;
 using Telegram.Bot;
 
@@ -63,7 +64,7 @@ namespace MG.WebHost.Config
 
             // Tasks
             services.AddStartupTask<DbInitialization>();
-            services.AddStartupTask<MoveMasterCardImageToUserAvatarOnceStartupTask>();
+            services.AddStartupTask<MoveMasterCardImageToUserAvatarOneTimeStartupTask>();
 
             return services;
         }

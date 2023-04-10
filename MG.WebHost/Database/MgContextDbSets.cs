@@ -51,13 +51,24 @@ namespace MG.WebHost.Database
             modelBuilder.Entity<Image>().ToTable(nameof(Images));
             modelBuilder.Entity<Tournament>().ToTable(nameof(Tournaments));
             modelBuilder.Entity<TournamentResult>().ToTable(nameof(TournamentResults));
-            modelBuilder.Entity<News>()
-                .ToTable(nameof(News))
-                .HasOne(e => e.Tournament)
-                .WithMany(e => e.News)
-                .HasForeignKey(e => e.TournamentId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<News>(t =>
+            {
+                t
+                    .ToTable(nameof(News))
+                    .HasOne(e => e.Tournament)
+                    .WithMany(e => e.News)
+                    .HasForeignKey(e => e.TournamentId)
+                    .IsRequired(false)
+                    .OnDelete(DeleteBehavior.SetNull);
+                
+                t
+                    .HasOne(e => e.Category)
+                    .WithMany(e => e.News)
+                    .HasForeignKey(e => e.CategoryId)
+                    .IsRequired(false)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    ;
+            });
             modelBuilder.Entity<Permission>().ToTable(nameof(Permissions));
             modelBuilder.Entity<MgLoginModel>(t =>
             {

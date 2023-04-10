@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {LocationViewModel} from '../../../models/locations/location.view.model';
 import {goToExternalLink} from '../../../utils/utils';
+import {GMapsUtils} from "../../../utils/g-maps-utils";
 
 @Component({
   selector: 'mg-location-card',
@@ -16,6 +17,6 @@ export class LocationCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  goToLink = (externalLink: string) => goToExternalLink(externalLink);
+  goToMap = (externalLink: LocationViewModel) => goToExternalLink(GMapsUtils.getMapUrl(externalLink.address));
 
 }

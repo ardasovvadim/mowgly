@@ -1,14 +1,19 @@
+using MG.WebHost.Entities.Users;
 using MG.WebHost.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace MG.WebHost.Utils;
 
 public class UserPermissionCache
 {
-    public UserPermissionCache(IUserService userService, CacheUtils cache)
+    private readonly UserManager<User> _userManager;
+
+    public UserPermissionCache(IUserService userService, CacheUtils cache, UserManager<User> userManager)
     {
         UserService = userService;
         Cache = cache;
+        _userManager = userManager;
     }
 
     private CacheUtils Cache { get; }
@@ -27,6 +32,12 @@ public class UserPermissionCache
         await SetKeyAsync(key);
 
         return permissions;
+    }
+    
+    public async Task ClearCacheAsync(Guid userId)
+    {
+        var key = CacheKey + userId;
+        await Cache.RemoveAsync(key);
     }
 
     public async Task ClearCacheAsync()

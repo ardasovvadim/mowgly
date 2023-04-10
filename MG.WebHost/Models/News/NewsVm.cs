@@ -1,5 +1,3 @@
-using System;
-
 namespace MG.WebHost.Models.News;
 
 public record NewsVm
@@ -11,4 +9,8 @@ public record NewsVm
     public Guid AuthorId { get; set; }
     public DateTime? CreatedDate { get; set; }
     public string ImageUrl { get; set; }
+    public string AuthorAvatar { get; set; }
+    
+    public Guid? CategoryId { get; set; }
+    public string CategoryName { get; set; }
 }

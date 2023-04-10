@@ -14,7 +14,6 @@ import {RegSectionComponent} from './pages/registration-page/reg-section/reg-sec
 import {AppLayoutComponent} from './pages/app-layout/app-layout.component';
 import {EventsPageComponent} from './pages/events-page/events-page.component';
 import {SchedulePageComponent} from './pages/schedule-page/schedule-page.component';
-import {NewsDetailsComponent} from './pages/news-page/news-details/news-details.component';
 import {MasterPageComponent} from './pages/master-page/master-page.component';
 import {RegCompletedModalComponent} from './pages/registration-page/reg-completed-modal/reg-completed-modal.component';
 import {LoginPageComponent} from './pages/login-page/login-page.component';
@@ -36,7 +35,6 @@ import {MastersPageComponent} from './pages/masters-page/masters-page.component'
         AppLayoutComponent,
         SchedulePageComponent,
         EventsPageComponent,
-        NewsDetailsComponent,
         MasterPageComponent,
         LoginPageComponent,
         RegistrationPageComponent,

@@ -14,7 +14,6 @@ export class UserAvatarComponent implements OnInit {
   @Input() size: number = 64;
 
   avatar$: Observable<string> = this.userService.profile$.pipe(map(profile => profile?.profiles?.find(p => p.name == 'UserAvatar')?.value))
-  error: boolean = false;
 
   constructor(
       private readonly userService: UserService

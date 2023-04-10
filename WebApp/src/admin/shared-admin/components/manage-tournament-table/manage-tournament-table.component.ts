@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {TournamentResult, TournamentResultsData} from '../../../../app/pages/news-page/news-details/news-details.component';
 import {ModalService} from '../../../../app/services/modal.service';
 import {
   ManageTournamentResultModalComponent
 } from '../manage-tournament-result-modal/manage-tournament-result-modal.component';
 import {ManageTournamentApiService} from '../../../services/manage-tournament-api.service';
 import {Subscription} from 'rxjs';
+import {TournamentResult, TournamentResultsData} from "../../../../app/models/news/news-vm";
 
 @Component({
   selector: 'mg-manage-tournament-table',

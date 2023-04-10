@@ -1,4 +1,5 @@
 using MG.WebHost.Models;
+using MG.WebHost.Models.Images;
 using MG.WebHost.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,16 @@ namespace MG.WebHost.Controllers
         [HttpPost, Authorize]
         public async Task<Guid> SaveAsync(ImageCreateDto request)
         {
-            return await _imageService.AddAsync(request);
+            return await _imageService.AddBase64ImageAsync(request);
+        }
+
+        [HttpPost("news"), Authorize]
+        public async Task<CkImageDto> UploadNewsImageAsync(IFormFile upload)
+        {
+            return new CkImageDto
+            {
+                Url = "/api/image/" + await _imageService.AddFormFileImageAsync(upload)
+            };
         }
 
         [HttpDelete("{id:guid}"), Authorize]

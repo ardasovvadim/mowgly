@@ -31,7 +31,6 @@ import {NewsTournamentTableComponent} from './components/news/news-tournament-ta
 import {NewsImageBlockComponent} from './components/news/news-image-block/news-image-block.component';
 import {BgComponent} from './components/bg/bg.component';
 import {RouterModule} from '@angular/router';
-import {NewsPageComponent} from '../pages/news-page/news-page.component';
 import {AutocompleteInputComponent} from './components/autocomplete-input/autocomplete-input.component';
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {LoadingDirective} from './directives/loading.directive';
@@ -49,6 +48,7 @@ import {LoaderComponent} from './components/loader/loader.component';
 import {AddImageModalComponent} from './components/add-image-modal/add-image-modal.component';
 import {QuillEditorComponent} from './components/quill-editor/quill-editor.component';
 import {FooterContactsComponent} from './components/footer-contacts/footer-contacts.component';
+import { AvatarComponent } from './components/avatar/avatar.component';
 
 const components: any[] = [
     FooterComponent,
@@ -69,7 +69,6 @@ const components: any[] = [
     ContainsSettingPipe,
     LocationCardComponent,
     BgComponent,
-    NewsPageComponent,
     ImageCroppModalComponent,
     LoadingDirective,
     AddImageModalComponent,
@@ -102,6 +101,7 @@ const components: any[] = [
         ListErrorsComponent,
         LoaderComponent,
         FooterContactsComponent,
+        AvatarComponent,
     ],
     exports: [
         // ---
@@ -132,6 +132,7 @@ const components: any[] = [
         ListErrorsComponent,
         UserAvatarComponent,
         FooterContactsComponent,
+        AvatarComponent,
     ],
     imports: [
         CommonModule,

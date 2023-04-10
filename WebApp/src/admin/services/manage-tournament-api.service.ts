@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {ApiService} from '../../app/services/api.service';
 import {Observable} from 'rxjs';
 import {IdName} from '../../app/models/timetable-records/timetable-record.view.model';
-import {TournamentEditModel, TournamentResult} from '../../app/pages/news-page/news-details/news-details.component';
 import {TournamentApiService} from '../../app/services/tournament-api.service';
+import {TournamentEditModel, TournamentResult} from "../../app/models/news/news-vm";
 
 @Injectable({
     providedIn: 'root'

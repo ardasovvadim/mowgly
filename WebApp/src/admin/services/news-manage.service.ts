@@ -1,18 +1,13 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of, tap} from 'rxjs';
 import * as moment from 'moment';
-import {
-    NewsBlock,
-    NewsBlockType,
-    NewsDetailsVm,
-    NewsImageBlock
-} from '../../app/pages/news-page/news-details/news-details.component';
 import {StorageService} from '../../app/services/storage.service';
 import {
     ChooseOrCreateEventModalComponent
 } from '../shared-admin/components/choose-or-create-event-modal/choose-or-create-event-modal.component';
 import {ManageNewsApiService} from './manage-news-api.service';
 import {mgSuccessNotification} from '../../app/utils/ui-kit';
+import {NewsBlock, NewsBlockType, NewsDetailsVm, NewsImageBlock} from "../../app/models/news/news-vm";
 
 @Injectable()
 export class NewsManageService {
@@ -87,22 +82,21 @@ export class NewsManageService {
         const index = block ? this.blocks.indexOf(block) : -1;
 
         switch (type) {
-            case NewsBlockType.Image: {
-                const defaultImageBlockData = {
-                    url: 'https://autosdutriomphe.fr/wp-content/uploads/2018/04/default-image.webp',
-                    caption: 'Підпис'
-                } as NewsImageBlock;
-                newBlock.data = JSON.stringify(defaultImageBlockData);
-                break;
-            }
+            // case NewsBlockType.Image: {
+            //     const defaultImageBlockData = {
+            //         url: 'https://autosdutriomphe.fr/wp-content/uploads/2018/04/default-image.webp',
+            //         caption: 'Підпис'
+            //     } as NewsImageBlock;
+            //     newBlock.data = JSON.stringify(defaultImageBlockData);
+            //     break;
+            // }
             case NewsBlockType.Text: {
-                newBlock.data = `<p>Текст...</p>`
                 break;
             }
-            case NewsBlockType.Video: {
-                newBlock.data = 'https://www.youtube.com/embed/bfoGTrtFc5g'
-                break;
-            }
+            // case NewsBlockType.Video: {
+            //     newBlock.data = 'https://www.youtube.com/embed/bfoGTrtFc5g'
+            //     break;
+            // }
             case NewsBlockType.TournamentResultsTable: {
                 this.createEventModal.chooseEvent();
                 this.savedBlockPosition = index;
@@ -139,10 +133,8 @@ export class NewsManageService {
 
     private newData = (): NewsDetailsVm => {
         return {
-            title: 'Заголовок',
-            description: 'Опис',
-            // todo: not sure
-            createdDate: moment().toISOString(),
+            title: '',
+            description: '',
         } as NewsDetailsVm;
     }
 

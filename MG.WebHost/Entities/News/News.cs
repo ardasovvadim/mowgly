@@ -17,4 +17,7 @@ public class News : BaseEntity
 
     public Guid? TournamentId { get; set; }
     public virtual Tournament Tournament { get; set; }
+
+    public Guid? CategoryId { get; set; }
+    public virtual Category Category { get; set; }
 }

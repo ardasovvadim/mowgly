@@ -36,15 +36,35 @@
   justify-content: center;
 
   .mg-stepper-back-btn {
-    @include absolute-y-center-left();
+    position: absolute;
+    left: 0;
+    top: 34%;
+  }
+
+  .mg-stepper-skip-btn {
+    position: absolute;
+    right: 0;
     top: 34%;
   }
 }
 
 @media (max-width: $mg-breakpoint-small) {
-  .mg-stepper-nav .mg-stepper-back-btn {
-    position: relative;
-    margin-top: 10px;
+  .mg-stepper-nav {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+
+    .stepper {
+      width: 100%;
+    }
+
+    .mg-stepper-back-btn, .mg-stepper-skip-btn {
+      position: relative;
+      margin-top: 10px;
+    }
+
+    .mg-stepper-skip-btn {
+      margin-left: auto;
+    }
   }
 
   #mg-reg-switcher {

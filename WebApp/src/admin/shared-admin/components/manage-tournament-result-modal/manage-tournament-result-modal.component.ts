@@ -2,16 +2,13 @@ import {Component, ViewChild} from '@angular/core';
 import {ManageModal} from '../manage-modal/manage-modal';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ManageTournamentApiService} from '../../../services/manage-tournament-api.service';
-import {
-  TournamentResult,
-  TournamentResultsData
-} from '../../../../app/pages/news-page/news-details/news-details.component';
 import {IdName} from '../../../../app/models/timetable-records/timetable-record.view.model';
 import {catchError, Observable} from 'rxjs';
 import {mgConfirm} from '../../../../app/utils/ui-kit';
 import {
   AutocompleteInputComponent
 } from '../../../../app/mg-shared/components/autocomplete-input/autocomplete-input.component';
+import {TournamentResult, TournamentResultsData} from "../../../../app/models/news/news-vm";
 
 @Component({
   selector: 'mg-manage-tournament-result-modal',

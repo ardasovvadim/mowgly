@@ -6,3 +6,7 @@
   --ck-spacing-standard: 0;
   --ck-focus-ring: none;
 }
+
+.ck.ck-editor__editable_inline {
+  border: none !important;
+}

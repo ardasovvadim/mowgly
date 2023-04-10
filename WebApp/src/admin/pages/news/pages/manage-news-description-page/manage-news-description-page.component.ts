@@ -1,10 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {
-    NewsBlock,
-    NewsBlockType,
-    NewsDetailsVm
-} from '../../../../../app/pages/news-page/news-details/news-details.component';
 import {NewsManageService} from '../../../../services/news-manage.service';
 import {filter, map, switchMap} from 'rxjs/operators';
 import {
@@ -22,6 +17,7 @@ import {AddImageModalComponent} from '../../../../../app/mg-shared/components/ad
 import {
     ChooseOrCreateEventModalComponent
 } from '../../../../shared-admin/components/choose-or-create-event-modal/choose-or-create-event-modal.component';
+import {NewsBlock, NewsBlockType, NewsDetailsVm} from "../../../../../app/models/news/news-vm";
 
 @Component({
     selector: 'mg-manage-news-description-page',
@@ -34,11 +30,11 @@ import {
 })
 export class ManageNewsDescriptionPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
-    data: NewsDetailsVm = {} as NewsDetailsVm;
+    news: NewsDetailsVm = {} as NewsDetailsVm;
     blockTypes = NewsBlockType;
 
     get isEditMode(): boolean {
-        return !this.data?.id
+        return !this.news?.id
     }
 
     @ViewChild('imageCoverModal') modalManageImage: ManageNewsImageCoverModalComponent;
@@ -48,6 +44,13 @@ export class ManageNewsDescriptionPageComponent implements OnInit, AfterViewInit
     @ViewChild('addImageCoverModal') addImageCoverModal: AddImageModalComponent;
     @ViewChild('htmlElement') htmlElement: ElementRef;
     @ViewChild('createEventModal') createEventModal: ChooseOrCreateEventModalComponent;
+    descriptionEditorConfig = {
+        blockToolbar: [],
+        placeholder: 'Введіть опис новини',
+    };
+    textBlockEditorConfig = {
+        placeholder: 'Введіть текст',
+    };
 
     constructor(
         private readonly activatedRoute: ActivatedRoute,
@@ -69,7 +72,7 @@ export class ManageNewsDescriptionPageComponent implements OnInit, AfterViewInit
         this.newsManageService.$data.subscribe(data => {
             // todo: delete
             console.log(data)
-            this.data = data;
+            this.news = data;
         });
     }
 
@@ -77,7 +80,7 @@ export class ManageNewsDescriptionPageComponent implements OnInit, AfterViewInit
         this.newsManageService.createEventModal = this.createEventModal;
 
         this.addImageCoverModal.onImageAdded.subscribe(imageDataUrl => {
-            this.data.imageUrl = imageDataUrl;
+            this.news.imageUrl = imageDataUrl;
             this.addImageCoverModal.close();
             this.saveResult();
         });
@@ -99,7 +102,7 @@ export class ManageNewsDescriptionPageComponent implements OnInit, AfterViewInit
             )
             .subscribe({
                 next: () => {
-                    this.data.tournamentId = tournamentId;
+                    this.news.tournamentId = tournamentId;
                     this.saveResult();
                 },
                 error: () => {}
@@ -172,5 +175,27 @@ export class ManageNewsDescriptionPageComponent implements OnInit, AfterViewInit
                 },
                 error: () => {}
             })
+    }
+
+    deleteImageCover() {
+        this.news.imageUrl = null;
+        this.saveResult();
+    }
+
+    addTextBlock() {
+        this.newsManageService.addBlock(this.getLatestBlock(), NewsBlockType.Text);
+    }
+
+    addTournamentTable() {
+        this.newsManageService.addBlock(this.getLatestBlock(), NewsBlockType.TournamentResultsTable);
+    }
+
+    private getLatestBlock(): NewsBlock {
+        const blocks = this.news.blocks;
+        return blocks ? blocks[blocks.length - 1] : null;
+    }
+
+    addImage() {
+        this.newsManageService.addBlock(this.getLatestBlock(), NewsBlockType.Image);
     }
 }

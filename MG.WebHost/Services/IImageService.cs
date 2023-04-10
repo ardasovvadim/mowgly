@@ -1,6 +1,7 @@
 using MG.WebHost.Entities.Images;
 using MG.WebHost.Exceptions;
 using MG.WebHost.Models;
+using MG.WebHost.Models.Images;
 using MG.WebHost.Repositories;
 using MG.WebHost.Utils;
 using Microsoft.AspNetCore.StaticFiles;
@@ -12,9 +13,10 @@ namespace MG.WebHost.Services
     public interface IImageService
     {
         Task<ImageDto> GetImagePhysicalPathOrDefault(Guid imageGuid);
-        Task<Guid> AddAsync(ImageCreateDto request);
+        Task<Guid> AddBase64ImageAsync(ImageCreateDto request);
         Task DeleteAsync(Guid id);
         Task DeleteAsync(IEnumerable<Guid> ids);
+        Task<Guid> AddFormFileImageAsync(IFormFile formFile);
     }
 
     public class ImageService : IImageService
@@ -57,7 +59,7 @@ namespace MG.WebHost.Services
             });
         }
 
-        public async Task<Guid> AddAsync(ImageCreateDto request)
+        public async Task<Guid> AddBase64ImageAsync(ImageCreateDto request)
         {
             if (request == null)
                 throw new BusinessException("Image is null");
@@ -72,23 +74,11 @@ namespace MG.WebHost.Services
                 throw new BusinessException("Unsupported image file extension");
 
             var pathPrefix = request.PathPrefix ?? "";
-            var imageId = Guid.NewGuid();
+            
             var imageBytes = Convert.FromBase64String(imageDataUrlParts.Last().Replace("base64,", ""));
             using var ms = new MemoryStream(imageBytes);
-
-            var subPath = Path.Combine(ImageFolder, pathPrefix);
-            var fullPath = _directoryUtils.CombinePathFromRoot(subPath);
-            var imageFolderFullPath = _directoryUtils.EnsureFolderCreated(fullPath);
-            var imagePath = Path.Combine(imageFolderFullPath, imageId + imageExtension);
-
-            await using var fs = new FileStream(imagePath, FileMode.Create);
-            var imageEntity = new Image(imageId, pathPrefix, imageExtension);
-
-            await Task.WhenAll(ms.CopyToAsync(fs), _imageRepository.InsertAsync(imageEntity));
-
-            await _imageRepository.SaveChangesAsync();
-
-            return imageEntity.Id;
+            
+            return await SaveImageFileAsync(pathPrefix, imageExtension, ms);
         }
 
         public Task DeleteAsync(Guid id)
@@ -99,6 +89,36 @@ namespace MG.WebHost.Services
         public Task DeleteAsync(IEnumerable<Guid> ids)
         {
             return DeleteImplAsync(ids);
+        }
+
+        public async Task<Guid> AddFormFileImageAsync(IFormFile formFile)
+        {
+            if (formFile == null)
+                throw new BusinessException("Image is null");
+            
+            var imageExtension = Path.GetExtension(formFile.FileName);
+            var pathPrefix = "news";
+            
+            return await SaveImageFileAsync(pathPrefix, imageExtension, formFile.OpenReadStream());
+        }
+
+        private async Task<Guid> SaveImageFileAsync(string pathPrefix, string imageExtension, Stream imageStream)
+        {
+            var imageId = Guid.NewGuid();
+
+            var subPath = Path.Combine(ImageFolder, pathPrefix);
+            var fullPath = _directoryUtils.CombinePathFromRoot(subPath);
+            var imageFolderFullPath = _directoryUtils.EnsureFolderCreated(fullPath);
+            var imagePath = Path.Combine(imageFolderFullPath, imageId + imageExtension);
+
+            await using var fs = new FileStream(imagePath, FileMode.Create);
+            var imageEntity = new Image(imageId, pathPrefix, imageExtension);
+
+            await Task.WhenAll(imageStream.CopyToAsync(fs), _imageRepository.InsertAsync(imageEntity));
+
+            await _imageRepository.SaveChangesAsync();
+
+            return imageEntity.Id;
         }
 
         private async Task DeleteImplAsync(IEnumerable<Guid> ids)

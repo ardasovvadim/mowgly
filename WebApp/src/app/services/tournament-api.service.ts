@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import {Observable} from 'rxjs';
-import {TournamentResultsData} from '../pages/news-page/news-details/news-details.component';
+
+import {TournamentResultsData} from "../models/news/news-vm";
 
 @Injectable()
 export class TournamentApiService {

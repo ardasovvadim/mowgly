@@ -1,0 +1,32 @@
+<div class="col-12 mt-50">
+    <h1 class="uk-text-center">Новини</h1>
+</div>
+
+<div class="uk-child-width-1-3@xl uk-child-width-1-2@m mt-50" uk-grid="masonry: true">
+    <div *ngFor="let news of data">
+        <div class="uk-card uk-card-default">
+            <div *ngIf="news.imageUrl" class="uk-card-media-top">
+                <img [src]="news.imageUrl | image" alt="Post image" loading="lazy">
+            </div>
+            <div class="uk-card-body">
+                <div *ngIf="news.categoryName" class="uk-card-badge uk-label">{{news.categoryName}}</div>
+                <h3 class="uk-card-title">{{news.title}}</h3>
+                <p class="truncate-text" [innerHtml]="news.description | safeHtml"></p>
+            </div>
+            <div class="uk-card-footer">
+                <div class="uk-grid-small uk-flex-middle" uk-grid>
+                    <div class="uk-width-auto">
+                        <mg-avatar [size]="40" [image]="news.authorAvatar"></mg-avatar>
+                    </div>
+                    <div class="uk-width-expand">
+                        <p class="uk-margin-remove-bottom">{{news.author}}</p>
+                        <p class="uk-text-meta uk-margin-remove-top"><time [dateTime]="news.createdDate">{{news.createdDate | date : 'longDate'}}</time></p>
+                    </div>
+                    <div class="uk-width-auto">
+                        <a href="#" class="uk-button uk-button-text" [routerLink]="'/news/' + news.id">Продовжити читати</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

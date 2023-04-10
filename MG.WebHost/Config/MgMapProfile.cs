@@ -1,4 +1,5 @@
 using AutoMapper;
+using MG.WebHost.Database;
 using MG.WebHost.Entities;
 using MG.WebHost.Entities.Enums;
 using MG.WebHost.Entities.News;
@@ -105,11 +106,17 @@ namespace MG.WebHost.Config
             CreateMap<News, NewsVm>()
                 .ForMember(d => d.Author, o => o.MapFrom(s => s.Author.ConcatName()))
                 .ForMember(d => d.CreatedDate, o => o.MapFrom(s => s.PublishedDate))
+                .ForMember(d => d.AuthorAvatar, o => o.MapFrom(s => s.Author.Profiles.FirstOrDefault(p => p.Name == UserProfileKeys.UserAvatar).Value))
+                .ForMember(d => d.CategoryId, o => o.MapFrom(s => s.Category.Id))
+                .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category.Name))
                 ;
 
             CreateMap<News, NewsDetailsVm>()
                 .ForMember(d => d.Author, o => o.MapFrom(s => s.Author.ConcatName()))
                 .ForMember(d => d.CreatedDate, o => o.MapFrom(s => s.PublishedDate))
+                .ForMember(d => d.AuthorAvatar, o => o.MapFrom(s => s.Author.Profiles.FirstOrDefault(p => p.Name == UserProfileKeys.UserAvatar).Value))
+                .ForMember(d => d.CategoryId, o => o.MapFrom(s => s.Category.Id))
+                .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category.Name))
                 ;
 
             CreateMap<News, NewsDetailsEditModel>()
@@ -117,6 +124,7 @@ namespace MG.WebHost.Config
                 .ForMember(d => d.CreatedDate, o => o.MapFrom(s => s.PublishedDate))
                 .ReverseMap()
                 .ForMember(d => d.Author, o => o.Ignore())
+                .ForMember(d => d.PublishedDate, o => o.Ignore())
                 ;
 
             CreateMap<User, AdminMasterVm>()

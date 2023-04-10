@@ -1,7 +1,9 @@
 using AutoMapper;
+using MG.WebHost.Database;
 using MG.WebHost.Entities.News;
 using MG.WebHost.Models.News;
 using MG.WebHost.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace MG.WebHost.Services;
 
@@ -26,12 +28,24 @@ public class NewsService : INewsService
 
     public async Task<IEnumerable<NewsVm>> GetNewsList()
     {
-        return _mapper.Map<IEnumerable<NewsVm>>(await _newsRepository.GetAsync(null, "Author")).OrderByDescending(n => n.CreatedDate);
+        return _mapper.Map<IEnumerable<NewsVm>>(await GetQuery().OrderByDescending(n => n.CreatedDate).ToListAsync());
     }
 
     public async Task<NewsDetailsVm> GetNewsDetails(Guid newsId)
     {
-        return _mapper.Map<NewsDetailsVm>(await _newsRepository.GetByIdAsync(newsId, include: "Author"));
+        var news = await GetQuery()
+                .FirstOrDefaultAsync(e => e.Id == newsId);
+        return _mapper.Map<NewsDetailsVm>(news);
+    }
+
+    private IQueryable<News> GetQuery()
+    {
+        return _newsRepository
+            .GetQueryable()
+            .Include(e => e.Author)
+            .ThenInclude(e => e.Profiles.Where(p => p.Name == UserProfileKeys.UserAvatar))
+            .AsNoTracking()
+            ;
     }
 
     public async Task<NewsDetailsEditModel> AddNews(NewsDetailsEditModel request)
@@ -41,10 +55,10 @@ public class NewsService : INewsService
             ? new News()
             : await _newsRepository.GetByIdAsync(request.Id.Value) ?? new News();
 
+        _mapper.Map(request, result);
+        
         if (isNew)
             result.PublishedDate = DateTime.UtcNow;
-
-        _mapper.Map(request, result);
 
         if (request.Id.HasValue)
             _newsRepository.Update(result);

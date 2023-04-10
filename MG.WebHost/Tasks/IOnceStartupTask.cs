@@ -4,7 +4,7 @@ using MG.WebHost.Services;
 
 namespace MG.WebHost.Tasks;
 
-public abstract class OnceStartupTask : IStartupTask
+public abstract class OneTimeStartupTask : IStartupTask
 {
     private readonly IServiceProvider _serviceProvider;
     protected IServiceProvider ServiceProvider;
@@ -12,7 +12,7 @@ public abstract class OnceStartupTask : IStartupTask
     protected ILogger Logger => LazyProvider.ProvideRequired(() => ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger(GetType()));
     protected IRepository<OneTimeTask> SettingRepository => LazyProvider.GetRequiredService<IRepository<OneTimeTask>>();
 
-    protected OnceStartupTask(IServiceProvider serviceProvider)
+    protected OneTimeStartupTask(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }
@@ -28,6 +28,8 @@ public abstract class OnceStartupTask : IStartupTask
         
         if (isExecutedPrev)
             return;
+        
+        Logger.LogInformation("Running one time task {id}", Task);
 
         try
         {
@@ -43,8 +45,9 @@ public abstract class OnceStartupTask : IStartupTask
         
         await SettingRepository.InsertAsync(setting);
         await SettingRepository.SaveChangesAsync();
+        
+        Logger.LogInformation("One time task {id} successfully executed", Task);
     }
-    
-    public abstract Task ExecuteOnce();
-    
+
+    protected abstract Task ExecuteOnce();
 }

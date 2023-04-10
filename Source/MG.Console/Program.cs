@@ -1,32 +1,16 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using MailKit.Net.Smtp;
-using MimeKit;
-using MimeKit.Text;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
-var smtpServer = "smtp-relay.sendinblue.com";
-var port = 587;
-var login = "ardasovvadim@gmail.com";
-var password = "8QTzx9pS2wknMvIP";
+var apiKey = "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";
+var client = new SendGridClient(apiKey);
+var from = new EmailAddress("ardasovvadim@gmail.com", "Vadim Ardasov Sender");
+var subject = "Sending with SendGrid is Fun";
+var to = new EmailAddress("vadym.ardasov@nure.ua", "Vadim Ardasov Receiver");
+var plainTextContent = "and easy to do anywhere, even with C#";
+var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+var response = await client.SendEmailAsync(msg);
 
-using var smtpClient = new SmtpClient();
-
-Console.WriteLine("Connecting to SMTP server...");
-await smtpClient.ConnectAsync(smtpServer, port, false);
-
-Console.WriteLine("Authenticating...");
-await smtpClient.AuthenticateAsync(login, password);
-
-var message = new MimeMessage();
-message.From.Add(new MailboxAddress("Vadim Admin", "ardasovvadim@ardasovvadim.space"));
-message.To.Add(new MailboxAddress("Olha", "olha.koshlata@gmail.com"));
-message.Subject = "Test email from C#";
-message.Body = new TextPart(TextFormat.Plain) { Text = "Hello, world!" };
-
-Console.WriteLine("Sending message...");
-await smtpClient.SendAsync(message);
-
-Console.WriteLine("Disconnecting...");
-await smtpClient.DisconnectAsync(true);
-
-Console.WriteLine("Done.");
+Console.WriteLine("Is success: " + response.IsSuccessStatusCode);

@@ -18,20 +18,17 @@
                 uk-icon="icon: arrow-right" class="green-main"></span>
         </span>
     </div>
-    <ng-template [ngIf]="currentLocation?.googleMapsLink" [ngIfElse]="withoutLink">
-        <p class="mg-text-green uk-link mg-pointer" (click)="goToMaps(currentLocation.googleMapsLink)">
+    <ng-template [ngIf]="currentLocation?.address">
+        <p class="mg-text-green uk-link mg-pointer" (click)="goToMaps(currentLocation)">
             Адреса: {{currentLocation?.address ?? '...'}} <span uk-icon="icon: link"></span>
         </p>
-    </ng-template>
-    <ng-template #withoutLink>
-        <p>Адреса: {{currentLocation?.address ?? '...'}}</p>
     </ng-template>
 </div>
 
 <div class="mg-card mt-50">
     <div style="width: 100%; height: 500px" class="xy-center">
-        <ng-template [ngIf]="currentLocation?.googleMapsEmbeddedLink" [ngIfElse]="displayAddress">
-            <iframe [src]="(currentLocation?.googleMapsEmbeddedLink | safeUrl) ?? null"
+        <ng-template [ngIf]="currentLocation?.address" [ngIfElse]="displayAddress">
+            <iframe [src]="(getUrl(currentLocation) | safeUrl) ?? null"
                     id="map"
                     width="100%"
                     height="500px"

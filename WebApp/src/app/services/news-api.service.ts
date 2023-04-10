@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import {Observable} from 'rxjs';
-import {NewsVm} from '../models/news/news-vm';
-import {NewsBlock, NewsDetailsVm} from '../pages/news-page/news-details/news-details.component';
+import {NewsBlock, NewsDetailsVm, NewsVm} from '../models/news/news-vm';
 import {map} from 'rxjs/operators';
 
 @Injectable()

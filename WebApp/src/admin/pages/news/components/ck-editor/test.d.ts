@@ -1,5 +1,5 @@
-declare module 'ckeditor5-custom-build/build/ckeditor' {
-    const Editor: any;
-
-    export default Editor;
-}
+// declare module 'ckeditor5-custom-build/build/ckeditor' {
+//     const Editor: any;
+//
+//     export default Editor;
+// }

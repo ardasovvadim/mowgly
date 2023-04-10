@@ -226,6 +226,29 @@ namespace MG.WebHost.Migrations
                     b.ToTable("Locations", (string)null);
                 });
 
+            modelBuilder.Entity("MG.WebHost.Entities.News.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category");
+                });
+
             modelBuilder.Entity("MG.WebHost.Entities.News.News", b =>
                 {
                     b.Property<Guid>("Id")
@@ -237,6 +260,9 @@ namespace MG.WebHost.Migrations
 
                     b.Property<string>("Blocks")
                         .HasColumnType("longtext");
+
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime(6)");
@@ -265,6 +291,8 @@ namespace MG.WebHost.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("TournamentId");
 
@@ -908,12 +936,19 @@ namespace MG.WebHost.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MG.WebHost.Entities.News.Category", "Category")
+                        .WithMany("News")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("MG.WebHost.Entities.Tournaments.Tournament", "Tournament")
                         .WithMany("News")
                         .HasForeignKey("TournamentId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Author");
+
+                    b.Navigation("Category");
 
                     b.Navigation("Tournament");
                 });
@@ -1104,6 +1139,11 @@ namespace MG.WebHost.Migrations
                     b.Navigation("TimetableRecords");
 
                     b.Navigation("UserRequests");
+                });
+
+            modelBuilder.Entity("MG.WebHost.Entities.News.Category", b =>
+                {
+                    b.Navigation("News");
                 });
 
             modelBuilder.Entity("MG.WebHost.Entities.Sections.Section", b =>

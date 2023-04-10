@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {TournamentEditModel} from '../../../../app/pages/news-page/news-details/news-details.component';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ManageModal} from '../manage-modal/manage-modal';
 import {ManageTournamentApiService} from '../../../services/manage-tournament-api.service';
 import * as moment from 'moment';
+import {TournamentEditModel} from "../../../../app/models/news/news-vm";
 
 @Component({
   selector: 'mg-manage-tournament-modal',

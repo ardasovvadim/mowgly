@@ -104,6 +104,9 @@ namespace MG.WebHost.Services
                     var rolesToDelete = existingRoles.Except(requestRoles).ToList();
                     if (rolesToDelete.Any())
                         await UserManager.RemoveFromRolesAsync(user, rolesToDelete);
+
+                    if ((newRoles.Any() || rolesToDelete.Any()) && !isNew)
+                        await UserManager.UpdateSecurityStampAsync(user);
                 }
 
                 Mapper.Map(request, user);

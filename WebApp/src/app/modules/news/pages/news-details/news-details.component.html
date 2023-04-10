@@ -1,0 +1,64 @@
+<ng-template [ngIf]="!newsNotFound" [ngIfElse]="notFound">
+    <div class="uk-card uk-card-default mt-50">
+        <div *ngIf="news?.imageUrl || imageLoadingError" class="uk-card-media-top">
+            <img [src]="news.imageUrl | image" style="width: 100%" alt="" (error)="imageLoadingError = true">
+        </div>
+        <div class="uk-card-body">
+            <div *ngIf="news?.categoryName" class="uk-card-badge uk-label">{{news.categoryName}}</div>
+
+            <h3 class="uk-card-title">{{news?.title}}</h3>
+            <div [innerHtml]="news?.description | safeHtml"></div>
+
+            <ng-template [ngIf]="news?.blocks && news.blocks.length">
+                <div *ngFor="let block of news.blocks | sorted">
+
+                    <!--       Text type       -->
+
+                    <ng-template [ngIf]="block.type == blockTypes.Text">
+                        <div [innerHTML]="block.data | safeHtml"></div>
+                    </ng-template>
+
+                    <!--       Video type       -->
+
+                    <ng-template [ngIf]="block.type == blockTypes.Video">
+                        <div class="news-video">
+                            <iframe [src]="block.data | safeUrl"
+                                    width="1920"
+                                    height="1080"
+                                    allowfullscreen
+                                    uk-responsive
+                                    uk-video="automute: true; autoplay: false"></iframe>
+                        </div>
+                    </ng-template>
+
+                    <!--       Image type       -->
+
+                    <ng-template [ngIf]="block.type == blockTypes.Image">
+                        <mg-news-image-block [data]="block.data"></mg-news-image-block>
+                    </ng-template>
+
+                    <!--       TournamentResultsTable type       -->
+
+                    <ng-template [ngIf]="block.type == blockTypes.TournamentResultsTable">
+                        <mg-news-tournament-table [data]="block.data"></mg-news-tournament-table>
+                    </ng-template>
+
+                </div>
+            </ng-template>
+        </div>
+        <div class="uk-card-footer">
+            <div class="uk-grid-small uk-flex-middle" uk-grid>
+                <div class="uk-width-auto">
+                    <mg-avatar [size]="40" [image]="news?.authorAvatar"></mg-avatar>
+                </div>
+                <div class="uk-width-expand">
+                    <p class="uk-margin-remove-bottom">{{news?.author}}</p>
+                    <p class="uk-text-meta uk-margin-remove-top"><time [dateTime]="news?.createdDate">{{news?.createdDate | date : 'longDate'}}</time></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #notFound>
+    <h3 class="uk-text-center mt-200">Новина не знайдена = (</h3>
+</ng-template>

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NewsImageBlock} from '../../../../pages/news-page/news-details/news-details.component';
 import {Indexer} from '../../../../utils/utils';
+import {NewsImageBlock} from "../../../../models/news/news-vm";
 
 @Component({
   selector: 'mg-news-image-block',

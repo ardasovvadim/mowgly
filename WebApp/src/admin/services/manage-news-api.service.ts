@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {NewsApiService} from '../../app/services/news-api.service';
 import {ApiService} from '../../app/services/api.service';
-import {NewsDetailsVm} from '../../app/pages/news-page/news-details/news-details.component';
 import {AdminGetNewsRequest, AdminNewsVm} from '../models/news.model';
 import {Page} from '../../app/models/page';
+import {NewsDetailsVm} from "../../app/models/news/news-vm";
 
 @Injectable()
 export class ManageNewsApiService extends NewsApiService {

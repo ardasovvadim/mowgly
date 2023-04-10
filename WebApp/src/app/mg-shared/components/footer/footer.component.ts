@@ -6,6 +6,7 @@ import {LocationViewModel} from '../../../models/locations/location.view.model';
 import {ComponentState, MgComponentService} from '../../../services/mg-component.service';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {GMapsUtils} from "../../../utils/g-maps-utils";
 
 @Component({
     selector: 'mg-footer',
@@ -54,11 +55,18 @@ export class FooterComponent implements OnInit {
         }
     }
 
-    goToGoogleMapLink = () => goToExternalLink(this.currentLocation?.googleMapsLink);
+    goToGoogleMapLink() {
+        const url = GMapsUtils.getMapUrl(this.currentLocation?.address);
+        goToExternalLink(url);
+    }
 
     changeCurrentItem(location: LocationViewModel, index: number) {
         this.currentLocation = location;
         this.currentIndex = index;
+    }
+
+    getUrl(location: LocationViewModel) {
+        return GMapsUtils.getEmbedUrl(location.address);
     }
 }
 

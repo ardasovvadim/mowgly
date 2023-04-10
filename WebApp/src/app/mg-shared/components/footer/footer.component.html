@@ -23,9 +23,15 @@
             </div>
         </div>
 
-        <div id="footer-map" class="mg-no-select" (click)="goToGoogleMapLink()"></div>
-
     </ng-template>
+
+    <div id="footer-map" class="mg-no-select" (click)="goToGoogleMapLink()">
+        <iframe [src]="getUrl(currentLocation) | safeUrl"
+                *ngIf="currentLocation?.address"
+                id="map"
+                allowfullscreen="false"
+                aria-hidden="false" tabindex="0"></iframe>
+    </div>
 
     <div id="footer-contacts">
         <mg-footer-contacts></mg-footer-contacts>

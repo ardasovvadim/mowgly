@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NewsBlock, NewsBlockType} from '../../../../../app/pages/news-page/news-details/news-details.component';
 import {NewsManageService} from '../../../../services/news-manage.service';
+import {NewsBlock, NewsBlockType} from "../../../../../app/models/news/news-vm";
 
 @Component({
   selector: 'mg-manage-block',

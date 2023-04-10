@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {ManageModal} from '../manage-modal/manage-modal';
-import {NewsBlock} from '../../../../app/pages/news-page/news-details/news-details.component';
+
+import {NewsBlock} from "../../../../app/models/news/news-vm";
 
 @Component({
   selector: 'mg-manage-text-html-modal',

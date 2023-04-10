@@ -32,8 +32,8 @@ import {TRSearchCriteriaRequest} from '../../models/timetable-records/timetable-
 export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public locationsCityGroups: Map<string, LocationViewModel[]> = new Map<string, LocationViewModel[]>();
-  public sections: SectionVm[] = [];
-  public masters: MasterVm[] = [];
+  public sections?: SectionVm[] = null;
+  public masters?: MasterVm[] = null;
   public switcherId: string = `switcher-${Indexer.getId()}`;
   private $currentStep: BehaviorSubject<RegistrationState>;
   public state: RegistrationStateModel;
@@ -151,6 +151,7 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   private processLocationStep() {
+    this.state.selectedLocation = null;
     this.state.selectedSection = null;
     this.state.selectedMaster = null;
 
@@ -167,40 +168,31 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   private processSectionStep() {
-    if (this.state.selectedLocation == null)
-      this.resetState();
-    else {
-      this.state.selectedMaster = null;
+    this.state.selectedSection = null;
+    this.state.selectedMaster = null;
 
-      this.sectionService
-        .getSectionByLocationId(this.state.selectedLocation)
-        .subscribe(sections => this.sections = sections);
-    }
+    this.sectionService
+      .getSectionByLocationId(this.state.selectedLocation)
+      .subscribe(sections => this.sections = sections);
   }
 
   private processMasterStep() {
-    if (this.state.selectedLocation == null || this.state.selectedSection == null) {
-      this.resetState();
-    }
-    else {
-      this.masterService
-        .getCardMasters({
-          pageSize: 10,
-          locationIds: [this.state.selectedLocation],
-          sectionIds: [this.state.selectedSection]
-        } as MasterSearchCriteria)
-          .subscribe(masters => {
-            this.masters = masters;
-          });
-    }
+    this.state.selectedMaster = null;
+    const location = this.state.selectedLocation;
+    const section = this.state.selectedSection;
+
+    this.masterService
+      .getCardMasters({
+        pageSize: 10,
+        locationIds: location ? [location] : [],
+        sectionIds: section ? [section] : []
+      } as MasterSearchCriteria)
+        .subscribe(masters => {
+          this.masters = masters;
+        });
   }
 
   private processPersonalDataStep() {
-    if (this.state.selectedMaster == null
-      || this.state.selectedLocation == null
-      || this.state.selectedSection == null) {
-      this.resetState();
-    }
   }
 
   private resetState() {
@@ -219,29 +211,30 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   sendRegistrationData(personalData: PersonalDataModel) {
-    if (this.state.selectedSection != null
-      && this.state.selectedLocation != null
-      && this.state.selectedMaster != null) {
+    const request = {
+      ...personalData,
+      locationId: this.state.selectedLocation,
+      sectionId: this.state.selectedSection,
+      masterId: this.state.selectedMaster
+    } as PersonalDataModel;
 
-      const request = {
-        ...personalData,
-        locationId: this.state.selectedLocation,
-        sectionId: this.state.selectedSection,
-        masterId: this.state.selectedMaster
-      } as PersonalDataModel;
-
-      this.registrationService
-        .register(request)
-        .subscribe(_ => {
-          this.regCompletedModal?.open();
-          this.regCompletedModal?.onClose.subscribe(_ => this.resetState());
-        });
-    }
+    this.registrationService
+      .register(request)
+      .subscribe(_ => {
+        this.regCompletedModal?.open();
+        this.regCompletedModal?.onClose.subscribe(_ => this.resetState());
+      });
   }
 
   prevStep() {
     const currentStep = this.state.currentStep;
     if (currentStep-1 >= 0)
       this.changeCurrentStep(currentStep - 1);
+  }
+
+  skipStep() {
+    const currentStep = this.state.currentStep;
+    if (currentStep < this.steps.length - 1)
+      this.changeCurrentStep(currentStep + 1);
   }
 }

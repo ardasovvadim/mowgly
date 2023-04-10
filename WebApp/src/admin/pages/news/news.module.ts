@@ -14,6 +14,7 @@ import {
 import {ManageNewsVideoModalComponent} from "./components/manage-news-video-modal/manage-news-video-modal.component";
 import {ManageBlockComponent} from "./components/manage-block/manage-block.component";
 import {SharedAdminModule} from "../../shared-admin/shared-admin.module";
+import {UnsupportedTypePipe} from './pipes/unsupported-type.pipe';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {SharedAdminModule} from "../../shared-admin/shared-admin.module";
         ManageNewsDescriptionPageComponent,
         ManageNewsImageCoverModalComponent,
         ManageNewsVideoModalComponent,
-        ManageBlockComponent
+        ManageBlockComponent,
+        UnsupportedTypePipe
     ],
     imports: [
         NewsRoutingModule,

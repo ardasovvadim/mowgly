@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {ManageModal} from '../../../../shared-admin/components/manage-modal/manage-modal';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {NewsBlock, NewsImageBlock} from '../../../../../app/pages/news-page/news-details/news-details.component';
 import {Indexer} from '../../../../../app/utils/utils';
 import {UiKit} from '../../../../../app/utils/ui-kit';
 import {AddImageModalComponent} from '../../../../../app/mg-shared/components/add-image-modal/add-image-modal.component';
+import {NewsBlock, NewsImageBlock} from "../../../../../app/models/news/news-vm";
 
 @Component({
   selector: 'mg-manage-news-image-cover-modal',

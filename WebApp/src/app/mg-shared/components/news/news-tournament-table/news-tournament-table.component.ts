@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TournamentResultsData} from '../../../../pages/news-page/news-details/news-details.component';
 import {TournamentApiService} from '../../../../services/tournament-api.service';
+import {TournamentResultsData} from "../../../../models/news/news-vm";
 
 @Component({
   selector: 'mg-news-tournament-table',

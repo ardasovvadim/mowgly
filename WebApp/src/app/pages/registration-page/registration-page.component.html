@@ -14,6 +14,7 @@
     </ul>
 
     <a [hidden]="this.state.currentStep == 0"  class="mg-stepper-back-btn"><mg-icon (click)="prevStep()" icon="long-arrow" color="green-main" width="90"></mg-icon></a>
+    <a [hidden]="this.state.currentStep == steps.length - 1"  class="mg-stepper-skip-btn"><mg-icon (click)="skipStep()" icon="long-arrow" rotate="right" color="green-main" width="90"></mg-icon></a>
 
   </div>
 
@@ -50,27 +51,41 @@
       <li id="step-2">
         <div class="uk-grid uk-child-width-1-2@m" uk-grid="masonry: true">
 
-          <div class="" *ngFor="let section of sections">
-            <mg-reg-section
-                            [section]="section"
-                            (sectionSelected)="sectionSelected(section)"
-                            (openTimeTable)="showSectionTimeTableRecords(section)"></mg-reg-section>
-          </div>
+          <ng-template [ngIf]="sections?.length" [ngIfElse]="emptySections">
+            <div class="" *ngFor="let section of sections">
+              <mg-reg-section
+                              [section]="section"
+                              (sectionSelected)="sectionSelected(section)"
+                              (openTimeTable)="showSectionTimeTableRecords(section)"></mg-reg-section>
+            </div>
+          </ng-template>
+
+          <ng-template #emptySections>
+            <div class="uk-width-1-1" *ngIf="sections != null">
+                <p class="uk-text-center uk-text-large uk-margin-medium-top">Вибачте, але за даним критерієм напрямків не знайдено.</p>
+            </div>
+          </ng-template>
 
         </div>
       </li>
 
       <li id="step-3">
-        <mg-master-slider [cardBottomRef]="cardBottom" [masters]="masters">
-          <ng-template let-master #cardBottom>
+        <ng-template [ngIf]="masters?.length" [ngIfElse]="emptyMasters">
+          <mg-master-slider [cardBottomRef]="cardBottom" [masters]="masters">
+            <ng-template let-master #cardBottom>
 
-            <div class="d-flex align-items-center justify-content-between uk-flex-wrap">
-              <a (click)="showMasterTimeTableRecords(master)"><span class="uk-margin-right"><mg-icon color="green-main" icon="calendar"></mg-icon></span>Розклад</a>
-              <button (click)="masterSelected(master)" class="uk-button uk-button-primary">Обрати</button>
-            </div>
+              <div class="d-flex align-items-center justify-content-between uk-flex-wrap">
+                <a (click)="showMasterTimeTableRecords(master)"><span class="uk-margin-right"><mg-icon color="green-main" icon="calendar"></mg-icon></span>Розклад</a>
+                <button (click)="masterSelected(master)" class="uk-button uk-button-primary">Обрати</button>
+              </div>
 
-          </ng-template>
-        </mg-master-slider>
+            </ng-template>
+          </mg-master-slider>
+        </ng-template>
+
+        <ng-template #emptyMasters>
+          <p class="uk-text-center uk-text-large uk-margin-medium-top" *ngIf="masters != null">Вибачте, але за даним критерієм інструкторів не знайдено.</p>
+        </ng-template>
       </li>
 
       <li id="step-4">
