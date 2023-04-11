@@ -3,7 +3,7 @@
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-var apiKey = "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";
+var apiKey = "";
 var client = new SendGridClient(apiKey);
 var from = new EmailAddress("ardasovvadim@gmail.com", "Vadim Ardasov Sender");
 var subject = "Sending with SendGrid is Fun";
