@@ -155,11 +155,6 @@ public static class Startup
             app.UseHsts();
         }
 
-        var defaultFileOptions = new DefaultFilesOptions
-        {
-            RedirectToAppendTrailingSlash = false
-        };
-        app.UseDefaultFiles(defaultFileOptions);
         app.UseStaticFiles();
 
         app.UseRouting();
@@ -176,25 +171,7 @@ public static class Startup
             pattern: "api/{controller}/{action=Index}/{id?}");
         
         app.MapRazorPages();
-
-        app.UseWhen(ctx =>
-        {
-            var path = ctx.Request.Path;
-            return !path.StartsWithSegments("/api");
-        }, cfg =>
-        {
-            cfg.Use((ctx, next) =>
-            {
-                if (ctx.GetEndpoint() != null)
-                    return next();
         
-                ctx.Request.Path = "/index.html";
-                return next();
-            });
-        
-            cfg.UseStaticFiles();
-        });
-
         return app;
     }
 

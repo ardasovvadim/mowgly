@@ -32,6 +32,7 @@ export class ManageNewsDescriptionPageComponent implements OnInit, AfterViewInit
 
     news: NewsDetailsVm = {} as NewsDetailsVm;
     blockTypes = NewsBlockType;
+    imageUrlError: string = null;
 
     get isEditMode(): boolean {
         return !this.news?.id
@@ -81,6 +82,7 @@ export class ManageNewsDescriptionPageComponent implements OnInit, AfterViewInit
 
         this.addImageCoverModal.onImageAdded.subscribe(imageDataUrl => {
             this.news.imageUrl = imageDataUrl;
+            this.imageUrlError = null;
             this.addImageCoverModal.close();
             this.saveResult();
         });
@@ -179,6 +181,7 @@ export class ManageNewsDescriptionPageComponent implements OnInit, AfterViewInit
 
     deleteImageCover() {
         this.news.imageUrl = null;
+        this.imageUrlError = null;
         this.saveResult();
     }
 
@@ -197,5 +200,9 @@ export class ManageNewsDescriptionPageComponent implements OnInit, AfterViewInit
 
     addImage() {
         this.newsManageService.addBlock(this.getLatestBlock(), NewsBlockType.Image);
+    }
+
+    onImageUrlError(error: ErrorEvent) {
+        this.imageUrlError = error.message ?? "Зображення на обкладинці новини не може бути завантажене. Будь-ласка перевірте посилання або замініть його."
     }
 }

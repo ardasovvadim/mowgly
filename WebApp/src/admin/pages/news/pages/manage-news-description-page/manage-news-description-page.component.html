@@ -24,11 +24,18 @@
             <div><button class="uk-button uk-button-default w-100" (click)="addTournamentTable()">Додати таблицю результатів</button></div>
         </div>
 
+        <div class="">
+            <div class="uk-alert-danger uk-card uk-card-small uk-card-body" *ngIf="imageUrlError">
+                <span uk-icon="icon: info" class="uk-margin-small-right"></span> {{imageUrlError}}
+                <a class="uk-alert-close" uk-close (click)="imageUrlError = null"></a>
+            </div>
+        </div>
+
         <div class="uk-card uk-card-default mt-50" *ngIf="news">
 
             <div class="uk-card-media-top">
                 <ng-template [ngIf]="news?.imageUrl">
-                    <img [src]="news.imageUrl | image" style="width: 100%">
+                    <img [src]="news.imageUrl | image" (error)="onImageUrlError($event)" style="width: 100%" alt="Обкладинка новини">
                 </ng-template>
             </div>
 

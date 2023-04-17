@@ -6,7 +6,7 @@
     <div *ngFor="let news of data">
         <div class="uk-card uk-card-default">
             <div *ngIf="news.imageUrl" class="uk-card-media-top">
-                <img [src]="news.imageUrl | image" alt="Post image" style="width: 100%" loading="lazy">
+                <img [src]="news.imageUrl | image" (error)="news.imageUrl = null" alt="Post image" style="width: 100%" loading="lazy">
             </div>
             <div class="uk-card-body">
                 <div *ngIf="news.categoryName" class="uk-card-badge uk-label">{{news.categoryName}}</div>

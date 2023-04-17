@@ -3,6 +3,8 @@ import {GeneralSettingVm} from '../models/general-setting.view.model';
 import {UiKit} from './ui-kit';
 import * as moment from 'moment';
 import {defer, Observable} from 'rxjs';
+import UIkit from "uikit";
+import image = UIkit.image;
 
 export abstract class Indexer {
   private static id: number = 0;
@@ -36,13 +38,23 @@ export function isGuid(str: string): boolean {
   return str != null && str.length > 0 && guidRegex.test(str);
 }
 
-export function getImageUrl(guid: string): string {
+export function getImageUrl(path: string): string {
+  if (path.includes('assets/img'))
+    return path;
+
+  let imagePath = path.includes('/api/image')
+      ? path
+      : `/api/image/${path}`;
+
   // todo
-  return `/api/image/${guid}`;
+  if (environment.production)
+    return imagePath;
+
+  return environment.apiUrl + imagePath;
 }
 
 export function parseImage(strValue: string) {
-  return isGuid(strValue) ? getImageUrl(strValue) : strValue;
+  return strValue.startsWith("http") ? strValue : getImageUrl(strValue);
 }
 
 export function scrollTo(id: string, offset: number | null = null) {

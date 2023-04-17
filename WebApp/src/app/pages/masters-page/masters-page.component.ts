@@ -29,7 +29,6 @@ export class MastersPageComponent implements OnInit {
 
 
     filterText: string;
-    filterDate: string;
     asc: boolean = false;
     data: MasterVm[];
 
@@ -98,13 +97,10 @@ export class MastersPageComponent implements OnInit {
 
     reset() {
         this.filterText = null;
-        this.filterDate = null;
+        this.filteringCity = null;
+        this.filteringSection = null;
         this.pageOptions = {...this.initialPageOptions};
         this.refreshData();
     }
-
-    goToNews(newsId: string) {
-        this.router.navigate(['/news/' + newsId]);
-    }
-
+    
 }

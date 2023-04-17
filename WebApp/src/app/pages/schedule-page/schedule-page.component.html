@@ -5,20 +5,20 @@
 
         <div class="mg-tools uk-margin-medium-bottom mt-50 uk-grid-small" uk-grid>
             <div class="uk-width-1-2@s uk-width-auto@m">
-                <select class="uk-select" [(ngModel)]="filteringCity">
+                <select class="uk-select" [(ngModel)]="filteringCity" (ngModelChange)="refreshData()">
                     <option [ngValue]="null">Всі міста</option>
                     <option *ngFor="let city of options?.cities" [ngValue]="city">{{city}}</option>
                 </select>
             </div>
             <div class="uk-width-1-2@s uk-width-auto@m">
-                <select class="uk-select" [(ngModel)]="filteringLocation">
+                <select class="uk-select" [(ngModel)]="filteringLocation" (ngModelChange)="refreshData()">
                     <option [ngValue]="null">Всі філіали</option>
                     <option *ngFor="let location of options?.locations"
                             [ngValue]="location.id">{{location.name}}</option>
                 </select>
             </div>
             <div class="uk-width-1-2@s uk-width-auto@m">
-                <select class="uk-select" [(ngModel)]="filteringSection">
+                <select class="uk-select" [(ngModel)]="filteringSection" (ngModelChange)="refreshData()">
                     <option [ngValue]="null">Всі напрямки</option>
                     <option *ngFor="let section of options?.sections" [ngValue]="section.id">{{section.name}}</option>
                 </select>

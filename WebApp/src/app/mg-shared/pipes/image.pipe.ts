@@ -1,6 +1,5 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {parseImage} from '../../utils/utils';
-import {GeneralSettingVm} from '../../models/general-setting.view.model';
 
 @Pipe({
   name: 'image'

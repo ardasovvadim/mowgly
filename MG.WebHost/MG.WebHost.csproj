@@ -39,5 +39,9 @@
         <None Remove="Images\**" />
         <None Remove="logs\**" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
  
 </Project>
