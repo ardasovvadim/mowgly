@@ -1,7 +1,7 @@
 using MG.WebHost.Config;
+using MG.WebHost.Contracts;
+using MG.WebHost.Contracts.Tournaments;
 using MG.WebHost.Entities.Tournaments;
-using MG.WebHost.Models;
-using MG.WebHost.Models.Tournaments;
 using MG.WebHost.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,15 @@
 using AutoMapper;
+using MG.WebHost.Contracts;
+using MG.WebHost.Contracts.Events;
+using MG.WebHost.Contracts.Locations;
+using MG.WebHost.Contracts.Masters;
+using MG.WebHost.Contracts.News;
+using MG.WebHost.Contracts.Orders;
+using MG.WebHost.Contracts.Registrations;
+using MG.WebHost.Contracts.Sections;
+using MG.WebHost.Contracts.TimetableRecords;
+using MG.WebHost.Contracts.Tournaments;
+using MG.WebHost.Contracts.Users;
 using MG.WebHost.Database;
 using MG.WebHost.Entities;
 using MG.WebHost.Entities.Enums;
@@ -6,17 +17,6 @@ using MG.WebHost.Entities.News;
 using MG.WebHost.Entities.Sections;
 using MG.WebHost.Entities.Tournaments;
 using MG.WebHost.Entities.Users;
-using MG.WebHost.Models;
-using MG.WebHost.Models.Events;
-using MG.WebHost.Models.Locations;
-using MG.WebHost.Models.Masters;
-using MG.WebHost.Models.News;
-using MG.WebHost.Models.Orders;
-using MG.WebHost.Models.Registrations;
-using MG.WebHost.Models.Sections;
-using MG.WebHost.Models.TimetableRecords;
-using MG.WebHost.Models.Tournaments;
-using MG.WebHost.Models.Users;
 using MG.WebHost.Utils;
 
 namespace MG.WebHost.Config

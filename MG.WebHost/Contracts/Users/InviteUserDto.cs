@@ -1,0 +1,8 @@
+namespace MG.WebHost.Contracts.Users;
+
+public class InviteUserDto
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
+}

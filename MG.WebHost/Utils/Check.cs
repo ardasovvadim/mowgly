@@ -1,5 +1,3 @@
-using MG.WebHost.Models.Users;
-
 namespace MG.WebHost.Utils;
 
 public static class Check

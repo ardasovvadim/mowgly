@@ -1,5 +1,5 @@
 using System;
-using MG.WebHost.Models;
+using MG.WebHost.Contracts;
 
 namespace MG.WebHost.Entities.Tournaments;
 

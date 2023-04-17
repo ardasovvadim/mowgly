@@ -1,5 +1,6 @@
 using MG.WebHost.Config;
-using MG.WebHost.Models.TimetableRecords;
+using MG.WebHost.Contracts.TimetableRecords;
+using MG.WebHost.Contracts.Timetalbes;
 using MG.WebHost.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

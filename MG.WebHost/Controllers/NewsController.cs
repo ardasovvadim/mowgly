@@ -1,7 +1,7 @@
 using MG.WebHost.Config;
+using MG.WebHost.Contracts;
+using MG.WebHost.Contracts.News;
 using MG.WebHost.Entities.News;
-using MG.WebHost.Models;
-using MG.WebHost.Models.News;
 using MG.WebHost.Services;
 using MG.WebHost.Utils;
 using Microsoft.AspNetCore.Authorization;

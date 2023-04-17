@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using MG.WebHost.Contracts;
 using MG.WebHost.Services;
 using Microsoft.AspNetCore.Mvc;
 

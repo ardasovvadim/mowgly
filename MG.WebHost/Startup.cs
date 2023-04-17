@@ -1,12 +1,13 @@
 using System.Text;
 using MG.WebHost.Config;
+using MG.WebHost.Contracts.StartupTasks;
 using MG.WebHost.Database;
 using MG.WebHost.Entities;
 using MG.WebHost.Entities.Users;
 using MG.WebHost.Security;
-using MG.WebHost.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -83,6 +84,12 @@ public static class Startup
 
         builder.Services.AddControllersWithViews();
         builder.Services.AddRazorPages();
+        
+        builder.Services.Configure<RazorViewEngineOptions>(options =>
+        {
+            options.ViewLocationFormats.Add("/Pages/{0}.cshtml");
+            options.ViewLocationFormats.Add("/Pages/Shared/{0}.cshtml");
+        });
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(o =>

@@ -1,3 +1,4 @@
+using MG.WebHost.Contracts.Users;
 using MG.WebHost.Entities.Users;
 using MG.WebHost.Services;
 using Microsoft.AspNetCore.Identity;

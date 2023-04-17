@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using MG.WebHost.Contracts;
+using MG.WebHost.Contracts.Options;
 using MG.WebHost.Entities;
 using MG.WebHost.Entities.Enums;
 using MG.WebHost.Entities.Sections;
 using MG.WebHost.Entities.Tournaments;
 using MG.WebHost.Entities.Users;
-using MG.WebHost.Models;
-using MG.WebHost.Models.Options;
 using MG.WebHost.Repositories;
 using MG.WebHost.Utils;
 using Microsoft.AspNetCore.Mvc;

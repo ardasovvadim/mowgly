@@ -1,6 +1,6 @@
 using MG.WebHost.Config;
+using MG.WebHost.Contracts.Telegram;
 using MG.WebHost.ModelBinders;
-using MG.WebHost.Models.Telegram;
 using MG.WebHost.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

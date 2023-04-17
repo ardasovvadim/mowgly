@@ -1,10 +1,36 @@
-using MG.WebHost.JwtFeatures;
+using MG.WebHost.Contracts;
+using MG.WebHost.Contracts.Emails;
+using MG.WebHost.Contracts.Images;
+using MG.WebHost.Contracts.Locations;
+using MG.WebHost.Contracts.Masters;
+using MG.WebHost.Contracts.News;
+using MG.WebHost.Contracts.Notifications;
+using MG.WebHost.Contracts.Registrations;
+using MG.WebHost.Contracts.StartupTasks;
+using MG.WebHost.Contracts.Tasks;
+using MG.WebHost.Contracts.Telegram;
+using MG.WebHost.Contracts.Timetalbes;
+using MG.WebHost.Contracts.Tournaments;
+using MG.WebHost.Contracts.Users;
 using MG.WebHost.Repositories;
 using MG.WebHost.Security;
 using MG.WebHost.Services;
+using MG.WebHost.Services.BackgroundServices;
+using MG.WebHost.Services.Emails;
+using MG.WebHost.Services.Images;
+using MG.WebHost.Services.Locations;
+using MG.WebHost.Services.Masters;
+using MG.WebHost.Services.News;
+using MG.WebHost.Services.Notifications;
+using MG.WebHost.Services.OneTimeTasks;
+using MG.WebHost.Services.Registrations;
+using MG.WebHost.Services.StartupTasks;
+using MG.WebHost.Services.Tasks;
+using MG.WebHost.Services.Telegram;
+using MG.WebHost.Services.Timetables;
+using MG.WebHost.Services.Tournaments;
+using MG.WebHost.Services.Users;
 using MG.WebHost.Settings;
-using MG.WebHost.Tasks;
-using MG.WebHost.Tasks.OneTimeTasks;
 using MG.WebHost.Utils;
 using Telegram.Bot;
 
@@ -63,7 +89,7 @@ namespace MG.WebHost.Config
             services.Configure<TelegramTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromMinutes(5));
 
             // Tasks
-            services.AddStartupTask<DbInitialization>();
+            services.AddStartupTask<DbInitializationStartupTask>();
             services.AddStartupTask<MoveMasterCardImageToUserAvatarOneTimeStartupTask>();
 
             return services;

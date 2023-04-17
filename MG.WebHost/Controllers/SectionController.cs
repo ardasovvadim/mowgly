@@ -1,8 +1,8 @@
 using System.Linq.Expressions;
 using MG.WebHost.Config;
+using MG.WebHost.Contracts;
+using MG.WebHost.Contracts.Sections;
 using MG.WebHost.Entities.Sections;
-using MG.WebHost.Models;
-using MG.WebHost.Models.Sections;
 using MG.WebHost.Services;
 using MG.WebHost.Utils;
 using Microsoft.AspNetCore.Authorization;

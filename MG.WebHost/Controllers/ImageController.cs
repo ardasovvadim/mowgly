@@ -1,5 +1,5 @@
-using MG.WebHost.Models;
-using MG.WebHost.Models.Images;
+using MG.WebHost.Contracts;
+using MG.WebHost.Contracts.Images;
 using MG.WebHost.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

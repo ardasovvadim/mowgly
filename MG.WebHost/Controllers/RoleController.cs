@@ -1,7 +1,7 @@
 using MG.WebHost.Config;
+using MG.WebHost.Contracts;
+using MG.WebHost.Contracts.Roles;
 using MG.WebHost.Entities;
-using MG.WebHost.Models;
-using MG.WebHost.Models.Roles;
 using MG.WebHost.Repositories;
 using MG.WebHost.Utils;
 using Microsoft.AspNetCore.Authorization;

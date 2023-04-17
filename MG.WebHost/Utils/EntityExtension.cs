@@ -1,9 +1,9 @@
 using System.Linq.Expressions;
 using System.Text;
+using MG.WebHost.Contracts;
 using MG.WebHost.Entities.Interfaces;
 using MG.WebHost.Entities.Sections;
 using MG.WebHost.Entities.Users;
-using MG.WebHost.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 

@@ -1,9 +1,9 @@
 ﻿using MG.WebHost.Config;
+using MG.WebHost.Contracts;
+using MG.WebHost.Contracts.Auth;
+using MG.WebHost.Contracts.Users;
 using MG.WebHost.Entities.Enums;
 using MG.WebHost.Entities.Users;
-using MG.WebHost.Models;
-using MG.WebHost.Models.Auth;
-using MG.WebHost.Models.Users;
 using MG.WebHost.Services;
 using MG.WebHost.Utils;
 using Microsoft.AspNetCore.Authorization;

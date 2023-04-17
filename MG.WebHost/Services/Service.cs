@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using AutoMapper;
+using MG.WebHost.Contracts;
 using MG.WebHost.Entities.Interfaces;
-using MG.WebHost.Models;
 using MG.WebHost.Repositories;
 using MG.WebHost.Utils;
 using Microsoft.EntityFrameworkCore;
