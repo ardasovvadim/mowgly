@@ -1,0 +1,51 @@
+<div class="table-wrapper uk-position-relative" style="height: 600px; overflow: scroll">
+
+    <!-- It's shit but to do header sticky there is no other way -->
+
+    <table class="uk-table uk-table-divide uk-table-justify uk-background-muted w-100 mg-sticky-header">
+        <thead>
+        <tr>
+            <th>Час</th>
+            <th>Пн</th>
+            <th>Вт</th>
+            <th>Ср</th>
+            <th>Чт</th>
+            <th>Пт</th>
+            <th>Сб</th>
+            <th>Нд</th>
+        </tr>
+        </thead>
+    </table>
+
+    <table class="uk-table uk-table-divide uk-table-justify timetable-table mg-no-select">
+
+        <tbody>
+
+        <tr *ngFor="let dayTime of dayTimes">
+
+            <td>{{dayTime}}</td>
+
+            <td *ngFor="let day of dayOfWeek">
+
+                <ng-container *ngIf="isBusy(day, dayTime); else freeSlot">
+                    <div class="timeslot-wrapper">
+                        <mg-timetable-slot *ngIf="isBuildBusySlot(day, dayTime)"
+                                           (click)="onEditTimeslot.emit(timeslot);"
+                                           [options]="options"
+                                           [masters]="masters"
+                                           [data]="timeslot"></mg-timetable-slot>
+                    </div>
+                </ng-container>
+
+                <ng-template #freeSlot>
+                    <div class="hidden-wrapper" (click)="onAddTimeslot.emit({day, dayTime})">-</div>
+                </ng-template>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+</div>

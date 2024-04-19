@@ -13,10 +13,6 @@ import {ManageLocationsPageComponent} from './pages/manage-locations-page/manage
 import {
     ManageLocationModalComponent
 } from './pages/manage-locations-page/manage-location-modal/manage-location-modal.component';
-import {ManageSchedulePageComponent} from './pages/manage-schedule-page/manage-schedule-page.component';
-import {
-    ManageTimeslotModalComponent
-} from './pages/manage-schedule-page/manage-timeslot-modal/manage-timeslot-modal.component';
 import {ManageUserModalComponent} from './pages/manage-users-page/manage-user-modal/manage-user-modal.component';
 import {
     ManageSectionModalComponent
@@ -44,8 +40,6 @@ import {SharedAdminModule} from "./shared-admin/shared-admin.module";
         ManageSectionsPageComponent,
         ManageLocationsPageComponent,
         ManageLocationModalComponent,
-        ManageSchedulePageComponent,
-        ManageTimeslotModalComponent,
         ManageUserModalComponent,
         ManageSectionModalComponent,
         ManageEventsPageComponent,

@@ -102,5 +102,5 @@ export class MastersPageComponent implements OnInit {
         this.pageOptions = {...this.initialPageOptions};
         this.refreshData();
     }
-    
+
 }

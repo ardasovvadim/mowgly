@@ -45,28 +45,31 @@
 
     </div>
 
-    <div class="col-12 mt-50 uk-position-relative">
-        <div uk-grid="masonry: true" class="uk-child-width-1-3@l uk-child-width-1-2@m"
-             [mgLoadingBg]="false"
-             [mgLoading]="loading" style="min-height: 400px">
+    <div class="uk-position-relative">
+        <div class="col-12 mt-50 uk-position-relative w-100" [mgLoadingBg]="false" [mgLoading]="loading">
+            <div uk-grid="masonry: true" class="uk-child-width-1-3@l uk-child-width-1-2@m"
+                 style="min-height: 400px">
 
-            <mg-master-card *ngFor="let master of data"
-                            [master]="master">
-                <a [routerLink]="['/master', master.id]">
-                    <button type="button" class="uk-button uk-button-primary">
-                        Дізнатися більше
-                    </button>
-                </a>
-            </mg-master-card>
+                <mg-master-card *ngFor="let master of data"
+                                [master]="master">
+                    <a [routerLink]="['/master', master.id]">
+                        <button type="button" class="uk-button uk-button-primary">
+                            Дізнатися більше
+                        </button>
+                    </a>
+                </mg-master-card>
 
+
+            </div>
+
+            <div class="mt-50">
+                <mg-pagination [pageOptions]="pageOptions"
+                               (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
+            </div>
 
         </div>
 
-        <mg-pagination [pageOptions]="pageOptions"
-                       (onPageChanged)="pageOptions = $event; refreshData()"></mg-pagination>
-
         <mg-bg [offset]="-180"></mg-bg>
-
     </div>
 
     <div class="mt-200 uk-text-center x-center" id="text-1">

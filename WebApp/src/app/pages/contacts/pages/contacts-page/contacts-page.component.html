@@ -5,8 +5,8 @@
         <span [class.uk-disabled]="currentIndex == 0" class="uk-link"
               (click)="previous()"><span uk-icon="icon: arrow-left" class="green-main"></span>Попередній</span>
         <div>
-            <p class="mx-3 my-0 mg-text-green mg-pointer">{{currentLocation?.name ?? '...'}}</p>
-            <div uk-dropdown="mode: click">
+            <p class="mx-3 my-0 mg-text-green mg-pointer">{{currentLocation?.name ?? '...'}} <span uk-icon="icon: triangle-down"></span></p>
+            <div uk-dropdown="">
                 <ul class="uk-nav uk-dropdown-nav">
                     <li *ngFor="let location of locations" [class.uk-active]="location == currentLocation">
                         <a (click)="chooseLocation(location)">{{location.name}}</a>

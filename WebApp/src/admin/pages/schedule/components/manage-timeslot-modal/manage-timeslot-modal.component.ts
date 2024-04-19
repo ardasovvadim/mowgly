@@ -4,13 +4,13 @@ import {
     IdName,
     LocationSectionOptions,
     TimetableRecordEditModel
-} from '../../../../app/models/timetable-records/timetable-record.view.model';
+} from '../../../../../app/models/timetable-records/timetable-record.view.model';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {OptionsApiService} from '../../../../app/services/options-api.service';
+import {OptionsApiService} from '../../../../../app/services/options-api.service';
 import {Observable} from 'rxjs';
-import {Indexer} from '../../../../app/utils/utils';
+import {Indexer} from '../../../../../app/utils/utils';
 import UIkit from 'uikit';
-import {UiKit} from '../../../../app/utils/ui-kit';
+import {UiKit} from '../../../../../app/utils/ui-kit';
 import UIkitModalElement = UIkit.UIkitModalElement;
 
 @UntilDestroy()

@@ -1,0 +1,8 @@
+<div class="avatar">
+    <a *ngIf="isAuthenticated$ | async; else login" (click)="logout()">Вийти</a>
+    <ng-template #login>
+        <a *ngIf="!(isAuthenticated$ | async)" routerLink="/login">Увійти</a>
+    </ng-template>
+
+    <mg-user-avatar [size]="64" (click)="goToProfile()"></mg-user-avatar>
+</div>

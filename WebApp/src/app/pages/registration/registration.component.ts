@@ -18,18 +18,18 @@ import {MasterVm} from '../../models/masterVm';
 import {MasterApiService} from '../../services/master-api.service';
 import {PersonalDataModel} from '../../models/registration/personal-data.model';
 import {OrderApiService} from '../../services/order-api.service';
-import {RegCompletedModalComponent} from './reg-completed-modal/reg-completed-modal.component';
 import {MasterSearchCriteria} from '../../models/masters/master-search-criteria.request';
 import {TRSearchCriteriaRequest} from '../../models/timetable-records/timetable-record-search-criteria.request';
+import {RegCompletedModalComponent} from "./reg-completed-modal/reg-completed-modal.component";
 
 @Component({
-  selector: 'app-registration-page',
-  templateUrl: './registration-page.component.html',
-  styleUrls: ['./registration-page.component.scss'],
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.scss'],
   animations: [fadeInAnimation],
   providers: [RegistrationStateService, OrderApiService]
 })
-export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class RegistrationComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public locationsCityGroups: Map<string, LocationViewModel[]> = new Map<string, LocationViewModel[]>();
   public sections?: SectionVm[] = null;
@@ -92,21 +92,21 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
     this.subscriptions.push(sub);
 
     sub = this.modalService
-      .createModal<TimetableRecordModalComponent>({type: TimetableRecordModalComponent})
-      .subscribe(modal => {
-        if (modal != null) {
-          this.timetableModal = modal;
-        }
-      });
+        .createModal<TimetableRecordModalComponent>({type: TimetableRecordModalComponent})
+        .subscribe(modal => {
+          if (modal != null) {
+            this.timetableModal = modal;
+          }
+        });
 
     this.subscriptions.push(sub)
 
     sub = this.modalService
-      .createModal<RegCompletedModalComponent>({type: RegCompletedModalComponent})
-      .subscribe(modal => {
-        if (modal != null)
-          this.regCompletedModal = modal;
-      });
+        .createModal<RegCompletedModalComponent>({type: RegCompletedModalComponent})
+        .subscribe(modal => {
+          if (modal != null)
+            this.regCompletedModal = modal;
+        });
 
     this.subscriptions.push(sub);
   }
@@ -119,8 +119,8 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
 
   showMasterTimeTableRecords(master: MasterVm): void {
     if (this.state.selectedSection != null
-      && this.state.selectedLocation != null
-      && master != null) {
+        && this.state.selectedLocation != null
+        && master != null) {
       this.timetableModal?.displayTimetableRecords({
         masterId: master.id,
         locationId: this.state.selectedLocation
@@ -172,8 +172,8 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
     this.state.selectedMaster = null;
 
     this.sectionService
-      .getSectionByLocationId(this.state.selectedLocation)
-      .subscribe(sections => this.sections = sections);
+        .getSectionByLocationId(this.state.selectedLocation)
+        .subscribe(sections => this.sections = sections);
   }
 
   private processMasterStep() {
@@ -182,11 +182,11 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
     const section = this.state.selectedSection;
 
     this.masterService
-      .getCardMasters({
-        pageSize: 10,
-        locationIds: location ? [location] : [],
-        sectionIds: section ? [section] : []
-      } as MasterSearchCriteria)
+        .getCardMasters({
+          pageSize: 10,
+          locationIds: location ? [location] : [],
+          sectionIds: section ? [section] : []
+        } as MasterSearchCriteria)
         .subscribe(masters => {
           this.masters = masters;
         });
@@ -219,11 +219,11 @@ export class RegistrationPageComponent implements OnInit, AfterViewInit, OnDestr
     } as PersonalDataModel;
 
     this.registrationService
-      .register(request)
-      .subscribe(_ => {
-        this.regCompletedModal?.open();
-        this.regCompletedModal?.onClose.subscribe(_ => this.resetState());
-      });
+        .register(request)
+        .subscribe(_ => {
+          this.regCompletedModal?.open();
+          this.regCompletedModal?.onClose.subscribe(_ => this.resetState());
+        });
   }
 
   prevStep() {

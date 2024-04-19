@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AppLayoutComponent} from './pages/app-layout/app-layout.component';
 import {MainPageComponent} from './pages/main-page/main-page.component';
-import {RegistrationPageComponent} from './pages/registration-page/registration-page.component';
 import {MasterPageComponent} from './pages/master-page/master-page.component';
 import {EventsPageComponent} from './pages/events-page/events-page.component';
 import {SchedulePageComponent} from './pages/schedule-page/schedule-page.component';
@@ -18,12 +17,12 @@ const routes: Routes = [
         component: AppLayoutComponent,
         children: [
             {path: '', component: MainPageComponent},
-            {path: 'registration', component: RegistrationPageComponent},
+            {path: 'registration', loadChildren: () => import('./pages/registration/registration.module').then(m => m.RegistrationModule)},
             {path: 'master/:id', component: MasterPageComponent},
             {path: 'masters', component: MastersPageComponent},
             {path: 'events', component: EventsPageComponent},
             {path: 'schedule', component: SchedulePageComponent},
-            {path: 'news', loadChildren: () => import('./modules/news/news.module').then(m => m.NewsModule)},
+            {path: 'news', loadChildren: () => import('./pages/news/news.module').then(m => m.NewsModule)},
             {path: 'login', component: LoginPageComponent},
             {
                 path: 'user-registration',

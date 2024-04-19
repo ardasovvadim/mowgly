@@ -1,0 +1,46 @@
+<mg-ribbon-toolbar>
+
+    <div>
+        <div class="uk-search uk-search-default">
+            <a class="uk-search-icon-flip"
+               (click)="refreshData()"
+               uk-search-icon></a>
+            <input class="uk-search-input uk-input" type="search" placeholder="Пошук по інструктору"
+                   (keyup.enter)="refreshData()"
+                   (ngModelChange)="filterText = $event;" [ngModel]="filterText">
+        </div>
+    </div>
+
+    <select class="uk-select" [(ngModel)]="cityFilter" (ngModelChange)="refreshData()">
+        <option [ngValue]="null">Всі міста</option>
+        <option *ngFor="let city of options?.cities" [ngValue]="city">{{city}}</option>
+    </select>
+
+    <select class="uk-select" [(ngModel)]="locationFilter" (ngModelChange)="refreshData()">
+        <option [ngValue]="null">Всі філіали</option>
+        <option *ngFor="let location of options?.locations" [ngValue]="location.id">{{location.name}}</option>
+    </select>
+
+    <select class="uk-select" [(ngModel)]="sectionFilter" (ngModelChange)="refreshData()">
+        <option [ngValue]="null">Всі напрямки</option>
+        <option *ngFor="let section of options?.sections" [ngValue]="section.id">{{section.name}}</option>
+    </select>
+
+    <button class="uk-button uk-button-primary" type="button" *mgMgIfPerm="'Permission.TimetableRecord.Create'" (click)="addTimeslot()">Додати</button>
+
+    <button class="uk-button uk-button-primary" type="button" (click)="refreshData()">Оновити</button>
+</mg-ribbon-toolbar>
+
+<!--<div class="mg-tools uk-margin-medium-bottom uk-grid-small" uk-grid="">-->
+<!--    -->
+<!--</div>-->
+
+<div [mgLoading]="loading">
+    <mg-schedule-board-view
+            [dayTimes]="dayTimes"
+            [dayOfWeek]="dayOfWeek"
+            [timeslot]="get"
+    ></mg-schedule-board-view>
+</div>
+
+<mg-manage-timeslot-modal #manageModal></mg-manage-timeslot-modal>

@@ -7,7 +7,6 @@ import {ManageUsersPageComponent} from './pages/manage-users-page/manage-users-p
 import {ManageSectionsPageComponent} from './pages/manage-sections-page/manage-sections-page.component';
 import {ManageOrdersPageComponent} from './pages/manage-orders-page/manage-orders-page.component';
 import {ManageLocationsPageComponent} from './pages/manage-locations-page/manage-locations-page.component';
-import {ManageSchedulePageComponent} from './pages/manage-schedule-page/manage-schedule-page.component';
 import {ManageEventsPageComponent} from './pages/manage-events-page/manage-events-page.component';
 import {ManageMasterPageComponent} from './pages/manage-masters-page/manage-master-page/manage-master-page.component';
 import {
@@ -63,9 +62,8 @@ const routes: Routes = [
             },
             {
                 path: 'schedule',
-                component: ManageSchedulePageComponent,
-                canActivate: [AuthorizeGuard, PermissionGuard],
-                data: {permissions: ['Permission.TimetableRecord.Get']}
+                loadChildren: () => import('./pages/schedule/schedule.module').then(m => m.ScheduleModule),
+                canLoad: [AuthorizeGuard]
             },
             {
                 path: 'events',

@@ -31,16 +31,9 @@
         </div>
     </div>
 
-    <div *ngIf="isLargeMenu" class="col-auto d-flex ml-auto">
+    <div *ngIf="isLargeMenu" class="col-auto d-flex ml-auto align-items-center">
 
-        <div class="avatar">
-            <a *ngIf="isAuthenticated$ | async; else login" (click)="logout()">Вийти</a>
-            <ng-template #login>
-                <a *ngIf="!(isAuthenticated$ | async)" routerLink="/login">Увійти</a>
-            </ng-template>
-
-            <mg-user-avatar [size]="64" (click)="goToProfile()"></mg-user-avatar>
-        </div>
+        <mg-user-avatar-block></mg-user-avatar-block>
 
         <div class="contacts">
             <a href="tel:+380 (067) 700-555-3">+380 (067) 700-555-3</a>

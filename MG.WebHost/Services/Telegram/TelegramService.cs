@@ -39,7 +39,7 @@ public class TelegramService : BaseService, ITelegramService
             return new BotStatusResponseDto
             {
                 TokenIsValid = false,
-                Error = "Telegram boy is not ok"
+                Error = "Telegram bot is not ok"
             };
 
         await Client.DeleteWebhookAsync();

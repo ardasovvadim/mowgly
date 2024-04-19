@@ -55,8 +55,8 @@ namespace MG.WebHost.Config
             services.AddScoped<ITournamentService, TournamentService>();
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<ILocationService, LocationService>();
-            services.AddScoped<ITelegramService, TelegramService>();
             services.AddScoped<ILazyProvider, LazyProvider>();
+            services.AddScoped<ITelegramService, TelegramService>();
             services.AddScoped<ITelegramBotClient, TelegramBotClient>(sp =>
             {
                 var secret = configuration.GetSection(TelegramSettings.Name)["Secret"];

@@ -1,0 +1,19 @@
+.mg-ribbon-toolbar {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  padding-bottom: 20px;
+
+  > * {
+    margin-right: 15px;
+  }
+
+  .uk-search {
+    min-width: 250px;
+  }
+
+  .uk-select {
+    width: 200px;
+  }
+
+}

@@ -49,6 +49,7 @@ import {AddImageModalComponent} from './components/add-image-modal/add-image-mod
 import {QuillEditorComponent} from './components/quill-editor/quill-editor.component';
 import {FooterContactsComponent} from './components/footer-contacts/footer-contacts.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
+import { UserAvatarBlockComponent } from './components/user-avatar-block/user-avatar-block.component';
 
 const components: any[] = [
     FooterComponent,
@@ -102,6 +103,7 @@ const components: any[] = [
         LoaderComponent,
         FooterContactsComponent,
         AvatarComponent,
+        UserAvatarBlockComponent,
     ],
     exports: [
         // ---
@@ -133,6 +135,7 @@ const components: any[] = [
         UserAvatarComponent,
         FooterContactsComponent,
         AvatarComponent,
+        UserAvatarBlockComponent,
     ],
     imports: [
         CommonModule,

@@ -17,6 +17,7 @@ import {ManageEventModalComponent} from "./components/manage-event-modal/manage-
 import {MgIfPermDirective} from "./directives/mg-if-perm.directive";
 import {ConcatUserTypesPipe} from "./pipes/concat-user-types.pipe";
 import {HasFlagPipe} from "./pipes/has-flag.pipe";
+import { RibbonToolbarComponent } from './components/ribbon-toolbar/ribbon-toolbar.component';
 
 const declarations = [
     ChooseOrCreateEventModalComponent,
@@ -36,13 +37,15 @@ const declarations = [
 
 @NgModule({
     declarations: [
-        ...declarations
+        ...declarations,
+        RibbonToolbarComponent
     ],
     imports: [
         MgSharedModule
     ],
     exports: [
-        ...declarations
+        ...declarations,
+        RibbonToolbarComponent
     ]
 })
 export class SharedAdminModule {

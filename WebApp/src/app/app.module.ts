@@ -8,14 +8,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MgSharedModule} from './mg-shared/mg-shared.module';
 import {MainPageComponent} from './pages/main-page/main-page.component';
-import {RegistrationPageComponent} from './pages/registration-page/registration-page.component';
-import {RegPersonalDataComponent} from './pages/registration-page/reg-personal-data/reg-personal-data.component';
-import {RegSectionComponent} from './pages/registration-page/reg-section/reg-section.component';
 import {AppLayoutComponent} from './pages/app-layout/app-layout.component';
 import {EventsPageComponent} from './pages/events-page/events-page.component';
 import {SchedulePageComponent} from './pages/schedule-page/schedule-page.component';
 import {MasterPageComponent} from './pages/master-page/master-page.component';
-import {RegCompletedModalComponent} from './pages/registration-page/reg-completed-modal/reg-completed-modal.component';
 import {LoginPageComponent} from './pages/login-page/login-page.component';
 import {ErrorHandlerInterceptor} from './interceptors/error-handler.interceptor';
 import {AuthHandlerInterceptor} from './interceptors/auth-handler.interceptor';
@@ -28,16 +24,11 @@ import {MastersPageComponent} from './pages/masters-page/masters-page.component'
         AppComponent,
         AppComponent,
         MainPageComponent,
-        RegistrationPageComponent,
-        RegSectionComponent,
-        RegPersonalDataComponent,
-        RegCompletedModalComponent,
         AppLayoutComponent,
         SchedulePageComponent,
         EventsPageComponent,
         MasterPageComponent,
         LoginPageComponent,
-        RegistrationPageComponent,
         ErrorPageComponent,
         MastersPageComponent,
     ],

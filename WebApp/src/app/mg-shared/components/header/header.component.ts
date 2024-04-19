@@ -1,11 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BreakpointService} from '../../../services/breakpoint.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {Router} from '@angular/router';
 import {UiKit} from '../../../utils/ui-kit';
 import {scrollTo} from '../../../utils/utils';
-import {AuthenticationService} from '../../../services/authentication.service';
-import {Observable} from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -31,12 +28,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         {name: 'Як нас знайти', link: '/contacts'},
     ]
 
-    isAuthenticated$: Observable<boolean> = this.authService.isAuthenticated$;
-
     constructor(
         private readonly breakpointService: BreakpointService,
-        private readonly router: Router,
-        private readonly authService: AuthenticationService
     ) {
         this.isLargeMenu = breakpointService.isMatchedMinLgBreakpoint;
         this.breakpointService.minLgBreakpoint$
@@ -62,13 +55,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
             scrollTo('el-9', -200);
             return;
         }
-    }
-
-    logout() {
-        this.authService.logout();
-    }
-
-    goToProfile() {
-        this.router.navigate(['/user-profile']);
     }
 }

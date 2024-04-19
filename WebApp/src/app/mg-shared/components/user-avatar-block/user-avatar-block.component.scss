@@ -1,0 +1,12 @@
+@import "variables";
+
+.avatar {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 30px;
+  a {
+    margin-right: 25px;
+    color: $mg-green-text;
+  }
+}
